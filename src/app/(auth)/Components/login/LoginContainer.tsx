@@ -46,7 +46,7 @@ export default function LoginContainer() {
                         document.cookie = cookie;
 
 
-                        // router.push("/dashboard")
+                        router.push("/dashboard")
                     } else {
                         dispatch(setAlert({ data: { message: "email & password wrong", show: true, type: "error" } }))
                     }
