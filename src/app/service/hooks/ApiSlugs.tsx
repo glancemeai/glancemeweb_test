@@ -1,7 +1,7 @@
 import APIClient from "./connection";
 
 export default function Apis() {
-    const URL = "https://rotenx.me"
+    const URL = "https://rotenx.me/v1"
 
     const Login = async (data:any) => {
         var result = await APIClient("POST", `${URL}/user/login`, false, data);
