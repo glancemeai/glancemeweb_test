@@ -1,0 +1,51 @@
+.main {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f5f5f5;
+}
+.mainOne {
+    position: relative;
+    width: 50%;
+    height: 100%;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.mainTwo{ 
+    position: relative;
+    width: 50%;
+    height: 100%;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    overflow: hidden;
+}
+.mainTwoImage {
+    position: relative;
+    width: 100%;
+    height: 500px;
+    max-width: 100%;
+    max-height: 100%;
+}
+.mainTwoImageDesign1 {
+    position: absolute;
+    top: -100px;
+    left: -100px;
+    width: 250px;
+    height: 250px;
+}
+.mainTwoImageDesign2 {
+    position: absolute;
+    bottom: -100px;
+    right: -100px;
+    width: 250px;
+    height: 250px;
+}

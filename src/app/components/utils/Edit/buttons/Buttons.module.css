@@ -1,0 +1,175 @@
+.main {
+    position: relative;
+    width: 100%;
+    height: auto;
+    padding: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.main button {
+    position: relative;
+    width: auto;
+    height: auto;
+    padding: 10px 20px;
+    border-radius: 6px;
+    background-color: black;
+    color: white;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    font-weight: 500;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    background-position: center;
+    transition: background 0.6s;
+}
+
+
+.main button:hover{
+    background-color: #222;
+    background-image: radial-gradient(circle, transparent 1%, #222 1%);
+    background-position: center;
+    background-size: 15000%;
+}
+
+.main button:active {
+    transition: background 0s;
+    background-color:rgba(255, 255, 255, 0.2);
+    background-size: 100%;
+}
+
+.mainTwo {
+    position: relative;
+    width: auto;
+    height: auto;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.mainTwo button {
+    position: relative;
+    width: auto;
+    height: auto;
+    padding: 10px;
+    border-radius: 6px;
+    background-color: transparent;
+    color: #313639;
+    border: 1.5px solid #313639;
+    outline: none;
+    font-size: 15px;
+    font-weight: 500;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    white-space: nowrap;
+    background-position: center;
+    transition: background 0.6s;
+}
+
+
+.mainTwo button:hover{
+    background-color: rgba(0, 0, 0, .10);
+}
+
+.mainTwo button:active {
+    transition: background 0s;
+    background-color:rgba(156, 156, 156, 0.07);
+    background-size: 100%;
+}
+
+
+.mainThree {
+    position: relative;
+    width: 100%;
+    height: auto;
+    padding: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.mainThree button {
+    position: relative;
+    width: 100%;
+    height: auto;
+    padding: 10px 20px;
+    border-radius: 6px;
+    background-color: black;
+    color: white;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    font-weight:400;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    background-position: center;
+    transition: background 0.6s;
+}
+
+
+.mainThree button:hover{
+    background-color: #222;
+    background-image: radial-gradient(circle, transparent 1%, #222 1%);
+    background-position: center;
+    background-size: 15000%;
+}
+
+.mainThree button:active {
+    transition: background 0s;
+    background-color:rgba(255, 255, 255, 0.2);
+    background-size: 100%;
+}
+
+
+
+.mainFour {
+    position: relative;
+    width: 100%;
+    height: auto;
+    padding: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.mainFour button {
+    position: relative;
+    width: auto;
+    height: auto;
+    padding: 10px 20px;
+    border-radius: 6px;
+    background-color: black;
+    color: white;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    font-weight: 500;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    background-position: center;
+    transition: background 0.6s;
+}
+
+
+.mainFour button:hover{
+    background-color: #222;
+    background-image: radial-gradient(circle, transparent 1%, #222 1%);
+    background-position: center;
+    background-size: 15000%;
+}
+
+.mainFour button:active {
+    transition: background 0s;
+    background-color:rgba(255, 255, 255, 0.2);
+    background-size: 100%;
+}

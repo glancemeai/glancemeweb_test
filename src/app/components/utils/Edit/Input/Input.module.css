@@ -1,0 +1,683 @@
+.mainInputOne{ 
+    position: relative;
+    width: 100%;
+    height: auto;
+    max-width: 300px;
+    margin-bottom: 5px;
+    display: flex;
+    gap: 5px;
+    flex-direction: column;
+    justify-content: left;
+    align-items: center;
+    overflow: hidden;
+}
+.mainInputOne label{
+    position: relative;
+    width: 100%;
+    height: auto;
+    padding: 5px;
+    font-size: 15px;
+    user-select: none;
+    font-weight: 500;
+}
+.mainInputOne input{
+    position: relative;
+    width: 100%;
+    height: auto;
+    max-width: 300px;
+    padding: 10px 20px;
+    border: none;
+    outline: none;
+    font-size: 15px;
+    font-weight: 450;
+    background-color:  #f5f5f5;
+    border-radius: 6px;
+
+}
+
+/* search */
+.mainSearchInput{ 
+    position: relative;
+    width: 100%;
+    height: auto;
+    max-width: 350px;
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-radius: 6px;
+    overflow: hidden;
+    background-color:  #f5f5f5;
+}
+.mainSearchInput label{
+    position: relative;
+    width: auto;
+    height: auto;
+    padding: 5px 10px;
+    font-size: 15px;
+    user-select: none;
+    font-weight: 500;
+}
+.mainSearchInput input{
+    position: relative;
+    width: 100%;
+    height: auto;
+    padding: 10px 15px;
+    border: none;
+    outline: none;
+    font-size: 15px;
+    font-weight: 450;
+    border-radius: 6px;
+    background-color: transparent;
+}
+/* two */
+.mainInputTwo{ 
+    position: relative;
+    width: 100%;
+    height: auto;
+    margin-bottom: 5px;
+    display: flex;
+    gap: 5px;
+    flex-direction: column;
+    justify-content: left;
+    align-items: center;
+    overflow: hidden;
+}
+.mainInputTwo label{
+    position: relative;
+    width: 100%;
+    height: auto;
+    padding: 5px;
+    font-size: 15px;
+    user-select: none;
+    font-weight: 500;
+}
+.mainInputTwo textarea{
+    position: relative;
+    width: 100%;
+    height: 200px;
+    padding: 20px;
+    border: none;
+    outline: none;
+    font-size: 15px;
+    font-weight: 450;
+    background-color: #f5f5f5;
+    border-radius: 6px;
+    resize: none;
+}
+
+
+/* Three */
+.mainInputThree{ 
+    position: relative;
+    width: 100%;
+    height: auto;
+    margin-bottom: 5px;
+    display: flex;
+    gap: 5px;
+    flex-direction: column;
+    justify-content: left;
+    overflow: visible;
+}
+.mainInputThree label{
+    position: relative;
+    width: 100%;
+    height: auto;
+    padding: 5px;
+    font-size: 15px;
+    user-select: none;
+    font-weight: 500;
+}
+
+.mainInputThreeData {
+    position: relative;
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+}
+.mainInputThreeData p{
+    position: relative;
+    width: fit-content;
+    height: auto;
+    padding: 5px 10px;
+    margin: 5px;
+    border-radius: 4px;
+    display: flex;
+    gap: 10px;
+    word-break: break-all;
+    justify-content: center;
+    align-items: center;
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+    user-select: none;
+    cursor: default;
+}
+.mainInputThreeData p:hover{
+    background-color:#f3f3f3;
+}
+.mainInputThreeData p span{
+    line-height: 0px;
+    padding: 4px;
+    background: #eee;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.mainInputThreeInput {
+    position: relative;
+    width: 100%;
+    height: auto;
+    max-width: 300px;
+}
+
+.mainInputThreeInput input{
+    position: relative;
+    width: 100%;
+    height: auto;
+    max-width: 300px;
+    padding: 10px 20px;
+    border: none;
+    outline: none;
+    font-size: 15px;
+    font-weight: 450;
+    background-color:  #f5f5f5;
+    border-radius: 6px;
+}
+
+
+/* suggestion */
+.mainInputThreeInputSuggestion {
+    position: absolute;
+    top: 100%;
+    left: 0px;
+    width: 100%;
+    height: auto;
+    max-height: 250px;
+    background: white;
+    border-radius: 4px;
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+    z-index: 50;
+    overflow-y: auto;  
+    display: none; 
+}
+.mainInputThreeInputSuggestion::-webkit-scrollbar {
+    width: 4px;
+    background-color: transparent;
+}
+.mainInputThreeInputSuggestion::-webkit-scrollbar-thumb {
+    width: 3px;
+    background-color: #eee;
+    border-radius: 10px;
+}
+.mainInputThreeInputSuggestionClose {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100vw;
+    height: 100vh;
+}
+.mainInputThreeInputSuggestionHolderHeading {
+    position: relative;
+    width: 100%;
+    padding: 10px;
+    height: auto;
+    border-bottom: 1px solid #eee;
+}
+
+.mainInputThreeInputSuggestionHolderHeading h3{
+    position: relative;
+    font-size: 15px;
+    font-weight: 450;
+    color: #444;
+}
+
+.mainInputThreeInputSuggestionHolderData {
+    position: relative;
+    width: 100%;
+    height: auto;
+    padding: 10px;
+    display: flex;
+    gap: 5px;
+    flex-direction: column;
+    justify-content: left;
+}
+.mainInputThreeInputSuggestionHolderData p{
+    position: relative;
+    width: 100%;
+    height: auto;
+    padding: 10px 15px;
+    font-size: 14px;
+    font-weight: 450;
+    border-radius: 6px;
+    color: #444;
+    user-select: none;
+    cursor: pointer;
+}
+.mainInputThreeInputSuggestionHolderData p:hover{
+    background-color: #fbfbfb;
+}
+
+
+/* four */
+
+.mainInputFour{ 
+    position: relative;
+    width: 100%;
+    height: auto;
+    margin-bottom: 5px;
+    display: flex;
+    gap: 5px;
+    flex-direction: column;
+    justify-content: left;
+    overflow: hidden;
+}
+.mainInputFour label{
+    position: relative;
+    width: 100%;
+    height: auto;
+    padding: 5px;
+    font-size: 15px;
+    font-weight: 500;
+    user-select: none;
+}
+.mainInputFourHolder {
+    position: relative;
+    width: 100%;
+    height: auto;
+    padding: 5px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: left;
+    align-items: center;
+}
+.mainInputFourItem {
+    position: relative;
+    width: fit-content;
+    height: auto;
+    padding: 5px 10px;
+    margin: 0px 5px;
+    border-radius: 6px;
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+    align-items: center;
+    background-color: #f5f5f5;
+}
+.mainInputFourItem input{
+    position: relative;
+    width: 20px;
+    height: 20px;
+}
+.mainInputFourItem label{
+    font-size: 14px;
+    font-weight: 450;
+    cursor: pointer;
+    user-select: none;
+}
+
+
+
+
+
+/* Five */
+
+.mainInputFive{ 
+    position: relative;
+    width: 100%;
+    height: auto;
+    margin-bottom: 5px;
+    display: flex;
+    gap: 5px;
+    flex-direction: column;
+    justify-content: left;
+    overflow: hidden;
+}
+.mainInputFive label{
+    position: relative;
+    width: 100%;
+    height: auto;
+    padding: 5px;
+    font-size: 15px;
+    font-weight: 500;
+    user-select: none;
+}
+.mainInputFiveHolder {
+    position: relative;
+    width: 100%;
+    height: auto;
+    padding: 5px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: left;
+    align-items: center;
+}
+.mainInputFiveItem {
+    position: relative;
+    width: fit-content;
+    height: auto;
+    padding: 5px 10px;
+    margin: 0px 5px;
+    border-radius: 6px;
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+    align-items: center;
+    background-color: #f5f5f5;
+}
+.mainInputFiveItem input{
+    position: relative;
+    width: 20px;
+    height: 20px;
+}
+.mainInputFiveItem label{
+    font-size: 14px;
+    font-weight: 450;
+    cursor: pointer;
+    user-select: none;
+}
+
+/* six */
+.mainInputSix{ 
+    position: relative;
+    width: 100%;
+    height: auto;
+    max-width: 300px;
+    margin-bottom: 5px;
+    display: flex;
+    gap: 5px;
+    flex-direction: column;
+    justify-content: left;
+    align-items: center;
+    overflow: hidden;
+}
+.mainInputSix label{
+    position: relative;
+    width: 100%;
+    height: auto;
+    padding: 5px;
+    font-size: 15px;
+    user-select: none;
+    font-weight: 500;
+}
+.mainInputSix input{
+    position: relative;
+    width: 100%;
+    height: auto;
+    max-width: 300px;
+    padding: 10px 20px;
+    border: none;
+    outline: none;
+    font-size: 15px;
+    font-weight: 450;
+    background-color:  #f5f5f5;
+    border-radius: 6px;
+
+}
+
+
+
+
+/* Seven */
+.mainInputSeven{ 
+    position: relative;
+    width: 100%;
+    height: auto;
+    max-width: 300px;
+    margin-bottom: 5px;
+    display: flex;
+    gap: 5px;
+    flex-direction: column;
+    justify-content: left;
+    overflow: visible;
+}
+.mainInputSeven label{
+    position: relative;
+    width: 100%;
+    height: auto;
+    padding: 5px;
+    font-size: 15px;
+    user-select: none;
+    font-weight: 500;
+}
+
+.mainInputSevenInput {
+    position: relative;
+    width: 100%;
+    height: auto;
+    max-width: 300px;
+}
+
+.mainInputSevenInput input{
+    position: relative;
+    width: 100%;
+    height: auto;
+    max-width: 300px;
+    padding: 10px 20px;
+    border: none;
+    outline: none;
+    font-size: 15px;
+    font-weight: 450;
+    background-color:  #f5f5f5;
+    border-radius: 6px;
+}
+
+
+/* suggestion */
+.mainInputSevenInputSuggestion {
+    position: absolute;
+    bottom: 100%;
+    left: 0px;
+    width: 100%;
+    height: auto;
+    max-height: 250px;
+    background: white;
+    border-radius: 4px;
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+    z-index: 50;
+    overflow-y: auto;
+    display: none;  
+}
+.mainInputSevenInputSuggestion::-webkit-scrollbar {
+    width: 4px;
+    background-color: transparent;
+}
+.mainInputSevenInputSuggestion::-webkit-scrollbar-thumb {
+    width: 3px;
+    background-color: #eee;
+    border-radius: 10px;
+}
+.mainInputSevenInputSuggestionClose {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100vw;
+    height: 100vh;
+}
+.mainInputSevenInputSuggestionHolderHeading {
+    position: relative;
+    width: 100%;
+    padding: 10px;
+    height: auto;
+    border-bottom: 1px solid #eee;
+}
+
+.mainInputSevenInputSuggestionHolderHeading h3{
+    position: relative;
+    font-size: 15px;
+    font-weight: 450;
+    color: #444;
+}
+
+.mainInputSevenInputSuggestionHolderData {
+    position: relative;
+    width: 100%;
+    height: auto;
+    padding: 10px;
+    display: flex;
+    gap: 5px;
+    flex-direction: column;
+    justify-content: left;
+}
+.mainInputSevenInputSuggestionHolderData p{
+    position: relative;
+    width: 100%;
+    height: auto;
+    padding: 10px 15px;
+    font-size: 14px;
+    font-weight: 450;
+    border-radius: 6px;
+    color: #444;
+    user-select: none;
+    cursor: pointer;
+}
+.mainInputSevenInputSuggestionHolderData p:hover{
+    background-color: #fbfbfb;
+}
+
+
+
+/* eight */
+
+
+.mainEightInput {
+    position: relative;
+    width: 100%;
+    height: auto;
+    padding: 10px;
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.mainEightInputField {
+    position: relative;
+    width: 100%;
+    height: auto;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.mainEightInputField input {
+    position: relative;
+    width: 100%;
+    height: auto;
+    padding: 10px 0px;
+    border: none;
+    outline: none;
+    background-color: transparent;
+}
+
+.mainEightInputField p {
+    position: relative;
+    width: auto;
+    height: auto;
+    padding: 10px 20px;
+}
+
+/* nine */
+.mainInputNine{ 
+    position: relative;
+    width: 100%;
+    height: auto;
+    margin-bottom: 5px;
+    display: flex;
+    gap: 5px;
+    flex-direction: column;
+    justify-content: left;
+    align-items: center;
+    overflow: hidden;
+}
+.mainInputNine label{
+    position: relative;
+    width: 100%;
+    height: auto;
+    padding: 5px;
+    font-size: 15px;
+    user-select: none;
+    font-weight: 500;
+}
+.mainInputNine input{
+    position: relative;
+    width: 100%;
+    height: auto;
+    padding: 10px 20px;
+    border: none;
+    outline: none;
+    font-size: 15px;
+    font-weight: 450;
+    background-color:  #f5f5f5;
+    border-radius: 6px;
+
+}
+
+
+
+
+/* ten */
+
+.mainInputTen {
+    position: relative;
+    width: 100%;
+    height: auto;
+    background-color: #eeeeee53;
+    border-radius: 8px;
+    overflow: visible;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.mainInputTen input {
+    position: relative;
+    width: 100%;
+    height: auto;
+    padding: 10px 0px;
+    border: none;
+    outline: none;
+    background-color: transparent;
+}
+
+.mainInputTen p {
+    position: relative;
+    width: auto;
+    height: auto;
+    padding: 10px 20px;
+}
+
+.mainInputTenEmojie {
+    position: absolute;
+    top: -100%;
+    left: 0px;
+    width: auto;
+    height: auto;
+    max-width: 350px;
+    max-height: 450px;
+    padding: 5px;
+    overflow-y: auto;
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    border: 1px solid black;
+    background-color: white;
+    z-index: 9999999999;
+}
+.mainInputTenEmojie p{
+    position: relative;
+    font-size: 20px;
+}
+.mainInputTenEmojiClose {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100vw;
+    height: 100vh;
+}
