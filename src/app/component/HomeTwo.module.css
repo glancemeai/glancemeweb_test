@@ -1,0 +1,116 @@
+.main {
+  position: relative;
+  width: 100%;
+  height: auto;
+  padding: 40px 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+}
+
+.mainHolder {
+  position: relative;
+  width: 100%;
+  height: auto;
+  padding: 10px;
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.mainHolderItem {
+  position: relative;
+  width: 100%;
+  max-width: 350px;
+  height: 350px;
+  border-radius: 4px;
+}
+
+.mainHolderItem::before {
+  content: "";
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 100%;
+  height: 100%;
+  border-radius: 4px;
+  background-color: #444;
+  transition: 0.3s all ease-in;
+}
+.mainHolderItem:hover::before{
+  background-color: #222;
+}
+
+.mainHolderItem:hover{
+  transform: scale(1.08);
+  transition: 0.2s all ease-out;
+}
+
+.mainHolderItemContainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+  display: flex;
+  gap: 20px;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
+  border-radius: 4px;
+  background-color: white;
+}
+
+.mainHolderItemContainerHeading {
+  position: relative;
+  width: 100%;
+  height: auto;
+}
+
+.mainHolderItemContainerHeading h3 {
+  font-size: 25px;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.mainHolderItemContainerPara {
+  position: relative;
+  width: 100%;
+  height: auto;
+}
+
+.mainHolderItemContainerPara p {
+  font-size: 17px;
+  font-weight: 400;
+  word-spacing: 2px;
+  line-height: 22px;
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  .main {
+    padding: 20px;
+  }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+    
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+.mainHolderItem {
+    width: 30%;
+}
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+}

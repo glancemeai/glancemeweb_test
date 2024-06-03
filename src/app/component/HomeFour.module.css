@@ -1,0 +1,104 @@
+.mainThree {
+    position: relative;
+    width: 100%;
+    height: auto;
+    padding: 20px;
+    background-color: white;
+}
+.mainHolderThree {
+    position: relative;
+    width: 80%;
+    height: auto;
+    margin: 10px auto;
+    padding: 10px;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+.mainThreeHeading {
+    position: relative;
+    width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.mainThreeHeading h3{
+    position: relative;
+    width: auto;
+    height: auto;
+    font-size: 30px;
+    font-weight: 500;
+}
+
+
+.card {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+    cursor: pointer;
+}
+.card:hover{
+    border-bottom: 5px solid #65c28c;
+    transform: scale(1.05);
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+}
+.cardImage {
+    position: relative;
+    width: auto;
+    height: auto;
+    padding: 10px;
+}
+.cardImage p{
+    position: relative;
+    width: auto;
+    height: auto;
+    padding: 20px;
+    font-size: 40px;
+    line-height: 0px;
+    border-radius: 50%;
+    background-color: #f2f7f9;
+    color: #79ca9b;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.cardDetails {
+    position: relative;
+    width: 100%;
+    height: auto;
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.cardDetails p{
+    position: relative;
+    width: auto;
+    height: auto;
+    font-size: 20px;
+    font-weight: 500;
+    color: #444;
+}
+
+.cardDetails span{
+    position: relative;
+    width: 80%;
+    height: auto;
+    font-size: 14px;
+    font-weight: 450;
+    color: #777;
+    text-align: center;
+}

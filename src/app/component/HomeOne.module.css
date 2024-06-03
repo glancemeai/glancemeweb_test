@@ -1,0 +1,700 @@
+.main {
+  position: relative;
+  width: 100%;
+  height: auto;
+  background: #aae2cb;
+}
+.mainHeader {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: auto;
+  min-height: 60px;
+  padding: 0px 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.562);
+  backdrop-filter: blur(10px);
+  z-index: 99999;
+}
+
+.mainHeaderHolder {
+  position: relative;
+  width: 95%;
+  height: 100%;
+  padding: 0px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.mainHeaderItem {
+  position: relative;
+  width: auto;
+  height: 100%;
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px;
+}
+
+.mainHeaderItem h1 {
+  position: relative;
+  width: auto;
+  height: auto;
+  font-size: 25px;
+  font-weight: 500;
+}
+
+.mainHeaderItem p {
+  position: relative;
+  font-size: 17px;
+  font-weight: 400;
+  padding: 15px 15px;
+  cursor: pointer;
+}
+.mainHeaderItem p::after {
+  content: "";
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: auto;
+  height: auto;
+  padding: 2.5px;
+  border-radius: 50%;
+  background: #444;
+  display: none;
+}
+.mainHeaderItem p:hover::after {
+  display: block;
+}
+.mainHeaderItem button {
+  position: relative;
+  width: auto;
+  height: 100%;
+  padding: 15px 25px;
+  border: none;
+  outline: none;
+  color: white;
+  font-size: 17px;
+  background-color: black;
+}
+
+.mainOne {
+  position: relative;
+  width: 100%;
+  height: auto;
+  padding: 20px;
+  margin-top: 60px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  border-top: 2px solid black;
+  background-image: url("/images/home/rect.png");
+}
+.mainOneItem {
+  position: relative;
+  width: 50%;
+  height: auto;
+  padding: 20px;
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.mainOneItemOne {
+  position: relative;
+  width: 90%;
+  height: auto;
+  display: flex;
+  gap: 20px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.mainOneItemOne h2 {
+  font-size: 55px;
+  font-weight: 600;
+  color: #111;
+  text-transform: capitalize;
+}
+.mainOneItemOne p {
+  font-size: 15px;
+  word-spacing: 10px;
+  font-weight: 500;
+  color: #333;
+}
+.mainOneItemtwo {
+  position: relative;
+  width: 90%;
+  height: auto;
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  justify-content: left;
+  align-items: center;
+}
+.mainOneItemtwoSubItemButton {
+  position: relative;
+  width: auto;
+  height: auto;
+}
+
+.mainOneItemtwoSubItemButton::after {
+  content: "";
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 100%;
+  height: 100%;
+  border-radius: 4px;
+  background: #e7d269;
+  border: 2px solid black;
+}
+
+.mainOneItemtwoSubItemButton button {
+  position: relative;
+  width: auto;
+  height: auto;
+  padding: 15px 35px;
+  background-color: black;
+  border: none;
+  outline: none;
+  color: white;
+  border-radius: 4px;
+  font-size: 17px;
+  z-index: 2;
+}
+
+.mainOneItemtwoSubItem {
+  position: relative;
+  width: auto;
+  height: auto;
+  padding: 5px;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
+.mainOneItemtwoSubItemOne {
+  position: relative;
+  width: auto;
+  height: auto;
+  padding: 10px;
+  border-radius: 50%;
+  border: 3px solid black;
+  background: white;
+  line-height: 0px;
+}
+
+.mainOneItemtwoSubItem p {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.mainOneItemtwoSubItem p:hover {
+  text-decoration: underline;
+}
+
+.mainArrowOne {
+  position: absolute;
+  bottom: -120px;
+  left: 0px;
+  width: 150px;
+  height: 150px;
+  z-index: 9;
+}
+
+.mainArrowTwo {
+  position: absolute;
+  top: 0px;
+  right: 100px;
+  width: 150px;
+  height: 150px;
+}
+
+.mainTwoItemTwo {
+  position: relative;
+  width: 50%;
+  height: auto;
+  height: calc(100vh - 110px);
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mainTwoItemTwoImage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* desing  */
+
+.mainHolderOneContainerTwoDesign {
+  position: absolute;
+  top: 20px;
+  left: -20px;
+  width: auto;
+  height: auto;
+  padding: 10px 20px;
+  border-radius: 5px;
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.089) 0px 1px 2px,
+    rgba(51, 51, 51, 0.701) 0px 0px 0px 2px;
+}
+
+.mainHolderOneContainerTwoDesignItemOne {
+  position: relative;
+  width: auto;
+  height: auto;
+  padding: 10px;
+  line-height: 0px;
+  background-color: #ffeee6;
+  color: #ff966e;
+  border-radius: 5px;
+}
+
+.mainHolderOneContainerTwoDesignItemTwo {
+  position: relative;
+  width: auto;
+  height: auto;
+  font-size: 20px;
+  font-weight: 500;
+  color: #5dbf84;
+}
+
+.mainHolderOneContainerTwoDesignItemTwo span {
+  font-size: 15px;
+  font-weight: 450;
+  color: #333;
+}
+
+.mainHolderOneContainerTwoDesignTwo {
+  position: absolute;
+  bottom: 200px;
+  left: 20%;
+  transform: translateX(-80%);
+  width: fit-content;
+  height: auto;
+  padding: 10px 20px;
+  background-color: rgba(255, 255, 255, 0.59);
+  border-radius: 7px;
+  display: flex;
+  flex-direction: column;
+  backdrop-filter: blur(10px);
+  z-index: 9999;
+}
+
+.mainHolderOneContainerTwoDesignTwoHeading {
+  position: relative;
+  width: auto;
+  height: auto;
+  font-size: 16px;
+  font-weight: 450;
+  color: #333;
+  text-transform: capitalize;
+}
+
+.mainHolderOneContainerTwoDesignTwoContent {
+  position: relative;
+  width: 100%;
+  height: auto;
+  padding: 5px 10px;
+  margin-top: 5px;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+}
+
+.mainHolderOneContainerTwoDesignTwoContent span {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  border-radius: 50%;
+}
+
+.mainHolderOneContainerTwoDesignThree {
+  position: absolute;
+  top: 50%;
+  left: 80%;
+  transform: translateX(-20%);
+  width: 200px;
+  height: auto;
+  padding: 10px 20px;
+  background-color: rgba(255, 255, 255, 0.59);
+  border-radius: 7px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  backdrop-filter: blur(10px);
+  z-index: 9999;
+}
+
+.mainHolderOneContainerTwoDesignThree p {
+  position: relative;
+  width: auto;
+  height: auto;
+  padding: 5px;
+  font-size: 17px;
+  font-weight: 400;
+  color: #222;
+}
+
+.MoveAnimation {
+  -webkit-animation: mover 1s infinite alternate;
+  animation: mover 1s infinite alternate;
+}
+.MoveAnimation {
+  -webkit-animation: mover 1s infinite alternate;
+  animation: mover 1s infinite alternate;
+}
+@-webkit-keyframes mover {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-10px);
+  }
+}
+@keyframes mover {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-10px);
+  }
+}
+
+.mainDesignTwo {
+  position: absolute;
+  top: 160px;
+  left: -20px;
+  width: 250px;
+  height: 60px;
+  background: white;
+  box-shadow: rgba(0, 0, 0, 0.089) 0px 1px 2px,
+    rgba(51, 51, 51, 0.701) 0px 0px 0px 2px;
+}
+
+.mainDesignThree {
+  position: absolute;
+  top: 60%;
+  left: -20px;
+  transform: translateY(-40%);
+  width: 250px;
+  height: auto;
+  padding: 10px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  background: white;
+  z-index: 9;
+  box-shadow: rgba(0, 0, 0, 0.089) 0px 1px 2px,
+    rgba(51, 51, 51, 0.701) 0px 0px 0px 2px;
+}
+.mainDesignThreeItme {
+  position: relative;
+  width: auto;
+  height: auto;
+}
+
+.mainDesignThreeItme:nth-child(1) {
+  animation: DesignThreeJump ease 0.2s;
+  animation-delay: 0.4s;
+}
+
+.mainDesignThreeItme:nth-child(2) {
+  animation: DesignThreeJump ease 0.2s;
+  animation-delay: 0.6s;
+}
+
+.mainDesignThreeItme:nth-child(3) {
+  animation: DesignThreeJump ease 0.2s;
+  animation-delay: 0.8s;
+}
+
+.mainDesignThreeItme:nth-child(4) {
+  animation: DesignThreeJump ease 0.2s;
+  animation-delay: 1s;
+}
+@keyframes DesignThreeJump {
+  0% {
+    top: 0px;
+  }
+  50% {
+    top: -10px;
+  }
+  100% {
+    top: 0px;
+  }
+}
+
+.mainDesignFour {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  width: 250px;
+  height: auto;
+  padding: 10px;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  background: white;
+  box-shadow: rgba(0, 0, 0, 0.089) 0px 1px 2px,
+    rgba(51, 51, 51, 0.701) 0px 0px 0px 2px;
+}
+
+.mainDesignFourItem {
+  position: relative;
+  width: auto;
+  height: auto;
+  padding: 10px;
+  line-height: 0px;
+  border-radius: 50%;
+  border: 2px solid black;
+}
+
+.mainDesignFour p{
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 20px;
+  text-transform: capitalize;
+}
+
+@media only screen and (max-width: 600px) {
+  .mainHeaderItemTwo {
+    display: none;
+  }
+  .mainHeaderHolder {
+    width: 100%;
+  }
+  .mainHeaderItem h1 {
+    font-size: 23px;
+    font-weight: 400;
+  }
+  .mainHeaderItemThree {
+    display: flex;
+  }
+
+  /* mainOne */
+  .mainOne {
+    flex-direction: column;
+    padding: 20px 4px;
+  }
+  .mainOneItem {
+    width: 100%;
+    padding: 0px;
+  }
+
+  .mainOneItemOne h2 {
+    font-size: 35px;
+  }
+  .mainOneItemtwo {
+    gap: 10px;
+    padding: 5px;
+    justify-content: space-between;
+  }
+  .mainOneItemtwoSubItemButton button {
+    padding: 15px 20px;
+    font-size: 15px;
+  }
+  .mainOneItemtwoSubItem {
+    gap: 5px;
+    padding: 0px;
+  }
+  .mainOneItemtwoSubItemOne {
+    padding: 10px;
+  }
+  .mainTwoItemTwo {
+    width: 100%;
+    height: auto;
+  }
+
+  .mainTwoItemTwoImage {
+    position: relative;
+    width: 330px;
+    height: 400px;
+    margin-top: 80px;
+  }
+
+  /* design */
+  .mainHolderOneContainerTwoDesign {
+    top: 30px;
+    left: 10px;
+    padding: 5px;
+    z-index: 2;
+    box-shadow: none;
+    border: 1px solid black;
+  }
+  .mainHolderOneContainerTwoDesign {
+    display: none;
+  }
+  .mainArrowTwo {
+    right: 0px;
+  }
+  .mainDesignThree {
+    top: 100px;
+    transform: none; 
+  }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+  .mainHeaderItemTwo {
+    display: none;
+  }
+
+  .mainHeaderHolder {
+    width: 100%;
+  }
+  .mainHeaderItem h1 {
+    font-size: 23px;
+    font-weight: 400;
+  }
+  .mainHeaderItemThree {
+    display: flex;
+  }
+
+  .mainOneItemtwo {
+    gap: 10px;
+    padding: 5px;
+    justify-content: space-between;
+  }
+
+  .mainOneItemtwoSubItemButton button {
+    padding: 15px 20px;
+    font-size: 15px;
+  }
+  .mainOneItemtwoSubItem {
+    gap: 5px;
+    padding: 0px;
+  }
+  .mainOneItemOne h2 {
+    font-size: 25px;
+  }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  .mainHeaderItemTwo {
+    display: flex;
+  }
+  .mainHeaderHolder {
+    width: 95%;
+  }
+  .mainHeaderItem h1 {
+    font-size: 25px;
+    font-weight: 500;
+  }
+  .mainHeaderItemThree {
+    display: none;
+  }
+  .mainOneItemtwo {
+    gap: 15px;
+    padding: 5px;
+    justify-content: left;
+  }
+
+  .mainOneItemtwoSubItemButton button {
+    padding: 15px 30px;
+    font-size: 15px;
+  }
+  .mainOneItemtwoSubItem {
+    gap: 5px;
+    padding: 0px;
+  }
+  .mainOneItemOne h2 {
+    font-size: 40px;
+  }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+  .mainHeaderItemTwo {
+    display: flex;
+  }
+  .mainHeaderHolder {
+    width: 95%;
+  }
+  .mainHeaderItem h1 {
+    font-size: 25px;
+    font-weight: 500;
+  }
+  .mainHeaderItemThree {
+    display: none;
+  }
+  .mainOneItemtwo {
+    gap: 20px;
+    padding: 5px;
+    justify-content: left;
+  }
+
+  .mainOneItemtwoSubItemButton button {
+    padding: 15px 35px;
+    font-size: 15px;
+  }
+  .mainOneItemtwoSubItem {
+    gap: 5px;
+    padding: 0px;
+  }
+  .mainOneItemOne h2 {
+    font-size: 50px;
+  }
+}
+
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+  .mainHeaderItemTwo {
+    display: flex;
+  }
+  .mainHeaderHolder {
+    width: 95%;
+  }
+  .mainHeaderItem h1 {
+    font-size: 25px;
+    font-weight: 500;
+  }
+  .mainHeaderItemThree {
+    display: none;
+  }
+  .mainOneItemtwo {
+    gap: 20px;
+    padding: 5px;
+    justify-content: left;
+  }
+
+  .mainOneItemtwoSubItemButton button {
+    padding: 15px 35px;
+    font-size: 15px;
+  }
+  .mainOneItemtwoSubItem {
+    gap: 5px;
+    padding: 0px;
+  }
+  .mainOneItemOne h2 {
+    font-size: 55px;
+  }
+}
