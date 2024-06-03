@@ -5,3 +5,5 @@ const SupportPage = () => {
         </div>
     )
 }
+
+export default SupportPage
