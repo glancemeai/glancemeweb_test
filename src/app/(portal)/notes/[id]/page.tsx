@@ -1,16 +1,14 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 import style from "./notes.module.css"
-import Header from '../../component/header/header'
 import DashboardLeft from '../../dashboard/component/left/dashboardLeft'
 import Intro from '../../dashboard/component/intro/intro'
 import Note from './component/note'
 import { useDispatch } from 'react-redux'
 import Apis from '@/app/service/hooks/ApiSlugs'
 import { setAlert } from '@/app/redux/utils/message'
-import SkeletonNotes from './skeleton'
 
-export default function SingleNote({searchParams}:any) {
+export default function SingleNote() {
     const [userData,setUserData] = useState<any>()
     const [userLoading,setUserLoading] = useState(true)
     const disptach = useDispatch()
@@ -54,7 +52,7 @@ export default function SingleNote({searchParams}:any) {
                 </div>
                 <div className={style.mainHolderTwo}>
                     {/* {notesLoading ? <SkeletonNotes/> :<Note url={searchParams?.url} data={notesData?.data}/> } */}
-                    <Note url={searchParams?.url} />
+                    <Note />
                 </div>
             </div>
         </div>

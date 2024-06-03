@@ -12,6 +12,7 @@ import { useDispatch } from 'react-redux'
 import { setAlert } from '@/app/redux/utils/message'
 import { IoMdClose } from 'react-icons/io'
 import SkeletonNotes from '../skeleton'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 
 
 
@@ -87,7 +88,8 @@ const EditNotes = (props: any) => {
 
 export default function Note(props: any) {
     const disptach = useDispatch()
-
+    const path = usePathname()
+    const search = useSearchParams()
     const Dates = (time: any) => {
         const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
         const d = new Date(time);
@@ -133,12 +135,12 @@ export default function Note(props: any) {
         })
     }
 
-
+    const [url, setUrl] = useState("")
     const NotesDelete = async (token: string) => {
         const apis = Apis()
 
         await apis.DeleteNotes({ notes_token: token }).then(data => {
-            NotesHandler(props?.url)
+            NotesHandler(url)
             disptach(setAlert({ data: { message: "Deleted successfully", show: true, type: "info" } }))
             setNotesLoading(false)
         }).catch((error) => {
@@ -147,8 +149,17 @@ export default function Note(props: any) {
         })
     }
     useEffect(() => {
-        NotesHandler(props?.url)
-    }, [props?.url])
+        const currentUrl = window.location.href;
+        
+        let newUrl = currentUrl;
+        if (currentUrl.includes('https://devtool-eta.vercel.app/notes/roten.x?url=')) {
+            newUrl = currentUrl.replace('https://devtool-eta.vercel.app/notes/roten.x?url=', '');
+        } else if (currentUrl.includes('http://localhost:3000/notes/roten.x?url=')) {
+            newUrl = currentUrl.replace('http://localhost:3000/notes/roten.x?url=', '');
+        }
+        setUrl(newUrl)
+        NotesHandler(newUrl)
+    }, [])
     return (
         <>
             {notesLoading ? <SkeletonNotes /> : (
@@ -189,11 +200,11 @@ export default function Note(props: any) {
 
                                         </div>
                                         <div className={style.mainHolderTwoDetailBg} style={{ background: `${val?.color}` }}></div>
-                                        {notesData?.data[0]?.data[0]?.image == val?.image ? "" : 
-                                        <div className={style.mainHolderOneImage}>
-                                            <Image src={val?.image ? val?.image : "/images/rotenx.png"} alt='user' fill style={{ objectFit: "contain" }} />
-                                        </div>}
-                                        <p style={{ borderLeft: ` 4px solid ${val?.color}` }}><b>{val?.title}</b> 
+                                        {notesData?.data[0]?.data[0]?.image == val?.image ? "" :
+                                            <div className={style.mainHolderOneImage}>
+                                                <Image src={val?.image ? val?.image : "/images/rotenx.png"} alt='user' fill style={{ objectFit: "contain" }} />
+                                            </div>}
+                                        <p style={{ borderLeft: ` 4px solid ${val?.color}` }}><b>{val?.title}</b>
                                             {val?.description ? <br /> : ""}
                                             {val?.description ? <br /> : ""}
                                             {val?.description}
@@ -209,7 +220,7 @@ export default function Note(props: any) {
                             })}
                         </div>
                     </div>
-                    <EditNotes show={editShow} color={editColor} desc={editDesc} close={editShowHandler} notes_token={noteToken} dataReload={() => { NotesHandler(props?.url) }} />
+                    <EditNotes show={editShow} color={editColor} desc={editDesc} close={editShowHandler} notes_token={noteToken} dataReload={() => { NotesHandler(url) }} />
                 </div>
             )}
         </>
