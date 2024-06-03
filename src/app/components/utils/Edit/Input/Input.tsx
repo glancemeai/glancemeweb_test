@@ -3,11 +3,11 @@ import { AiOutlineClose } from "react-icons/ai"
 import { BsSearch, BsSend, BsEmojiSmile } from "react-icons/bs"
 import Image from "next/image"
 
-export function InputTwo() {
+export function InputTwo(props:any) {
     return (
         <div className={styles.mainInputTwo}>
-            <label >About Yourself</label>
-            <textarea placeholder="Tell me something about you..." />
+            <label >{props?.name ?? "About Yourself"}</label>
+            <textarea placeholder={props?.placeholder ?? "About Yourself"} />
         </div>
     )
 }

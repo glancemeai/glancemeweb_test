@@ -21,7 +21,7 @@ export function ButtonThree(props:any) {
   
   return (
     <div className={styles.mainThree} >
-      <button title={props?.name} onClick={() => {props?.onClick ? props?.onClick() : ""}}>{props?.name}  {props?.load ? <span><FiLoader/></span> : <span>{props?.icon ? props?.icon : <BsArrowRight/>}</span>} </button>
+      <button title={props?.name} onClick={props?.onClick ? props?.onClick() : "" }>{props?.name}  {props?.load ? <span><FiLoader/></span> : <span>{props?.icon ? props?.icon : <BsArrowRight/>}</span>} </button>
     </div>
   )
 }

@@ -1,0 +1,23 @@
+.main {
+    position: relative;
+    width: 100%;
+    height: auto;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.mainHolder {
+    position: relative;
+    width: 100%;
+    max-width: 450px;
+    height: auto;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: white;
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+    
+}
