@@ -16,6 +16,8 @@ const SupportPage = () => {
                     <ButtonThree name={"Send Query"}/>
                 </div>
             </div>
+
+            
         </div>
     )
 }
