@@ -25,7 +25,6 @@ export default function LoginContainer() {
     }
     const [loginCall, setLoginCall] = useState(false)
     const Login = async () => {
-
         if (email == "" || password == "") {
             dispatch(setAlert({ data: { message: "email or password is empty", show: true, type: "error" } }))
         } else {
