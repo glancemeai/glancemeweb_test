@@ -33,6 +33,7 @@ export default function Dashboard() {
 
     useEffect(() => {
         userDetails()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     return (<>
         <div className={style.main}>

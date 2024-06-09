@@ -1,3 +1,4 @@
+'use client'
 import styles from "./Buttons.module.css"
 import {BsArrowRight, BsSave} from "react-icons/bs"
 import { FiLoader } from "react-icons/fi";

@@ -52,6 +52,7 @@ export default function Alert() {
   };
   useEffect(() => {
     handler();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
  
   return (

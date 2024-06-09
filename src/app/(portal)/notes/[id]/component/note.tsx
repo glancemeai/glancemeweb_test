@@ -51,6 +51,7 @@ const EditNotes = (props: any) => {
     }
     useEffect(() => {
         update()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props?.color])
     return (
         <div className={style.mainEditNotes} style={{ display: `${props?.show ? "block" : "none"}` }}>
@@ -159,6 +160,7 @@ export default function Note(props: any) {
         }
         setUrl(newUrl)
         NotesHandler(newUrl)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     return (
         <>
