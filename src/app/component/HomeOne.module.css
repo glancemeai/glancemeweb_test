@@ -171,7 +171,8 @@
   color: white;
   border-radius: 4px;
   font-size: 17px;
-  z-index: 2;
+  z-index: 99;
+  cursor: pointer;
 }
 
 .mainOneItemtwoSubItem {
