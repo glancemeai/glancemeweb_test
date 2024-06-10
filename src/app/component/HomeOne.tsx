@@ -56,9 +56,9 @@ const HomeOneMain = () => {
           </p>
         </div>
         <div className={style.mainOneItemtwo}>
-          <Link href={"https://chromewebstore.google.com/detail/rotenx-devtool/jcfiajnlfhplglbcpegfebokhhpladne"} passHref target="_blank"><div className={style.mainOneItemtwoSubItemButton}>
-            <button>Add To Chrome</button>
-          </div></Link>
+          <div className={style.mainOneItemtwoSubItemButton}>
+          <Link href={"https://chromewebstore.google.com/detail/rotenx-devtool/jcfiajnlfhplglbcpegfebokhhpladne"} passHref target="_blank"><button>Add To Chrome</button></Link>
+          </div>
           <div className={style.mainOneItemtwoSubItem}>
             <div className={style.mainOneItemtwoSubItemOne}>
               <BsFillPlayFill size={20} />
