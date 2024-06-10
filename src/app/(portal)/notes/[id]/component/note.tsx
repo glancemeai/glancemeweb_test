@@ -89,6 +89,7 @@ const EditNotes = (props: any) => {
 
 export default function Note(props: any) {
     const disptach = useDispatch()
+    const router = useRouter()
     const path = usePathname()
     const search = useSearchParams()
     const Dates = (time: any) => {
@@ -121,14 +122,18 @@ export default function Note(props: any) {
         }
     }
 
-    const [notesData, setNotesData] = useState<any>()
+    const [notesData, setNotesData] = useState<any>([])
     const [notesLoading, setNotesLoading] = useState(true)
 
     const NotesHandler = async (url: string) => {
         const apis = Apis()
         await apis.SingleNotes({ urlCode: url }).then(data => {
             setNotesData(data)
-
+            
+            if(data.data.length <= 0){
+                router.push("/dashboard")
+                disptach(setAlert({data:{message:"Notes not fount",show:true,type:"error"}}))
+            }
             setNotesLoading(false)
         }).catch((error) => {
             setNotesLoading(false)
@@ -185,8 +190,8 @@ export default function Note(props: any) {
                                 <a href={`${notesData?.data[0]?.data[0]?.type == "Youtube" ? `https://youtube.com/watch?v=${notesData?.data[0]?._id}` : notesData?.data[0]?._id}`} target="_blank" rel="noopener noreferrer"><p>{notesData?.data[0]?.data[0]?.type == "Youtube" ? `https://youtube.com/watch?v=${notesData?.data[0]?._id}` : notesData?.data[0]?._id} <BiLinkExternal /> </p></a>
                             </div>
                             {notesData?.data[0]?.data?.map((val: any, index: number) => {
-                                return (<>
-                                    <div className={style.mainHolderTwoDetail}>
+                                return (
+                                    <div className={style.mainHolderTwoDetail} key={index}>
                                         <div className={style.mainHolderTwoMenu} >
                                             <div className={style.mainHolderTwoMenuBar} >
                                                 <CiMenuKebab />
@@ -217,7 +222,7 @@ export default function Note(props: any) {
                                             <span>{Dates(val.time)}</span>
                                         </div>
                                     </div>
-                                </>
+                                
                                 )
                             })}
                         </div>

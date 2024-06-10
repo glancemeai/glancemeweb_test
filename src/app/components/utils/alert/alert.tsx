@@ -44,6 +44,19 @@ export default function Alert() {
       }, 2000);
       return () => clearTimeout(timeoutId);
     }
+
+    if (data.type == "info") {
+      setDetails({
+        color: "#111",
+        bgcolor: "#f4f4f4",
+        border: "#741d1d",
+        icon: <IoIosCloseCircleOutline size={20} />,
+      });
+      const timeoutId = setTimeout(() => {
+        showHandler();
+      }, 2000);
+      return () => clearTimeout(timeoutId);
+    }
   };
 
   const showHandler = () => {

@@ -1,13 +1,14 @@
 import React from 'react'
 import style from "./Header.module.css"
 import { BsGithub, BsLinkedin, BsTwitter } from 'react-icons/bs'
+import Link from 'next/link'
 export default function Header() {
     return (
         <>
         <div className={style.main}>
             <div className={style.mainHolder}>
                 <div className={style.mainHolderOne}>
-                    <h1>Roten.X DevTool</h1>
+                    <Link href={"/"} passHref><h1>Roten.X DevTool</h1></Link>
                 </div>
                 <div className={style.mainHolderTwo}>
                     <a href="https://github.com/rotenx/devTool" target="_blank" rel="noopener noreferrer"><p><BsGithub size={22}/></p></a>

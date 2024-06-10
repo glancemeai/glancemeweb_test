@@ -9,30 +9,36 @@ import Apis from '@/app/service/hooks/ApiSlugs'
 import { setAlert } from '@/app/redux/utils/message'
 
 export default function SingleNote() {
-    const [userData,setUserData] = useState<any>()
-    const [userLoading,setUserLoading] = useState(true)
+    const [userData, setUserData] = useState<any>()
+    const [userLoading, setUserLoading] = useState(true)
     const disptach = useDispatch()
 
-    const UserHandler = async() => {
+    const UserHandler = async () => {
         const apis = Apis()
         await apis.UserDetails("details").then(data => {
-            setUserData(data)
-            setUserLoading(false)
+            if (data.status == 200) {
+                setUserData(data)
+                setUserLoading(false)
+            } else {
+                window.location.href = "/login"
+                setUserLoading(false)
+                disptach(setAlert({ data: { message: data.message, show: true, type: "error" } }))
+            }
         }).catch((error) => {
             setUserLoading(false)
-            disptach(setAlert({data:{message:error.message,show:true,type:"error"}}))
+            disptach(setAlert({ data: { message: error.message, show: true, type: "error" } }))
         })
     }
 
     // const [notesData,setNotesData] = useState<any>()
     // const [notesLoading,setNotesLoading] = useState(true)
-    
+
     // const NotesHandler = async(url:string) => {
     //     const apis = Apis()
     //     await apis.SingleNotes({urlCode:url}).then(data => {
     //         setNotesData(data)
     //         console.log(data);
-            
+
     //         setNotesLoading(false)
     //     }).catch((error) => {
     //         setNotesLoading(false)
@@ -42,13 +48,14 @@ export default function SingleNote() {
 
     useEffect(() => {
         UserHandler()
-    },[])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
     return (<>
         <div className={style.main}>
             <div className={style.mainHolder}>
                 <div className={style.mainHolderOne}>
-                    <DashboardLeft loading={userLoading} data={userData?.data}/>
-                    <Intro/>
+                    <DashboardLeft loading={userLoading} data={userData?.data} />
+                    <Intro />
                 </div>
                 <div className={style.mainHolderTwo}>
                     {/* {notesLoading ? <SkeletonNotes/> :<Note url={searchParams?.url} data={notesData?.data}/> } */}

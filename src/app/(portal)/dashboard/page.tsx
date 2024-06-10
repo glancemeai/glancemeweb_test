@@ -1,18 +1,12 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import Header from '../component/header/header'
 import style from "./dashboard.module.css"
 import DashboardLeft from './component/left/dashboardLeft'
 import DashboardRight from './component/right/dashboardRight'
 import Intro from './component/intro/intro'
-import { cookies } from 'next/headers';
 import Apis from '@/app/service/hooks/ApiSlugs'
 import { useDispatch } from 'react-redux'
 import { setAlert } from '@/app/redux/utils/message'
-
-
-
-
 
 export default function Dashboard() {
     const [loading,setLoading] = useState(true)
@@ -22,9 +16,17 @@ export default function Dashboard() {
     const userDetails = async () => {
         const apis = Apis()
         await apis.UserDetails("user").then((data) => {
-            setData(data)
-            setLoading(false)
+            if(data.status == 200){
+                setData(data)
+                setLoading(false)
+            }else{
+                window.location.href = "/login"
+                setLoading(false)
+                dispatch(setAlert({data:{message:data.message,show:true,type:"error"}}))
+            }
         }).catch((error) => {
+            console.log(error);
+
             setLoading(false)
             dispatch(setAlert({data:{message:error.message,show:true,type:"error"}}))
         })

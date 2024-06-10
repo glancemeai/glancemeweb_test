@@ -187,6 +187,7 @@
   left: 0px;
   width: 100vw;
   height: 100vh;
+  z-index: 99999999999999 !important;
 }
 
 .mainEditNotesContainer {
@@ -252,4 +253,23 @@
   border: none;
   outline: none;
   resize: none;
+}
+
+@media only screen and (max-width: 600px) {
+  .mainHolder {
+    flex-direction: column;
+  }
+  .mainHolderOne {
+    width: 100%;
+  }
+  .mainHolderTwo {
+    width: 100%;
+  }
+.mainEditNotes {
+  background-color: rgba(0, 0, 0, 0.2);
+
+}
+  .mainEditNotesContainer {
+    width: 95%;
+  }
 }

@@ -10,20 +10,20 @@ function HomeOneHeader() {
     <div className={style.mainHeader}>
       <div className={style.mainHeaderHolder}>
         <div className={style.mainHeaderItem}>
-          <h1>Roten.X DevTool</h1>
+          <Link href={"/"} passHref><h1>Roten.X DevTool</h1></Link>
         </div>
         <div className={`${style.mainHeaderItem} ${style.mainHeaderItemTwo}`}>
-          <Link href={"/dashboard"}>
-            <p>Home</p>
+          <Link href={"/dashboard"} passHref>
+            <p>Dashboard</p>
           </Link>
-          <Link href={"/blog"}>
-            <p>Blog</p>
+          <Link href={"https://chromewebstore.google.com/detail/rotenx-devtool/jcfiajnlfhplglbcpegfebokhhpladne"} passHref target="_blank">
+            <p>Extension</p>
           </Link>
-          <Link href={"/contact"}>
+          <Link href={"/support"} passHref>
             <p>Contact</p>
           </Link>
-          <Link href={"/aboutus"}>
-            <p>About Us</p>
+          <Link href={"/privacy"} passHref>
+            <p>Privacy</p>
           </Link>
         </div>
         <div
@@ -49,14 +49,14 @@ const HomeOneMain = () => {
   return (
     <div className={style.mainOne}>
       <div className={style.mainOneItem}>
-        <div className={style.mainOneItemOne} style={{fontSize:"55px"}}>
+        <div className={style.mainOneItemOne} style={{ fontSize: "55px" }}>
           <h2>DevTool Start Effortless Online Learning And Notes Making!</h2>
           <p>
-          Empower your productivity with DevTool Seamlessly capture notes, highlight key insights in blogs, effortlessly summarize YouTube videos, and engage with AI-driven questions—all to ensure you never miss a beat.
+            Empower your productivity with DevTool Seamlessly capture notes, highlight key insights in blogs, effortlessly summarize YouTube videos, and engage with AI-driven questions—all to ensure you never miss a beat.
           </p>
         </div>
         <div className={style.mainOneItemtwo}>
-        <Link href={"/login"}><div className={style.mainOneItemtwoSubItemButton}>
+          <Link href={"https://chromewebstore.google.com/detail/rotenx-devtool/jcfiajnlfhplglbcpegfebokhhpladne"} passHref target="_blank"><div className={style.mainOneItemtwoSubItemButton}>
             <button>Add To Chrome</button>
           </div></Link>
           <div className={style.mainOneItemtwoSubItem}>

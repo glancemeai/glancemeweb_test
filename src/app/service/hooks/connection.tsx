@@ -8,7 +8,7 @@ const APIClient = async (method: string,
     var headers = new Headers();
     headers.append("Accept", "application/json");
     headers.append("Content-Type", "application/json");
-   
+
     var options: any = {
         method: method,
         withCredentials: true,
@@ -16,18 +16,26 @@ const APIClient = async (method: string,
         headers: headers,
         timeout: 10000,
     };
-    
+
     if (request !== null && !isFormData) {
         options = { ...options, body: JSON.stringify(request) };
     }
     else if (request !== null && isFormData) {
         options = { ...options, body: request };
     }
+    try {
+        const response = await fetch(url, options);
+        const data = await response.json();
+        if (!response.ok) {
+            throw new Error(`${data}`);
+        }
+        return data;
+    } catch (error:any) {
+        return { error: error.message };
+    }
 
-    let Fetchdata: any = await fetch(url, options)
-    
-    let data = await Fetchdata.json()
-    return data;
+
+
 }
 
 export default APIClient

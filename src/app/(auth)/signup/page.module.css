@@ -49,3 +49,19 @@
     width: 250px;
     height: 250px;
 }
+
+
+@media only screen and (max-width: 600px) {
+    .main {
+      height: auto;
+      align-items: flex-start;
+    }
+    .mainOne {
+      width: 95%;
+      align-items: flex-start;
+    }
+    .mainTwo {
+      display: none;
+    }
+  }
+  
