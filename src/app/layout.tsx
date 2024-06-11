@@ -23,10 +23,10 @@ export default function RootLayout({
       </head>
       <body className={inter.className}>
       <Providers>
+        {children}
         <section>
           <Alert />
         </section>
-        {children}
         <Footer/>
         </Providers>
         </body>
