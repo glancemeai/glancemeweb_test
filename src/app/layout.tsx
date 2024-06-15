@@ -4,6 +4,7 @@ import "./globals.css";
 import Alert from "./components/utils/alert/alert";
 import Providers from "./redux/provider/provider";
 import Footer from "./(portal)/component/footer/footer";
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -29,6 +30,7 @@ export default function RootLayout({
         </section>
         <Footer/>
         </Providers>
+        <SpeedInsights />
         </body>
     </html>
   );
