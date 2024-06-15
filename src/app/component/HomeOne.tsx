@@ -63,7 +63,7 @@ const HomeOneMain = () => {
             <div className={style.mainOneItemtwoSubItemOne}>
               <BsFillPlayFill size={20} />
             </div>
-            <p>How It{"'"}s works ??</p>
+            <Link href={"https://www.youtube.com/watch?v=O5S8qUtyuBI"} target="_blank" passHref><p>How It{"'"}s works ??</p></Link>
           </div>
           <div className={style.mainArrowOne}>
             <Image src={"/images/home/arrowone.png"} alt="arrow" fill />

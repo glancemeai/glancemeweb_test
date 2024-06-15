@@ -13,6 +13,7 @@ import { setAlert } from '@/app/redux/utils/message'
 import { IoMdClose } from 'react-icons/io'
 import SkeletonNotes from '../skeleton'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import Preview from '@/app/components/utils/preview/preview'
 
 
 
@@ -154,6 +155,15 @@ export default function Note(props: any) {
             disptach(setAlert({ data: { message: error.message, show: true, type: "error" } }))
         })
     }
+
+    const [prevImage,setPrevImage] = useState("")
+    const [prevDislay,setPrevDislay] = useState(false)
+
+    const prevHandler = (image:string,display:boolean) => {
+        setPrevImage(image)
+        setPrevDislay(display)
+    }
+
     useEffect(() => {
         const currentUrl = window.location.href;
         
@@ -182,8 +192,8 @@ export default function Note(props: any) {
                     <div className={style.mainHolder}>
                         <div className={style.mainHolderOne}>
                             <div className={style.mainHolderOneImage}>
-                                <Image src={notesData?.data[0]?.data[0]?.image ? notesData?.data[0]?.data[0]?.image : "/images/rotenx.png"} alt='user' fill style={{ objectFit: "contain" }} />
-                            </div>
+                                <Image onClick={() =>prevHandler(notesData?.data[0]?.data[0]?.image,true)} src={notesData?.data[0]?.data[0]?.image ? notesData?.data[0]?.data[0]?.image : "/images/rotenx.png"} alt='user' fill style={{ objectFit: "contain" }} />
+                            </div> 
                         </div>
                         <div className={style.mainHolderTwo}>
                             <div className={style.mainHolderTwoDetailLink}>
@@ -209,7 +219,7 @@ export default function Note(props: any) {
                                         <div className={style.mainHolderTwoDetailBg} style={{ background: `${val?.color}` }}></div>
                                         {notesData?.data[0]?.data[0]?.image == val?.image ? "" :
                                             <div className={style.mainHolderOneImage}>
-                                                <Image src={val?.image ? val?.image : "/images/rotenx.png"} alt='user' fill style={{ objectFit: "contain" }} />
+                                                <Image onClick={() =>prevHandler(val?.image,true)} src={val?.image ? val?.image : "/images/rotenx.png"} alt='user' fill style={{ objectFit: "contain" }} />
                                             </div>}
                                         <p style={{ borderLeft: ` 4px solid ${val?.color}` }}><b>{val?.title}</b>
                                             {val?.description ? <br /> : ""}
@@ -227,6 +237,7 @@ export default function Note(props: any) {
                             })}
                         </div>
                     </div>
+                    <Preview image={prevImage} display={prevDislay} onClick={prevHandler}/>
                     <EditNotes show={editShow} color={editColor} desc={editDesc} close={editShowHandler} notes_token={noteToken} dataReload={() => { NotesHandler(url) }} />
                 </div>
             )}
