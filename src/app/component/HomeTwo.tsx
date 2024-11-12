@@ -11,7 +11,7 @@ export default function HomeTwo() {
               <h3>Make Your Notes Online</h3>
             </div>
             <div className={style.mainHolderItemContainerPara}>
-              <p>Transform your note-taking experience with Roten.x DevTool: Craft online notes, highlight crucial points, and add key insights effortlessly, ensuring you never lose context. With DevTool, your important blogs are easily accessible, keeping all your notes conveniently organized in one place.
+              <p>Transform your note-taking experience with Glanceme.Ai: Craft online notes, highlight crucial points, and add key insights effortlessly, ensuring you never lose context. With DevTool, your important blogs are easily accessible, keeping all your notes conveniently organized in one place.
               </p>
             </div>
           </div>
@@ -23,7 +23,7 @@ export default function HomeTwo() {
             </div>
             <div className={style.mainHolderItemContainerPara}>
               <p>
-              Discover a new dimension of understanding with Roten.x DevTool: Generate concise summaries of YouTube videos, providing enhanced context to deepen your comprehension and enrich your viewing experience.
+              Discover a new dimension of understanding with Glanceme.Ai: Generate concise summaries of YouTube videos, providing enhanced context to deepen your comprehension and enrich your viewing experience.
               </p>
             </div>
           </div>
@@ -35,7 +35,7 @@ export default function HomeTwo() {
             </div>
             <div className={style.mainHolderItemContainerPara}>
               <p>
-              Unlock clarity and deepen comprehension: Roten.x DevTool enables you to pose targeted questions about YouTube videos, enhancing your understanding and tackling even the most complex content with ease.
+              Unlock clarity and deepen comprehension: Glanceme.Ai enables you to pose targeted questions about YouTube videos, enhancing your understanding and tackling even the most complex content with ease.
               </p>
             </div>
           </div>

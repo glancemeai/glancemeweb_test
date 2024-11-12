@@ -15,12 +15,16 @@ export default function Dashboard() {
 
     const userDetails = async () => {
         const apis = Apis()
-        await apis.UserDetails("user").then((data) => {
+        await apis.UserDetails("profile").then((data) => {
+            console.log(data);
+            
             if(data.status == 200){
                 setData(data)
+                console.log(data);
+                
                 setLoading(false)
             }else{
-                window.location.href = "/login"
+                // window.location.href = "/login"
                 setLoading(false)
                 dispatch(setAlert({data:{message:data.message,show:true,type:"error"}}))
             }

@@ -10,7 +10,7 @@ function HomeOneHeader() {
     <div className={style.mainHeader}>
       <div className={style.mainHeaderHolder}>
         <div className={style.mainHeaderItem}>
-          <Link href={"/"} passHref><h1>Roten.X DevTool</h1></Link>
+          <Link href={"/"} passHref><h1>Glanceme.Ai</h1></Link>
         </div>
         <div className={`${style.mainHeaderItem} ${style.mainHeaderItemTwo}`}>
           <Link href={"/dashboard"} passHref>
@@ -128,7 +128,7 @@ const HomeOneMain = () => {
           </div>
           <div className={style.mainDesignThreeItme}>
             <Image
-              src={"/images/rotenx.png"}
+              src={"/images/logo-1.png"}
               alt="rotenx"
               width={20}
               height={20}

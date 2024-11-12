@@ -8,7 +8,7 @@ const Footer = () => {
     return (
         <div className={styles.main}>
             <div className={styles.mainFooterBottom}>
-                <p>Copyright © 2024 Roten.x DevTool, Inc. All rights reserved to Anshit Mishra.</p>
+                <p>Copyright © 2024 Glanceme.Ai, Inc. All rights reserved to Glanceme.Ai.</p>
                 <div className={styles.mainFooterBottomSocials}>
                     <Link href={"https://medium.com/@anshit.03"} target="_blank" passHref><p><BsMedium size={25} /></p></Link>
                     <Link href={"https://github.com/anshitmishra"} target="_blank" passHref><p><FaGithub size={25} /></p></Link>

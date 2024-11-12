@@ -13,9 +13,9 @@ const PrivacyPage = () => {
 
                         <p>Effective Date: May 31, 2024</p>
 
-                        <p>Roten.x DevTool website, Rotenx apps for all platforms, rotenx devtool extensions are products of Roten.x Inc., which is registered and located in Gwalior, MP, INDIA.</p>
+                        <p>Glanceme.Ai website, Rotenx apps for all platforms, rotenx devtool extensions are products of Glanceme.Ai Inc., which is registered and located in Gwalior, MP, INDIA.</p>
 
-                        <p>At Roten.x, we are committed to protecting your privacy. This privacy policy describes our policies and procedures on the collection, use and disclosure of your information when you use the service and tells you about your privacy rights and how the law protects you.</p>
+                        <p>At Glanceme.Ai, we are committed to protecting your privacy. This privacy policy describes our policies and procedures on the collection, use and disclosure of your information when you use the service and tells you about your privacy rights and how the law protects you.</p>
 
                         <p> We use your personal data to provide and improve the service. By using the service, You agree to the collection and use of information in accordance with this Privacy Policy.</p>
                     </div>

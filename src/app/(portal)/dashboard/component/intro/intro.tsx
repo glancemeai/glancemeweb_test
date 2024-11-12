@@ -5,9 +5,9 @@ export default function Intro() {
     return (
         <div className={style.main}>
             <div className={style.mainHolder}>
-                <Image src={"/images/rotenx.png"} alt='image of user' width={150} height={150} style={{ borderRadius: "50%", objectFit: "cover" }} />
+                <Image src={"/images/logo-1.png"} alt='image of user' width={150} height={150} style={{ borderRadius: "50%", objectFit: "cover" }} />
                 <div className={style.mainHolderDetails}>
-                    <h3>Roten.X</h3>
+                    <h3>Glanceme.Ai</h3>
                     <span>#WeWorkForChange</span>
                 </div>
                 <br />

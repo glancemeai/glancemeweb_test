@@ -168,10 +168,10 @@ export default function Note(props: any) {
         const currentUrl = window.location.href;
         
         let newUrl = currentUrl;
-        if (currentUrl.includes('https://devtool-eta.vercel.app/notes/roten.x?url=')) {
-            newUrl = currentUrl.replace('https://devtool-eta.vercel.app/notes/roten.x?url=', '');
-        } else if (currentUrl.includes('http://localhost:3000/notes/roten.x?url=')) {
-            newUrl = currentUrl.replace('http://localhost:3000/notes/roten.x?url=', '');
+        if (currentUrl.includes('https://devtool-eta.vercel.app/notes/Glanceme.Ai?url=')) {
+            newUrl = currentUrl.replace('https://devtool-eta.vercel.app/notes/Glanceme.Ai?url=', '');
+        } else if (currentUrl.includes('http://localhost:3000/notes/Glanceme.Ai?url=')) {
+            newUrl = currentUrl.replace('http://localhost:3000/notes/Glanceme.Ai?url=', '');
         }
         setUrl(newUrl)
         NotesHandler(newUrl)
@@ -192,7 +192,7 @@ export default function Note(props: any) {
                     <div className={style.mainHolder}>
                         <div className={style.mainHolderOne}>
                             <div className={style.mainHolderOneImage}>
-                                <Image onClick={() =>prevHandler(notesData?.data[0]?.data[0]?.image,true)} src={notesData?.data[0]?.data[0]?.image ? notesData?.data[0]?.data[0]?.image : "/images/rotenx.png"} alt='user' fill style={{ objectFit: "contain" }} />
+                                <Image onClick={() =>prevHandler(notesData?.data[0]?.data[0]?.image,true)} src={notesData?.data[0]?.data[0]?.image ? notesData?.data[0]?.data[0]?.image : "/images/logo-1.png"} alt='user' fill style={{ objectFit: "contain" }} />
                             </div> 
                         </div>
                         <div className={style.mainHolderTwo}>
@@ -219,7 +219,7 @@ export default function Note(props: any) {
                                         <div className={style.mainHolderTwoDetailBg} style={{ background: `${val?.color}` }}></div>
                                         {notesData?.data[0]?.data[0]?.image == val?.image ? "" :
                                             <div className={style.mainHolderOneImage}>
-                                                <Image onClick={() =>prevHandler(val?.image,true)} src={val?.image ? val?.image : "/images/rotenx.png"} alt='user' fill style={{ objectFit: "contain" }} />
+                                                <Image onClick={() =>prevHandler(val?.image,true)} src={val?.image ? val?.image : "/images/logo-1.png"} alt='user' fill style={{ objectFit: "contain" }} />
                                             </div>}
                                         <p style={{ borderLeft: ` 4px solid ${val?.color}` }}><b>{val?.title}</b>
                                             {val?.description ? <br /> : ""}

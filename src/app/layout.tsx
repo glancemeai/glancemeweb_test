@@ -1,16 +1,16 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Ubuntu } from "next/font/google";
 import "./globals.css";
 import Alert from "./components/utils/alert/alert";
 import Providers from "./redux/provider/provider";
 import Footer from "./(portal)/component/footer/footer";
 import { SpeedInsights } from "@vercel/speed-insights/next"
 
-const inter = Inter({ subsets: ["latin"] });
+const ubuntu = Ubuntu({ weight:['300','400','500','700'],subsets:['cyrillic','latin'] });
 
 export const metadata: Metadata = {
-  title: "Roten.X DevTool",
-  description: "Roten.x DevTool Save notes Generate videos summary.",
+  title: "Glanceme.Ai",
+  description: "Glanceme.Ai Save notes Generate videos summary.",
 };
 
 export default function RootLayout({
@@ -22,7 +22,7 @@ export default function RootLayout({
     <html lang="en">
       <head>
       </head>
-      <body className={inter.className}>
+      <body className={ubuntu.className}>
       <Providers>
         {children}
         <section>

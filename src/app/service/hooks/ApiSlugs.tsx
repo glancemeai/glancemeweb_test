@@ -1,22 +1,28 @@
 import APIClient from "./connection";
 
 export default function Apis() {
-    const URL = "https://rotenx.me/v1"
+    const URL = "http://localhost:8000/v1/api"
 
     const Login = async (data:any) => {
-        var result = await APIClient("POST", `${URL}/user/login`, false, data);
+        var result = await APIClient("POST", `${URL}/users/login`, false, data);
         return result;
     }
     const Signup = async (data:any) => {
-        var result = await APIClient("POST", `${URL}/user`, false, data);
+        var result = await APIClient("POST", `${URL}/users/signup`, false, data);
         return result;
     }
+    
+    const Verify = async (data:any) => {
+        var result = await APIClient("POST", `${URL}/users/verify`, false, data);
+        return result;
+    }
+
     const AllNotes = async () => {
-        var result = await APIClient("POST", `${URL}/notes/all-notes`, false, null);
+        var result = await APIClient("GET", `${URL}/notes/all-notes`, true, null);
         return result;
     }
     const UserDetails = async (data:string) => {
-        var result = await APIClient("GET", `${URL}/user/${data}`, false, null);
+        var result = await APIClient("GET", `${URL}/users/${data}`, false, null);
         return result;
     }
 
@@ -38,6 +44,7 @@ export default function Apis() {
     return {
         Login,
         Signup,
+        Verify,
         AllNotes,
         UserDetails,
         SingleNotes,

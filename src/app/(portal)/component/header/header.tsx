@@ -8,7 +8,7 @@ export default function Header() {
         <div className={style.main}>
             <div className={style.mainHolder}>
                 <div className={style.mainHolderOne}>
-                    <Link href={"/"} passHref><h1>Roten.X DevTool</h1></Link>
+                    <Link href={"/"} passHref><h1>Glanceme.Ai</h1></Link>
                 </div>
                 <div className={style.mainHolderTwo}>
                     <a href="https://github.com/rotenx/devTool" target="_blank" rel="noopener noreferrer"><p><BsGithub size={22}/></p></a>

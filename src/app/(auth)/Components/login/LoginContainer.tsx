@@ -38,7 +38,7 @@ export default function LoginContainer() {
                         cookie += "path=/; ";
                         cookie += `max-age=${60 * 60 * 24 * 7}; `;
                         cookie += "SameSite=None; Secure; ";
-                        cookie += "domain=.rotenx.me";
+                        cookie += "domain=.glanceme.co";
 
                         console.log(cookie);
 
@@ -66,9 +66,9 @@ export default function LoginContainer() {
                 <InputOne disable={loginCall} name={"email"} id={"email"} placeholder={"email"} value={email} onChange={Handler} />
                 <InputOne disable={loginCall} type={"password"} name={"Password"} id={"Password"} placeholder={"password"} value={password} onChange={Handler} />
                 {/* <div className={styles.mainTwoItem}><p>forget password??</p></div> */}
-                <ButtonThree laod={loginCall} name={loginCall ? "Preparing Dashboard..." : "Login To Roten.X"} onClick={Login} />
+                <ButtonThree laod={loginCall} name={loginCall ? "Preparing Dashboard..." : "Login To Glanceme.Ai"} onClick={Login} />
                 <div className={styles.mainTwoItemTwo}><p>or</p></div>
-                <div className={styles.mainTwoItemSignup}>New to Roten.X? <Link href={"/signup"} passHref><p>Create Account</p></Link></div>
+                <div className={styles.mainTwoItemSignup}>New to Glanceme.Ai? <Link href={"/signup"} passHref><p>Create Account</p></Link></div>
             </div>
         </div>
     )

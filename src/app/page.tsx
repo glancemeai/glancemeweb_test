@@ -1,15 +1,15 @@
 import styles from './page.module.css'
-import HomeOne from './component/HomeOne'
-import HomeTwo from './component/HomeTwo'
+import HomeOne from './home/HomeOne'
+import HomeTwo from './home/HomeTwo'
 import HomeThree from './component/HomeThree'
-import HomeFour from './component/HomeFour'
+import HomeFour from './home/HomeFour'
 
 export default function Home() {
   return (
     <main className={styles.main}>
        <HomeOne/>
        <HomeTwo/>
-       <HomeThree />
+       {/* <HomeThree /> */}
        <HomeFour />
        
     </main>

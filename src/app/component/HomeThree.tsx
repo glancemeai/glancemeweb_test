@@ -6,7 +6,7 @@ export default function HomeThree() {
   return (
     <div className={style.main}>
       <div className={style.mainHeading}>
-        <h2>Roten.x DevTool Pricing</h2>
+        <h2>Glanceme.Ai Pricing</h2>
       </div>
       <div className={style.mainHolder}>
 
