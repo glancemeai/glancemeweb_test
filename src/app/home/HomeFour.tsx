@@ -25,7 +25,6 @@ const Card = (props: any) => {
 }
 
 
-
 export default function HomeFour() {
     return (
         <div className={style.mainThree}>
