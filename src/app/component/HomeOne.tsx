@@ -16,7 +16,7 @@ function HomeOneHeader() {
           <Link href={"/dashboard"} passHref>
             <p>Dashboard</p>
           </Link>
-          <Link href={"https://chromewebstore.google.com/detail/rotenx-devtool/jcfiajnlfhplglbcpegfebokhhpladne"} passHref target="_blank">
+          <Link href={"#"} passHref target="_blank">
             <p>Extension</p>
           </Link>
           <Link href={"/support"} passHref>
@@ -57,7 +57,7 @@ const HomeOneMain = () => {
         </div>
         <div className={style.mainOneItemtwo}>
           <div className={style.mainOneItemtwoSubItemButton}>
-          <Link href={"https://chromewebstore.google.com/detail/rotenx-devtool/jcfiajnlfhplglbcpegfebokhhpladne"} passHref target="_blank"><button>Add To Chrome</button></Link>
+          <Link href={"#"} passHref target="_blank"><button>Add To Chrome</button></Link>
           </div>
           <div className={style.mainOneItemtwoSubItem}>
             <div className={style.mainOneItemtwoSubItemOne}>
@@ -92,7 +92,7 @@ const HomeOneMain = () => {
         <div className={style.mainTwoItemTwoImage}>
           <Image
             src={"/images/home/ans.png"}
-            alt="anshit"
+            alt="glanceme"
             fill
             style={{ objectFit: "contain" }}
           />
@@ -129,7 +129,7 @@ const HomeOneMain = () => {
           <div className={style.mainDesignThreeItme}>
             <Image
               src={"/images/logo-1.png"}
-              alt="rotenx"
+              alt="glanceme"
               width={20}
               height={20}
               style={{ objectFit: "contain" }}

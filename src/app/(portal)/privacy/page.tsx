@@ -13,7 +13,7 @@ const PrivacyPage = () => {
 
                         <p>Effective Date: May 31, 2024</p>
 
-                        <p>Glanceme.Ai website, Rotenx apps for all platforms, rotenx devtool extensions are products of Glanceme.Ai Inc., which is registered and located in Gwalior, MP, INDIA.</p>
+                        <p>Glanceme.Ai website, glanceme apps for all platforms, glanceme devtool extensions are products of Glanceme.Ai Inc., which is registered and located in Pune, Maharashtra, INDIA.</p>
 
                         <p>At Glanceme.Ai, we are committed to protecting your privacy. This privacy policy describes our policies and procedures on the collection, use and disclosure of your information when you use the service and tells you about your privacy rights and how the law protects you.</p>
 
@@ -32,8 +32,8 @@ const PrivacyPage = () => {
                         <p> Definitions</p>
                         <p>For the purposes of this Privacy Policy:</p>
                         <p><b>Account</b> means a unique account created for You to access our Service or parts of our Service.</p>
-                        <p><b>Application</b> means the software program provided by the Company downloaded by You on any electronic device, named rotenx devtool Chrome & Edge extension, and rotenx APP for other OS.</p>
-                        <p><b>Company</b> {"("}referred to as either “the Company”, “We”, “Us” or “Our” in this Agreement{")"} refers to Rotenx Inc.</p>
+                        <p><b>Application</b> means the software program provided by the Company downloaded by You on any electronic device, named glanceme devtool Chrome & Edge extension, and glanceme APP for other OS.</p>
+                        <p><b>Company</b> {"("}referred to as either “the Company”, “We”, “Us” or “Our” in this Agreement{")"} refers to glanceme Inc.</p>
                         <p><b>Device</b> means any device that can access the Service such as a computer, a cell phone or a digital tablet.</p>
                         <p><b>Personal</b> Data is any information that relates to an identified or identifiable individual.</p>
                         <p><b>Service</b> refers to the Application</p>
@@ -52,7 +52,7 @@ const PrivacyPage = () => {
                     <div className={style.mainContainerPara}>
                         <p>Types of Data Collected</p>
                         <p>Personal Data</p>
-                        <p>While using Our Service, Rotenx DevTool may ask you to provide certain personally identifiable information that can be used to contact or identify you. Personally identifiable information may include, but is not limited to: your email, your name, your phone number if you choose to login with your phone number, etc.</p>
+                        <p>While using Our Service, glanceme DevTool may ask you to provide certain personally identifiable information that can be used to contact or identify you. Personally identifiable information may include, but is not limited to: your email, your name, your phone number if you choose to login with your phone number, etc.</p>
                         <p>Usage Data</p>
                         <p>Collected automatically when using the Service.</p>
                         <p>Usage Data may include information such as your browser type, operating system, the pages of our Service that you visit, the time and date of your visit, the time spent on those pages, and other diagnostic data.</p>
@@ -77,19 +77,19 @@ const PrivacyPage = () => {
                         <p><b>Third-Party Services</b> You can choose to permit or restrict Third-Party Services. Third-Party Services may integrate with our services, and you can enable or disable the integrations. Once enabled, the Third-Party Service may share some information with us to facilitate the integration. You should check the privacy settings and notices in these Third-Party Services to understand the data collection, sharing, and use.</p>
 
                         <p>Retention of Your Personal Data</p>
-                        <p>Rotenx DevTool will retain Your Personal Data only for as long as is necessary for the purposes set out in this Privacy Policy. We will retain and use Your Personal Data to the extent necessary to comply with our legal obligations {"("}for example, if we are required to retain your data to comply with applicable laws{")"}, resolve disputes, and enforce our legal agreements and policies.</p>
-                        <p>Rotenx DevTool will also retain Usage Data for internal analysis purposes. Usage Data is generally retained for a shorter period of time, except when this data is used to strengthen the security or to improve the functionality of Our Service, or We are legally obligated to retain this data for longer time periods.</p>
+                        <p>glanceme DevTool will retain Your Personal Data only for as long as is necessary for the purposes set out in this Privacy Policy. We will retain and use Your Personal Data to the extent necessary to comply with our legal obligations {"("}for example, if we are required to retain your data to comply with applicable laws{")"}, resolve disputes, and enforce our legal agreements and policies.</p>
+                        <p>glanceme DevTool will also retain Usage Data for internal analysis purposes. Usage Data is generally retained for a shorter period of time, except when this data is used to strengthen the security or to improve the functionality of Our Service, or We are legally obligated to retain this data for longer time periods.</p>
 
                         <p>Transfer of Your Personal Data</p>
-                        <p>Your information, including Personal Data, is processed at Rotenx DevTool{"'"}s operating offices and in any other places where the parties involved in the processing are located. This means that this information may be transferred to — and maintained on — computers located outside of Your state, province, country, or other governmental jurisdiction where the data protection laws may differ from those from Your jurisdiction.</p>
+                        <p>Your information, including Personal Data, is processed at glanceme DevTool{"'"}s operating offices and in any other places where the parties involved in the processing are located. This means that this information may be transferred to — and maintained on — computers located outside of Your state, province, country, or other governmental jurisdiction where the data protection laws may differ from those from Your jurisdiction.</p>
 
                         <p>Your consent to this Privacy Policy followed by Your submission of such information represents Your agreement to that transfer.</p>
 
-                        <p>Rotenx DevTool will take all steps reasonably necessary to ensure that Your data is treated securely and in accordance with this Privacy Policy and no transfer of Your Personal Data will take place to an organization or a country unless there are adequate controls in place including the security of Your data and other personal information.</p>
+                        <p>glanceme DevTool will take all steps reasonably necessary to ensure that Your data is treated securely and in accordance with this Privacy Policy and no transfer of Your Personal Data will take place to an organization or a country unless there are adequate controls in place including the security of Your data and other personal information.</p>
 
                         <p>Delete Your Personal Data</p>
 
-                        <p>You have the right to delete or request that Rotenx DevTool assist in deleting the Personal Data that We have collected about You.</p>
+                        <p>You have the right to delete or request that glanceme DevTool assist in deleting the Personal Data that We have collected about You.</p>
 
                         <p>Our Service may give You the ability to delete certain information about You from within the Service.</p>
 
@@ -99,14 +99,14 @@ const PrivacyPage = () => {
 
 
                         <p>Disclosure of Your Personal Data</p>
-                        <p>In addition to the aforementioned policy, the following information pertains to data collection, handling, storage, and sharing by the Chrome/Edge extension and Rotenx devTool web service.</p>
+                        <p>In addition to the aforementioned policy, the following information pertains to data collection, handling, storage, and sharing by the Chrome/Edge extension and glanceme devTool web service.</p>
 
                         <p>Data Collection </p>
 
-                        <p>If you choose to save your chats on Rotenx DevTool via the Rotenx extension, your chats will be saved on Rotenx DevTool servers in the Amazon US data center.</p>
-                        <p>Your registration data will also be saved on Rotenx DevTool servers in the Amazon US data center.</p>
+                        <p>If you choose to save your chats on glanceme DevTool via the glanceme extension, your chats will be saved on glanceme DevTool servers in the Amazon US data center.</p>
+                        <p>Your registration data will also be saved on glanceme DevTool servers in the Amazon US data center.</p>
                         <p>Your browser version may be saved and used to diagnose problems you experience.</p>
-                        <p>If you choose to upload and save files, such as HTML and PDF files on the Rotenx DevTool website, those data will be saved on Rotenx DevTool servers in the Amazon US data center.</p>
+                        <p>If you choose to upload and save files, such as HTML and PDF files on the glanceme DevTool website, those data will be saved on glanceme DevTool servers in the Amazon US data center.</p>
                         <p>We may use tools like Google Analytics to collect usage data.</p>
 
 
@@ -133,10 +133,10 @@ const PrivacyPage = () => {
                         <p>Your chat data is not shared with any other third parties, except when required by law enforcement.</p>
                         <p>Disclosure of Your Personal Data</p>
 
-                        <p>Rotenx DevTool may disclose Your Personal Data in the good faith belief that such action is necessary to:</p>
+                        <p>glanceme DevTool may disclose Your Personal Data in the good faith belief that such action is necessary to:</p>
 
                         <p>Comply with a legal obligation.</p>
-                        <p>Protect and defend the rights or property of Rotenx DevTool.</p>
+                        <p>Protect and defend the rights or property of glanceme DevTool.</p>
                         <p>Prevent or investigate possible wrongdoing in connection with the Service.</p>
                         <p>Protect the personal safety of users of the Service or the public.</p>
                         <p>Protect against legal liability.</p>
@@ -144,18 +144,18 @@ const PrivacyPage = () => {
 
                         <p>Business Transactions</p>
 
-                        <p>If Rotenx DevTool is involved in a merger, acquisition, or asset sale, Your Personal Data may be transferred. We will provide notice before Your Personal Data is transferred and becomes subject to a different Privacy Policy.</p>
+                        <p>If glanceme DevTool is involved in a merger, acquisition, or asset sale, Your Personal Data may be transferred. We will provide notice before Your Personal Data is transferred and becomes subject to a different Privacy Policy.</p>
 
                         <p>Law Enforcement</p>
 
-                        <p>Under certain circumstances, Rotenx DevTool may be required to disclose Your Personal Data if required to do so by law or in response to valid requests by public authorities {"("}e.g., a court or a government agency{")"}.</p>
+                        <p>Under certain circumstances, glanceme DevTool may be required to disclose Your Personal Data if required to do so by law or in response to valid requests by public authorities {"("}e.g., a court or a government agency{")"}.</p>
 
                         <p>Other Legal Requirements</p>
 
-                        <p>Rotenx DevTool may disclose Your Personal Data in the good faith belief that such action is necessary to:</p>
+                        <p>glanceme DevTool may disclose Your Personal Data in the good faith belief that such action is necessary to:</p>
 
                         <p>Comply with a legal obligation.</p>
-                        <p>Protect and defend the rights or property of Rotenx DevTool.</p>
+                        <p>Protect and defend the rights or property of glanceme DevTool.</p>
                         <p>Prevent or investigate possible wrongdoing in connection with the Service.</p>
                         <p>Protect the personal safety of Users of the Service or the public.</p>
                         <p>Protect against legal liability.</p>
@@ -208,7 +208,7 @@ const PrivacyPage = () => {
                     </div>
                     <div className={style.mainContainerPara}>
                         <p>If you have any questions about this Privacy Policy, You can contact us:</p>
-                        <p>By email: anshitmishra03@gmail.com</p>
+                        <p>By email: support@glanceme.ai</p>
                     </div>
                 </div>
             </div>

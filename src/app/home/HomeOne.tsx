@@ -16,7 +16,7 @@ function HomeOneHeader() {
           <Link href={"/dashboard"} passHref>
             <p>Dashboard</p>
           </Link>
-          <Link href={"https://chromewebstore.google.com/detail/rotenx-devtool/jcfiajnlfhplglbcpegfebokhhpladne"} passHref target="_blank">
+          <Link href={"#"} passHref target="_blank">
             <p>Extension</p>
           </Link>
           <Link href={"/support"} passHref>

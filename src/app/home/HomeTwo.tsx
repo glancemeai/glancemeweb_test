@@ -52,7 +52,7 @@ export default function HomeTwo() {
             <Image alt="meeting" width={170} height={150} src={'/images/home/meeting.png'}/>
           </div>
           <div className={style.mainHolderOneItemTwo}>
-            <p id={style.mainHolderOneItemTwoItemOne}>Can't Remember Last week meeting?</p>
+            <p id={style.mainHolderOneItemTwoItemOne}>Can{"'"}t Remember Last week meeting?</p>
             <p id={style.mainHolderOneItemTwoItemTwo}><span>Glanceme captures</span> every insight with AI</p>
           </div>
         </div>
@@ -79,7 +79,7 @@ export default function HomeTwo() {
 
         <div className={style.scroll_container}>
           <div className={style.scroll_container_item}>
-            <ParallaxText baseVelocity={-3}>Glancem.Ai Learn With AI ✦</ParallaxText>
+            <ParallaxText baseVelocity={-3}>Glancem.Ai Learn With AI </ParallaxText>
           </div> 
           <div className={style.scroll_container_item}>
             <ParallaxText baseVelocity={3}>Ask Question from Youtube Video 🤘</ParallaxText>
