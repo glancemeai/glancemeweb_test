@@ -8,7 +8,7 @@ const Footer = () => {
     return (
         <div className={styles.main}>
             <div className={styles.mainFooterBottom}>
-                <p>Copyright © 2024 Glanceme.Ai, Inc. All rights reserved to Glanceme.Ai.</p>
+                <p>Copyright © 2024 Glanceme AI Pvt. Ltd. All Rights reserved to Glanceme.Ai</p>
                 <div className={styles.mainFooterBottomSocials}>
                     <Link href={"#"} target="_blank" passHref><p><BsMedium size={25} /></p></Link>
                     <Link href={"#"} target="_blank" passHref><p><BsLinkedin size={20} /></p></Link>
