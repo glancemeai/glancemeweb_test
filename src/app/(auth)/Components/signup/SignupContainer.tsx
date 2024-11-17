@@ -49,26 +49,15 @@ export default function LoginContainer() {
         await apis.Verify(payload).then(data => {
             setLoginCall(false)
             if (data.status == 200) {
-                // let cookie = `authorization=${data?.data?.token}; `;
-                // cookie += "path=/; ";
-                // cookie += `max-age=${60 * 60 * 24 * 7}; `;
-                // cookie += "SameSite=None; Secure; ";
-                // cookie += "domain=.glanceme.co";
-                
-                // console.log(cookie);
-                
-                // document.cookie = cookie;
-                
                 dispatch(setAlert({ data: { message: "Account verified now Login!!", show: true, type: "info" } }))
-
                 router.push("/login")
             } else {
-                dispatch(setAlert({ data: { message: data?.data?.message, show: true, type: "error" } }))
+                dispatch(setAlert({ data: { message: data?.error, show: true, type: "error" } }))
             }
         }).catch(error => {
                 setLoginCall(false)
-                dispatch(setAlert({ data: { message: error.message, show: true, type: "error" } }))
-            });
+                dispatch(setAlert({ data: { message: error?.error, show: true, type: "error" } }))
+        });
 
     }
 
@@ -89,19 +78,8 @@ export default function LoginContainer() {
             setLoginCall(false)
             if (data.status == 201) {
                 setShowOTP(true);
-                // let cookie = `authorization=${data?.data?.token}; `;
-                // cookie += "path=/; ";
-                // cookie += `max-age=${60 * 60 * 24 * 7}; `;
-                // cookie += "SameSite=None; Secure; ";
-                // cookie += "domain=.glanceme.co";
-                
-                // console.log(cookie);
-                
-                // document.cookie = cookie;
-                
-                // router.push("/dashboard")
             } else {
-                dispatch(setAlert({ data: { message: data?.message, show: true, type: "error" } }))
+                dispatch(setAlert({ data: { message: data?.error, show: true, type: "error" } }))
             }
         })
             .catch(error => {

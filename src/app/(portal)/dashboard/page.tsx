@@ -7,31 +7,33 @@ import Intro from './component/intro/intro'
 import Apis from '@/app/service/hooks/ApiSlugs'
 import { useDispatch } from 'react-redux'
 import { setAlert } from '@/app/redux/utils/message'
+import { useRouter } from 'next/navigation'
 
 export default function Dashboard() {
+    const router = useRouter();
     const [loading,setLoading] = useState(true)
-    const [data,setData] = useState<any>()
+    const [data,setData] = useState<any>({})
     const dispatch = useDispatch()
 
     const userDetails = async () => {
         const apis = Apis()
+        setLoading(true)
+        setData({})
         await apis.UserDetails("profile").then((data) => {
-            console.log(data);
-            
+       
             if(data.status == 200){
-                setData(data)
                 console.log(data);
                 
+                setData(data)
                 setLoading(false)
             }else{
-                // window.location.href = "/login"
+                router.push("/login")
                 setLoading(false)
                 dispatch(setAlert({data:{message:data.message,show:true,type:"error"}}))
             }
         }).catch((error) => {
-            console.log(error);
-
             setLoading(false)
+            setData({})
             dispatch(setAlert({data:{message:error.message,show:true,type:"error"}}))
         })
 
@@ -39,13 +41,12 @@ export default function Dashboard() {
 
     useEffect(() => {
         userDetails()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     return (<>
         <div className={style.main}>
             <div className={style.mainHolder}>
                 <div className={style.mainHolderOne}>
-                    <DashboardLeft loading={loading} data={data?.data} />
+                    <DashboardLeft loading={loading} name={data?.data?.name} email={data?.data?.email} currentCredits={data?.data?.currentCredits} image={data?.data?.image} qnaCredits={data?.data?.qnaCredits} />
                     <Intro />
                 </div>
                 <div className={style.mainHolderTwo}>

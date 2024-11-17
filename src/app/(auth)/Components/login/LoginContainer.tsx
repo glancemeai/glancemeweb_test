@@ -33,7 +33,7 @@ export default function LoginContainer() {
             await apis.Login({ email: email, password: password })
                 .then(data => {
                     setLoginCall(false)
-                    if (data.status) {
+                    if (data.status == "200") {
                         let cookie = `authorization=${data?.data?.token}; `;
                         cookie += "path=/; ";
                         cookie += `max-age=${60 * 60 * 24 * 7}; `;
@@ -47,7 +47,7 @@ export default function LoginContainer() {
 
                         router.push("/dashboard")
                     } else {
-                        dispatch(setAlert({ data: { message: "email & password wrong", show: true, type: "error" } }))
+                        dispatch(setAlert({ data: { message: data?.error, show: true, type: "error" } }))
                     }
                 })
                 .catch(error => {

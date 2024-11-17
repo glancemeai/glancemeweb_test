@@ -9,6 +9,8 @@ export default function Apis() {
     }
     const Signup = async (data:any) => {
         var result = await APIClient("POST", `${URL}/users/signup`, false, data);
+        console.log(result);
+        
         return result;
     }
     

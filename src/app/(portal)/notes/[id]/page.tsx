@@ -9,18 +9,19 @@ import Apis from '@/app/service/hooks/ApiSlugs'
 import { setAlert } from '@/app/redux/utils/message'
 
 export default function SingleNote() {
-    const [userData, setUserData] = useState<any>()
+    const [userData, setUserData] = useState<any>({})
     const [userLoading, setUserLoading] = useState(true)
     const disptach = useDispatch()
 
     const UserHandler = async () => {
         const apis = Apis()
-        await apis.UserDetails("details").then(data => {
+        await apis.UserDetails("profile").then(data => {
             if (data.status == 200) {
+                console.log(data);
+                
                 setUserData(data)
                 setUserLoading(false)
             } else {
-                window.location.href = "/login"
                 setUserLoading(false)
                 disptach(setAlert({ data: { message: data.message, show: true, type: "error" } }))
             }
@@ -54,7 +55,7 @@ export default function SingleNote() {
         <div className={style.main}>
             <div className={style.mainHolder}>
                 <div className={style.mainHolderOne}>
-                    <DashboardLeft loading={userLoading} data={userData?.data} />
+                    <DashboardLeft loading={userLoading} name={userData?.data?.name} email={userData?.data?.email} currentCredits={userData?.data?.currentCredits} image={userData?.data?.image} qnaCredits={userData?.data?.qnaCredits} />
                     <Intro />
                 </div>
                 <div className={style.mainHolderTwo}>

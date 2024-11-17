@@ -12,7 +12,7 @@ import { useDispatch } from 'react-redux'
 import { setAlert } from '@/app/redux/utils/message'
 import { IoMdClose } from 'react-icons/io'
 import SkeletonNotes from '../skeleton'
-import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { useParams, usePathname, useRouter, useSearchParams } from 'next/navigation'
 import Preview from '@/app/components/utils/preview/preview'
 
 
@@ -90,9 +90,8 @@ const EditNotes = (props: any) => {
 
 export default function Note(props: any) {
     const disptach = useDispatch()
-    const router = useRouter()
-    const path = usePathname()
-    const search = useSearchParams()
+    const params = useParams()
+    
     const Dates = (time: any) => {
         const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
         const d = new Date(time);
@@ -126,15 +125,16 @@ export default function Note(props: any) {
     const [notesData, setNotesData] = useState<any>([])
     const [notesLoading, setNotesLoading] = useState(true)
 
-    const NotesHandler = async (url: string) => {
+    const NotesHandler = async (notes_token: string) => {
         const apis = Apis()
-        await apis.SingleNotes({ urlCode: url }).then(data => {
+        await apis.SingleNotes({ notes_token: notes_token }).then(data => {
             setNotesData(data)
+            console.log(data);
             
-            if(data.data.length <= 0){
-                router.push("/dashboard")
-                disptach(setAlert({data:{message:"Notes not fount",show:true,type:"error"}}))
-            }
+            // if(data.data.length <= 0){
+            //     router.push("/dashboard")
+            //     disptach(setAlert({data:{message:"Notes not fount",show:true,type:"error"}}))
+            // }
             setNotesLoading(false)
         }).catch((error) => {
             setNotesLoading(false)
@@ -165,18 +165,12 @@ export default function Note(props: any) {
     }
 
     useEffect(() => {
-        const currentUrl = window.location.href;
-        
-        let newUrl = currentUrl;
-        if (currentUrl.includes('https://devtool-eta.vercel.app/notes/Glanceme.Ai?url=')) {
-            newUrl = currentUrl.replace('https://devtool-eta.vercel.app/notes/Glanceme.Ai?url=', '');
-        } else if (currentUrl.includes('http://localhost:3000/notes/Glanceme.Ai?url=')) {
-            newUrl = currentUrl.replace('http://localhost:3000/notes/Glanceme.Ai?url=', '');
+        if (params?.id) {
+            setUrl(Array.isArray(params.id) ? params.id[0] : params.id);
+            NotesHandler(Array.isArray(params.id) ? params.id[0] : params.id)
         }
-        setUrl(newUrl)
-        NotesHandler(newUrl)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }, [params?.id])
     return (
         <>
             {notesLoading ? <SkeletonNotes /> : (
@@ -186,20 +180,22 @@ export default function Note(props: any) {
                             <BsArrowLeft />
                         </div></Link>
                         <div className={style.mainHeaderDate}>
-                            <p>{notesData?.data[0]?.data[0]?.type == "Youtube" ? "Youtube Notes" : "Text Notes"}</p>
+                            <p>{notesData?.data[0]?.type == "youtube" ? "Youtube Notes" : "Text Notes"}</p>
                         </div>
                     </div>
                     <div className={style.mainHolder}>
                         <div className={style.mainHolderOne}>
                             <div className={style.mainHolderOneImage}>
-                                <Image onClick={() =>prevHandler(notesData?.data[0]?.data[0]?.image,true)} src={notesData?.data[0]?.data[0]?.image ? notesData?.data[0]?.data[0]?.image : "/images/logo-1.png"} alt='user' fill style={{ objectFit: "contain" }} />
+                                <Image onClick={() =>prevHandler(notesData?.data[0]?.image || "",true)} src={notesData?.data[0]?.image ? notesData?.data[0]?.image : "/images/logo-1.png"} alt='user' fill style={{ objectFit: "contain" }} />
                             </div> 
                         </div>
                         <div className={style.mainHolderTwo}>
                             <div className={style.mainHolderTwoDetailLink}>
-                                <a href={`${notesData?.data[0]?.data[0]?.type == "Youtube" ? `https://youtube.com/watch?v=${notesData?.data[0]?._id}` : notesData?.data[0]?._id}`} target="_blank" rel="noopener noreferrer"><p>{notesData?.data[0]?.data[0]?.type == "Youtube" ? `https://youtube.com/watch?v=${notesData?.data[0]?._id}` : notesData?.data[0]?._id} <BiLinkExternal /> </p></a>
+                                <a href={`${notesData?.data[0]?.type == "youtube" ? `https://youtube.com/watch?v=${notesData?.data[0]?.urlCode}` : notesData?.data[0]?.urlCode}`} target="_blank" rel="noopener noreferrer"><p>{notesData?.data[0]?.type == "youtube" ? `https://youtube.com/watch?v=${notesData?.data[0]?.urlCode}` : notesData?.data[0]?.urlCode.substring(0, 40)+"..."} <BiLinkExternal /> </p></a>
                             </div>
-                            {notesData?.data[0]?.data?.map((val: any, index: number) => {
+                            {notesData?.data?.map((val: any, index: number) => {
+                                console.log(val);
+                                
                                 return (
                                     <div className={style.mainHolderTwoDetail} key={index}>
                                         <div className={style.mainHolderTwoMenu} >
@@ -217,7 +213,7 @@ export default function Note(props: any) {
 
                                         </div>
                                         <div className={style.mainHolderTwoDetailBg} style={{ background: `${val?.color}` }}></div>
-                                        {notesData?.data[0]?.data[0]?.image == val?.image ? "" :
+                                        {notesData?.data[0]?.image == val?.image ? "" :
                                             <div className={style.mainHolderOneImage}>
                                                 <Image onClick={() =>prevHandler(val?.image,true)} src={val?.image ? val?.image : "/images/logo-1.png"} alt='user' fill style={{ objectFit: "contain" }} />
                                             </div>}
@@ -228,8 +224,8 @@ export default function Note(props: any) {
                                             <br />
                                         </p>
                                         <div className={style.mainHolderTwoDetailSub}>
-                                            <a href={`${val.type == "Youtube" ? `https://youtube.com/watch?v=${val.urlCode}&t=${Math.ceil(val?.selectedData?.time)}s` : `${val.urlCode}#${val.notes_token}`}`} style={{ fontSize: "13px" }} target='_blank' rel="noopener noreferrer"> {val.type == "Youtube" ? `https://youtube.com/watch?v=${val.urlCode.substring(0, 10)}` : `${val.urlCode.substring(0, 30)}#${val.notes_token.substring(0, 3)}`}... <BiLinkExternal /> </a>
-                                            <span>{Dates(val.time)}</span>
+                                            <a href={`${val.type == "youtube" ? `https://youtube.com/watch?v=${val.urlCode}&t=${Math.ceil(val?.selectedData?.time)}s` : `${val.urlCode}#${val.notes_token}`}`} style={{ fontSize: "13px" }} target='_blank' rel="noopener noreferrer"> {val.type == "youtube" ? `https://youtube.com/watch?v=${val.urlCode.substring(0, 10)}` : `${val.urlCode.substring(0, 30)}#${val.notes_token.substring(0, 10)}`}... <BiLinkExternal /> </a>
+                                            <span>{Dates(val.createdAt)}</span>
                                         </div>
                                     </div>
                                 

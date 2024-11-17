@@ -8,10 +8,10 @@ export default function Card(props:any) {
     
     return (
         <div className={style.main}>
-           <Link href={`/notes/Glanceme.Ai?url=${props?.data?.urlCode}`} passHref> <div className={style.mainImage}>
+           <Link href={`/notes/${props?.data?.notes_token}`} passHref> <div className={style.mainImage}>
                 <Image src={props?.data?.image ? `${props?.data?.image ?? "/images/logo-1.png"}` : "/images/logo-1.png"} alt={"user"} fill style={{ objectFit: "contain" }} />
             </div></Link>
-            <Link href={`/notes/Glanceme.Ai?url=${props?.data?.urlCode}`} passHref> <div className={style.mainDetails}>
+            <Link href={`/notes/${props?.data?.notes_token}`} passHref> <div className={style.mainDetails}>
                 <p style={{fontSize:"13px",padding:"2px 5px"}}> {d.getDate()} {months[d.getMonth()]} {d.getFullYear()}</p>
                 <div className={style.mainDetailsTitle}>
                     <div className={style.mainDetailsTitleBg} style={{background:`${props?.data?.color}`}}></div>

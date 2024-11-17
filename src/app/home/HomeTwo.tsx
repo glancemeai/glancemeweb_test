@@ -77,7 +77,7 @@ export default function HomeTwo() {
           </div>
         </div>
 
-        <div className={style.scroll_container}>
+        {/* <div className={style.scroll_container}>
           <div className={style.scroll_container_item}>
             <ParallaxText baseVelocity={-3}>Glancem.Ai Learn With AI </ParallaxText>
           </div> 
@@ -87,7 +87,7 @@ export default function HomeTwo() {
           <div className={style.scroll_container_item}>
             <ParallaxText baseVelocity={-3}>Generate Notes of videos . Articles . Meeting With Glanceme ✨</ParallaxText>
           </div>
-        </div> 
+        </div>  */}
         </div>
     </div>
   );

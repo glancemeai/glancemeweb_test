@@ -26,12 +26,10 @@ const APIClient = async (method: string,
     try {
         const response = await fetch(url, options);
         const data = await response.json();
-        if (!response.ok) {
-            throw new Error(`${data}`);
-        }
+      
         return data;
     } catch (error:any) {
-        return { error: error.message };
+        return error;
     }
 
 
