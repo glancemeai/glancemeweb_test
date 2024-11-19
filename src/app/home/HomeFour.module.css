@@ -117,3 +117,19 @@
     color: #777;
     text-align: center;
 }
+
+
+
+@media only screen and (max-width: 600px) {
+    .main {
+      padding: 10px;
+    }
+    .mainHolderThree {
+        width: 100%;
+    }
+    .mainThreeHeading h3{
+    width: 100%;
+    font-size: 25px;
+    text-align: center;
+    }
+}

@@ -14,6 +14,8 @@ export default function DashboardRight(props: any) {
   const Data = async () => {
     const apis = Apis()
     await apis.AllNotes().then(data => {
+      console.log(data);
+      
       setData(data)
       setLoading(false);
     }).catch((error) => {

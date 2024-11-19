@@ -88,6 +88,94 @@
   background-color: black;
 }
 
+
+.mainMenuSidePanel {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100vw;
+  height: 100vh;
+}
+
+.mainMenuSidePanelClose {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.295);
+}
+
+.mainMenuSidePanelHolder {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  width: 85%;
+  max-width: 400px;
+  height: 100%;
+  background: white;
+}
+
+.mainMenuSidePanelHolderHeader {
+  position: relative;
+  width: 100%;
+  height: auto;
+  padding: 15px 20px;
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+}
+ 
+.mainMenuSidePanelHolderHeader h1{
+  position: relative;
+  width: auto;
+  height: auto;
+  font-size: 25px;
+  font-weight: 300;
+}
+
+.mainMenuSidePanelHolderItem {
+  position: relative;
+  width: 100%;
+  height: auto;
+  padding: 15px 20px;
+}
+
+.mainMenuSidePanelHolderItem p{
+  position: relative;
+  width: 100%;
+  height: auto;
+  padding: 10px;
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.mainMenuSidePanelHolderItem:hover{
+  background: #f4f4f4;
+}
+
+
+.mainMenuSidePanelHolderfooter {
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  width: 100%;
+  height: auto;
+  padding: 10px;
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  align-items: center;
+  border-top: 1px solid #ddd;
+}
+
+.mainMenuSidePanelHolderfooter p{
+  padding: 10px;
+}
+
+/* one */
 .mainOne {
   position: relative;
   width: 100%;
@@ -322,6 +410,7 @@
   height: auto;
   padding: 5px;
   display: flex;
+  flex-wrap: wrap;
   gap: 10px;
 }
 
@@ -389,7 +478,7 @@
   width: 25%;
   height: auto;
   display: flex;
-  justify-content: right;
+  justify-content: center;
   align-items: flex-end;
 }
 
@@ -418,64 +507,47 @@
 
   /* mainOne */
   .mainOne {
+    height: auto;
     flex-direction: column;
     padding: 20px 4px;
   }
-  .mainOneItem {
-    width: 100%;
-    padding: 0px;
-  }
 
-  .mainOneItemOne h2 {
+  .mainOneHolderOne {
+    flex-wrap: wrap;
+    padding: 20px 5px;
+  }
+  .mainOneHolderOneItemOne p{
     font-size: 35px;
   }
-  .mainOneItemtwo {
-    gap: 10px;
-    padding: 5px;
-    justify-content: space-between;
-  }
-  .mainOneItemtwoSubItemButton button {
-    padding: 15px 20px;
-    font-size: 15px;
-  }
-  .mainOneItemtwoSubItem {
-    gap: 5px;
-    padding: 0px;
-  }
-  .mainOneItemtwoSubItemOne {
-    padding: 10px;
-  }
-  .mainTwoItemTwo {
+  .mainOneHolderOneItemTwo {
     width: 100%;
+    padding: 20px 5px;
+  }
+
+.mainOneHolderTwoAnimation {
+  top: -20px;
+  left: 20px;
+}
+  .mainOneHolderTwo {
     height: auto;
+    flex-direction:column-reverse;
+    flex-wrap: wrap;
   }
 
-  .mainTwoItemTwoImage {
-    position: relative;
-    width: 330px;
-    height: 400px;
-    margin-top: 80px;
+  .mainOneHolderTwoItemOne {
+    width: 100%;
   }
 
-  /* design */
-  .mainHolderOneContainerTwoDesign {
-    top: 30px;
-    left: 10px;
-    padding: 5px;
-    z-index: 2;
-    box-shadow: none;
-    border: 1px solid black;
+.mainOneHolderTwoItemOneHolderTwoItemOne {
+  padding: 20px;
+}
+.mainOneHolderTwoItemOneHolderTwoItemTwo {
+  padding: 20px;
+}
+  .mainOneHolderTwoItemTwo {
+    width: 100%;
   }
-  .mainHolderOneContainerTwoDesign {
-    display: none;
-  }
-  .mainArrowTwo {
-    right: 0px;
-  }
-  .mainDesignThree {
-    top: 100px;
-    transform: none; 
-  }
+
 }
 
 /* Small devices (portrait tablets and large phones, 600px and up) */

@@ -4,6 +4,8 @@ import style from "./dashboardleft.module.css"
 import Image from 'next/image'
 import SkeletonLeft from './skeleton'
 export default function DashboardLeft({loading,image,name,email,currentCredits,qnaCredits}:{loading:boolean,image:string,name:string,email:string,currentCredits:string,qnaCredits:string}) {
+    console.log(name);
+    
     return (
         <div className={style.main}>
             {loading ? <SkeletonLeft/> :  (

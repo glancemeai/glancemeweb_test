@@ -1,4 +1,4 @@
-import Header from "../(portal)/component/header/header";
+import { Headerstatic } from "../home/HomeOne";
 
 export default function RootLayout({
   children,
@@ -7,7 +7,7 @@ export default function RootLayout({
 }>) {
   return (
     <section>
-      <Header></Header>
+      <Headerstatic/>
       {children}
     </section>
   );

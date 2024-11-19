@@ -31,6 +31,8 @@ const EditNotes = (props: any) => {
     const saveData = async (notes_token: string) => {
         const apis = Apis()
         setLoading(true)
+        console.log(description);
+        
         await apis.EditNotes({ color: color, description: description, notes_token: notes_token }).then(data => {
             setLoading(false)
             dispatch(setAlert({ data: { message: "Note updated!!!", show: true, type: "success" } }))
@@ -113,6 +115,8 @@ export default function Note(props: any) {
             setEditShow(true)
             setEditColor(color)
             setEditDesc(desc)
+            console.log(desc);
+            
         } else if (type == "delete") {
             setNotToken(token)
             setEditShow(false)
@@ -194,7 +198,6 @@ export default function Note(props: any) {
                                 <a href={`${notesData?.data[0]?.type == "youtube" ? `https://youtube.com/watch?v=${notesData?.data[0]?.urlCode}` : notesData?.data[0]?.urlCode}`} target="_blank" rel="noopener noreferrer"><p>{notesData?.data[0]?.type == "youtube" ? `https://youtube.com/watch?v=${notesData?.data[0]?.urlCode}` : notesData?.data[0]?.urlCode.substring(0, 40)+"..."} <BiLinkExternal /> </p></a>
                             </div>
                             {notesData?.data?.map((val: any, index: number) => {
-                                console.log(val);
                                 
                                 return (
                                     <div className={style.mainHolderTwoDetail} key={index}>

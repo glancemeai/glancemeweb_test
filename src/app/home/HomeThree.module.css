@@ -79,3 +79,19 @@
   text-transform: capitalize; 
   text-decoration: underline;
 }
+
+@media only screen and (max-width: 600px) {
+.main {
+  padding: 10px;
+}
+.mainHolderItem{
+  flex-wrap: wrap;
+}
+.mainHolderItemImage {
+  width: 100%;
+  height: 250px;
+}
+.mainHolderItemText{ 
+  width: 100%;
+}
+}

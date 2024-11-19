@@ -121,3 +121,13 @@
     line-height: 25px;
     color: #444;
 }
+
+
+@media only screen and (max-width: 600px) {
+    .main {
+      padding: 10px;
+    }
+    .mainHolder {
+    flex-wrap: wrap;
+    }
+}

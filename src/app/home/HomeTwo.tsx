@@ -17,7 +17,7 @@ export default function HomeTwo() {
     const handleIntersect: IntersectionObserverCallback = (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          video?.play();
+          // video?.play();
         } else {
           video?.pause();
         }
