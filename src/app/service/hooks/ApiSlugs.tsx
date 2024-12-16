@@ -19,8 +19,8 @@ export default function Apis() {
         return result;
     }
 
-    const AllNotes = async () => {
-        var result = await APIClient("GET", `${URL}/notes/all-notes`, true, null);
+    const AllNotes = async (folderId?:string) => {
+        var result = await APIClient("GET", `${URL}/notes/all-notes/${folderId ? folderId : ""}`, true, null);
         return result;
     }
     const UserDetails = async (data:string) => {

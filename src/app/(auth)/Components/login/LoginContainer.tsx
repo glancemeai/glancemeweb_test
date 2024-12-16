@@ -35,12 +35,11 @@ export default function LoginContainer() {
                     setLoginCall(false)
                     if (data.status == "200") {
                         let cookie = `authorization=${data?.data?.token}; `;
-                        cookie += "path=/; ";
-                        cookie += `max-age=${60 * 60 * 24 * 7}; `;
-                        cookie += "SameSite=None; Secure; ";
-                        cookie += "domain=.glanceme.co";
+                            cookie += "path=/; ";
+                            cookie += `max-age=${60 * 60 * 24 * 7}; `;
+                            cookie += "SameSite=None; Secure; ";
+                            cookie += "domain=.glanceme.co; ";
 
-                        console.log(cookie);
 
                         document.cookie = cookie;
 
@@ -63,8 +62,8 @@ export default function LoginContainer() {
                 <p>please login to your account</p>
             </div>
             <div className={styles.mainTwo}>
-                <InputOne disable={loginCall} name={"email"} id={"email"} placeholder={"email"} value={email} onChange={Handler} />
-                <InputOne disable={loginCall} type={"password"} name={"Password"} id={"Password"} placeholder={"password"} value={password} onChange={Handler} />
+                <InputOne disable={loginCall} name={"Email"} id={"Email"} placeholder={"Email"} value={email} onChange={Handler} />
+                <InputOne disable={loginCall} type={"password"} name={"Password"} id={"Password"} placeholder={"Password"} value={password} onChange={Handler} />
                 {/* <div className={styles.mainTwoItem}><p>forget password??</p></div> */}
                 <ButtonThree laod={loginCall} name={loginCall ? "Preparing Dashboard..." : "Login To Glanceme.Ai"} onClick={Login} />
                 <div className={styles.mainTwoItemTwo}><p>or</p></div>

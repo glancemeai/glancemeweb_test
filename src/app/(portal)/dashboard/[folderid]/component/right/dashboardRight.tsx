@@ -7,13 +7,17 @@ import { useDispatch } from 'react-redux'
 import { setAlert } from '@/app/redux/utils/message'
 import SkeletonDashboardRight from './skeleton'
 import Image from 'next/image'
+import { useParams } from 'next/navigation'
 export default function DashboardRight(props: any) {
+  const params = useParams()
+
   const disptach = useDispatch()
   const [loading, setLoading] = useState(true)
   const [data, setData] = useState<any>()
-  const Data = async () => {
+  const Data = async (folderid:string) => {
     const apis = Apis()
-    await apis.AllNotes().then(data => {
+    
+    await apis.AllNotes(folderid).then(data => {
       console.log(data);
       
       setData(data)
@@ -22,10 +26,15 @@ export default function DashboardRight(props: any) {
       disptach(setAlert({ data: { message: error.message, show: true, type: "error" } }))
       setLoading(false);
     })
+  
   }
 
   useEffect(() => {
-    Data()
+    if (params?.folderid) {
+      Data(Array.isArray(params.folderid) ? params.folderid[0] : params.folderid)
+    }else{
+      setLoading(false)
+    }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   return (

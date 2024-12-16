@@ -49,7 +49,7 @@ export default function HomeTwo() {
       <div className={style.mainHolder}>
         <div className={style.mainHolderOne}>
           <div className={style.mainHolderOneItemOne}>
-            <Image alt="meeting" width={170} height={150} src={'/images/home/meeting.png'}/>
+            <Image alt="meeting" width={180} height={150} src={'/images/home/meeting.png'}/>
           </div>
           <div className={style.mainHolderOneItemTwo}>
             <p id={style.mainHolderOneItemTwoItemOne}>Can{"'"}t Remember Last week meeting?</p>

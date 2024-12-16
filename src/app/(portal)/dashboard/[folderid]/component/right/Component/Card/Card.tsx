@@ -29,10 +29,10 @@ export function FolderCard(props:any) {
    
    return (
        <div className={style.main}>
-          <Link href={`/dashboard/${props?.data?._id}`} passHref> <div className={style.mainImage}>
+          <Link href={`/${props?.data?._id}`} passHref> <div className={style.mainImage}>
                <Image src={"/images/folder.png"} alt={"folder"} fill style={{ objectFit: "contain" }} />
            </div></Link>
-           <Link href={`/dashboard/${props?.data?._id}`} passHref> <div className={style.mainDetails}>
+           <Link href={`/${props?.data?._id}`} passHref> <div className={style.mainDetails}>
                <p style={{fontSize:"13px",padding:"2px 5px"}}> {d.getDate()} {months[d.getMonth()]} {d.getFullYear()}</p>
                <div className={style.mainDetailsTitle}>
                    <div className={style.mainDetailsTitleBg} style={{background:"#f4f4f4",opacity:"1"}}></div>

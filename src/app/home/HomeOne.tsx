@@ -123,7 +123,7 @@ const HomeOneMain = () => {
           <div className={style.mainOneHolderTwoItemOneHolderOne}></div>
           <div className={style.mainOneHolderTwoItemOneHolderTwo}>
             <div className={style.mainOneHolderTwoItemOneHolderTwoItemOne}>
-              <span>124</span>
+              <span>10+</span>
               features
             </div>
             <div className={style.mainOneHolderTwoItemOneHolderTwoItemTwo}>

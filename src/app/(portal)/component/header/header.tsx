@@ -28,8 +28,8 @@ export default function Header() {
           className={`${style.mainHeaderItem} ${style.mainHeaderItemTwo}`}
         
         >
-          <Link href={"/profile"} passHref>
-            <p>Profile</p>
+          <Link href={"/logout"} passHref>
+            <p style={{color:"#ff4f4b"}}>logout</p>
           </Link>
      
         </div>
