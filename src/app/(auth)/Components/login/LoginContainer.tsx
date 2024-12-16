@@ -16,7 +16,7 @@ export default function LoginContainer() {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const Handler = async (data: string, type: string) => {
-        if (type == "email") {
+        if (type == "Email") {
             setEmail(data)
         } else if (type == "Password") {
             setPassword(data)
