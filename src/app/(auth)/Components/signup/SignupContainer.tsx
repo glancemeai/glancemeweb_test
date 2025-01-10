@@ -100,10 +100,10 @@ export default function LoginContainer() {
             <div className={styles.mainTwo}>
                 <InputOne disable={loginCall} placeholder={"Full Name"} id={"Name"} value={name} onChange={Handler} />
                 <InputOne disable={loginCall} placeholder={"Email"} id={"email"} value={email} onChange={Handler} />
-                <InputOne disable={loginCall} placeholder={"password"} type={"password"} id={"Password"} value={password} onChange={Handler} />
+                <InputOne disable={loginCall} placeholder={"Password"} type={"password"} id={"Password"} value={password} onChange={Handler} />
                 <ButtonThree laod={loginCall} name={"Join Glanceme.Ai"} onClick={SignUp} />
                 <div className={styles.mainTwoItemTwo}><p>or</p></div>
-                <div className={styles.mainTwoItemSignup}>already Have Account? <Link href={"/login"} passHref><p>Login Now</p></Link></div>
+                <div className={styles.mainTwoItemSignup}>Already Have Account? <Link href={"/login"} passHref><p>Login Now</p></Link></div>
             </div>
 
             <div className={styles.mainOTP} style={{display:`${showOTP ? 'block' : 'none'}`}}>

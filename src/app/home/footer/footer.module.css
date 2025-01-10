@@ -1,0 +1,391 @@
+.main {
+  position: relative;
+  width: 100%;
+  height: auto;
+  padding: 20px;
+  background-color: #222222;
+}
+
+.mainHolder {
+  position: relative;
+  width: 100%;
+  max-width: 1300px;
+  margin: 0px auto;
+  padding: 10px;
+}
+
+.mainHolderOne {
+  position: relative;
+  width: 100%;
+  height: auto;
+  padding: 40px;
+  border-radius: 8px;
+  background-color: #8f46af;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  justify-content: center;
+  align-items: center;
+}
+
+.mainHolderOneheading {
+  position: relative;
+  width: 100%;
+  height: auto;
+}
+
+.mainHolderOneheading h3 {
+  color: white;
+  font-size: 50px;
+  font-weight: 500;
+  text-align: center;
+}
+
+.mainHolderOneSubHeading {
+  position: relative;
+  width: 70%;
+  margin: 0px auto;
+  height: auto;
+}
+
+.mainHolderOneSubHeading p {
+  color: white;
+  font-size: 20px;
+  font-weight: 500;
+  text-align: center;
+}
+
+.mainHolderOneButton {
+  position: relative;
+  width: 70%;
+  max-width: 500px;
+  margin: 0px auto;
+  height: auto;
+  display: flex;
+}
+.mainHolderOneButton input {
+  position: relative;
+  width: 100%;
+  height: auto;
+  padding: 20px;
+  border: none;
+  outline: none;
+  padding-right: 30%;
+  font-size: 16px;
+  font-weight: 400;
+  border-radius: 28px;
+}
+
+.mainHolderOneButton button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  max-width: 150px;
+  height: 100%;
+  padding: 15px;
+  border: none;
+  outline: none;
+  border-radius: 28px;
+  font-size: 16px;
+  font-weight: 400;
+  color: white;
+  background-color: #360d48;
+  cursor: pointer;
+}
+
+.mainHolderTwo {
+  position: relative;
+  width: 100%;
+  height: auto;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.mainHolderTwoLeft {
+  position: relative;
+  width: 35%;
+  height: auto;
+  padding: 10px;
+}
+
+.mainHolderTwoLeftOne {
+  position: relative;
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  display: flex;
+  gap: 25px;
+  flex-direction: column;
+}
+
+.mainHolderTwoLeftOne h4 {
+  font-size: 20px;
+  font-weight: 500;
+  color: white;
+}
+
+.mainHolderTwoLeftOne p {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  color: white;
+}
+
+.mainHolderTwoLeftOne button {
+  position: relative;
+  width: 100%;
+  max-width: 250px;
+  height: auto;
+  padding: 10px 15px;
+  font-size: 16px;
+  font-weight: 400;
+  color: white;
+  border: 1px solid white;
+  border-radius: 18px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.mainHolderTwoLeftOne button:hover {
+  background-color: white;
+  color: #222222;
+}
+
+.mainHolderTwoRight {
+  position: relative;
+  width: 55%;
+  height: auto;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  align-items: flex-start;
+}
+
+.mainHolderTwoRightOne {
+  position: relative;
+  width: 100%;
+  height: auto;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.mainHolderTwoRightItem {
+  position: relative;
+  width: 100%;
+  height: auto;
+  padding: 5px;
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+}
+
+.mainHolderTwoRightItem h4 {
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 10px;
+  color: white;
+}
+
+.mainHolderTwoRightItem p {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  color: white;
+}
+
+.mainHolderTwoRightTwo {
+  position: relative;
+  width: 100%;
+  height: auto;
+  padding: 10px;
+  display: flex;
+  justify-content: right;
+}
+
+.mainHolderthree {
+  position: relative;
+  width: 100%;
+  height: auto;
+  padding: 10px;
+}
+
+.mainHolderthree hr {
+  position: relative;
+  width: 100%;
+  height: 2px;
+  background-color: white;
+}
+
+.mainHolderthreeItem {
+  position: relative;
+  width: 100%;
+  height: auto;
+  padding: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.mainHolderthreeItemOne {
+  position: relative;
+  width: auto;
+  height: auto;
+  padding: 10px;
+}
+
+.mainHolderthreeItemOne p {
+  font-size: 18px;
+  font-weight: 500;
+  color: white;
+  white-space: nowrap;
+}
+
+.mainHolderthreeItemTwo {
+  position: relative;
+  width: 100%;
+  height: auto;
+  padding: 5px;
+  display: flex;
+  gap: 20px;
+  justify-content: right;
+  align-items: center;
+}
+
+.mainHolderthreeItemTwo p {
+  color: white;
+}
+
+@media only screen and (max-width: 600px) {
+  .main {
+    padding: 10px;
+  }
+  .mainHolderOne {
+    overflow: hidden;
+    padding: 30px 10px;
+  }
+  .mainHolderOneheading h3 {
+    font-size: 30px;
+  }
+  .mainHolderOneSubHeading {
+    width: 95%;
+  }
+  .mainHolderOneSubHeading p {
+    font-size: 18px;
+    font-weight: 400;
+  }
+
+  .mainHolderOneButton {
+    width: 95%;
+  }
+  .mainHolderOneButton input {
+    padding: 20px 10px;
+    padding-right: 40%;
+  }
+
+  .mainHolderOneButton button {
+    max-width: 120px;
+    padding: 5px;
+  }
+
+  .mainHolderTwo {
+    flex-direction: column;
+  }
+
+  .mainHolderTwoLeft {
+    width: 100%;
+  }
+
+  .mainHolderTwoRight {
+    width: 100%;
+  }
+
+  .mainHolderTwoRightOne {
+    gap: 20px;
+    flex-direction: column;
+  }
+
+  .mainHolderTwoRightTwo {
+    padding: 0px;
+    justify-content: center;
+  }
+}
+
+@media only screen and (min-width: 600px) {
+  .mainHolderTwo {
+    flex-direction: column;
+  }
+  .mainHolderTwoLeft {
+    width: 100%;
+  }
+  .mainHolderTwoRight {
+    width: 100%;
+  }
+  .mainHolderTwoRightOne {
+    gap: 20px;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  .mainHolderTwo {
+    flex-direction: row;
+  }
+  .mainHolderTwoLeft {
+    width: 35%;
+  }
+  .mainHolderTwoRight {
+    width: 65%;
+  }
+  .mainHolderTwoRightOne {
+    padding: 0px 10px;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+  .mainHolderTwo {
+    flex-direction: row;
+  }
+  .mainHolderTwoLeft {
+    width: 35%;
+  }
+  .mainHolderTwoRight {
+    width: 60%;
+  }
+  .mainHolderTwoRightOne {
+    padding: 0px 10px;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+  .mainHolderTwo {
+    flex-direction: row;
+  }
+  .mainHolderTwoLeft {
+    width: 35%;
+  }
+  .mainHolderTwoRight {
+    width: 50%;
+  }
+  .mainHolderTwoRightOne {
+    padding: 0px 10px;
+    flex-direction: row;
+    justify-content: right;
+    align-items: flex-start;
+  }
+}

@@ -1,0 +1,323 @@
+.main {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: calc(100vh - 70px);
+  max-width: 1300px;
+  max-height: 1200px;
+  margin: 0px auto;
+  margin-top: 70px;
+}
+
+.mainBg {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  max-height: 1200px;
+  background-image: url("/images/home/Lines_group.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.mainBg::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("/images/home/glassmorphism.png"); /* First image */
+  background-size: cover;
+  background-position: center;
+  opacity: 0.4; /* Apply opacity to the first image */
+}
+
+.mainHolder {
+  position: relative;
+  width: 100%;
+  height: auto;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.mainHolderHeading {
+  position: relative;
+  width: 100%;
+  height: auto;
+  padding: 10px;
+  margin-top: 20px;
+  display: flex;
+  gap: 15px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.mainHolderHeading h2 {
+  font-size: 70px;
+  font-weight: 400;
+}
+
+.mainHolderHeading h3 {
+  font-size: 70px;
+  font-weight: 400;
+  background: linear-gradient(
+    90.73deg,
+    #223fda 28.09%,
+    #8d53ff 50.59%,
+    #f94d86 72.2%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text; /* For Firefox */
+
+}
+
+.mainHolderSubHeading {
+  position: relative;
+  width: 75%;
+  height: inherit;
+  margin: 0px auto;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mainHolderSubHeading p {
+  position: relative;
+  font-size: 25px;
+  font-weight: 400;
+  text-align: center;
+  color: #686868;
+}
+
+.mainHolderButton {
+  position: relative;
+  width: 75%;
+  height: inherit;
+  margin: 0px auto;
+  padding: 10px;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
+.mainHolderButton button {
+  position: relative;
+  width: auto;
+  height: 100%;
+  padding: 15px 25px;
+  border: none;
+  outline: none;
+  color: white;
+  font-size: 28px;
+  font-weight: 700;
+  border-radius: 35px;
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  background-color: #4169e1;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.mainBanner {
+  position: relative;
+  width: 80%;
+  height: 100%;
+  padding: 10px;
+  margin: 0px auto;
+}
+
+.mainBannerImage {
+  position: relative;
+  width: 100%;
+  height: 600px;
+}
+
+@media only screen and (max-width: 600px) {
+  
+  .mainHolderHeading h2 {
+    font-size: 45px;
+    text-align: center;
+  }
+  .mainHolderHeading h3 {
+    font-size: 40px;
+    text-align: center;
+  }
+  .mainHolderSubHeading {
+    width: 100%;
+  }
+
+  .mainHolderSubHeading p {
+    font-size: 18px;
+    text-align: center;
+  }
+
+  .mainHolderButton {
+    width: 100%;
+  }
+
+  .mainHolderButton button {
+    font-size: 16px;
+  }
+
+  .mainBanner {
+    width: 100%;
+    height: auto;
+  }
+  .mainBannerImage {
+    height: 300px;
+  }
+}
+
+@media only screen and (min-width: 600px) {
+    .mainHolderHeading h2 {
+        font-size: 45px;
+        text-align: center;
+      }
+      .mainHolderHeading h3 {
+        font-size: 40px;
+        text-align: center;
+      }
+      .mainHolderSubHeading {
+        width: 80%;
+      }
+    
+      .mainHolderSubHeading p {
+        font-size: 18px;
+        text-align: center;
+      }
+    
+      .mainHolderButton {
+        width: 90%;
+      }
+    
+      .mainHolderButton button {
+        font-size: 18px;
+      }
+    
+      .mainBanner {
+        width: 90%;
+        height: auto;
+      }
+      .mainBannerImage {
+        height: 450px;
+      }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+    .mainHolderHeading h2 {
+        font-size: 60px;
+        text-align: center;
+      }
+      .mainHolderHeading h3 {
+        font-size: 60px;
+        text-align: center;
+      }
+      .mainHolderSubHeading {
+        width: 75%;
+      }
+    
+      .mainHolderSubHeading p {
+        font-size: 18px;
+        text-align: center;
+      }
+    
+      .mainHolderButton {
+        width: 75%;
+      }
+    
+      .mainHolderButton button {
+        font-size: 22px;
+      }
+    
+      .mainBanner {
+        width: 80%;
+        height: auto;
+      }
+      .mainBannerImage {
+        height: 600px;
+      }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+    .mainHolderHeading h2 {
+        font-size: 75px;
+        text-align: center;
+      }
+      .mainHolderHeading h3 {
+        font-size: 70px;
+        text-align: center;
+      }
+      .mainHolderSubHeading {
+        width: 75%;
+      }
+    
+      .mainHolderSubHeading p {
+        font-size: 25px;
+        text-align: center;
+      }
+    
+      .mainHolderButton {
+        width: 75%;
+      }
+    
+      .mainHolderButton button {
+        font-size: 28px;
+      }
+    
+      .mainBanner {
+        width: 80%;
+        height: auto;
+      }
+      .mainBannerImage {
+        height: 600px;
+      }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+    .mainHolderHeading h2 {
+        font-size: 75px;
+        text-align: center;
+      }
+      .mainHolderHeading h3 {
+        font-size: 70px;
+        text-align: center;
+      }
+      .mainHolderSubHeading {
+        width: 75%;
+      }
+    
+      .mainHolderSubHeading p {
+        font-size: 25px;
+        text-align: center;
+      }
+    
+      .mainHolderButton {
+        width: 75%;
+      }
+    
+      .mainHolderButton button {
+        font-size: 28px;
+      }
+    
+      .mainBanner {
+        width: 80%;
+        height: auto;
+      }
+      .mainBannerImage {
+        height: 600px;
+      }
+}

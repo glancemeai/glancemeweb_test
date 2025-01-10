@@ -1,4 +1,5 @@
-import { Headerstatic } from "../home/HomeOne";
+import Header from "../home/header/header";
+import { Headerstatic } from "../home_v1/HomeOne";
 
 export default function RootLayout({
   children,
@@ -7,7 +8,7 @@ export default function RootLayout({
 }>) {
   return (
     <section>
-      <Headerstatic/>
+      <Header/>
       {children}
     </section>
   );

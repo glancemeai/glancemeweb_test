@@ -1,0 +1,207 @@
+.main {
+  position: relative;
+  width: 100%;
+  height: auto;
+  max-width: 1300px;
+  padding: 20px 10px;
+  margin: 0px auto;
+}
+
+.mainHolder {
+  position: relative;
+  width: 85%;
+  height: auto;
+  margin: 0px auto;
+  display: flex;
+  gap: 20px;
+  flex-direction: column;
+}
+
+.mainHolderItem {
+  position: relative;
+  width: 100%;
+  height: auto;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.mainHolderItemImage {
+  position: relative;
+  width: 40%;
+  height: 100%;
+  min-height: 450px;
+  padding: 10px;
+}
+
+.mainHolderItemText {
+  position: relative;
+  width: 55%;
+  height: auto;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.mainHolderItemText h2 {
+  position: relative;
+  width: 100%;
+  height: auto;
+  font-size: 30px;
+  font-weight: 500;
+  line-height: 45px;
+  color: #111;
+  text-transform: capitalize;
+}
+
+.mainHolderItemText p {
+  position: relative;
+  width: 100%;
+  height: auto;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 28px;
+  color: #111;
+  text-transform: capitalize;
+}
+
+.mainHolderItemText span {
+  position: relative;
+  width: 100%;
+  height: auto;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 25px;
+  display: inline-block;
+  background: linear-gradient(
+    90deg,
+    #223fda 0%,
+    #8d53ff 30.85%,
+    #f94d86 61.69%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text; /* For Firefox */
+}
+
+.mainHolderItemText button {
+  position: relative;
+  width: min-content;
+  height: auto;
+  font-size: 18px;
+  font-weight: 500;
+  padding: 10px;
+  border: none;
+  outline: none;
+  color: #223fda;
+  background: transparent;
+  border-bottom: 1px solid #223fda;
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 600px) {
+  .main {
+    padding: 10px;
+  }
+  .mainHolder {
+    width: 95%;
+  }
+  .mainHolderItem{
+    flex-wrap: wrap;
+  }
+  .mainHolderItemImage {
+    width: 100%;
+    height: 250px;
+    min-height: 250px;
+  }
+  .mainHolderItemText{ 
+    width: 100%;
+  }
+}
+
+@media only screen and (min-width: 600px) {
+  .main {
+    padding: 10px;
+  }
+  .mainHolder {
+    width: 90%;
+  }
+  .mainHolderItem{
+    flex-wrap: wrap;
+  }
+  .mainHolderItemImage {
+    width: 100%;
+    height: 350px;
+    min-height: 350px;
+  }
+  .mainHolderItemText{ 
+    width: 100%;
+  }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  .main {
+    padding: 10px;
+  }
+  .mainHolder {
+    width: 90%;
+  }
+  .mainHolderItem{
+    flex-wrap: nowrap;
+  }
+  .mainHolderItemImage {
+    height: 350px;
+    min-height: 350px;
+  }
+  .mainHolderItemText{ 
+    width: 100%;
+  }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+  .main {
+    padding: 10px;
+  }
+  .mainHolder {
+    width: 85%;
+  }
+  .mainHolderItem{
+    flex-wrap: nowrap;
+  }
+  .mainHolderItemImage {
+    height: 400px;
+    min-height: 400px;
+  }
+  .mainHolderItemText{ 
+    width: 100%;
+  }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+  .main {
+    padding: 10px;
+  }
+  .mainHolder {
+    width: 85%;
+  }
+  .mainHolderItem{
+    flex-wrap: nowrap;
+  }
+  .mainHolderItemImage {
+    height: 450px;
+    min-height: 450px;
+  }
+  .mainHolderItemText{ 
+    width: 100%;
+  }
+}

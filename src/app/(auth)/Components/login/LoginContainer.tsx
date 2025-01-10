@@ -39,11 +39,7 @@ export default function LoginContainer() {
                             cookie += `max-age=${60 * 60 * 24 * 7}; `;
                             cookie += "SameSite=None; Secure; ";
                             cookie += "domain=.glanceme.co; ";
-
-
                         document.cookie = cookie;
-
-
                         router.push("/dashboard")
                     } else {
                         dispatch(setAlert({ data: { message: data?.error, show: true, type: "error" } }))
