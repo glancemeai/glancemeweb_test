@@ -1,84 +1,295 @@
 .main {
-    position: relative;
-    width: 100%;
-    max-width: 1300px;
-    margin: 0px auto;
-    height: auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  position: relative;
+  width: 100%;
+  height: auto;
+  overflow-x: hidden;
 }
+
 .mainHolder {
-    position: relative;
-    width: 95%;
-    height: auto;
-    padding: 10px;
-    display: flex;
-    justify-content: left;
-}
-.mainHolderOne {
-    position: relative;
-    width: 25%;
-    height: auto;
-    padding: 10px;
-
-}
-.mainHolderTwo {
-    position: relative;
-    width: 70%;
-    height: auto;
-    padding: 10px;
+  position: relative;
+  width: 100%;
+  height: auto;
+  padding: 10px;
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
 }
 
-@media only screen and (max-width: 768px) {
-    .main {
-      height: auto;
-      align-items: flex-start;
+.mainHolderHeader {
+  position: relative;
+  width: 100%;
+  height: auto;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.mainHolderHeaderTitle {
+  position: relative;
+  width: auto;
+  height: auto;
+}
+
+.mainHolderHeaderTitle p {
+  font-size: 25px;
+  font-weight: 400;
+  white-space: nowrap;
+}
+
+.mainHolderHeaderOptions {
+  position: relative;
+  width: 100%;
+  height: auto;
+  display: flex;
+  gap: 10px;
+  justify-content: right;
+  align-items: center;
+}
+
+.mainHolderHeaderOptionsSearch {
+  position: relative;
+  width: 400px;
+  height: auto;
+  padding: 5px 10px;
+  background: white;
+  border-radius: 8px;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
+    rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+}
+
+.mainHolderHeaderOptionsSearchFilter {
+  position: relative;
+  width: 35px;
+  height: 35px;
+  padding: 5px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #222;
+  cursor: pointer;
+}
+
+.mainHolderHeaderOptionsSearchFilter:hover {
+  background-color: #eee;
+  color: #222;
+}
+
+.mainHolderBody {
+  position: relative;
+  width: 100%;
+  height: auto;
+  padding: 10px 20px;
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+  align-items: stretch;
+}
+
+.mainHolderBodyLeft {
+  position: relative;
+  width: 100%;
+  height: auto;
+}
+
+
+.mainHolderBodyLeftSection{
+  position: relative;
+  width: 100%;
+  height: auto;
+  display: flex;
+  gap: 20px;
+  justify-content: left;
+  align-items: center;
+}
+
+.mainHolderBodyLeftSection p{
+  font-size: 16px;
+  font-weight: 400;
+  padding: 20px 10px;
+}
+
+.mainHolderBodyLeftNotes {
+  position: relative;
+  width: 100%;
+  height: auto;
+  padding: 20px 10px;
+  border-radius: 4px;
+  background-color: white;
+  display: flex;
+  gap: 20px;
+  flex-direction: column;
+  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
+  rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+}
+
+.mainHolderBodyLeftNotesOptions {
+  position: relative;
+  width: 95%;
+  height: auto;
+  margin: 0px auto;
+  padding: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+.mainHolderBodyLeftNotesOptionsItems {
+  position: relative;
+  width: auto;
+  height: auto;
+  display: flex;
+  gap: 20px;
+}
+.mainHolderBodyLeftNotesOptionsItems p{
+  font-size: 14px;
+  font-weight: 400px;
+  color: #444444;
+}
+
+
+.mainHolderBodyLeftNotesImage {
+  position: relative;
+  width: 95%;
+  height: auto;
+  margin: 0px auto;
+  min-height: 400px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.mainHolderBodyLeftNotesItems {
+  position: relative;
+  width: 95%;
+  height: auto;
+  margin: 0px auto;
+  padding: 10px 0px;
+  display: flex;
+  gap: 15px;
+  flex-direction: column;
+}
+
+
+
+.mainHolderBodyRight {
+  position: relative;
+  width: 500px;
+  height: 100%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.mainHolderBodyEmpty {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 500px;
+  display: flex;
+  gap: 20px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.mainHolderBodyEmptyImage {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  height: 350px;
+}
+
+.mainHolderBodyEmpty p {
+  position: relative;
+  width: auto;
+  height: auto;
+  padding: 5px;
+  font-size: 18px;
+  font-weight: 400;
+  color: #8b8b8b;
+}
+
+@media only screen and (max-width: 600px) {
+.mainHolder {
+    padding: 5px;
+}
+.mainHolderHeader {
+    gap: 25px;
+    flex-wrap: wrap;
+}
+.mainHolderHeaderOptions {
+    flex-wrap: wrap;
+}
+
+.mainHolderHeaderOptionsSearch {
+    width: 100%;
+}
+}
+
+@media only screen and (min-width: 600px) {
+    .mainHolderHeader {
+        gap: 10px;
+        flex-wrap: wrap;
     }
-    .mainHolder {
-      width: 100%;
-      padding: 10px;
-      flex-direction: column-reverse;
+
+.mainHolderHeaderOptionsSearch {
+    width: 100%;
+}
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+    .mainHolderHeader {
+        gap: 10px;
+        flex-wrap: nowrap;
     }
-    .mainHolderOne {
-      width: 100%;
+    .mainHolderHeaderOptionsSearch {
+        width: 350px;
     }
-    .mainHolderTwo {
-      width: 100%;
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+    .mainHolderHeader {
+        gap: 10px;
+        flex-wrap: nowrap;
     }
-  }
-  
-  /* Small devices (portrait tablets and large phones, 600px and up) */
-  @media only screen and (min-width: 600px) {
-  }
-  
-  /* Medium devices (landscape tablets, 768px and up) */
-  @media only screen and (min-width: 768px) {
-      .mainHolderOne {
-          width: 35%;
-        }
-        .mainHolderTwo {
-          width: 65%;
-        }
-  }
-  
-  /* Large devices (laptops/desktops, 992px and up) */
-  @media only screen and (min-width: 992px) {
-      .mainHolderOne {
-          width: 30%;
-        }
-        .mainHolderTwo {
-          width: 70%;
-        }
-  }
-  
-  /* Extra large devices (large laptops and desktops, 1200px and up) */
-  @media only screen and (min-width: 1200px) {
-      .mainHolderOne {
-          width: 25%;
-        }
-        .mainHolderTwo {
-          width: 70%;
-        }
-  }
-  
+    .mainHolderHeaderOptionsSearch {
+        width: 400px;
+    }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+    .mainHolderHeader {
+        gap: 10px;
+        flex-wrap: nowrap;
+    }
+    .mainHolderHeaderOptionsSearch {
+        width: 400px;
+    }
+}

@@ -5,6 +5,7 @@ import Section_two from './home/section_two/section_two'
 import Section_three from './home/section_three/section_three'
 import Section_Five from './home/section_five/section_five'
 import Section_Four from './home/section_four/section_four'
+import StaticPrice from './home/price/price'
 
 export default function Home() {
   return (
@@ -13,6 +14,7 @@ export default function Home() {
       <Section_one></Section_one>
       <Section_two></Section_two>
       <Section_three ></Section_three>
+      <StaticPrice />
       <Section_Four></Section_Four>
       <Section_Five/>
       {/* <HomeOne/>

@@ -1,7 +1,7 @@
 import APIClient from "./connection";
 
 export default function Apis() {
-    const URL = "http://localhost:8000/v1/api"
+    const URL = "https://glanceme.co.in/v1/api"
 
     const Login = async (data:any) => {
         var result = await APIClient("POST", `${URL}/users/login`, false, data);
@@ -42,6 +42,44 @@ export default function Apis() {
         var result = await APIClient("DELETE", `${URL}/notes/`, false, data);
         return result;
     }
+
+    const CreateFolder = async (data:any) => {
+        var result = await APIClient("POST", `${URL}/folder/create`, false, data);
+        return result;
+    }
+
+    const DeleteFolder = async (data:any) => {
+        var result = await APIClient("DELETE", `${URL}/folder/`, false, data);
+        return result;
+    }
+
+    const CreatePayment = async (data:any) => {
+        var result = await APIClient("POST", `${URL}/payments/create-order`, false, data);
+        return result;
+    }
+
+    const VerifyPayment = async (data:any) => {
+        var result = await APIClient("POST", `${URL}/payments/verify-payment`, false, data);
+        return result;
+    }
+
+    const GetPlans = async () => {
+        var result = await APIClient("GET", `${URL}/plans`, false, null);
+        return result;
+    }
+
+    const SearchNotes = async (data:any) => {
+        var result = await APIClient("GET", `${URL}/notes/search?${data}`, false, null);
+        return result;
+    }
+
+    const GetChat = async (data:any) => {
+        var result = await APIClient("GET", `${URL}/chat?${data}`, false, null);
+        return result;
+    }
+    
+
+    
     // 
     return {
         Login,
@@ -51,6 +89,13 @@ export default function Apis() {
         UserDetails,
         SingleNotes,
         EditNotes,
-        DeleteNotes
+        DeleteNotes,
+        CreateFolder,
+        DeleteFolder,
+        CreatePayment,
+        VerifyPayment,
+        GetPlans,
+        SearchNotes,
+        GetChat
     }
 }

@@ -54,13 +54,13 @@
     position: relative;
     width: auto;
     height: auto;
-    padding: 10px;
+    padding: 10px 15px;
     border-radius: 6px;
     background-color: transparent;
     color: #313639;
     border: 1.5px solid #313639;
     outline: none;
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 500;
     display: flex;
     justify-content: center;
@@ -132,18 +132,15 @@
 
 .mainFour {
     position: relative;
-    width: 100%;
+    width: fit-content;
     height: auto;
-    padding: 5px;
-    margin-top: 10px;
-    margin-bottom: 10px;
 }
 
 .mainFour button {
     position: relative;
     width: auto;
     height: auto;
-    padding: 10px 20px;
+    padding: 10px;
     border-radius: 6px;
     background-color: black;
     color: white;
@@ -172,4 +169,101 @@
     transition: background 0s;
     background-color:rgba(255, 255, 255, 0.2);
     background-size: 100%;
+}
+
+
+
+
+.mainFive {
+    position: relative;
+    width: auto;
+    height: auto;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.mainFive button {
+    position: relative;
+    width: auto;
+    height: auto;
+    padding: 10px 20px;
+    border-radius: 10px;
+    background-color: #F6F6F6;
+    color: #848484;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    font-weight: 700;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    background-position: center;
+    transition: background 0.6s;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.mainFive button:hover {
+    background-color: #e0e0e0; /* Softer gray for better hover contrast */
+    background-image: radial-gradient(circle, transparent 1%, #ccc 1%); /* Lightened radial effect */
+    background-position: center;
+    background-size: 15000%;
+}
+
+.mainFive button:active {
+    transition: background 0s;
+    background-color: #d0d0d0; /* A darker, clean contrast to indicate the active state */
+    background-size: 100%;
+}
+
+@media only screen and (max-width: 600px) {
+    .mainFive {
+    width: 100%;
+    }
+    .mainFive button {
+    width: 100%;
+    }
+}
+
+
+
+.mainSix {
+    position: relative;
+    width: auto;
+    height: auto;
+    font-size: 15px;
+    font-weight: 500;
+}
+.mainSix button {
+    position: relative;
+    width: auto;
+    height: auto;
+    padding: 10px 15px;
+    border-radius: 6px;
+    background-color: #4169E1; /* Default background color */
+    color: white;
+    outline: none;
+    border: none;
+    font-size: 16px;
+    font-weight: 500;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    white-space: nowrap;
+    background-position: center;
+    transition: background-color 0.3s, filter 0.3s;
+}
+
+/* Hover effect - brighten the button slightly */
+.mainSix button:hover {
+    background-color: #3158C7; /* Slightly darker color for more contrast */
+}
+
+/* Active effect - subtle press-in look */
+.mainSix button:active {
+    background-color: #2948A5; /* Even darker for active state */
 }

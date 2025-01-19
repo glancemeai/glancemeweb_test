@@ -2,7 +2,6 @@
 import InputOne, { InputTwo } from "@/app/components/utils/Edit/Input/Input"
 import style from "./support.module.css"
 import { ButtonThree } from "@/app/components/utils/Edit/buttons/Buttons"
-import Intro from "../dashboard/component/intro/intro"
 import { useDispatch } from "react-redux"
 import { setAlert } from "@/app/redux/utils/message"
 import { useState } from "react"
@@ -32,9 +31,6 @@ const SupportPage = () => {
     }
     return (
         <div className={style.main}>
-            <div style={{ width: "350px" }}>
-                <Intro />
-            </div>
             <div className={style.mainHolder}>
                 <div className={style.mainHolderHeading}>
                     <h1>Support Page</h1>

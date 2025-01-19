@@ -1,0 +1,27 @@
+
+.main {
+    position: relative;
+    width: 100%;
+    margin: 0 auto;
+    height: 100%;
+    min-height: 100vh;
+    background-color: white;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    overflow: visible
+}
+
+.mainOne {
+    position: relative;
+    width: auto;
+    min-height: 100vh;
+    flex-shrink: 0; 
+    overflow: visible
+}
+
+.mainTwo {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+}

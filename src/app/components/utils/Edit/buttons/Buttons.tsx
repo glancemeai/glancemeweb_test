@@ -13,7 +13,15 @@ export default function ButtonOne(props:any) {
 export function ButtonFour(props:any) {
   return (
     <div className={styles.mainFour}>
-      <button title={props?.name}>{props?.icon ?? ""} {props?.name}</button>
+      <button title={props?.name} onClick={() => {props?.onClick ? props?.onClick() : "" }}>{props?.icon ?? ""} {props?.name}</button>
+    </div>
+  )
+}
+
+export function ButtonFive(props:any) {
+  return (
+    <div className={styles.mainFive}>
+      <button title={props?.name} onClick={() => {props?.onClick ? props?.onClick() : "" }}>{props?.icon ?? ""} {props?.name}</button>
     </div>
   )
 }
@@ -30,8 +38,17 @@ export function ButtonThree(props:any) {
 export function ButtonTwo(props:any) {
   return (
     <div className={styles.mainTwo} >
-      <button title={props?.name} type="button" ><span>{props?.icons}</span> {props?.name}</button>
+      <button title={props?.name} type="button" onClick={() => {props?.onClick ? props?.onClick() : "" }}>{props?.icons ? (<span>{props?.icons}</span>) : ""}{props?.name}</button>
     </div>
   )
 }
+
+export function ButtonSix(props:any) {
+  return (
+    <div className={styles.mainSix} >
+      <button title={props?.name} disabled={props?.loading ? true : false} type="button" onClick={() => {props?.onClick ? props?.onClick() : "" }} >{props?.laoding ? props?.loadingText : props?.name}</button>
+    </div>
+  )
+}
+
 

@@ -35,11 +35,11 @@ export default function LoginContainer() {
                     setLoginCall(false)
                     if (data.status == "200") {
                         let cookie = `authorization=${data?.data?.token}; `;
-                            cookie += "path=/; ";
-                            cookie += `max-age=${60 * 60 * 24 * 7}; `;
-                            cookie += "SameSite=None; Secure; ";
-                            cookie += "domain=.glanceme.co; ";
-                        document.cookie = cookie;
+                        cookie += "path=/;";
+                        cookie += `max-age=${60 * 60 * 24 * 365};`;
+                        cookie += "SameSite=None; Secure;";
+                        // cookie += "domain=.glanceme.ai;";
+                        document.cookie = cookie;                        
                         router.push("/dashboard")
                     } else {
                         dispatch(setAlert({ data: { message: data?.error, show: true, type: "error" } }))

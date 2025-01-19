@@ -1,0 +1,113 @@
+.mainCard {
+    position: relative;
+    width: 100%;
+    height: auto;
+    max-width: 400px;
+    padding: 10px;
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+    border-radius: 8px;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+}
+.mainCardHeader {
+    position: relative;
+    width: 100%;
+    height: auto;
+    padding: 10px;
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.mainCardHeader h3{
+    font-size: 20px;
+    font-weight: 400;
+    text-align: center;
+}
+
+.mainCardHeader h4{
+    font-size: 25px;
+    font-weight: 500;
+    text-align: center;
+}
+
+.mainCardDetails {
+    position: relative;
+    width: 100%;
+    height: auto;
+    padding: 20px 10px;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    background-color: #F9FAFB;
+}
+
+.mainCardDetailsItem {
+    position: relative;
+    width: 100%;
+    height: auto;
+    padding: 5px;
+    display: flex;
+    gap: 10px;
+    justify-content: left;
+}
+
+.mainCardDetailsItemName {
+    position: relative;
+    width: 100%;
+    height: auto;
+    font-size: 15px;
+    font-weight: 400;
+    color: #444;
+    display: flex;
+    gap: 10px;
+
+}
+
+.mainCardDetailsItemNumber {
+    position: relative;
+    width: auto;
+    height: auto;
+    font-size: 16px;
+    font-weight: 400;
+    color: #222;
+}
+.mainCardDetailsItemNumber p{
+    position: relative;
+    width: 100%;
+    text-align: right;
+}
+
+
+.mainCardButtons {
+    position: relative;
+    width: 100%;
+    height: auto;
+    padding: 10px;
+}
+
+.mainCardButtons button{
+    position: relative;
+    width: 100%;
+    height: auto;
+    padding: 15px 10px;
+    border: none;
+    outline: none;
+    border-radius: 16px;
+    color: #4169E1;
+    font-size: 16px;
+    font-weight: 600;
+    background-color: white;
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+}
+
+.mainCardButtons button:hover{
+    text-decoration: underline;
+}

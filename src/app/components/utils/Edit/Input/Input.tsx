@@ -167,29 +167,22 @@ export function InputNine(props: any) {
 }
 
 
-export function InputEmojie(props: any) {
-    // const [emojie,setEmojie] = useState([])
-    // const emojieCall = async (search:string) => {
-    //     const tempdata = await fetch(`https://emoji-api.com/emojis?search=${search}&access_key=f778f6c93564890ad1eda292d2c3b691a0daf061`)
-    //     const data = await tempdata.json()
-    //     setEmojie(data)
-    // }
-    // // eslint-disable-next-line react-hooks/exhaustive-deps
-    // useEffect(() => {
-    //      emojieCall("smileys")
-    // },[])
+
+
+export function InputTen(props: any) {
+    
+    const nofunction = () => {
+
+    }
     return (
         <div className={styles.mainInputTen}>
-            {/* <div className={styles.mainInputTenEmojie}>
-                {emojie.slice(0,100).map((val:any,index) => {
-                    return (
-                        <p key={index}>{val.character}</p>
-                    )
-                })}
-            </div> */}
-            <p><BsEmojiSmile size={20} /></p>
-            <input type="text" placeholder={props?.placeholder ?? "write your comment..."} />
-            <p><BsSend size={20} /></p>
+            {props?.name ? <label >{props?.name}</label> : ""}
+            {props?.onChange ?
+
+                <input type={props?.type ? props?.type : "text"} disabled={props?.disable ?? false} value={props?.value ? props?.value : ""} onChange={(e: any) => { props?.onChange ? props?.onChange(e.target.value, props?.id) : nofunction() }} placeholder={props?.placeholder} />
+                :
+                <input type={props?.type ? props?.type : "text"} disabled={props?.disable ?? false} placeholder={props?.placeholder} value={props?.value ? props?.value : ""}/>
+            }
         </div>
     )
 }
