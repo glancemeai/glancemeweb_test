@@ -88,7 +88,7 @@ const NotesPage = () => {
     } catch (error: any) {
       dispatch(setAlert({ data: { message: error.message, show: true, type: 'error' } }));
     }
-  }, [apis,dispatch,router]);
+  }, []);
 
   const fetchNotes = useCallback(
     async (notesToken: string) => {
@@ -106,7 +106,7 @@ const NotesPage = () => {
         setLoading(false);
       }
     },
-    [apis,dispatch]
+    []
   );
 
   const handleSearch = useCallback(
@@ -184,7 +184,7 @@ const NotesPage = () => {
                 </div>
             </div>
             <div className={style.mainHolderBodyLeftNotesImage}>
-                {notesData?.data[0]?.metaimage ? <Image src={`${notesData?.data[0]?.metaimage}`} alt="image" fill style={{objectFit:"cover"}} /> : notesData?.data[0]?.type == "youtube" ? <iframe style={{width:"100%",height:"450px"}} src={`https://www.youtube.com/embed/${notesData?.data[0]?.urlCode}`} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe> : ""}
+                {notesData?.data[0]?.metaimage ? <Image src={`${notesData?.data[0]?.metaimage ? notesData?.data[0]?.metaimage : "/images/notesArticlelaceHolder.png"}`} alt="image" fill style={{objectFit:"cover"}}  /> : notesData?.data[0]?.type == "youtube" ? <iframe style={{width:"100%",height:"450px"}} src={`https://www.youtube.com/embed/${notesData?.data[0]?.urlCode}`} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe> : ""}
             </div>
               {loading ? (
                 Array.from({ length: 3 }, (_, index) => <FolderSkeleton key={index} />)

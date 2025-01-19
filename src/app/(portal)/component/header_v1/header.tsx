@@ -24,7 +24,7 @@ const Header = ({image,title,backlink,forward}:Data) => {
                 </div>
             </div>
             <div className={style.mainTwo}>
-                <Link href={"profile"} passHref ><Image src={image ? `/images/${image}.png` : `/images/1.png`} alt="profile" width={50} height={50} style={{objectFit:"cover",borderRadius:"50%"}} /></Link>
+                <Link href={"/profile"} passHref ><Image src={image ? `/images/${image}.png` : `/images/1.png`} alt="profile" width={50} height={50} style={{objectFit:"cover",borderRadius:"50%"}} /></Link>
             </div>
         </div>
     )

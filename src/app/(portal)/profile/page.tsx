@@ -49,7 +49,7 @@ const Profile = () => {
             <div className={style.mainHolder}>
                 <div className={style.mainHolderHeader}>
                     <div className={style.mainHolderHeaderImage}>
-                        <Image src={data?.data?.image ? `/images/${data?.data?.image}.png` : `/images/1.png`} alt="" width={200} height={200} style={{objectFit:"cover",borderRadius:"50%"}} />
+                        <Image src={data?.data?.user?.image ? `/images/${data?.data?.user?.image}.png` : `/images/1.png`} alt="" width={200} height={200} style={{objectFit:"cover",borderRadius:"50%"}} />
                     </div>
                 </div>
                 <div className={style.mainHolderBody}>
