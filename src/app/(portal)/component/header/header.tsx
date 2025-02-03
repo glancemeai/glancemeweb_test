@@ -14,7 +14,7 @@ export default function Header() {
           <Link href={"/dashboard"} passHref>
             <p>Dashboard</p>
           </Link>
-          <Link href={"#"} passHref target="_blank">
+          <Link href={"https://chromewebstore.google.com/detail/glancemeai/pgjkednjpnkamnajfabgfigcldpgpokp"} passHref target="_blank">
             <p>Extension</p>
           </Link>
           <Link href={"/support"} passHref>

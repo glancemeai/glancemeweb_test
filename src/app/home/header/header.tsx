@@ -22,7 +22,7 @@ const Header = () => {
                         <Link href={"/Home"} passHref ><p>Home</p></Link>
                     </div>
                     <div className={style.mainHeaderHolderMenuItem} >
-                        <Link href={"/contact"} passHref target="_blank"><p>Extension</p></Link>
+                        <Link href={"https://chromewebstore.google.com/detail/glancemeai/pgjkednjpnkamnajfabgfigcldpgpokp"} passHref target="_blank"><p>Extension</p></Link>
                     </div>
                     <div className={style.mainHeaderHolderMenuItem} >
                         <Link href={"/contact"} passHref><p>Contact</p></Link>
@@ -37,7 +37,7 @@ const Header = () => {
                         <Link href={"/login"} passHref><p>Login</p></Link>
                     </div>
                     <div className={style.mainHeaderHolderLoginItem} >
-                    <Link href={"#"} passHref target="_blank"><button>Add to Chrome for Free</button></Link>
+                    <Link href={"https://chromewebstore.google.com/detail/glancemeai/pgjkednjpnkamnajfabgfigcldpgpokp"} passHref target="_blank"><button>Add to Chrome for Free</button></Link>
                     </div>
                 </div>
                 <div className={`${style.mainHeaderHolderSideMenu}`} onClick={() => {setShowMenu(!showMenu)}}>
@@ -61,7 +61,7 @@ const Header = () => {
                 <Link href={"/dashboard"} passHref><p>Dashboard</p></Link>
                 </div>
                 <div className={style.mainMenuSidePanelHolderItem}>
-                <Link href={"#"} target="_blank" passHref><p>Extension</p></Link>
+                <Link href={"https://chromewebstore.google.com/detail/glancemeai/pgjkednjpnkamnajfabgfigcldpgpokp"} target="_blank" passHref><p>Extension</p></Link>
                 </div>
                 <div className={style.mainMenuSidePanelHolderItem}>
                 <Link href={"/contact"} passHref><p>Contact</p></Link>

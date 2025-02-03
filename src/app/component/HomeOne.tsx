@@ -16,7 +16,7 @@ function HomeOneHeader() {
           <Link href={"/dashboard"} passHref>
             <p>Dashboard</p>
           </Link>
-          <Link href={"#"} passHref target="_blank">
+          <Link href={"https://chromewebstore.google.com/detail/glancemeai/pgjkednjpnkamnajfabgfigcldpgpokp"} passHref target="_blank">
             <p>Extension</p>
           </Link>
           <Link href={"/support"} passHref>
@@ -57,7 +57,7 @@ const HomeOneMain = () => {
         </div>
         <div className={style.mainOneItemtwo}>
           <div className={style.mainOneItemtwoSubItemButton}>
-          <Link href={"#"} passHref target="_blank"><button>Add To Chrome</button></Link>
+          <Link href={"https://chromewebstore.google.com/detail/glancemeai/pgjkednjpnkamnajfabgfigcldpgpokp"} passHref target="_blank"><button>Add To Chrome</button></Link>
           </div>
           <div className={style.mainOneItemtwoSubItem}>
             <div className={style.mainOneItemtwoSubItemOne}>

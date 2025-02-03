@@ -49,7 +49,7 @@ export default function LoginContainer() {
         await apis.Verify(payload).then(data => {
             setLoginCall(false)
             if (data.status == 200) {
-                dispatch(setAlert({ data: { message: "Account verified now Login!!", show: true, type: "info" } }))
+                dispatch(setAlert({ data: { message: "Account verified now Login!!", show: true, type: "success" } }))
                 router.push("/login")
             } else {
                 dispatch(setAlert({ data: { message: data?.error, show: true, type: "error" } }))

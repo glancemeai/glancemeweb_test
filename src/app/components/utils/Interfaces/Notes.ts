@@ -5,7 +5,7 @@ interface Notes {
     description:string,
     type: string,
     selectedData: {
-        time: Number,
+        time: number,
         url: string,
         date: Number,
         percentage: string

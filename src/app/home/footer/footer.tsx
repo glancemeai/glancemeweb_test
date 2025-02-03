@@ -1,6 +1,7 @@
 import Image from "next/image";
 import style from "./footer.module.css"
 import { FaFacebook,FaInstagramSquare,FaLinkedin } from "react-icons/fa";
+import Link from "next/link";
 const Footer = () => {
     return (
         <div className={style.main}>
@@ -42,7 +43,7 @@ const Footer = () => {
                             </div>
                             <div className={style.mainHolderTwoRightItem}>
                                 <h4>Tools</h4>
-                                <p>Extension</p>
+                                <Link href={"https://chromewebstore.google.com/detail/glancemeai/pgjkednjpnkamnajfabgfigcldpgpokp"} passHref><p>Extension</p></Link>
                                 <p>App</p>
                             </div>
                         </div>

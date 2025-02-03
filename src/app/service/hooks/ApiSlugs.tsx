@@ -7,6 +7,11 @@ export default function Apis() {
         var result = await APIClient("POST", `${URL}/users/login`, false, data);
         return result;
     }
+    const Logout = async () => {
+        var result = await APIClient("GET", `${URL}/users/logout`, false, null);
+        return result;
+    }
+    
     const Signup = async (data:any) => {
         var result = await APIClient("POST", `${URL}/users/signup`, false, data);
         console.log(result);
@@ -40,6 +45,11 @@ export default function Apis() {
 
     const DeleteNotes = async (data:any) => {
         var result = await APIClient("DELETE", `${URL}/notes/`, false, data);
+        return result;
+    }
+
+    const DeleteAllNotes = async (data:any) => {
+        var result = await APIClient("DELETE", `${URL}/notes/all`, false, data);
         return result;
     }
 
@@ -83,6 +93,7 @@ export default function Apis() {
     // 
     return {
         Login,
+        Logout,
         Signup,
         Verify,
         AllNotes,
@@ -90,6 +101,7 @@ export default function Apis() {
         SingleNotes,
         EditNotes,
         DeleteNotes,
+        DeleteAllNotes,
         CreateFolder,
         DeleteFolder,
         CreatePayment,

@@ -233,7 +233,7 @@
   color: #8b8b8b;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 768px) {
 .mainHolder {
     padding: 5px;
 }
@@ -248,17 +248,17 @@
 .mainHolderHeaderOptionsSearch {
     width: 100%;
 }
+.mainHolderBody {
+  padding: 10px;
+}
+
+.mainHolderBodyRight {
+  display: none;
+}
 }
 
 @media only screen and (min-width: 600px) {
-    .mainHolderHeader {
-        gap: 10px;
-        flex-wrap: wrap;
-    }
 
-.mainHolderHeaderOptionsSearch {
-    width: 100%;
-}
 }
 
 /* Medium devices (landscape tablets, 768px and up) */

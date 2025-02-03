@@ -20,6 +20,7 @@ import { ButtonFour } from '@/app/components/utils/Edit/buttons/Buttons';
 import Apis from '@/app/service/hooks/ApiSlugs';
 import { setAlert } from '@/app/redux/utils/message';
 import type Notes from '@/app/components/utils/Interfaces/Notes';
+import DeleteAlert from '@/app/components/utils/popups/deleteAlert/deleteAlert';
 interface FilterData {
   colors?: string[];
   type?: string;
@@ -63,9 +64,11 @@ const SubHeader = ({
 );
 
 const NotesPage = () => {
-  const { id } = useParams() || {};
+  const params = useParams();
+
   const router = useRouter();
   const dispatch = useDispatch();
+  const [id, setId] = useState("");
 
   const [loading, setLoading] = useState(true);
   const [userId, setUserId] = useState<string>('');
@@ -73,6 +76,14 @@ const NotesPage = () => {
   const [notesData, setNotesData] = useState<any>(null);
   const [filterVisible, setFilterVisible] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [alertShow, setAlertShow] = useState(false);
+  const [folderIdAlert, setFolderIdAlert] = useState("");
+  const [loadingAlert, setLoadingAlert] = useState(false);
+
+  const AlertShowHandler = useCallback((show: boolean, folderId: string) => {
+    setFolderIdAlert(folderId);
+    setAlertShow(show);
+  }, []);
 
   const apis = Apis();
 
@@ -140,14 +151,67 @@ const NotesPage = () => {
         setLoading(false);
       }
     },
-    [apis, searchQuery, userId, dispatch]
+    [apis, searchQuery, id, dispatch]
+  );
+
+
+  const deleteAllNotes = useCallback(
+    async (id: string) => {
+      if (!id) {
+        dispatch(setAlert({ data: { message: "Note Id Not Found", show: true, type: "error" } }));
+        return;
+      }
+      setLoadingAlert(true);
+      const apis = Apis();
+      try {
+        const response = await apis.DeleteAllNotes({ urlCode: id });
+        if (response.status === 200) {
+          AlertShowHandler(false, "");
+          dispatch(setAlert({ data: { message: response.message, show: true, type: "success" } }));
+          router.push('/dashboard'); 
+        } else {
+          dispatch(setAlert({ data: { message: response.message, show: true, type: "error" } }));
+        }
+      } catch (error: any) {
+        dispatch(setAlert({ data: { message: error.message, show: true, type: "error" } }));
+      } finally {
+        setLoadingAlert(false);
+      }
+    },
+    [dispatch, AlertShowHandler, params]
+  );
+
+
+  const deleteNotes = useCallback(
+    async (notesId: string) => {
+      if (!notesId) {
+        dispatch(setAlert({ data: { message: "Note Id Not Found", show: true, type: "error" } }));
+        return;
+      }
+      setLoadingAlert(true);
+      const apis = Apis();
+      try {
+        const response = await apis.DeleteNotes({ notes_token: notesId });
+        if (response.status === 200) {
+          router.refresh()
+          dispatch(setAlert({ data: { message: response.message, show: true, type: "success" } }));
+        } else {
+          dispatch(setAlert({ data: { message: response.message, show: true, type: "error" } }));
+        }
+      } catch (error: any) {
+        dispatch(setAlert({ data: { message: error.message, show: true, type: "error" } }));
+      } finally {
+        setLoadingAlert(false);
+      }
+    },
+    [dispatch,fetchNotes, params]
   );
 
   useEffect(() => {
     fetchUserDetails();
-    if (id) {
-      const noteId = Array.isArray(id) ? id[0] : id;
-      setUserId(noteId);
+    if (params?.id) {
+      const noteId = Array.isArray(params.id) ? params.id[0] : params.id;
+      setId(noteId);
       fetchNotes(noteId);
     } else {
       setLoading(false);
@@ -169,7 +233,7 @@ const NotesPage = () => {
           <div className={style.mainHolderBodyLeft}>
             <div className={style.mainHolderBodyLeftSection}>
                 <p style={{borderBottom:"2px solid black"}}>Notes</p>
-                <p>Mind Map</p>
+                {/* <p>Mind Map</p> */}
             </div>
             <br />
 
@@ -180,17 +244,17 @@ const NotesPage = () => {
                 </div>
                 <div className={style.mainHolderBodyLeftNotesOptionsItems}>
                     <p><IoShareSocialSharp size={20} color="#6086F8"/></p>
-                    <p><RiDeleteBin6Line size={20} color="#F47564"/></p>
+                    <p onClick={() => {AlertShowHandler(true,userId)}}><RiDeleteBin6Line size={20} color="#F47564"/></p>
                 </div>
             </div>
             <div className={style.mainHolderBodyLeftNotesImage}>
                 {notesData?.data[0]?.metaimage ? <Image src={`${notesData?.data[0]?.metaimage ? notesData?.data[0]?.metaimage : "/images/notesArticlelaceHolder.png"}`} alt="image" fill style={{objectFit:"cover"}}  /> : notesData?.data[0]?.type == "youtube" ? <iframe style={{width:"100%",height:"450px"}} src={`https://www.youtube.com/embed/${notesData?.data[0]?.urlCode}`} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe> : ""}
             </div>
-              {loading ? (
-                Array.from({ length: 3 }, (_, index) => <FolderSkeleton key={index} />)
+              {loading ? (<div style={{position:"relative",width:"100%",display:"flex",gap:"20px"}}>{
+                Array.from({ length: 3 }, (_, index) => <FolderSkeleton key={index} />)}</div>
               ) : (
                 notesData?.data?.map((note: Notes, index: string) => (
-                  <NotesItem key={index} loading={false} data={note} />
+                  <NotesItem key={index} loading={false} data={note} deleteNotes={deleteNotes} />
                 ))
               )}
             </div>
@@ -204,6 +268,15 @@ const NotesPage = () => {
         show={filterVisible}
         filterShowHandler={setFilterVisible}
         onFilterApply={(filters:FilterData) => handleSearch(filters)}
+      />
+      <DeleteAlert
+        loading={loadingAlert}
+        show={alertShow}
+        Title="Delete Notes"
+        message="Click On Delete Button Your All Notes and Folder Related to this Notes will be deleted."
+        cancle={AlertShowHandler}
+        folderIdAlert={folderIdAlert}
+        Delete={deleteAllNotes}
       />
     </div>
   );

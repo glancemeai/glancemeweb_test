@@ -1,109 +1,153 @@
 .mainNotesItem {
-    position: relative;
-    width: 100%;
-    height: auto;
-    min-height: 100px;
-    padding: 20px;
-    border-radius: 4px;
-    display: flex;
-    justify-content: space-between;
-    align-items: stretch; /* Ensure child elements take full height */
-    background-color: #ECFCFF;
+  position: relative;
+  width: 100%;
+  height: auto;
+  min-height: 100px;
+  padding: 20px;
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch; /* Ensure child elements take full height */
+  background-color: #ecfcff;
 }
 .mainNotesItemImage {
-    position: relative;
-    width: auto;
-    height: auto;
+  position: relative;
+  width: 250px;
+  height: 200px;
 }
 
 .mainNotesItemDetails {
-    position: relative;
-    width: 100%;
-    height: auto; /* Allow flexible height to match parent */
-    padding: 5px 10px;
-    display: flex;
-    gap: 20px;
-    align-items: stretch; /* Ensure full height alignment */
+  position: relative;
+  width: 100%;
+  height: auto; /* Allow flexible height to match parent */
+  padding: 5px 10px;
+  display: flex;
+  gap: 20px;
+  align-items: stretch; /* Ensure full height alignment */
 }
 
 .mainNotesItemDetailsLine {
-    position: relative;
-    width: 2px;
-    height: 100%;
-    padding: 2px;
-    border-radius: 4px;
-    display: inline-block;
-    background-color: #53C9DD;
+  position: relative;
+  width: 2px;
+  height: 100%;
+  padding: 2px;
+  border-radius: 4px;
+  display: inline-block;
+  background-color: #53c9dd;
 }
 
 .mainNotesItemDetailsText {
-    position: relative;
-    flex-grow: 1; /* Allow text container to expand fully */
-    height: 100%;
-    padding:  10px;
-    display: flex;
-    gap: 10px;
-    flex-direction: column;
+  position: relative;
+  flex-grow: 1; /* Allow text container to expand fully */
+  height: 100%;
+  padding: 10px;
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
 }
 
-
-.mainNotesItemDetailsText h3{
-    text-overflow: ellipsis;
-    overflow: hidden;
-    font-size: 18px;
-    font-weight: 500;
+.mainNotesItemDetailsText h3 {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  font-size: 18px;
+  font-weight: 500;
 }
 
-.mainNotesItemDetailsText p{
-    font-size: 16px;
-    line-height: 24px;
-    font-weight: 400;
+.mainNotesItemDetailsText p {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
 }
 
 .mainNotesItemOptions {
-    position: relative;
-    width: auto;
-    height: 100%;
-    padding: 5px;
-    border-radius: 50%;
-    cursor: pointer;
+  position: relative;
+  width: auto;
+  height: 100%;
+  padding: 5px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  gap: 20px;
 }
 
-
+.mainNotesItemOptionsItem{
+  position: relative;
+  display: flex;
+  gap: 20px;
+}
 .mainNotesItemMenu {
-    position: absolute;
-    width: 150px;
-    height: auto;
-    padding: 10px;
-    background-color: white;
-    border-radius: 4px;
-    display: none;
-    flex-direction: column;
-    gap: 10px;
+  position: absolute;
+  width: 150px;
+  height: auto;
+  padding: 10px;
+  background-color: white;
+  border-radius: 4px;
+  display: none;
+  flex-direction: column;
+  gap: 10px;
   box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
-  rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+    rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
   z-index: 9999 !important;
 }
 
-.mainNotesItemMenu p{
-    position: relative;
+.mainNotesItemMenu p {
+  position: relative;
+  width: 100%;
+  height: auto;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: 400;
+  display: flex;
+  gap: 20px;
+  justify-content: left;
+  align-items: center;
+  cursor: pointer;
+}
+
+.mainNotesItemMenu p:hover {
+  background-color: #eee;
+}
+
+.mainNotesItemOptionsItemTwo:hover .mainNotesItemMenu {
+  display: flex;
+}
+
+@media only screen and (max-width: 600px) {
+  .mainNotesItem {
+    flex-direction: column;
+  }
+
+  .mainNotesItemImage {
     width: 100%;
-    height: auto;
-    padding: 10px 20px;
-    font-size: 16px;
-    font-weight: 400;
-    display: flex;
-    gap: 20px;
-    justify-content: left;
-    align-items: center;
-    cursor: pointer;
+  }
+
+  .mainNotesItemDetails {
+    width: 100%;
+  }
+
+.mainNotesItemDetailsText {
+    width: 100%;
 }
 
-.mainNotesItemMenu p:hover{
-    background-color: #eee;
+  .mainNotesItemOptions {
+    position: absolute;
+    top: 90%;
+    right: 10px;
+  }
 }
 
+@media only screen and (min-width: 600px) {
 
-.mainNotesItemOptions:hover .mainNotesItemMenu {
-    display: flex;
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
 }

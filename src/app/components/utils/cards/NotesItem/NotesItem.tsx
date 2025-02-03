@@ -1,13 +1,16 @@
 import Image from "next/image"
 import style from "./NotesItem.module.css"
 import { BsThreeDotsVertical } from "react-icons/bs";
+import { FiExternalLink } from "react-icons/fi";
 import { FiEdit } from "react-icons/fi";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import Notes from "../../Interfaces/Notes";
+import Link from "next/link";
 
 
 interface NotesCard {
     data?:Notes;
+    deleteNotes?:Function;
     loading:boolean;
 }
 
@@ -27,7 +30,7 @@ const NotesItem = (props:NotesCard) => {
     return (
         <div className={style.mainNotesItem} style={{background:`${hexToRgba(props?.data?.color || "", 0.4)}`}}>            
             <div className={style.mainNotesItemImage} style={{display:`${props?.data?.image ? "flex" : "none"}`}}>
-                <Image src={`${props?.data?.image ? props?.data?.image : "/images/notesArticlelaceHolder.png"}`} alt={`${props?.data?.title}`} width={250} height={200} style={{objectFit:"cover",borderRadius:"8px"}}/>
+                <Image src={`${props?.data?.image ? props?.data?.image : "/images/notesArticlelaceHolder.png"}`} alt={`${props?.data?.title}`} fill style={{objectFit:"cover",borderRadius:"8px"}}/>
             </div>
             <div className={style.mainNotesItemDetails}>
                 <div className={style.mainNotesItemDetailsLine} style={{background:`${props?.data?.color}`}}></div>
@@ -37,10 +40,13 @@ const NotesItem = (props:NotesCard) => {
                 </div>
             </div>
             <div className={style.mainNotesItemOptions}>
-                <p className={style.mainNotesItemOptionsItem}><BsThreeDotsVertical size={20}/></p>
+                <Link href={`${props?.data?.selectedData?.url}&t=${Math.floor(props?.data?.selectedData?.time || 0)}s`} passHref target="_blank"><p className={style.mainNotesItemOptionsItem}><FiExternalLink size={20}/></p></Link>
+                <div className={style.mainNotesItemOptionsItemTwo}>
+                <p ><BsThreeDotsVertical size={20}/></p>
                 <div className={style.mainNotesItemMenu}>
                     <p><FiEdit size={20}/> Edit</p>
-                    <p><RiDeleteBin6Line size={20}/> Delete</p>
+                    <p onClick={() => {props?.deleteNotes ? props?.deleteNotes(props?.data?.notes_token) : ""}}><RiDeleteBin6Line size={20}/> Delete</p>
+                </div>
                 </div>
             </div>
         </div>

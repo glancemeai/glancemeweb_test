@@ -14,9 +14,9 @@ const Card = ({heading,paragraph,tagLine,textSide="right",image,altText}:{headin
           <span>{tagLine}</span>
           <h2>{heading}</h2>
           <p>{paragraph}</p>
-          <button>
+          <Link href={"https://chromewebstore.google.com/detail/glancemeai/pgjkednjpnkamnajfabgfigcldpgpokp"} passHref><button>
             Add to Chrome <BsArrowRight size={20}/>
-          </button>
+          </button></Link>
         </div>
         
       </div>

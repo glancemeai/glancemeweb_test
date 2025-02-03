@@ -86,58 +86,8 @@ const ChatCard = () => {
                     }
                         </>
                     )
-                }) : "No Chat Found" }
-
-                {/* <div className={style.mainCenterItem}>
-                    <div className={style.mainCenterItemRight}>
-                        <p>Lorem ipsum dolor sit amet  adipis elit.</p>
-                    </div>
-                </div>
-                <div className={style.mainCenterItem}>
-                    <div className={style.mainCenterItemLeft}>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                    </div>
-                </div>
-                <div className={style.mainCenterItem}>
-                    <div className={style.mainCenterItemRight}>
-                        <p>Lorem ipsum dolor sit amet  adipis elit.</p>
-                    </div>
-                </div>
-                <div className={style.mainCenterItem}>
-                    <div className={style.mainCenterItemLeft}>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                    </div>
-                </div>
-                <div className={style.mainCenterItem}>
-                    <div className={style.mainCenterItemRight}>
-                        <p>Lorem ipsum dolor sit amet  adipis elit.</p>
-                    </div>
-                </div>
-                <div className={style.mainCenterItem}>
-                    <div className={style.mainCenterItemLeft}>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                    </div>
-                </div>
-                <div className={style.mainCenterItem}>
-                    <div className={style.mainCenterItemRight}>
-                        <p>Lorem ipsum dolor sit amet  adipis elit.</p>
-                    </div>
-                </div>
-                <div className={style.mainCenterItem}>
-                    <div className={style.mainCenterItemLeft}>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                    </div>
-                </div>
-                <div className={style.mainCenterItem}>
-                    <div className={style.mainCenterItemRight}>
-                        <p>Lorem ipsum dolor sit amet  adipis elit.</p>
-                    </div>
-                </div>
-                <div className={style.mainCenterItem}>
-                    <div className={style.mainCenterItemLeft}>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                    </div>
-                </div> */}
+                }) : "" }
+                {ChatData?.data?.summary[0]?.summary && ChatData?.data?.chat?.messages.length > 0 ? "" : "No Chat Found"}
             </div>
             <div className={style.mainFooter}>
                 <div className={style.mainFooterInput}>

@@ -30,7 +30,7 @@ const Section_one = () => {
             height={40}
             style={{ objectFit: "contain" }}
           />
-          <Link href={"#"} passHref target="_blank"><button>
+          <Link href={"https://chromewebstore.google.com/detail/glancemeai/pgjkednjpnkamnajfabgfigcldpgpokp"} passHref target="_blank"><button>
             <FaChrome size={25} color="white" /> Add to Chrome for Free
           </button></Link>
         </div>
