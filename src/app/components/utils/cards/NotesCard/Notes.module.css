@@ -53,17 +53,375 @@
     color: #222;
 }
 
-.mainNotesDetailsOptions{
-    position: relative;
-    width: 100%;
-    height: auto;
+.mainNotesDetailsOptions {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: relative;
 }
 
 .mainNotesDetailsOptions p{
     font-size: 14px;
     font-weight: 400;
     color: #444;
+}
+
+.optionsContainer {
+    position: relative;
+    width: auto;
+    height: auto;
+    font-size: 14px;
+    font-weight: 400;
+    color: #444;
+    margin-left: auto;
+}
+
+.optionsContainer:hover .optionsDropdown {
+    display: flex;
+}
+
+.optionsDropdown {
+    position: absolute;
+    width: 150px;
+    height: auto;
+    padding: 10px;
+    background-color: white;
+    border-radius: 4px;
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
+    rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+    z-index: 9999;
+    right: 0;
+    top: 100%;
+}
+
+.optionItem {
+    position: relative;
+    width: 100%;
+    height: auto;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: 400;
+    display: flex;
+    gap: 20px;
+    justify-content: left;
+    align-items: center;
+    cursor: pointer;
+}
+
+.optionItem:hover {
+    background-color: #eee;
+}
+
+.threeDotIcon {
+    cursor: pointer;
+    color: #6B7280;
+    padding: 4px;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+}
+
+.threeDotIcon:hover {
+    background-color: rgba(107, 114, 128, 0.1);
+}
+
+.moveFolderDropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    z-index: 10;
+    min-width: 200px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.moveFolderModal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.moveFolderContent {
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    width: 400px;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.dialogHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #eee;
+}
+
+.dialogHeader h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.folderList {
+    flex: 1;
+    min-height: 200px;
+    max-height: 400px;
+    overflow-y: auto;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    padding: 8px;
+}
+
+.recursiveFolderList {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    width: 100%;
+}
+
+.recursiveFolderItem {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.folderItem {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+}
+
+.folderItem:hover {
+    background-color: #f5f7fa;
+}
+
+.folderItemSelected {
+    background-color: #e6f2ff;
+    color: #0066cc;
+}
+
+.folderItemSelected .folderIcon {
+    color: #0066cc;
+}
+
+.folderExpandIcon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    color: #666;
+    transition: transform 0.2s ease;
+}
+
+.folderExpandIcon:hover {
+    color: #333;
+}
+
+.folderIcon {
+    color: #666;
+    margin-right: 4px;
+}
+
+.backButton {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border: none;
+    background: none;
+    color: #666;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.backButton:hover {
+    background-color: #f5f7fa;
+    color: #333;
+}
+
+.modalActions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    padding-top: 16px;
+    border-top: 1px solid #eee;
+}
+
+.cancelButton,
+.moveButton {
+    padding: 8px 16px;
+    border-radius: 4px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.cancelButton {
+    background-color: #f5f7fa;
+    color: #666;
+    border-color: #eee;
+}
+
+.cancelButton:hover {
+    background-color: #edf0f5;
+    color: #333;
+}
+
+.moveButton {
+    background-color: #0066cc;
+    color: white;
+}
+
+.moveButton:hover {
+    background-color: #0052a3;
+}
+
+.moveButtonDisabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.deleteModal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999;
+}
+
+.deleteContent {
+    background-color: white;
+    border-radius: 8px;
+    padding: 24px;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.deleteContent h3 {
+    margin: 0 0 16px 0;
+    font-size: 18px;
+    color: #333;
+}
+
+.deleteContent p {
+    margin: 0 0 24px 0;
+    font-size: 14px;
+    color: #666;
+    line-height: 1.5;
+}
+
+.nestedFolderList {
+    margin-left: 20px;
+    border-left: 1px solid #e0e0e0;
+    padding-left: 10px;
+}
+
+.noFolders {
+    text-align: center;
+    color: #999;
+    padding: 20px;
+    font-style: italic;
+}
+
+.deleteButton {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    background-color: #dc3545;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s;
+    z-index: 1000001;
+}
+
+.deleteButton:hover {
+    background-color: #c82333;
+}
+
+.cancelButton {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    background-color: #f5f5f5;
+    color: #666;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.2s;
+    z-index: 1000001;
+}
+
+.cancelButton:hover {
+    background-color: #e0e0e0;
+}
+
+.optionsDropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 200px;
+    background-color: white;
+    border: 1px solid #E5E7EB;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    padding: 8px 0;
+}
+
+.optionItem {
+    display: flex;
+    align-items: center;
+    padding: 10px 16px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.optionItem:hover {
+    background-color: #F3F4F6;
+}
+
+.optionIcon {
+    margin-right: 12px;
+    color: #6B7280;
+    font-size: 16px;
+}
+
+.optionText {
+    font-size: 14px;
+    color: #374151;
+    font-weight: 500;
 }
