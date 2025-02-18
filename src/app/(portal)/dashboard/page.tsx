@@ -32,6 +32,12 @@ interface FilterData {
   title?: string;
 }
 
+interface NotesData {
+  notes: Notes[];
+  folders: Folders[];
+  folderInfo?: any;
+}
+
 const SubHeader = ({
   search,
   onChange,
@@ -82,12 +88,13 @@ const Dashboard = () => {
   const [alertShow, setAlertShow] = useState(false);
   const [filterShow, setFilterShow] = useState(false);
   const [title, setTitle] = useState("");
+  const [folders, setFolders] = useState<any[]>([]);
 
   // Handlers
   const folderShowHandler = (isVisible: boolean) => setNewFolderPopUp(isVisible);
   const filterShowHandler = (isVisible: boolean) => setFilterShow(isVisible);
-  const alertShowHandler = (isVisible: boolean, folderId: string) => {
-    setFolderIdAlert(folderId);
+  const alertShowHandler = (isVisible: boolean, folderId?: string) => {
+    setFolderIdAlert(folderId || "");
     setAlertShow(isVisible);
   };
 
@@ -118,17 +125,92 @@ const Dashboard = () => {
 
     try {
       const response = await apis.AllNotes();
-      if (response.status === 200) {
-        setNotesData(response);
-      } else {
-        dispatch(setAlert({ data: { message: response.message, show: true, type: "error" } }));
+
+      // Log the first note to see its structure
+      if (response?.data?.notes?.length > 0) {
+        console.log('First note structure:', response.data.notes[0]);
+      }
+
+      // Always try to set data if available, without showing any errors
+      if (response?.data) {
+        setNotesData({
+          notes: response.data.notes || [],
+          folders: response.data.folders || [],
+          folderInfo: response.data.folderInfo || null
+        });
       }
     } catch (error: any) {
-      dispatch(setAlert({ data: { message: error.message, show: true, type: "error" } }));
+      // Silently handle any errors
+      console.error('Notes fetch error:', error);
     } finally {
       setLoading(false);
     }
   }, [dispatch]);
+
+  const fetchFolders = useCallback(async () => {
+    const apis = Apis();
+    setLoading(true);
+
+    try {
+      const response = await apis.GetFolders();
+
+      // Always try to set data if available, without showing any errors
+      if (response?.data) {
+        setFolders(response.data);
+      }
+    } catch (error: any) {
+      // Silently handle any errors
+      console.error('Folders fetch error:', error);
+    } finally {
+      setLoading(false);
+    }
+  }, [dispatch]);
+
+  const searchNotesHandler = async (filters: FilterData) => {
+    const apis = Apis();
+    setLoading(true);
+
+    try {
+      const filteredData: Record<string, string> = {};
+      
+      // Safely add filters
+      if (filters.type && filters.type !== "none") {
+        filteredData.type = filters.type;
+      }
+      if (filters.reminder) {
+        filteredData.reminder = String(filters.reminder);
+      }
+      if (title) {
+        filteredData.title = title;
+      }
+
+      // Convert filters to URL query parameters
+      const params = new URLSearchParams(filteredData).toString();
+      const response = await apis.SearchNotes(params);
+
+      if (response.status === 200 && response.data) {
+        setNotesData(response);
+      } else {
+        dispatch(setAlert({ 
+          data: { 
+            message: response.message || 'Failed to search notes', 
+            show: true, 
+            type: "error" 
+          } 
+        }));
+      }
+    } catch (error: any) {
+      dispatch(setAlert({ 
+        data: { 
+          message: error.message || 'An unexpected error occurred', 
+          show: true, 
+          type: "error" 
+        } 
+      }));
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const deleteFolder = async (folderId: string) => {
     if (!folderId) {
@@ -154,67 +236,83 @@ const Dashboard = () => {
     }
   };
 
-  const searchNotesHandler = async (filters: FilterData) => {
-    const apis = Apis();
-    setLoading(true);
-
+  const refreshNotes = useCallback(async () => {
     try {
-      let filteredData = { ...filters };
-        if (filteredData.type === "none") {
-          delete filteredData.type;
-        }
-
-        if(title != ""){
-            filteredData.title = title
-        }
-      // Convert `data` object into URL query parameters
-      const params = new URLSearchParams(filteredData as any).toString();
-      const response = await apis.SearchNotes(params);
-
-      if (response.status === 200) {
-        setNotesData(response);
-      } else {
-        dispatch(setAlert({ data: { message: response.message, show: true, type: "error" } }));
-      }
-    } catch (error: any) {
-      dispatch(setAlert({ data: { message: error.message, show: true, type: "error" } }));
-    } finally {
-      setLoading(false);
+      await fetchNotesData();
+      await fetchFolders();
+    } catch (error) {
+      console.error('Error refreshing notes:', error);
     }
-  };
+  }, [fetchNotesData, fetchFolders]);
+
+  // Method to move a note between folders in local state
+  const moveNoteToFolder = useCallback((noteToken: string, targetFolderId: string) => {
+    setNotesData((prevData: NotesData | null) => {
+      if (!prevData?.notes) return prevData;
+
+      const updatedNotes = prevData.notes.map(note => {
+        if (note.notes_token === noteToken) {
+          return { ...note, folderId: targetFolderId };
+        }
+        return note;
+      });
+
+      return {
+        ...prevData,
+        notes: updatedNotes
+      };
+    });
+  }, []);
 
   // Effects
   useEffect(() => {
     userDetails();
     fetchNotesData();
-  }, [userDetails, fetchNotesData]);
+    fetchFolders();
+  }, [userDetails, fetchNotesData, fetchFolders]);
 
   // Render Helper
   const renderContent = () => {
-      if (loading) {
-        return Array.from({ length: 3 }, (_, index) => <FolderSkeleton key={index} />);
-      }
- 
-
-    if (!notesData?.data?.folders?.length && !notesData?.data?.notes?.length) {
-      return (
-        <div className={style.mainHolderBodyEmpty}>
-          <div className={style.mainHolderBodyEmptyImage}>
-            <Image src="/images/emptyfolder.png" alt="Empty Folder" fill style={{ objectFit: "contain" }} />
-          </div>
-          <p>This folder is empty</p>
-        </div>
-      );
-    }
-
     return (
       <>
-        {notesData?.data?.folders?.map((folder: Folders, index: string) => (
-          <FolderCard key={index} AlertShowHandler={alertShowHandler} loading={loading} data={folder} />
-        ))}
-        {notesData?.data?.notes?.map((note: Notes, index: string) => (
-          <NotesCard key={index} loading={loading} data={note} />
-        ))}
+        {loading ? (
+          <>
+            {Array.from({ length: 3 }).map((_, index) => (
+              <FolderCard 
+                key={index} 
+                loading={true} 
+                AlertShowHandler={() => {}} 
+                data={notesData?.folders || []}
+              />
+            ))}
+            {Array.from({ length: 6 }).map((_, index) => (
+              <NotesCard key={index} loading={true} />
+            ))}
+          </>
+        ) : (
+          <>
+            {notesData?.folders?.map((folder: Folders, index: number) => (
+              <FolderCard 
+                key={index} 
+                AlertShowHandler={alertShowHandler} 
+                loading={loading} 
+                data={folder}
+                folders={notesData?.folders || []}
+                refreshFolders={refreshNotes}
+              />
+            ))}
+            {notesData?.notes?.map((note: Notes, index: string) => (
+              <NotesCard 
+                key={index} 
+                data={note} 
+                loading={loading} 
+                folders={notesData?.folders || []} 
+                refreshNotes={refreshNotes} 
+                moveNoteToFolder={moveNoteToFolder} // Pass the method
+              />
+            ))}
+          </>
+        )}
       </>
     );
   };

@@ -4,7 +4,8 @@ interface Folders {
     createdBy: string,
     sharedWith: string[],
     parentFolder: string | null,
-    createdAt: string
+    createdAt: string,
+    children?: Folders[]
 }
 
 export default Folders

@@ -19,13 +19,13 @@ const Header = () => {
                 </div></Link>
                 <div className={style.mainHeaderHolderMenu} >
                     <div className={style.mainHeaderHolderMenuItem} >
-                        <Link href={"/Home"} passHref ><p>Home</p></Link>
+                        <Link href={"/home"} passHref ><p>Home</p></Link>
                     </div>
                     <div className={style.mainHeaderHolderMenuItem} >
                         <Link href={"https://chromewebstore.google.com/detail/glancemeai/pgjkednjpnkamnajfabgfigcldpgpokp"} passHref target="_blank"><p>Extension</p></Link>
                     </div>
                     <div className={style.mainHeaderHolderMenuItem} >
-                        <Link href={"/contact"} passHref><p>Contact</p></Link>
+                        <Link href={"/support"} passHref><p>Contact</p></Link>
                     </div>
                     <div className={style.mainHeaderHolderMenuItem} >
                         <Link href={"/privacy"} passHref><p>Privacy</p></Link>

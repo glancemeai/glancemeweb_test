@@ -2,6 +2,7 @@ import Image from "next/image";
 import style from "./footer.module.css"
 import { FaFacebook,FaInstagramSquare,FaLinkedin } from "react-icons/fa";
 import Link from "next/link";
+import { FaXTwitter, FaYoutube } from "react-icons/fa6";
 const Footer = () => {
     return (
         <div className={style.main}>
@@ -32,14 +33,14 @@ const Footer = () => {
                             <div className={style.mainHolderTwoRightItem}>
                                 <h4>Help and services</h4>
                                 <p>How does it work</p>
-                                <p>FAQs</p>
-                                <p>Contacts</p>
+                                <Link href={"/faqs"} passHref><p>FAQs</p></Link>
+                                <Link href={"/support"} passHref><p>Contacts</p></Link>
                             </div>
                             <div className={style.mainHolderTwoRightItem}>
                                 <h4>To Explore</h4>
                                 <p>Blogs</p>
                                 <p>Docs</p>
-                                <p>Privacy</p>
+                                <Link href={"/privacy"} passHref><p>Privacy</p></Link>
                             </div>
                             <div className={style.mainHolderTwoRightItem}>
                                 <h4>Tools</h4>
@@ -61,9 +62,11 @@ const Footer = () => {
                         <p>© 2025 Glanceme.Ai</p>
                         </div>
                         <div className={style.mainHolderthreeItemTwo}>
-                        <p><FaFacebook size={25} color="white"/></p>
-                        <p><FaInstagramSquare size={25} color="white"/></p>
-                        <p><FaLinkedin size={25} color="white"/></p>
+                        <Link href={"https://www.linkedin.com/company/glancemeai/"} passHref target="_blank"><p><FaLinkedin size={25} color="white"/></p></Link>
+                        <Link href={"https://x.com/GlancemeAi"} passHref target="_blank"><p><FaXTwitter size={25} color="white"/></p></Link>
+                        <Link href={"https://www.instagram.com/glancemeai/"} passHref target="_blank"><p><FaInstagramSquare size={25} color="white"/></p></Link>
+                        <Link href={"https://www.facebook.com/glancemeai"} passHref target="_blank"><p><FaFacebook size={25} color="white"/></p></Link>
+                        <Link href={"https://www.youtube.com/@Glanceme"} passHref target="_blank"><p><FaYoutube size={25} color="white"/></p></Link>
                     </div>
                     </div>
                 </div>

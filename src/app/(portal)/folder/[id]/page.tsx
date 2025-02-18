@@ -110,11 +110,13 @@ const Folder = () => {
     setFilterShow(show);
   }, []);
 
-  const AlertShowHandler = useCallback((show: boolean, folderId: string) => {
-    setFolderIdAlert(folderId);
+  const AlertShowHandler = useCallback((show: boolean, folderId?: string) => {
+    if (folderId) {
+      setFolderIdAlert(folderId);
+    }
     setAlertShow(show);
   }, []);
-
+  
   const userDetails = useCallback(async () => {
     const apis = Apis();
     try {

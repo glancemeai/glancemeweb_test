@@ -40,7 +40,18 @@ const NotesItem = (props:NotesCard) => {
                 </div>
             </div>
             <div className={style.mainNotesItemOptions}>
-                <Link href={`${props?.data?.selectedData?.url}&t=${Math.floor(props?.data?.selectedData?.time || 0)}s`} passHref target="_blank"><p className={style.mainNotesItemOptionsItem}><FiExternalLink size={20}/></p></Link>
+                <a 
+                    href={
+                        props?.data?.type === 'youtube' 
+                            ? `${props?.data?.selectedData?.url}&t=${Math.floor(props?.data?.selectedData?.time || 0)}s`
+                            : props?.data?.urlCode || '#'
+                    } 
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={style.mainNotesItemOptionsItem}
+                >
+                    <FiExternalLink size={20}/>
+                </a>
                 <div className={style.mainNotesItemOptionsItemTwo}>
                 <p ><BsThreeDotsVertical size={20}/></p>
                 <div className={style.mainNotesItemMenu}>
@@ -54,4 +65,3 @@ const NotesItem = (props:NotesCard) => {
 }
 
 export default NotesItem
-

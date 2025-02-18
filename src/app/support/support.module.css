@@ -14,7 +14,7 @@
     width: 100%;
     max-width: 450px;
     height: auto;
-    padding: 10px;
+    padding: 30px 20px;
     margin: 10px 0px;
     border-radius: 8px;
     background-color: white;
@@ -22,4 +22,9 @@
     gap: 20px;
     flex-direction: column;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;   
+}
+
+.mainHolderHeading h1{
+    font-size: 25px;
+    font-weight: 400;
 }

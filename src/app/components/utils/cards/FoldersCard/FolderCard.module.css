@@ -1,0 +1,246 @@
+.mainFolder {
+    position: relative;
+    width: 100%;
+    max-width: 250px;
+    height: auto;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+
+}
+
+
+.mainFolderImage {
+    position: relative;
+    width: 100%;
+    height: auto;
+    padding: 20px 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1.5px solid #d8d8d8;
+}
+
+
+.mainFolderDetails {
+    position: relative;
+    width: 100%;
+    height: auto;
+    padding: 10px 0px;
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+    justify-content: left;
+}
+
+.mainFolderDetails p {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 500;
+    color: #222;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.mainFolderDetailsOptions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 8px;
+}
+
+.mainFolderDetailsOptions p {
+    font-size: 12px;
+    color: #666;
+}
+
+.mainFolderDetailsOptionsShow {
+    position: relative;
+    cursor: pointer;
+    padding: 5px; /* Slightly increases the hover area */
+}
+
+.mainNotesItemMenu {
+    position: absolute;
+    bottom: -5px; /* Moves it a bit lower */
+    right: -10px; /* Moves it slightly to the right */
+    transform: translateY(100%);
+    background-color: white;
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    z-index: 9999;
+    min-width: 160px;
+    display: none; /* Initially hidden */
+    padding: 8px 0;
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+    visibility: hidden;
+}
+
+/* Expanding the hoverable area */
+.mainFolderDetailsOptionsShow::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 20px; /* Expands hover area downward */
+    bottom: -20px; /* Makes sure it's connected to the menu */
+    left: 0;
+}
+
+/* Keep menu open when hovering over dots or menu */
+.mainFolderDetailsOptionsShow:hover .mainNotesItemMenu,
+.mainNotesItemMenu:hover {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+}
+
+.mainNotesItemMenu p {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.mainNotesItemMenu p:hover {
+    background-color: #f5f5f5;
+}
+
+.mainNotesItemMenu svg {
+    color: #666;
+}
+
+/* Move Modal Styles */
+.moveModal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.moveModalContent {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 400px;
+}
+
+.moveModalContent h3 {
+    margin: 0 0 16px;
+    color: #333;
+    font-size: 18px;
+}
+
+.folderList {
+    max-height: 300px;
+    overflow-y: auto;
+    margin-bottom: 16px;
+}
+
+.folderItem {
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.folderItem:hover {
+    background-color: #f5f5f5;
+}
+
+.folderItem.selected {
+    background-color: #e3f2fd;
+}
+
+.modalButtons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.modalButtons button {
+    padding: 8px 16px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.modalButtons button:first-child {
+    background-color: #f5f5f5;
+    color: #666;
+}
+
+.modalButtons button:last-child {
+    background-color: #2196f3;
+    color: white;
+}
+
+.modalButtons button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.nestedFolderList {
+  max-height: 300px;
+  overflow-y: auto;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.nestedFolderItem {
+  position: relative;
+  margin-bottom: 5px;
+}
+
+.folderItem {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  border-radius: 4px;
+}
+
+.folderItem:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.folderItem.selected {
+  background-color: rgba(33, 150, 243, 0.1);
+  color: #2196F3;
+}
+
+.expandIcon {
+  margin-right: 8px;
+  display: flex;
+  align-items: center;
+  color: #757575;
+}
+
+.folderName {
+  flex-grow: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

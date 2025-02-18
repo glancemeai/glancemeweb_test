@@ -1,7 +1,10 @@
+import Header from "../home/header/header";
 import style from "./privacy.module.css"
 
 const PrivacyPage = () => {
     return (
+        <>
+        <Header></Header>
         <div className={style.main}>
             <div className={style.mainHolder}>
                 <div className={style.mainContainer}>
@@ -213,6 +216,7 @@ const PrivacyPage = () => {
                 </div>
             </div>
         </div >
+        </>
     )
 }
 
