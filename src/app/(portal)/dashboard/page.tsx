@@ -117,7 +117,7 @@ const Dashboard = () => {
     } finally {
       setLoading(false);
     }
-  }, [dispatch, router]);
+  }, [router, dispatch]);
 
   const fetchNotesData = useCallback(async () => {
     const apis = Apis();
@@ -126,12 +126,9 @@ const Dashboard = () => {
     try {
       const response = await apis.AllNotes();
 
-      // Log the first note to see its structure
       if (response?.data?.notes?.length > 0) {
         console.log('First note structure:', response.data.notes[0]);
       }
-
-      // Always try to set data if available, without showing any errors
       if (response?.data) {
         setNotesData({
           notes: response.data.notes || [],
@@ -140,12 +137,11 @@ const Dashboard = () => {
         });
       }
     } catch (error: any) {
-      // Silently handle any errors
       console.error('Notes fetch error:', error);
     } finally {
       setLoading(false);
     }
-  }, [dispatch]);
+  }, []);
 
   const fetchFolders = useCallback(async () => {
     const apis = Apis();
@@ -154,7 +150,6 @@ const Dashboard = () => {
     try {
       const response = await apis.GetFolders();
 
-      // Always try to set data if available, without showing any errors
       if (response?.data) {
         setFolders(response.data);
       }
@@ -164,7 +159,7 @@ const Dashboard = () => {
     } finally {
       setLoading(false);
     }
-  }, [dispatch]);
+  }, []);
 
   const searchNotesHandler = async (filters: FilterData) => {
     const apis = Apis();
@@ -184,7 +179,6 @@ const Dashboard = () => {
         filteredData.title = title;
       }
 
-      // Convert filters to URL query parameters
       const params = new URLSearchParams(filteredData).toString();
       const response = await apis.SearchNotes(params);
 
@@ -226,6 +220,7 @@ const Dashboard = () => {
       if (response.status === 200) {
         alertShowHandler(false, "");
         fetchNotesData();
+        dispatch(setAlert({data: {message: "Folder Deleted Succesfully", show: true, type: "success"}}))
       } else {
         dispatch(setAlert({ data: { message: response.message, show: true, type: "error" } }));
       }
@@ -298,7 +293,7 @@ const Dashboard = () => {
                 loading={loading} 
                 data={folder}
                 folders={notesData?.folders || []}
-                refreshFolders={refreshNotes}
+                refresh={refreshNotes}
               />
             ))}
             {notesData?.notes?.map((note: Notes, index: string) => (
@@ -308,7 +303,7 @@ const Dashboard = () => {
                 loading={loading} 
                 folders={notesData?.folders || []} 
                 refreshNotes={refreshNotes} 
-                moveNoteToFolder={moveNoteToFolder} // Pass the method
+                moveNoteToFolder={moveNoteToFolder} 
               />
             ))}
           </>

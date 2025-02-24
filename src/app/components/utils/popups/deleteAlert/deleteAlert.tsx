@@ -23,7 +23,7 @@ const DeleteAlert = (props:DeleteProps) => {
                     <p>{props?.message}</p>
                 </div>
                 <div className={style.mainDeleteAlertHolderButton}>
-                    <ButtonTwo name="cancle" onClick={() => {props?.cancle(false)}}/>
+                    <ButtonTwo name="Cancel" onClick={() => {props?.cancle(false)}}/>
                     <ButtonSix name="Delete" loading={props?.loading} loadingText={"Deleting"} onClick={() => {props?.Delete(props?.folderIdAlert)}}/>
                 </div>
             </div>

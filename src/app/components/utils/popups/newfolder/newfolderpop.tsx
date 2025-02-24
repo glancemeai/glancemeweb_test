@@ -57,11 +57,17 @@ const NewFolderPopUp = (props:any) => {
         setName(data)
     }
 
+    const handlekeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+        if(event.key == "Enter" && name.trim() != "") {
+            CreateFolderHandler()
+        }
+    }
+
     useEffect(() => {
         setshow(props?.show)
     },[props?.show])
     return (
-        <div className={style.main} style={{display:`${show ? "block" : "none"}`}}>
+        <div className={style.main} style={{display:`${show ? "block" : "none"}`}} onKeyDown={handlekeyDown} tabIndex={0}>
             <div className={style.mainClose} onClick={() => {folderShowHandle(false)}}></div>
             <div className={style.mainHolder}>
                 <div className={style.mainHolderHeader}>
@@ -71,7 +77,7 @@ const NewFolderPopUp = (props:any) => {
                     <InputTen placeholder={"Enter Folder Name"} value={name} onChange={nameHandler}/>
                 </div>
                 <div className={style.mainHolderButton}>
-                    <ButtonTwo name="cancle" onClick={() => {folderShowHandle(false)}}/>
+                    <ButtonTwo name="cancel" onClick={() => {folderShowHandle(false)}}/>
                     <ButtonSix name="Create" loading={loading} loadingText={"creating"} onClick={CreateFolderHandler}/>
                 </div>
             </div>

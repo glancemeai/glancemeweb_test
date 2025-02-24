@@ -65,21 +65,20 @@ export default function Apis() {
 
     const EditNotes = async (data: {
         notes_token?: string,
-        folderId?: string,
-        title?: string,
-        description?: string,
         color?: string,
+        description?: string,
+        title?: string,
+        folderId?: string,
         reminder?: boolean,
         reminderDate?: string
     }) => {
         console.log('EditNotes API Call - Input:', data);
-        // Changed to match the endpoint that works for note creation
-        var result = await APIClient("PUT", `${URL}/notes/edit`, true, {
+        var result = await APIClient("PUT", `${URL}/notes`, true, {
             notes_token: data.notes_token,
-            folder_id: data.folderId,
-            title: data.title,
-            description: data.description,
             color: data.color,
+            description: data.description,
+            title: data.title,
+            folder_id: data.folderId,
             reminder: data.reminder,
             reminder_date: data.reminderDate
         });
@@ -160,31 +159,40 @@ export default function Apis() {
             var result = await APIClient("GET", `${URL}/folder`, true, null);
             
             if (result && result.status === 200) {
-                const folders = Array.isArray(result.data) ? result.data : [];
-                
-                // Create a map of all folders
-                const folderMap = new Map();
+                const folders: Folders[] = Array.isArray(result.data) ? result.data : [];
+    
+                const folderMap = new Map<string, Folders & { children: Folders[] }>();
                 folders.forEach(folder => {
                     folderMap.set(folder._id, {
                         ...folder,
-                        isRoot: true // Initially mark all as root
+                        children: [] // Initialize children array
                     });
                 });
 
-                // Identify non-root folders
+                const rootFolders: (Folders & { children: Folders[] })[] = [];
+                
                 folders.forEach(folder => {
-                    if (folder.parentFolder) {
+                    if (!folder.parentFolder) {
+                        rootFolders.push(folderMap.get(folder._id)!);
+                    } else {
                         const parent = folderMap.get(folder.parentFolder);
                         if (parent) {
-                            folderMap.get(folder._id).isRoot = false;
+                            parent.children.push(folderMap.get(folder._id)!);
+                        } else {
+                            rootFolders.push(folderMap.get(folder._id)!);
                         }
                     }
                 });
 
-                // Filter to only return root folders
-                const rootFolders = folders.filter(folder => {
-                    const folderData = folderMap.get(folder._id);
-                    return folderData.isRoot;
+                // Debug logging
+                console.log('Processed Folders:', {
+                    totalFolders: folders.length,
+                    rootFolders: rootFolders.length,
+                    rootFolderDetails: rootFolders.map(f => ({
+                        id: f._id,
+                        name: f.name,
+                        childrenCount: f.children.length
+                    }))
                 });
 
                 return {

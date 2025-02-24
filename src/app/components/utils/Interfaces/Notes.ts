@@ -1,4 +1,5 @@
 interface Notes {
+    _id: string;
     color: string,
     urlCode: string,
     title: string,

@@ -52,11 +52,11 @@ export default function LoginContainer() {
                 dispatch(setAlert({ data: { message: "Account verified now Login!!", show: true, type: "success" } }))
                 router.push("/login")
             } else {
-                dispatch(setAlert({ data: { message: data?.error, show: true, type: "error" } }))
+                dispatch(setAlert({ data: { message: data.message || "Verification failed", show: true, type: "error" } }))
             }
         }).catch(error => {
                 setLoginCall(false)
-                dispatch(setAlert({ data: { message: error?.error, show: true, type: "error" } }))
+                dispatch(setAlert({ data: { message: error.message || "Verification failed", show: true, type: "error" } }))
         });
 
     }
@@ -79,7 +79,7 @@ export default function LoginContainer() {
             if (data.status == 201) {
                 setShowOTP(true);
             } else {
-                dispatch(setAlert({ data: { message: data?.error, show: true, type: "error" } }))
+                dispatch(setAlert({ data: { message: data.message || "Signup failed", show: true, type: "error" } }))
             }
         })
             .catch(error => {
@@ -87,7 +87,7 @@ export default function LoginContainer() {
                 console.log(error);
                 
                 setLoginCall(false)
-                dispatch(setAlert({ data: { message: error.message, show: true, type: "error" } }))
+                dispatch(setAlert({ data: { message: error.message || "Signup failed", show: true, type: "error" } }))
             });
 
     }

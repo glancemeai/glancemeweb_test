@@ -16,7 +16,7 @@ export default function Alert() {
     border: "",
     icon: <GoIssueClosed size={20} />,
   });
-  const data = useSelector((state: RootState) => state.AlertSlice.data);
+  const data = useSelector((state: RootState) => state.message.data);
 
   const handler = () => {
     if (data.type == "success") {

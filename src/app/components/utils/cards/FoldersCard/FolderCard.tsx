@@ -18,7 +18,7 @@ interface FolderCardProps {
   loading: boolean;
   AlertShowHandler: (show: boolean, id?: string) => void;
   folders?: Folders[];
-  refreshFolders?: () => void;
+  refresh?: () => void;
 }
 
 interface NestedFolder extends Folders {
@@ -113,17 +113,13 @@ const FolderCard = (props: FolderCardProps) => {
     setShowOptions(false);
   };
 
+  const handleCancelMove = () => {
+    setShowMoveModal(false);
+    setSelectedFolderId("");
+  }
+
   const handleMove = async () => {
-    if (!selectedFolderId) {
-      dispatch(setAlert({
-        data: {
-          message: "Please select a folder",
-          show: true,
-          type: "error"
-        }
-      }));
-      return;
-    }
+    if (!selectedFolderId) return;
 
     const apis = Apis();
     try {
@@ -138,8 +134,8 @@ const FolderCard = (props: FolderCardProps) => {
           }
         }));
         setShowMoveModal(false);
-        if (props.refreshFolders) {
-          props.refreshFolders();
+        if (props.refresh) {
+          props.refresh();
         }
       } else {
         throw new Error(response.message);
@@ -203,7 +199,7 @@ const FolderCard = (props: FolderCardProps) => {
               onSelectFolder={setSelectedFolderId}
             />
             <div className={style.modalButtons}>
-              <button onClick={() => setShowMoveModal(false)}>Cancel</button>
+              <button onClick={handleCancelMove}>Cancel</button>
               <button 
                 onClick={handleMove}
                 disabled={!selectedFolderId}

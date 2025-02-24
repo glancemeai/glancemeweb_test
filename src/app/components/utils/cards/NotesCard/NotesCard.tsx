@@ -9,8 +9,12 @@ import Folders from '../../Interfaces/Folders';
 import DateCreate from '../../action/date';
 import Link from 'next/link';
 import Apis from '../../../../service/hooks/ApiSlugs';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../../../redux/store';
 import { setAlert } from '../../../../redux/utils/message';
+import { setAllFolders } from '../../../../redux/utils/folders';
+import { MdOutlineDriveFileMove } from 'react-icons/md';
+import { RiDeleteBin6Line } from 'react-icons/ri';
 
 interface NotesCard {
   data?:Notes;
@@ -18,45 +22,38 @@ interface NotesCard {
   folders?: Folders[]; 
   moveNoteToFolder?: (noteToken: string, targetFolderId: string) => void;
   refreshNotes?: () => void;
+  AlertShowHandler?: (show: boolean, id?: string) => void; // Add this line
+
 }
 
 const NotesCard = (props: NotesCard) => {
+ 
   const [showOptions, setShowOptions] = useState(false);
   const [showMoveFolder, setShowMoveFolder] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [selectedFolderId, setSelectedFolderId] = useState<string | null>(null);
-  const [currentFolderId, setCurrentFolderId] = useState<string | null>(null);
-  const [folderHistory, setFolderHistory] = useState<string[]>([]);
-  const [allFolders, setAllFolders] = useState<Folders[]>([]);
+  const [currentFolderPath, setCurrentFolderPath] = useState<string[]>([]);
+  const [hasFetchedFolders, setHasFetchedFolders] = useState(false);
   const dispatch = useDispatch();
   const apis = Apis();
 
-  useEffect(() => {
-    const initializeFolders = async () => {
-      // Prevent multiple calls if folders are already loaded
-      if (allFolders.length > 0) return;
+  // Use Redux selector to get folders
+  const allFolders = useSelector((state: RootState) => state.folders.allFolders);
 
+  useEffect(() => {
+    const fetchFolders = async () => {
+      if (hasFetchedFolders || allFolders.length > 0) return;
+      
       try {
         const foldersResponse = await apis.GetFolders();
-        
-        if (foldersResponse.status === 200 && foldersResponse.data.length > 0) {
-          // Directly set the nested folders from API
-          setAllFolders(foldersResponse.data);
-        } else {
-          // Dispatch an alert if no folders found
-          dispatch(setAlert({
-            data: {
-              message: "No folders available",
-              show: true,
-              type: "info"
-            }
-          }));
+        if (foldersResponse.status === 200) {
+          dispatch(setAllFolders(foldersResponse.data));
+          setHasFetchedFolders(true);
         }
       } catch (error) {
-        // Handle any errors during folder retrieval
         dispatch(setAlert({
           data: {
-            message: "Failed to retrieve folders",
+            message: "Failed to fetch folders",
             show: true,
             type: "error"
           }
@@ -64,11 +61,21 @@ const NotesCard = (props: NotesCard) => {
       }
     };
 
-    // Initialize folders only when needed
-    if (showMoveFolder) {
-      initializeFolders();
+    fetchFolders();
+  }, [apis, dispatch, hasFetchedFolders]);
+
+  const currentLevelFolders = useMemo(() => {
+    // If no current folder path, show only root folders
+    if (currentFolderPath.length === 0) {
+      return allFolders.filter(folder => 
+        !folder.parentFolder || folder.parentFolder === null
+      );
     }
-  }, [showMoveFolder, allFolders.length]);
+    
+    // Show children of the current folder in the path
+    const currentFolderId = currentFolderPath[currentFolderPath.length - 1];
+    return allFolders.filter(folder => folder.parentFolder === currentFolderId);
+  }, [allFolders]);
 
   const RecursiveFolderList: React.FC<{
     parentFolderId?: string | null;
@@ -77,137 +84,112 @@ const NotesCard = (props: NotesCard) => {
   }> = ({ parentFolderId = null, depth = 0, folders = allFolders }) => {
     // Get current level folders
     const currentLevelFolders = useMemo(() => {
-      return folders.filter(folder => {
-        if (parentFolderId === null) {
-          return !folder.parentFolder;
-        }
-        return folder.parentFolder === parentFolderId;
-      });
-    }, [parentFolderId, folders]);
+      // If no current folder path, show only root folders
+      if (currentFolderPath.length === 0) {
+        // Explicitly filter root folders (no parent or parent is null/undefined)
+        return folders.filter(folder => 
+          !folder.parentFolder || folder.parentFolder === null
+        );
+      }
+      
+      // Show children of the current folder in the path
+      const currentFolderId = currentFolderPath[currentFolderPath.length - 1];
+      return folders.filter(folder => folder.parentFolder === currentFolderId);
+    }, [currentFolderPath, folders]);
 
-    // Expanded folders state
-    const [expandedFolders, setExpandedFolders] = useState<Set<string>>(new Set());
-
-    // Toggle folder expansion
-    const toggleExpand = (folderId: string, e: React.MouseEvent) => {
-      e.stopPropagation();
-      setExpandedFolders(prev => {
-        const newSet = new Set(prev);
-        if (newSet.has(folderId)) {
-          newSet.delete(folderId);
-        } else {
-          newSet.add(folderId);
-        }
-        return newSet;
-      });
+    const handleFolderSelect = (folderId: string) => {
+      setSelectedFolderId(folderId);
     };
 
-    // No folders to display
-    if (!currentLevelFolders.length) {
-      return null;
-    }
+    const handleFolderDoubleClick = (folder: Folders) => {
+      // Safely check for children
+      const children = folder.children ?? [];
+      
+      // If folder has children, drill down
+      if (children.length > 0) {
+        setCurrentFolderPath(prev => [...prev, folder._id]);
+        // Reset selected folder when drilling down
+        setSelectedFolderId(null);
+      } else {
+        // If no children, just select the folder
+        setSelectedFolderId(folder._id);
+      }
+    };
+
+    const handleBackNavigation = () => {
+      if (currentFolderPath.length > 0) {
+        // Remove the last folder from the path
+        setCurrentFolderPath(prev => prev.slice(0, -1));
+        // Reset selected folder when going back
+        setSelectedFolderId(null);
+      }
+    };
 
     return (
-      <div className={style.recursiveFolderList}>
-        {currentLevelFolders.map(folder => {
-          // Check if folder has children
-          const hasChildren = folder.children && folder.children.length > 0;
-          const isExpanded = expandedFolders.has(folder._id);
+      <div className={style.folderListContainer}>
+        {/* Back navigation */}
+        {currentFolderPath.length > 0 && (
+          <div 
+            className={style.backButton} 
+            onClick={handleBackNavigation}
+          >
+            <FaArrowLeft /> Back to Parent Folder
+          </div>
+        )}
 
-          return (
-            <div key={folder._id} className={style.recursiveFolderItem}>
+        <div className={style.recursiveFolderList}>
+          {currentLevelFolders.map(folder => {
+            // Safely check for children
+            const hasChildren = (folder.children?.length ?? 0) > 0;
+            
+            return (
               <div 
-                className={`${style.folderItem} ${selectedFolderId === folder._id ? style.folderItemSelected : ''}`}
-                style={{ paddingLeft: `${depth * 20}px` }}
-                onClick={() => handleFolderSelect(folder._id)}
-                onDoubleClick={() => handleFolderDoubleClick(folder._id)}
+                key={folder._id} 
+                className={`${style.recursiveFolderItem} ${depth > 0 ? style.nestedFolder : ''}`}
               >
-                {hasChildren && (
-                  <span 
-                    className={style.folderExpandIcon}
-                    onClick={(e) => toggleExpand(folder._id, e)}
-                  >
-                    {isExpanded ? <FaChevronDown /> : <FaChevronRight />}
-                  </span>
-                )}
-                <FaFolder className={style.folderIcon} />
-                <span>{folder.name}</span>
+                <div 
+                  className={`${style.folderItem} ${selectedFolderId === folder._id ? style.folderItemSelected : ''}`}
+                  onClick={() => handleFolderSelect(folder._id)}
+                  // onDoubleClick={() => handleFolderDoubleClick(folder)}
+                >
+                  {hasChildren && (
+                    <span className={style.folderExpandIcon}>
+                      <FaChevronRight />
+                    </span>
+                  )}
+                  
+                  {hasChildren ? <FaFolderOpen /> : <FaFolder />}
+                  
+                  <span>{folder.name}</span>
+                  
+                  {hasChildren && (
+                    <span className={style.childCount}>
+                      {folder.children?.length ?? 0} subfolder{(folder.children?.length ?? 0) !== 1 ? 's' : ''}
+                    </span>
+                  )}
+                </div>
               </div>
-
-              {hasChildren && isExpanded && (
-                <RecursiveFolderList
-                  parentFolderId={folder._id}
-                  depth={depth + 1}
-                  folders={folder.children}
-                />
-              )}
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
     );
   };
 
-  const handleFolderDoubleClick = (folderId: string) => {
-    // Find the specific folder by ID
-    const clickedFolder = allFolders.find(folder => folder._id === folderId);
-    
-    // Check if folder has children using the new nested structure
-    const hasChildren = clickedFolder?.children && clickedFolder.children.length > 0;
-    
-    if (hasChildren) {
-      // Update folder history and current folder
-      setFolderHistory(prev => [...prev, currentFolderId || 'root']);
-      setCurrentFolderId(folderId);
-      
-      // Reset selected folder when navigating
-      setSelectedFolderId(null);
-    } else {
-      // If no children, just select the folder
-      setSelectedFolderId(folderId);
-    }
-  };
-
-  const getVisibleFolders = () => {
-    if (!currentFolderId) {
-      // If no current folder, show root-level folders
-      return allFolders.filter(folder => !folder.parentFolder);
-    }
-    
-    // Find the current folder
-    const currentFolder = allFolders.find(folder => folder._id === currentFolderId);
-    
-    // Return children of the current folder
-    return currentFolder?.children || [];
-  };
-
-  const handleBack = () => {
-    if (folderHistory.length > 0) {
-      const previousFolder = folderHistory[folderHistory.length - 1];
-      setCurrentFolderId(previousFolder === 'root' ? null : previousFolder);
-      setFolderHistory(prev => prev.slice(0, -1));
-    }
-  };
-
-  const handleFolderSelect = (folderId: string) => {
-    setSelectedFolderId(folderId);
-  };
-
   const renderMoveFolderDialog = () => {
     if (!showMoveFolder) return null;
+
+    const handleCancelMove = () => {
+      setShowMoveFolder(false);
+      setSelectedFolderId(null); // Reset selected folder
+    };
 
     return (
       <div className={style.moveFolderModal}>
         <div className={style.moveFolderContent}>
           <div className={style.dialogHeader}>
             <h3>Move to Folder</h3>
-            {folderHistory.length > 0 && (
-              <button className={style.backButton} onClick={handleBack}>
-                <FaArrowLeft /> Back
-              </button>
-            )}
           </div>
-          
           <div className={style.folderList}>
             <RecursiveFolderList />
           </div>
@@ -215,7 +197,7 @@ const NotesCard = (props: NotesCard) => {
           <div className={style.modalActions}>
             <button 
               className={style.cancelButton} 
-              onClick={() => setShowMoveFolder(false)}
+              onClick={handleCancelMove}
             >
               Cancel
             </button>
@@ -232,69 +214,12 @@ const NotesCard = (props: NotesCard) => {
     );
   };
 
-  const OptionsMenu = () => {
-    const [showOptions, setShowOptions] = useState(false);
-
-    return (
-      <div className={style.optionsContainer}>
-        <div 
-          className={style.threeDotIcon}
-          onClick={() => setShowOptions(!showOptions)}
-        >
-          <FaEllipsisV />
-        </div>
-        
-        {showOptions && (
-          <div className={style.optionsDropdown}>
-            <div 
-              className={style.optionItem}
-              onClick={() => {
-                toggleMoveFolder();
-                setShowOptions(false);
-              }}
-            >
-              <FaFolderOpen className={style.optionIcon} />
-              <span className={style.optionText}>Move to Folder</span>
-            </div>
-            <div 
-              className={style.optionItem}
-              onClick={() => {
-                toggleDeleteConfirm();
-                setShowOptions(false);
-              }}
-            >
-              <FaTrash className={style.optionIcon} />
-              <span className={style.optionText}>Delete</span>
-            </div>
-          </div>
-        )}
-      </div>
-    );
+  const toggleOptions = (isVisible: boolean) => {
+    setShowOptions(isVisible);
   };
 
-  const toggleOptions = () => {
-    setShowOptions(!showOptions);
-    if (showMoveFolder) {
-      setShowMoveFolder(false);
-      setSelectedFolderId(null);
-      setCurrentFolderId(null);
-      setFolderHistory([]);
-    }
-    if (showDeleteConfirm) {
-      setShowDeleteConfirm(false);
-    }
-  };
-
-  const toggleMoveFolder = () => {
-    setShowMoveFolder(!showMoveFolder);
-    setShowOptions(false);
-    setSelectedFolderId(null);
-    setCurrentFolderId(null);
-    setFolderHistory([]);
-  };
-
-  const toggleDeleteConfirm = () => {
-    setShowDeleteConfirm(!showDeleteConfirm);
+  const handleMoveClick = () => {
+    setShowMoveFolder(true)
     setShowOptions(false);
   };
 
@@ -346,28 +271,43 @@ const NotesCard = (props: NotesCard) => {
 
   const handleDelete = async () => {
     try {
-      if (!props.data?.notes_token) {
-        throw new Error('Note token is missing');
-      }
-
-      const result = await apis.DeleteNotes({
-        notes_token: props.data.notes_token
+      // Log the current note details for debugging
+      console.log('Deleting Note:', {
+        token: props.data?.notes_token,
+        folderId: props.data?.folderId
       });
 
-      if (result.status !== 200) {
-        throw new Error(result.message);
-      }
+      const result = await apis.DeleteNotes({
+        notes_token: props.data?.notes_token || ''
+      });
 
-      dispatch(setAlert({
-        data: {
-          message: "Note deleted successfully",
-          show: true,
-          type: "success"
+      if (result.status === 200) {
+        dispatch(setAlert({
+          data: {
+            message: "Note deleted successfully",
+            show: true,
+            type: "success"
+          }
+        }));
+        
+        // Always call refreshNotes if it's provided, with additional logging
+        if (props.refreshNotes) {
+          console.log('Triggering refreshNotes after delete');
+          await props.refreshNotes();
+        } else {
+          console.warn('No refreshNotes method provided');
         }
-      }));
-
-      if (props.refreshNotes) {
-        props.refreshNotes();
+        
+        // Close delete confirmation modal
+        setShowDeleteConfirm(false);
+      } else {
+        dispatch(setAlert({
+          data: {
+            message: "Failed to delete note",
+            show: true,
+            type: "error"
+          }
+        }));
       }
     } catch (error: any) {
       dispatch(setAlert({
@@ -377,6 +317,7 @@ const NotesCard = (props: NotesCard) => {
           type: "error"
         }
       }));
+      console.error('Delete note error:', error);
     }
   };
 
@@ -385,7 +326,7 @@ const NotesCard = (props: NotesCard) => {
     : [];
 
   return (
-    <>
+    <div className={style.notesCard}>
       {props.loading ? (
         <FolderSkeleton />
       ) : (
@@ -416,10 +357,25 @@ const NotesCard = (props: NotesCard) => {
             <Link href={`/notes/${props?.data?.urlHash}`} passHref>
               <p>{props?.data?.title}</p>
             </Link>
-            <div className={style.mainNotesDetailsOptions}>
-              <p>{DateCreate(props.data?.createdAt || '')}</p>
-              <OptionsMenu />
-            </div>
+            <div className={style.mainFolderDetailsOptions}
+        onMouseEnter={() => toggleOptions(true)}
+        onMouseLeave={() => toggleOptions(false)}
+        >
+          <p>{DateCreate(props.data?.createdAt || '')}</p>
+          <div className={style.mainFolderDetailsOptionsShow}>
+            <BsThreeDotsVertical size={20}/>
+            {showOptions && (
+              <div className={style.mainNotesItemMenu}>
+                <p onClick={handleMoveClick}>
+                  <MdOutlineDriveFileMove size={20} /> Move to Folder
+                </p>
+                <p onClick={() => setShowDeleteConfirm(true)}>
+                  <RiDeleteBin6Line size={20} /> Delete
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
             {renderMoveFolderDialog()}
             {showDeleteConfirm && (
               <div className={style.deleteModal}>
@@ -429,7 +385,7 @@ const NotesCard = (props: NotesCard) => {
                   <div className={style.modalActions}>
                     <button 
                       className={style.cancelButton}
-                      onClick={toggleDeleteConfirm}
+                      onClick={() => setShowDeleteConfirm(false)}
                     >
                       Cancel
                     </button>
@@ -446,7 +402,7 @@ const NotesCard = (props: NotesCard) => {
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 };
 

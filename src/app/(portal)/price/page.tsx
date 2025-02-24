@@ -90,11 +90,11 @@ const Price = () => {
 
       const options = {
         key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID!,
-        amount: paymentResponse.order.amount,
-        currency: paymentResponse.order.currency,
+        amount: (paymentResponse as any).order?.amount || 0,
+        currency: (paymentResponse as any).order?.currency || 'INR',
         name: "Glanceme.Ai",
-        description: `Payment for ${paymentResponse.paymentData.name}`,
-        order_id: paymentResponse.order.id,
+        description: `Payment for ${(paymentResponse as any).paymentData?.name || 'Plan'}`,
+        order_id: (paymentResponse as any).order?.id,
         prefill: {
           name: dataProfile?.data?.name || "",
           email: dataProfile?.data?.email || "",
@@ -108,21 +108,41 @@ const Price = () => {
             const verifyResponse = await apis.VerifyPayment({
               razorpay_order_id: response.razorpay_order_id,
               razorpay_payment_id: response.razorpay_payment_id,
-              razorpay_signature: response.razorpay_signature,
-              paymentId: paymentResponse.paymentId,
+              razorpay_signature: response.razorpay_signature
             });
 
-            const redirectUrl = verifyResponse?.success
-              ? `/profile?status=success&subscriptionId=${verifyResponse?.subscription._id}`
-              : "/profile?status=failed";
-            router.push(redirectUrl);
+            const isPaymentSuccessful = 
+              verifyResponse.status === 200 && 
+              (verifyResponse as any).success === true;
+
+            if (isPaymentSuccessful) {
+              dispatch(setAlert({
+                data: {
+                  message: "Payment Successful",
+                  show: true,
+                  type: "success"
+                }
+              }));
+              
+              // Additional success handling
+              router.push('/dashboard');
+            } else {
+              dispatch(setAlert({
+                data: {
+                  message: verifyResponse.message || "Payment verification failed",
+                  show: true,
+                  type: "error"
+                }
+              }));
+            }
           } catch (error: any) {
-            console.error("Verification Error:", error.message);
-            dispatch(
-              setAlert({
-                data: { message:"Verification Error: "+error.message, show: true, type: "error" },
-              })
-            );
+            dispatch(setAlert({
+              data: {
+                message: error.message || "An unexpected error occurred",
+                show: true,
+                type: "error"
+              }
+            }));
           }
         },
       };

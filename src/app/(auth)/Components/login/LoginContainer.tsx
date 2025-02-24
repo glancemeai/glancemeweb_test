@@ -24,33 +24,53 @@ export default function LoginContainer() {
 
     }
     const [loginCall, setLoginCall] = useState(false)
-    const Login = async () => {
-        if (email == "" || password == "") {
-            dispatch(setAlert({ data: { message: "email or password is empty", show: true, type: "error" } }))
-        } else {
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setLoginCall(true);
+
+        try {
             const apis = Apis()
-            setLoginCall(true)
-            await apis.Login({ email: email, password: password })
-                .then(data => {
-                    setLoginCall(false)
-                    if (data.status == "200") {
-                        let cookie = `authorization=${data?.data?.token}; `;
-                        cookie += "path=/;";
-                        cookie += `max-age=${60 * 60 * 24 * 365};`;
-                        cookie += "SameSite=None; Secure;";
-                        // cookie += "domain=.glanceme.ai;";
-                        document.cookie = cookie;                        
-                        router.push("/dashboard")
-                    } else {
-                        dispatch(setAlert({ data: { message: data?.error, show: true, type: "error" } }))
-                    }
-                })
-                .catch(error => {
-                    setLoginCall(false)
-                    dispatch(setAlert({ data: { message: error.message, show: true, type: "error" } }))
-                });
+            const data = await apis.Login({ email: email, password: password });
+            setLoginCall(false);
+
+            if (data.status === 200) {
+                let cookie = `authorization=${data?.data?.token}; `;        
+                cookie += "path=/;";
+                cookie += `max-age=${60 * 60 * 24 * 365};`;
+                cookie += "SameSite=None; Secure;";
+                // cookie += "domain=.glanceme.ai;";
+                document.cookie = cookie;                        
+                router.push("/dashboard");
+            } else {
+                // Use optional chaining and fallback for error message
+                const errorMessage = 
+                    (data as any).error || 
+                    data.message || 
+                    "Login failed. Please try again.";
+                
+                dispatch(setAlert({ 
+                    data: { 
+                        message: errorMessage, 
+                        show: true, 
+                        type: "error" 
+                    } 
+                }));
+            }
+        } catch (error: any) {
+            setLoginCall(false);
+            const errorMessage = 
+                error.message || 
+                "An unexpected error occurred. Please try again.";
+            
+            dispatch(setAlert({ 
+                data: { 
+                    message: errorMessage, 
+                    show: true, 
+                    type: "error" 
+                } 
+            }));
         }
-    }
+    };
     return (
         <div className={styles.main}>
             <div className={styles.mainOne}>
@@ -61,7 +81,7 @@ export default function LoginContainer() {
                 <InputOne disable={loginCall} name={"Email"} id={"Email"} placeholder={"Email"} value={email} onChange={Handler} />
                 <InputOne disable={loginCall} type={"password"} name={"Password"} id={"Password"} placeholder={"Password"} value={password} onChange={Handler} />
                 {/* <div className={styles.mainTwoItem}><p>forget password??</p></div> */}
-                <ButtonThree laod={loginCall} name={loginCall ? "Preparing Dashboard..." : "Login To Glanceme.Ai"} onClick={Login} />
+                <ButtonThree laod={loginCall} name={loginCall ? "Preparing Dashboard..." : "Login To Glanceme.Ai"} onClick={handleSubmit} />
                 <div className={styles.mainTwoItemTwo}><p>or</p></div>
                 <div className={styles.mainTwoItemSignup}>New to Glanceme.Ai? <Link href={"/signup"} passHref><p>Create Account</p></Link></div>
             </div>

@@ -78,28 +78,31 @@
 .mainNotesItemMenu {
   position: absolute;
   width: 150px;
-  height: auto;
   padding: 10px;
   background-color: white;
   border-radius: 4px;
-  display: none;
-  flex-direction: column;
-  gap: 10px;
+  right: 0;
+  top: 100%;
+  opacity: 0;
+  pointer-events: none;
   box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
     rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
-  z-index: 9999 !important;
+  z-index: 10; /* Adjusted to a moderate value */
+  transition: opacity 0.2s ease;
+}
+
+.mainNotesItemMenu.show {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .mainNotesItemMenu p {
-  position: relative;
   width: 100%;
-  height: auto;
   padding: 10px 20px;
   font-size: 16px;
   font-weight: 400;
   display: flex;
   gap: 20px;
-  justify-content: left;
   align-items: center;
   cursor: pointer;
 }
@@ -108,8 +111,168 @@
   background-color: #eee;
 }
 
-.mainNotesItemOptionsItemTwo:hover .mainNotesItemMenu {
-  display: flex;
+.mainNotesItemOptionsItemTwo:hover {
+  cursor: pointer;
+}
+
+
+.deleteConfirmDialog {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.deleteConfirmContent {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+}
+
+.deleteConfirmContent p {
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+
+.deleteConfirmButtons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.deleteConfirmButtons button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.deleteConfirmButtons button:first-child {
+    background-color: #f0f0f0;
+    color: black;
+}
+
+.deleteButton {
+    background-color: #ff4d4d;
+    color: white;
+}
+
+.editInput, 
+.editTextarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.editTextarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.editActions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1.5rem;
+    gap: 1rem;
+}
+
+.saveButton, .cancelButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.saveButton {
+    background: linear-gradient(135deg, #4CAF50, #45a049);
+    color: white;
+}
+
+.saveButton:hover {
+    background: linear-gradient(135deg, #45a049, #4CAF50);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+.cancelButton {
+    background: linear-gradient(135deg, #f44336, #d32f2f);
+    color: white;
+}
+
+.cancelButton:hover {
+    background: linear-gradient(135deg, #d32f2f, #f44336);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+.saveButton svg, .cancelButton svg {
+    font-size: 1.2rem;
+}
+
+.deleteConfirmDialog {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+}
+
+.deleteConfirmContent {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.deleteConfirmButtons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+
+.deleteConfirmButtons button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.deleteConfirmButtons button:first-child {
+    background-color: #f0f0f0;
+    color: black;
+}
+
+.deleteConfirmButtons .deleteButton {
+    background-color: #f44336;
+    color: white;
 }
 
 @media only screen and (max-width: 600px) {
@@ -144,7 +307,36 @@
 @media only screen and (min-width: 768px) {
 }
 
-/* Large devices (laptops/desktops, 992px and up) */
+/* Large devices (laptops/desktops, 992px and up) */.simpleButton {
+    padding: 8px 12px; /* Adjust padding for a smaller button */
+    border: none; /* Remove border */
+    border-radius: 4px; /* Rounded corners */
+    background-color: #007bff; /* Primary color */
+    color: white; /* Text color */
+    font-size: 14px; /* Font size */
+    font-weight: normal; /* Font weight */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.2s ease; /* Smooth transition for hover effect */
+}
+
+.simpleButton:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+}
+.cancelButton {
+  padding: 8px 12px; /* Adjust padding for a smaller button */
+  border: none; /* Remove border */
+  border-radius: 4px; /* Rounded corners */
+  background-color: red; /* Primary color */
+  color: white; /* Text color */
+  font-size: 14px; /* Font size */
+  font-weight: normal; /* Font weight */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background-color 0.2s ease; /* Smooth transition for hover effect */
+}
+
+.cancelButton:hover {
+    background-color: darkred; /* Darker shade on hover */
+}
 @media only screen and (min-width: 992px) {
 }
 

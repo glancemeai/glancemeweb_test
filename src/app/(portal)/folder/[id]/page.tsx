@@ -110,8 +110,8 @@ const Folder = () => {
     setFilterShow(show);
   }, []);
 
-  const AlertShowHandler = useCallback((show: boolean, folderId: string) => {
-    setFolderIdAlert(folderId);
+  const AlertShowHandler = useCallback((show: boolean, id?: string) => {
+    setFolderIdAlert(id || "");
     setAlertShow(show);
   }, []);
 
@@ -152,6 +152,12 @@ const Folder = () => {
     [dispatch]
   );
 
+  const refreshCurrentFolder = useCallback(() => {
+    if (id) {
+      fetchData(id);
+    }
+  }, [id, fetchData]);
+
   const deleteFolder = useCallback(
     async (folderId: string) => {
       if (!folderId) {
@@ -162,9 +168,10 @@ const Folder = () => {
       const apis = Apis();
       try {
         const response = await apis.DeleteFolder({ parentFolderId: folderId });
-        if (response.status === "200") {
+        if (response.status === 200) {
           AlertShowHandler(false, "");
           fetchData(id);
+          dispatch(setAlert({data: {message: "Folder Deleted Succesfully", show: true, type: "success"}}))
         } else {
           dispatch(setAlert({ data: { message: response.message, show: true, type: "error" } }));
         }
@@ -245,10 +252,18 @@ const Folder = () => {
                   data={folder}
                   AlertShowHandler={AlertShowHandler}
                   loading={loading}
+                  refresh={refreshCurrentFolder}
+                  folders={folderData?.data?.folders || []}
                 />
               ))}
               {folderData?.data?.notes?.map((note: Notes, index: string) => (
-                <NotesCard key={index} data={note} loading={loading} />
+                <NotesCard 
+                  key={index} 
+                  data={note} 
+                  loading={loading} 
+                  refreshNotes={refreshCurrentFolder}
+                  folders={folderData?.data?.folders || []}
+                />
               ))}
               {folderData?.data?.folders?.length === 0 &&
                 folderData?.data?.notes?.length === 0 && (
