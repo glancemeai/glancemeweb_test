@@ -1,25 +1,297 @@
-.main {
-    position: relative;
-    width: 100%;
-    height: auto;
-    padding: 10px;
+/* Base Styles */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+
+.container {
     display: flex;
-    gap: 20px;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
-    align-items: flex-start ;
+    min-height: 100vh;
+    width: 100%;
+    background: linear-gradient(10deg, #C5FFF8, rgba(117, 52, 255, 0.8) 50%, rgba(255, 255, 255, 0.8) 100%);
+    padding: 40px 20px;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    margin-top: 0;
 }
 
-.mainHolder {
-    position: relative;
+.contactHeaderWrapper {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.mainTitle {
+    font-size: 36px;
+    color: #000;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    font-size: 16px;
+    color: #555;
+}
+
+.contactWrapper {
+    display: flex;
     width: 100%;
-    max-width: 450px;
-    height: auto;
-    padding: 10px;
-    margin: 10px 0px;
-    border-radius: 8px;
+    max-width: 1000px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    overflow: hidden;
     background-color: white;
+}
+
+/* Contact Info Section */
+.contactInfo {
+    flex: 0 0 40%;
+    background: linear-gradient(135deg, #223FDA, #F94D86);
+    color: white;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+}
+
+.circleOverlay {
+    position: absolute;
+    top: 30%;
+    right: -50px;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    z-index: 1;
+}
+
+.contactInfo h2 {
+    font-size: 24px;
+    margin-bottom: 40px;
+    position: relative;
+    z-index: 2;
+}
+
+.contactDetails {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    margin-bottom: 40px;
+    position: relative;
+    z-index: 2;
+}
+
+.contactItem {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 16px;
+}
+
+.icon {
+    font-size: 20px;
+}
+
+.socialIcons {
     display: flex;
     gap: 20px;
+    margin-top: auto;
+    position: relative;
+    z-index: 2;
+}
+
+.socialIcons a {
+    color: white;
+    font-size: 22px;
+    transition: all 0.3s ease;
+}
+
+.socialIcons a:hover {
+    transform: translateY(-3px);
+    opacity: 0.8;
+}
+
+/* Contact Form Section */
+.contactForm {
+    flex: 0 0 60%;
+    padding: 40px;
+}
+
+.inquiryTypes {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.inquiryOption {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    position: relative;
+}
+
+.inquiryOption input[type="radio"] {
+    opacity: 0;
+    position: absolute;
+}
+
+.radioCustom {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 2px solid #ddd;
+    position: relative;
+}
+
+.inquiryOption input[type="radio"]:checked + .radioCustom::after {
+    content: "";
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: #4D79FF;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.formRow {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.formGroup {
+    flex: 1;
+    display: flex;
     flex-direction: column;
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;   
+    margin-bottom: 20px;
+}
+
+.fullWidth {
+    width: 100%;
+}
+
+.formGroup label {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 8px;
+}
+
+.formGroup input {
+    border: none;
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.formGroup input:focus {
+    border-bottom-color: #4D79FF;
+}
+
+.formGroup input::placeholder {
+    color: #bbb;
+}
+
+.formActions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.uploadButton {
+    display: inline-block;
+    padding: 10px 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #666;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.uploadButton:hover {
+    border-color: #4D79FF;
+    color: #4D79FF;
+}
+
+.sendButton {
+    padding: 12px 24px;
+    background-color: #4D79FF;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.sendButton:hover {
+    background-color: #3A66FF;
+}
+
+/* Responsive Styles */
+@media screen and (max-width: 900px) {
+    .contactWrapper {
+        flex-direction: column;
+        max-width: 600px;
+    }
+    
+    .contactInfo, .contactForm {
+        flex: 0 0 100%;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .formRow {
+        flex-direction: column;
+        gap: 0;
+    }
+    
+    .inquiryTypes {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .formActions {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .uploadButton, .sendButton {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .container {
+        padding-top: 80px; /* Add space for the navbar */
+    }
+    
+    .contactHeaderWrapper {
+        margin-top: 20px; /* Additional space below navbar */
+    }
+    
+    .mainTitle {
+        font-size: 28px; /* Slightly smaller on mobile */
+    }
+}
+
+/* Additional responsive adjustments */
+@media screen and (max-width: 600px) {
+    .container {
+        padding-top: 100px; /* More space for navbar on very small screens */
+    }
+    
+    .contactWrapper {
+        margin-top: 20px;
+    }
 }

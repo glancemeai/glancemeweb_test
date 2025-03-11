@@ -129,7 +129,6 @@ const NotesPage = () => {
           title: searchQuery || undefined,
           noteUrlCode: userId || undefined,
         };
-        // const queryString = new URLSearchParams(queryParams as Record<string, string>).toString();
         const queryString = new URLSearchParams(
           Object.entries(queryParams)
             .filter(([_, value]) => value !== undefined && value !== null) 
@@ -151,9 +150,8 @@ const NotesPage = () => {
         setLoading(false);
       }
     },
-    [apis, searchQuery, id, dispatch]
+    [apis, dispatch, searchQuery, userId]
   );
-
 
   const deleteAllNotes = useCallback(
     async (id: string) => {
@@ -178,9 +176,8 @@ const NotesPage = () => {
         setLoadingAlert(false);
       }
     },
-    [dispatch, AlertShowHandler, params]
+    [dispatch, AlertShowHandler, router]
   );
-
 
   const deleteNotes = useCallback(
     async (notesId: string) => {
@@ -204,7 +201,7 @@ const NotesPage = () => {
         setLoadingAlert(false);
       }
     },
-    [dispatch,fetchNotes, params]
+    [dispatch, router]
   );
 
   useEffect(() => {
@@ -216,7 +213,7 @@ const NotesPage = () => {
     } else {
       setLoading(false);
     }
-  }, [fetchUserDetails,fetchNotes,id]);
+  }, [fetchUserDetails, fetchNotes, params?.id]);
 
   return (
     <div className={style.main}>
@@ -254,7 +251,7 @@ const NotesPage = () => {
                 Array.from({ length: 3 }, (_, index) => <FolderSkeleton key={index} />)}</div>
               ) : (
                 notesData?.data?.map((note: Notes, index: string) => (
-                  <NotesItem key={index} loading={false} data={note} deleteNotes={deleteNotes} />
+                  <NotesItem key={index} loading={false} data={note} deleteNotes={deleteNotes}  />
                 ))
               )}
             </div>

@@ -1,5 +1,9 @@
+import Header from "../home/header/header"
+
 const termsAndCondition = () => {
     return (
+        <>
+        <Header></Header>
         <div><p>
             
             Last updated on Jan 19 2025 For the purpose of these Terms and Conditions, The term {"'"}we{"'"}, {"'"}us{"'"}, {"'"}our{"'"} used anywhere on this page shall mean GLANCEME AI PRIVATE LIMITED, whose registered/operational office is A-103, Wind Chime, Near Shivaji Statu, Kalewadi, Pune MAHARASHTRA 411017 . {"'"}you{"'"}, “your”, {"'"}user{"'"}, “visitor” shall mean any natural or legal person who is visiting our website and/or agreed to purchase from us.
@@ -26,6 +30,7 @@ Any dispute arising out of use of our website and/or purchase with us and/or any
 
 We, shall be under no liability whatsoever in respect of any loss or damage arising directly or indirectly out of the decline of authorization for any Transaction, on Account of the Cardholder having exceeded the preset limit mutually agreed by us with our acquiring bank from time to time
         </p></div>
+        </>
     )
 }
 

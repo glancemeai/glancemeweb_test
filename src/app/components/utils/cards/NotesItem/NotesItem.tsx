@@ -1,25 +1,24 @@
-import { useState } from "react";
-import Image from "next/image"
-import style from "./NotesItem.module.css"
+import { useState, useRef, useEffect } from "react";
+import NextImage from "next/image";
+import style from "./NotesItem.module.css";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { FiExternalLink } from "react-icons/fi";
-import { FiEdit } from "react-icons/fi";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import { FaSave, FaTimes } from "react-icons/fa";
+import { FaPencilAlt, FaFont, FaSave, FaTimes } from "react-icons/fa";
+import { MdColorLens } from "react-icons/md";
 import Notes from "../../Interfaces/Notes";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { setAlert } from "../../../../redux/utils/message";
 import Apis from "../../../../service/hooks/ApiSlugs";
 
 interface NotesCard {
-    data?:Notes;
+    data?: Notes;
     deleteNotes?: (notesToken: string) => void;
-    loading:boolean;
+    loading: boolean;
 }
 
-function hexToRgba(hex:string, alpha = 1) {
+function hexToRgba(hex: string, alpha = 1) {
     hex = hex.replace(/^#/, '');
     if (hex.length === 3) {
         hex = hex.split('').map(char => char + char).join('');
@@ -30,7 +29,7 @@ function hexToRgba(hex:string, alpha = 1) {
     return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 }
 
-const NotesItem = (props:NotesCard) => {
+const NotesItem = (props: NotesCard) => {
     const router = useRouter();
     const dispatch = useDispatch();
     const apis = Apis();
@@ -39,16 +38,198 @@ const NotesItem = (props:NotesCard) => {
     const [isEditing, setIsEditing] = useState(false);
     const [editedTitle, setEditedTitle] = useState(props.data?.title || '');
     const [editedDescription, setEditedDescription] = useState(props.data?.description || '');
-
+    
+    // Screenshot editor states
+    const [showScreenshotEditor, setShowScreenshotEditor] = useState(false);
     const [showMenu, setShowMenu] = useState(false);
+    
+    // Canvas drawing states
+    const canvasRef = useRef<HTMLCanvasElement>(null);
+    const [isDrawing, setIsDrawing] = useState(false);
+    const [currentTool, setCurrentTool] = useState<string | null>(null);
+    const [currentColor, setCurrentColor] = useState('#FF0000');
+    const [lineWidth, setLineWidth] = useState(3);
+    const [textInput, setTextInput] = useState('');
+    const [textPosition, setTextPosition] = useState({ x: 0, y: 0 });
+    const [showTextInput, setShowTextInput] = useState(false);
+    const [editedImage, setEditedImage] = useState<string | null>(null);
+    const [isImageLoaded, setIsImageLoaded] = useState(false);
+    const [initialImage, setInitialImage] = useState<HTMLImageElement | null>(null);
+    const [showColorPicker, setShowColorPicker] = useState(false);
+
+    const colorOptions = ['#FF0000', '#00FF00', '#0000FF', '#FFFF00', '#FF00FF', '#00FFFF', '#000000', '#FFFFFF'];
+
+    useEffect(() => {
+        console.log(showScreenshotEditor)
+        console.log(canvasRef.current)
+
+       
+        if (showScreenshotEditor && canvasRef.current) {
+            console.log(props.data?.image)
+            const canvas = canvasRef.current;
+            const ctx = canvas.getContext('2d');
+            
+            if (ctx) {
+                const img = new window.Image();
+                img.crossOrigin = "anonymous";
+                
+                img.onload = () => {
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    ctx.drawImage(img, 0, 0);
+                    
+                    setInitialImage(img);
+                    setIsImageLoaded(true);
+                };
+                
+                img.onerror = (e) => {
+                    console.error("Failed to load image:", e);
+                    // Set default canvas with error message
+                    canvas.width = 800;
+                    canvas.height = 600;
+                    ctx.fillStyle = "#FFFFFF";
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                    ctx.fillStyle = "#FF0000";
+                    ctx.font = "24px Arial";
+                    ctx.fillText("Unable to load image", 250, 300);
+                    setIsImageLoaded(true);
+                };
+                
+                const imageSrc = props.data?.image || '/images/notesArticlePlaceHolder.png';
+                console.log(imageSrc , "abc")
+                img.src = imageSrc;
+            }
+        }
+    }, [showScreenshotEditor, props.data?.image]);
 
     const toggleMenu = () => {
         setShowMenu((prev) => !prev);
     };
 
+    const handleImageClick = () => {
+        if (props.data?.image) {
+            setShowScreenshotEditor(true);
+        }
+    };
+
+    // Drawing functions
+    const startDrawing = (e: React.MouseEvent<HTMLCanvasElement>) => {
+        if (!canvasRef.current || !currentTool) return;
+        
+        const canvas = canvasRef.current;
+        const rect = canvas.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        if (currentTool === 'pencil') {
+            const ctx = canvas.getContext('2d');
+            if (ctx) {
+                ctx.beginPath();
+                ctx.moveTo(x, y);
+                ctx.strokeStyle = currentColor;
+                ctx.lineWidth = lineWidth;
+                ctx.lineCap = 'round';
+                setIsDrawing(true);
+            }
+        } else if (currentTool === 'text') {
+            setTextPosition({ x, y });
+            setShowTextInput(true);
+        }
+    };
+    
+    const draw = (e: React.MouseEvent<HTMLCanvasElement>) => {
+        if (!isDrawing || !canvasRef.current || currentTool !== 'pencil') return;
+        
+        const canvas = canvasRef.current;
+        const ctx = canvas.getContext('2d');
+        const rect = canvas.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        if (ctx) {
+            ctx.lineTo(x, y);
+            ctx.stroke();
+        }
+    };
+    
+    const endDrawing = () => {
+        setIsDrawing(false);
+    };
+    
+    const addTextToCanvas = () => {
+        if (!canvasRef.current || !textInput) return;
+        
+        const canvas = canvasRef.current;
+        const ctx = canvas.getContext('2d');
+        
+        if (ctx) {
+            ctx.font = '20px Arial';
+            ctx.fillStyle = currentColor;
+            ctx.fillText(textInput, textPosition.x, textPosition.y);
+            setTextInput('');
+            setShowTextInput(false);
+        }
+    };
+    
+    const handleToolChange = (tool: string) => {
+        setCurrentTool(tool);
+        setShowTextInput(false);
+    };
+    
+    const handleColorChange = (color: string) => {
+        setCurrentColor(color);
+    };
+    
+    const handleColorButtonClick = () => {
+        setShowColorPicker(!showColorPicker);
+    };
+
+    const saveScreenshot = async () => {
+        if (!canvasRef.current || !props?.data?.notes_token) {
+            dispatch(setAlert({
+                data: {
+                    message: "Unable to save screenshot",
+                    show: true,
+                    type: "error"
+                }
+            }));
+            return;
+        }
+        
+        try {
+            const dataUrl = canvasRef.current.toDataURL('image/png');
+            setEditedImage(dataUrl);
+            
+            dispatch(setAlert({
+                data: {
+                    message: "Screenshot saved successfully",
+                    show: true,
+                    type: "success"
+                }
+            }));
+            
+            setShowScreenshotEditor(false);
+        } catch (error) {
+            dispatch(setAlert({
+                data: {
+                    message: "Failed to save screenshot",
+                    show: true,
+                    type: "error"
+                }
+            }));
+        }
+    };
 
     const handleDeleteClick = () => {
-        setShowDeleteConfirm(true);
+
+        setShowScreenshotEditor(false);
+        setCurrentTool(null); // Reset tool selection
+        setIsDrawing(false);
+        setEditedImage(null);
+        setInitialImage(null);
+        setTextInput('');
     }
 
     const handleCancelDelete = () => {
@@ -85,7 +266,7 @@ const NotesItem = (props:NotesCard) => {
                 title: editedTitle,
                 folderId: props.data.folderId ?? undefined,
                 reminder: false,
-                reminderDate: undefined
+                reminderDate: undefined,
             });
 
             if (response.status === 200) {
@@ -97,7 +278,6 @@ const NotesItem = (props:NotesCard) => {
                     }
                 }));
                 
-                // Refresh the page
                 window.location.reload();
             } else {
                 dispatch(setAlert({
@@ -122,10 +302,7 @@ const NotesItem = (props:NotesCard) => {
     }
 
     const handleConfirmDelete = async () => {
-        console.log('Delete token:', props?.data?.notes_token);
-        
         if (!props?.deleteNotes) {
-            console.error('Delete function not provided');
             dispatch(setAlert({
                 data: {
                     message: "Delete function not available",
@@ -138,7 +315,6 @@ const NotesItem = (props:NotesCard) => {
         }
 
         if (!props?.data?.notes_token) {
-            console.error('No notes token found');
             dispatch(setAlert({
                 data: {
                     message: "Note ID not found",
@@ -151,13 +327,9 @@ const NotesItem = (props:NotesCard) => {
         }
 
         try {
-            // Call the delete function passed from parent
             await props.deleteNotes(props.data.notes_token);
-            
-            // Additional navigation to ensure refresh
-            window.location.reload()
+            window.location.reload();
         } catch (error) {
-            console.error('Delete error:', error);
             dispatch(setAlert({
                 data: {
                     message: "Failed to delete note",
@@ -171,75 +343,249 @@ const NotesItem = (props:NotesCard) => {
     }
 
     return (
-        <div className={style.mainNotesItem} style={{background:`${hexToRgba(props?.data?.color || "", 0.4)}`}}>            
-            {showDeleteConfirm && (
-                <div className={style.deleteConfirmDialog}>
-                    <div className={style.deleteConfirmContent}>
-                        <p>Do you want to delete?</p>
-                        <div className={style.deleteConfirmButtons}>
-                            <button onClick={handleCancelDelete}>Cancel</button>
-                            <button onClick={handleConfirmDelete} className={style.deleteButton}>Delete</button>
+        <>
+            <div className={style.mainNotesItem} style={{background: `${hexToRgba(props?.data?.color || "", 0.4)}`}}>            
+                {showDeleteConfirm && (
+                    <div className={style.deleteConfirmDialog}>
+                        <div className={style.deleteConfirmContent}>
+                            <p>Do you want to delete?</p>
+                            <div className={style.deleteConfirmButtons}>
+                                <button onClick={handleCancelDelete}>Cancel</button>
+                                <button onClick={handleConfirmDelete} className={style.deleteButton}>Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                )}
+                
+                <div 
+                    className={`${style.mainNotesItemImage} ${props?.data?.image ? style.clickable : ''}`} 
+                    style={{display: `${props?.data?.image ? "flex" : "none"}`}}
+                    onClick={handleImageClick}
+                >
+                    <NextImage 
+                        src={editedImage || props?.data?.image || "/images/notesArticlePlaceHolder.png"} 
+                        alt={`${props?.data?.title || 'Note image'}`} 
+                        fill 
+                        style={{objectFit: "cover", borderRadius: "8px"}}
+                    />
+                </div>
+                
+                <div className={style.mainNotesItemDetails}>
+                    <div className={style.mainNotesItemDetailsLine} style={{background: `${props?.data?.color}`}}></div>
+                    <div className={style.mainNotesItemDetailsText}>
+                        {isEditing ? (
+                            <>
+                                <input 
+                                    type="text" 
+                                    value={editedTitle} 
+                                    onChange={(e) => setEditedTitle(e.target.value)}
+                                    placeholder="Note Title"
+                                    className={style.editInput}
+                                />
+                                <textarea 
+                                    value={editedDescription} 
+                                    onChange={(e) => setEditedDescription(e.target.value)}
+                                    placeholder="Note Description"
+                                    className={style.editTextarea}
+                                />
+                                <div className={style.editActions}>
+                                    <button className={style.simpleButton} onClick={handleSaveEdit}>Save</button>
+                                    <button className={style.cancelButton} onClick={handleCancelEdit}>Cancel</button>
+                                </div>
+                            </>
+                        ) : (
+                            <>
+                                <h3>{props?.data?.title}</h3>
+                                <p>{props?.data?.description}</p>
+                            </>
+                        )}
+                    </div>
+                </div>
+                <div className={style.mainNotesItemOptions}>
+                    <a 
+                        href={
+                            props?.data?.type === 'youtube' 
+                                ? `${props?.data?.selectedData?.url}&t=${Math.floor(props?.data?.selectedData?.time || 0)}s`
+                                : props?.data?.urlCode || '#'
+                        } 
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={style.mainNotesItemOptionsItem}
+                    >
+                        <FiExternalLink size={20}/>
+                    </a>
+                    <div className={style.mainNotesItemOptionsItemTwo}>
+                        <p onClick={toggleMenu}><BsThreeDotsVertical size={20}/></p>
+                        <div className={`${style.mainNotesItemMenu} ${showMenu ? style.show : ''}`}>
+                            <p onClick={handleEditClick}><FaPencilAlt size={20}/> Edit</p>
+                            <p onClick={handleDeleteClick}><RiDeleteBin6Line size={20}/> Delete</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* Screenshot Editor Modal - Updated to match the screenshot */}
+            {showScreenshotEditor && (
+                <div className={style.screenshotEditorOverlay}>
+                    <div className={style.screenshotEditorContainer}>
+                        <div className={style.screenshotHeader}>
+                            <h2>Glanceme.Ai</h2>
+                        </div>
+                        
+                        <div className={style.screenshotContent}>
+                            <div className={style.imageContainer}>
+                            <canvas
+                                        ref={canvasRef}
+                                        onMouseDown={startDrawing}
+                                        onMouseMove={draw}
+                                        onMouseUp={endDrawing}
+                                        onMouseLeave={endDrawing}
+                                        className={style.drawingCanvas}
+                                    />
+                                {/* {isImageLoaded ? (
+                                    <canvas
+                                        ref={canvasRef}
+                                        onMouseDown={startDrawing}
+                                        onMouseMove={draw}
+                                        onMouseUp={endDrawing}
+                                        onMouseLeave={endDrawing}
+                                        className={style.drawingCanvas}
+                                    />
+                                ) : (
+                                    <div className={style.loadingSpinner}>Loading...</div>
+                                )} */}
+                                
+                                {showTextInput && (
+                                    <div 
+                                        className={style.textInputContainer}
+                                        style={{
+                                            position: 'absolute',
+                                            left: `${textPosition.x}px`,
+                                            top: `${textPosition.y}px`,
+                                            zIndex: 1000, // Ensure it's above the canvas
+                                            backgroundColor: 'white',
+                                            padding: '10px',
+                                            border: '1px solid #ccc',
+                                            borderRadius: '4px',
+                                            boxShadow: '0 2px 10px rgba(0,0,0,0.1)'
+                                        }}
+                                    >
+                                        <input
+                                            type="text"
+                                            value={textInput}
+                                            onChange={(e) => setTextInput(e.target.value)}
+                                            onKeyDown={(e) => {
+                                                if (e.key === 'Enter') {
+                                                    addTextToCanvas();
+                                                }
+                                            }}
+                                            autoFocus
+                                            placeholder="Enter text"
+                                            className={style.textInput}
+                                            style={{
+                                                width: '200px',
+                                                marginBottom: '10px'
+                                            }}
+                                        />
+                                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                            <button 
+                                                onClick={addTextToCanvas}
+                                                style={{
+                                                    padding: '5px 10px',
+                                                    backgroundColor: '#4169E1',
+                                                    color: 'white',
+                                                    border: 'none',
+                                                    borderRadius: '4px',
+                                                    cursor: 'pointer'
+                                                }}
+                                            >
+                                                Add
+                                            </button>
+                                            <button 
+                                                onClick={() => setShowTextInput(false)}
+                                                style={{
+                                                    padding: '5px 10px',
+                                                    backgroundColor: '#f0f0f0',
+                                                    color: '#333',
+                                                    border: '1px solid #ccc',
+                                                    borderRadius: '4px',
+                                                    cursor: 'pointer'
+                                                }}
+                                            >
+                                                Cancel
+                                            </button>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                            
+                            <div className={style.sideToolbar}>
+                                <button 
+                                    className={`${style.toolButton} ${currentTool === 'text' ? style.activeToolButton : ''}`} 
+                                    onClick={() => handleToolChange('text')}
+                                >
+                                    <span className={style.toolIcon}>Text</span>
+                                </button>
+                                <button 
+                                    className={`${style.toolButton} ${currentTool === 'pencil' ? style.activeToolButton : ''}`} 
+                                    onClick={() => handleToolChange('pencil')}
+                                >
+                                    <span className={style.toolIcon}>Draw</span>
+                                </button>
+                                <button 
+                                    className={style.toolButton} 
+                                    onClick={handleDeleteClick}
+                                >
+                                    <span className={style.toolIcon}>Delete</span>
+                                </button>
+                                <button 
+                                    className={style.toolButton} 
+                                    onClick={handleColorButtonClick}
+                                >
+                                    <span className={style.toolIcon}>Color</span>
+                                </button>
+                                
+                                {showColorPicker && (
+                                    <div className={style.colorPickerContainer}>
+                                        {colorOptions.map((color) => (
+                                            <div 
+                                                key={color} 
+                                                className={style.colorOption}
+                                                style={{ backgroundColor: color }}
+                                                onClick={() => {
+                                                    handleColorChange(color);
+                                                    setShowColorPicker(false);
+                                                }}
+                                            />
+                                        ))}
+                                    </div>
+                                )}
+                                
+                                <div className={style.profileButton}>
+                                    <div className={style.profileCircle}></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div className={style.screenshotFooter}>
+                            <button 
+                                onClick={() => setShowScreenshotEditor(false)}
+                                className={style.closeButton}
+                            >
+                                Close Tab
+                            </button>
+                            <button 
+                                onClick={saveScreenshot}
+                                className={style.saveButton}
+                            >
+                                Save Screenshot
+                            </button>
                         </div>
                     </div>
                 </div>
             )}
-            <div className={style.mainNotesItemImage} style={{display:`${props?.data?.image ? "flex" : "none"}`}}>
-                <Image src={`${props?.data?.image ? props?.data?.image : "/images/notesArticlelaceHolder.png"}`} alt={`${props?.data?.title}`} fill style={{objectFit:"cover",borderRadius:"8px"}}/>
-            </div>
-            <div className={style.mainNotesItemDetails}>
-                <div className={style.mainNotesItemDetailsLine} style={{background:`${props?.data?.color}`}}></div>
-                <div className={style.mainNotesItemDetailsText}>
-                    {isEditing ? (
-                        <>
-                            <input 
-                                type="text" 
-                                value={editedTitle} 
-                                onChange={(e) => setEditedTitle(e.target.value)}
-                                placeholder="Note Title"
-                                className={style.editInput}
-                            />
-                            <textarea 
-                                value={editedDescription} 
-                                onChange={(e) => setEditedDescription(e.target.value)}
-                                placeholder="Note Description"
-                                className={style.editTextarea}
-                            />
-                            <div className={style.editActions}>
-                                <button className={style.simpleButton} onClick={handleSaveEdit}>Save</button>
-                                <button className={style.cancelButton} onClick={handleCancelEdit}>Cancel</button>
-                            </div>
-                        </>
-                    ) : (
-                        <>
-                            <h3>{props?.data?.title}</h3>
-                            <p>{props?.data?.description}</p>
-                        </>
-                    )}
-                </div>
-            </div>
-            <div className={style.mainNotesItemOptions}>
-                <a 
-                    href={
-                        props?.data?.type === 'youtube' 
-                            ? `${props?.data?.selectedData?.url}&t=${Math.floor(props?.data?.selectedData?.time || 0)}s`
-                            : props?.data?.urlCode || '#'
-                    } 
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={style.mainNotesItemOptionsItem}
-                >
-                    <FiExternalLink size={20}/>
-                </a>
-                <div className={style.mainNotesItemOptionsItemTwo}>
-                    <p onClick={toggleMenu}><BsThreeDotsVertical size={20}/></p>
-                    <div className={`${style.mainNotesItemMenu} ${showMenu ? style.show : ''}`}>
-                        <p onClick={handleEditClick}><FiEdit size={20}/> Edit</p>
-                        <p onClick={handleDeleteClick}><RiDeleteBin6Line size={20}/> Delete</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    )
-}
+        </>
+    );
+};
 
-export default NotesItem
+export default NotesItem;

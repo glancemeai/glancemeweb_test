@@ -62,10 +62,10 @@
     cursor: pointer;
 }
 
-.mainHeaderHolderMenuItem:first-child {
+/* .mainHeaderHolderMenuItem:first-child {
     color: #4169E1;
     border-bottom: 2px solid #4169E1;
-}
+} */
 
 .mainHeaderHolderMenuItem:hover {
     color: #4169E1;
@@ -75,6 +75,10 @@
 .mainHeaderHolderMenu:hover .mainHeaderHolderMenuItem:first-child {
     color: black;
     border-bottom: none;
+}
+.active {
+    border-bottom: 2px solid #4169E1; /* Style for the active tab */
+    color: #4169E1; /* Optional: Change text color for active tab */
 }
 
 .mainHeaderHolderMenu:hover .mainHeaderHolderMenuItem:first-child:hover {

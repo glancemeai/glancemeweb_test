@@ -42,12 +42,12 @@ const NotesCard = (props: NotesCard) => {
 
   useEffect(() => {
     const fetchFolders = async () => {
-      if (hasFetchedFolders || allFolders.length > 0) return;
-      
       try {
-        const foldersResponse = await apis.GetFolders();
-        if (foldersResponse.status === 200) {
-          dispatch(setAllFolders(foldersResponse.data));
+        if (!hasFetchedFolders && allFolders.length === 0) {
+          const response = await apis.GetFolders();
+          if (response.status === 200) {
+            dispatch(setAllFolders(response.data));
+          }
           setHasFetchedFolders(true);
         }
       } catch (error) {
@@ -62,7 +62,7 @@ const NotesCard = (props: NotesCard) => {
     };
 
     fetchFolders();
-  }, [apis, dispatch, hasFetchedFolders]);
+  }, [apis, dispatch, hasFetchedFolders, allFolders.length]);
 
   const currentLevelFolders = useMemo(() => {
     // If no current folder path, show only root folders
@@ -75,28 +75,13 @@ const NotesCard = (props: NotesCard) => {
     // Show children of the current folder in the path
     const currentFolderId = currentFolderPath[currentFolderPath.length - 1];
     return allFolders.filter(folder => folder.parentFolder === currentFolderId);
-  }, [allFolders]);
+  }, [allFolders, currentFolderPath]);
 
   const RecursiveFolderList: React.FC<{
     parentFolderId?: string | null;
     depth?: number;
     folders?: Folders[];
   }> = ({ parentFolderId = null, depth = 0, folders = allFolders }) => {
-    // Get current level folders
-    const currentLevelFolders = useMemo(() => {
-      // If no current folder path, show only root folders
-      if (currentFolderPath.length === 0) {
-        // Explicitly filter root folders (no parent or parent is null/undefined)
-        return folders.filter(folder => 
-          !folder.parentFolder || folder.parentFolder === null
-        );
-      }
-      
-      // Show children of the current folder in the path
-      const currentFolderId = currentFolderPath[currentFolderPath.length - 1];
-      return folders.filter(folder => folder.parentFolder === currentFolderId);
-    }, [currentFolderPath, folders]);
-
     const handleFolderSelect = (folderId: string) => {
       setSelectedFolderId(folderId);
     };

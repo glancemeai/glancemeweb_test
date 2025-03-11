@@ -11,15 +11,14 @@ const Section_one = () => {
       <div className={style.mainBg}></div>
       <div className={style.mainHolder}>
         <div className={style.mainHolderHeading}>
-          <h2>Glance your hourly content</h2>
+          <h2>Every Glance is a Leap</h2>
           <h3>
-            <BsStars size={40} color="#223FDA" /> in a minute !
+            <BsStars size={40} color="#223FDA" />Towards Mastery 
           </h3>
         </div>
         <div className={style.mainHolderSubHeading}>
           <p>
-            Quickly glance the meetings, lectures, podcasts, depositions and
-            more. Glanceme gives you superhuman recall and review using AI.
+          From information overload to focused learning grasp key concepts faster with instant summaries and intuitive topic search. With GlanceMe AI, ask questions interactively and build your personalized knowledge archive.
           </p>
         </div>
         <div className={style.mainHolderButton}>

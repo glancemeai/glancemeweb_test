@@ -29,8 +29,8 @@ import Notes from "@/app/components/utils/Interfaces/Notes";
 interface SubHeaderProps {
   name?: string;
   search: string;
-  onChange: (value: string) => void;
-  searchHandler: (data: filterData) => void;
+  onChange: (value: any) => void;
+  searchHandler: (data?: filterData) => void;
   filterShowHandler: (show: boolean) => void;
   folderShowHandler: (show: boolean) => void;
 }
@@ -56,14 +56,12 @@ const SubHeader: React.FC<SubHeaderProps> = ({
       <div className={style.mainHolderHeaderOptionsSearch}>
         <SearchInput
           value={search}
-          onChange={(e:any) => onChange(e.target.value)}
+          onChange={onChange}
           type="text"
           placeholder="Search Notes"
         />
         <ButtonFour
-          onClick={() =>
-            searchHandler({ type: "none", reminder: false, title: search })
-          }
+          onClick={() => searchHandler()}
           name=""
           icon={<FiSearch size={18} />}
         />
@@ -101,6 +99,66 @@ const Folder = () => {
   const [alertShow, setAlertShow] = useState(false);
   const [folderIdAlert, setFolderIdAlert] = useState("");
   const [loadingAlert, setLoadingAlert] = useState(false);
+  const [filteredNotes, setFilteredNotes] = useState<Notes[] | null>(null);
+  const [filteredFolders, setFilteredFolders] = useState<Folders[] | null>(null);
+  const [currentFilters, setCurrentFilters] = useState<filterData>({});
+  const [isFiltered, setIsFiltered] = useState(false);
+
+  // Handle search input changes - handles both event object or direct value
+  const searchTitleHandler = useCallback((newValue: any) => {
+    // Check if newValue is an event or a direct string value
+    if (newValue && typeof newValue === 'object' && newValue.target) {
+      setTitle(newValue.target.value);
+    } else {
+      setTitle(newValue);
+    }
+  }, []);
+
+  // Client-side search for immediate feedback
+  const performLocalSearch = useCallback(() => {
+    if (!folderData?.data) return;
+
+    // If no search term and no filters, show all notes and folders
+    if (!title.trim() && Object.keys(currentFilters).length === 0) {
+      setFilteredNotes(null);
+      setFilteredFolders(null);
+      setIsFiltered(false);
+      return;
+    }
+
+    setIsFiltered(true);
+    const searchTerm = title.trim().toLowerCase();
+    
+    // Filter notes
+    let matchedNotes = folderData.data.notes || [];
+    let matchedFolders = folderData.data.folders || [];
+    
+    if (searchTerm) {
+      // Filter notes by search term
+      matchedNotes = matchedNotes.filter((note: Notes) => {
+        const titleMatch = note.title?.toLowerCase().includes(searchTerm) || false;
+        const contentMatch = note.content?.toLowerCase().includes(searchTerm) || false;
+        return titleMatch || contentMatch;
+      });
+      
+      // Filter folders by search term
+      matchedFolders = matchedFolders.filter((folder: Folders) => 
+        folder.name?.toLowerCase().includes(searchTerm) || false
+      );
+    }
+    
+    // Apply additional filters if any
+    if (currentFilters.type && currentFilters.type !== "none") {
+      matchedNotes = matchedNotes.filter((note: Notes) => note.type === currentFilters.type);
+    }
+    
+    if (currentFilters.reminder !== undefined) {
+      matchedNotes = matchedNotes.filter((note: Notes) => note.reminder === currentFilters.reminder);
+    }
+    
+    setFilteredNotes(matchedNotes);
+    setFilteredFolders(matchedFolders);
+  }, [title, folderData, currentFilters]);
 
   const folderShowHandler = useCallback((show: boolean) => {
     setShowNewFolderPopUp(show);
@@ -137,9 +195,11 @@ const Folder = () => {
       try {
         const response = await apis.AllNotes(folderId);
         if (response.status === 200) {
-          console.log(response);
-          
           setFolderData(response);
+          // Reset filtered states when fetching fresh data
+          setFilteredNotes(null);
+          setFilteredFolders(null);
+          setIsFiltered(false);
         } else {
           dispatch(setAlert({ data: { message: response.message, show: true, type: "error" } }));
         }
@@ -171,7 +231,7 @@ const Folder = () => {
         if (response.status === 200) {
           AlertShowHandler(false, "");
           fetchData(id);
-          dispatch(setAlert({data: {message: "Folder Deleted Succesfully", show: true, type: "success"}}))
+          dispatch(setAlert({data: {message: "Folder Deleted Successfully", show: true, type: "success"}}))
         } else {
           dispatch(setAlert({ data: { message: response.message, show: true, type: "error" } }));
         }
@@ -185,19 +245,55 @@ const Folder = () => {
   );
 
   const SearchNotesHandler = useCallback(
-    async (filter: filterData) => {
+    async (filter?: filterData) => {
+      // Update current filters if provided
+      if (filter) {
+        setCurrentFilters(filter);
+      }
+      
+      // First perform local search for immediate feedback
+      performLocalSearch();
+      
+      // Then try API search
       const apis = Apis();
       setLoading(true);
-
+  
       try {
-        const filteredData: filterData = { ...filter, folderId: id, title };
-        if (filteredData.type === "none") delete filteredData.type;
-
-        const query = new URLSearchParams(filteredData as any).toString();
+        // Use provided filters or current filters
+        const activeFilters = filter || currentFilters;
+        
+        // Create the search parameters
+        const filteredData: Record<string, string> = { 
+          folderId: id
+        };
+        
+        // Add title if it exists
+        if (title) {
+          filteredData.title = title;
+        }
+        
+        // Add other filters safely
+        if (activeFilters.type && activeFilters.type !== "none") {
+          filteredData.type = activeFilters.type;
+        }
+        
+        if (activeFilters.reminder !== undefined) {
+          filteredData.reminder = String(activeFilters.reminder);
+        }
+        
+        // Add recursive parameter for nested folder search
+        filteredData.recursive = "true";
+  
+        const query = new URLSearchParams(filteredData).toString();
         const response = await apis.SearchNotes(query);
-
+  
         if (response.status === 200) {
           setFolderData(response);
+          // Clear filtered states since we're now showing search results
+          setFilteredNotes(null);
+          setFilteredFolders(null);
+          // But we still want to know if we're showing filtered results
+          setIsFiltered(true);
         } else {
           dispatch(setAlert({ data: { message: response.message, show: true, type: "error" } }));
         }
@@ -207,8 +303,15 @@ const Folder = () => {
         setLoading(false);
       }
     },
-    [dispatch, id, title]
+    [dispatch, id, title, currentFilters, performLocalSearch]
   );
+
+  // Run local search when title or filters change
+  useEffect(() => {
+    if (folderData?.data) {
+      performLocalSearch();
+    }
+  }, [folderData?.data, title, currentFilters, performLocalSearch]);
 
   useEffect(() => {
     userDetails();
@@ -221,6 +324,10 @@ const Folder = () => {
     }
   }, [params, userDetails, fetchData]);
 
+  // Determine which data to render
+  const foldersToRender = filteredFolders || folderData?.data?.folders || [];
+  const notesToRender = filteredNotes || folderData?.data?.notes || [];
+
   return (
     <div className={style.main}>
       <Header
@@ -232,7 +339,7 @@ const Folder = () => {
         <SubHeader
           search={title}
           name={folderData?.data?.folderInfo?.name}
-          onChange={setTitle}
+          onChange={searchTitleHandler}
           searchHandler={SearchNotesHandler}
           filterShowHandler={filterShowHandler}
           folderShowHandler={folderShowHandler}
@@ -246,9 +353,9 @@ const Folder = () => {
             </>
           ) : (
             <>
-              {folderData?.data?.folders?.map((folder: Folders, index: string) => (
+              {foldersToRender.map((folder: Folders, index: number) => (
                 <FolderCard
-                  key={index}
+                  key={index.toString()}
                   data={folder}
                   AlertShowHandler={AlertShowHandler}
                   loading={loading}
@@ -256,29 +363,41 @@ const Folder = () => {
                   folders={folderData?.data?.folders || []}
                 />
               ))}
-              {folderData?.data?.notes?.map((note: Notes, index: string) => (
+              {notesToRender.map((note: Notes, index: number) => (
                 <NotesCard 
-                  key={index} 
+                  key={index.toString()} 
                   data={note} 
                   loading={loading} 
                   refreshNotes={refreshCurrentFolder}
                   folders={folderData?.data?.folders || []}
                 />
               ))}
-              {folderData?.data?.folders?.length === 0 &&
-                folderData?.data?.notes?.length === 0 && (
-                  <div className={style.mainHolderBodyEmpty}>
-                    <div className={style.mainHolderBodyEmptyImage}>
-                      <Image
-                        src="/images/emptyfolder.png"
-                        alt="Empty Folder"
-                        fill
-                        style={{ objectFit: "contain" }}
-                      />
-                    </div>
-                    <p>This folder is empty</p>
+              {!loading && foldersToRender.length === 0 && notesToRender.length === 0 && isFiltered && (
+                <div className={style.mainHolderBodyEmpty}>
+                  <div className={style.mainHolderBodyEmptyImage}>
+                    <Image
+                      src="/images/emptyfolder.png"
+                      alt="Empty Folder"
+                      fill
+                      style={{ objectFit: "contain" }}
+                    />
                   </div>
-                )}
+                  <p>No matching folders or notes found for &quot;{title}&quot;</p>
+                </div>
+              )}
+              {!loading && foldersToRender.length === 0 && notesToRender.length === 0 && !isFiltered && (
+                <div className={style.mainHolderBodyEmpty}>
+                  <div className={style.mainHolderBodyEmptyImage}>
+                    <Image
+                      src="/images/emptyfolder.png"
+                      alt="Empty Folder"
+                      fill
+                      style={{ objectFit: "contain" }}
+                    />
+                  </div>
+                  <p>This folder is empty</p>
+                </div>
+              )}
             </>
           )}
         </div>

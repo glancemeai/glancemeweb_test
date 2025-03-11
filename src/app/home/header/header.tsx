@@ -5,11 +5,28 @@ import { HiOutlineViewGrid } from "react-icons/hi";
 import { TbMenu3 } from "react-icons/tb";
 import { BsMedium,  BsLinkedin, BsTwitter,  } from "react-icons/bs"
 import { AiOutlineMail } from "react-icons/ai"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const Header = () => {
   const [showMenu,setShowMenu] = useState(false)
+  const [activeTab, setActiveTab] = useState('home')
+  const pathname = usePathname(); 
+
+  useEffect(() => {
+    if (pathname === '/support') {
+      setActiveTab('contact');
+    } else if (pathname === '/about') {
+      setActiveTab('about');
+    } else if (pathname === '/blog') {
+      setActiveTab('blog');
+    } else if (pathname === '/home') {
+      setActiveTab('home');
+    } else {
+      setActiveTab('home'); // Default case
+    }
+  }, [pathname]);
     return (
         <div className={style.mainHeader} >
             <div className={style.mainHeaderHolder} >
@@ -18,17 +35,18 @@ const Header = () => {
                     <h1>Glanceme.Ai</h1>
                 </div></Link>
                 <div className={style.mainHeaderHolderMenu} >
-                    <div className={style.mainHeaderHolderMenuItem} >
-                        <Link href={"/Home"} passHref ><p>Home</p></Link>
+                    <div className={`${style.mainHeaderHolderMenuItem} ${activeTab === 'home' ? style.active : ''}`} >
+                        <Link href={"/home"} passHref ><p onClick={() => {setActiveTab('home')}}>Home</p></Link>
                     </div>
-                    <div className={style.mainHeaderHolderMenuItem} >
-                        <Link href={"https://chromewebstore.google.com/detail/glancemeai/pgjkednjpnkamnajfabgfigcldpgpokp"} passHref target="_blank"><p>Extension</p></Link>
+                    <div className={`${style.mainHeaderHolderMenuItem} ${activeTab === 'contact' ? style.active : ''}`} >
+                        <Link href={"/support"} passHref><p onClick={() => {setActiveTab('contact')}}>Contact Us</p></Link>
                     </div>
-                    <div className={style.mainHeaderHolderMenuItem} >
-                        <Link href={"/contact"} passHref><p>Contact</p></Link>
+                    <div className={`${style.mainHeaderHolderMenuItem} ${activeTab === 'about' ? style.active : ''}`} >
+                        <Link href={"/about"} passHref><p onClick={() => {setActiveTab('about')}}>About Us</p></Link>
                     </div>
-                    <div className={style.mainHeaderHolderMenuItem} >
-                        <Link href={"/privacy"} passHref><p>Privacy</p></Link>
+                    
+                    <div className={`${style.mainHeaderHolderMenuItem} ${activeTab === 'blog' ? style.active : ''}`} >
+                        <Link href={"/blog"} passHref><p onClick={() => {setActiveTab('blog')}}>Blog</p></Link>
                     </div>
                 </div>
                 <div className={style.mainHeaderHolderLogin} >
@@ -61,13 +79,13 @@ const Header = () => {
                 <Link href={"/dashboard"} passHref><p>Dashboard</p></Link>
                 </div>
                 <div className={style.mainMenuSidePanelHolderItem}>
-                <Link href={"https://chromewebstore.google.com/detail/glancemeai/pgjkednjpnkamnajfabgfigcldpgpokp"} target="_blank" passHref><p>Extension</p></Link>
+                <Link href={"/about"} passHref><p>About Us</p></Link>
                 </div>
                 <div className={style.mainMenuSidePanelHolderItem}>
                 <Link href={"/contact"} passHref><p>Contact</p></Link>
                 </div>
                 <div className={style.mainMenuSidePanelHolderItem}>
-                <Link href={"/policy"} passHref><p>Policy</p></Link>
+                <Link href={"/blog"} passHref><p>Blog</p></Link>
                 </div>
                 <div className={style.mainMenuSidePanelHolderItem}>
                 <Link href={"/login"} passHref><p>Login</p></Link>

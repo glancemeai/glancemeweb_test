@@ -1,4 +1,6 @@
 interface Notes {
+    reminder: boolean;
+    content: any;
     _id: string;
     color: string,
     urlCode: string,

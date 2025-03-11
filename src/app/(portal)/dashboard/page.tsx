@@ -62,7 +62,7 @@ const SubHeader = ({
           type="text"
           placeholder="Search Notes"
         />
-        <ButtonFour onClick={() => searchHandler({ type: "none", reminder: false, title: search })} icon={<FiSearch size={18} />} />
+        <ButtonFour onClick={() => searchHandler()} icon={<FiSearch size={18} />} />
         <p
           className={style.mainHolderHeaderOptionsSearchFilter}
           onClick={() => filterShowHandler(true)}
@@ -82,13 +82,16 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const [showNewFolderPopUp, setNewFolderPopUp] = useState(false);
   const [data, setData] = useState<any>(null);
-  const [notesData, setNotesData] = useState<any>(null);
+  const [notesData, setNotesData] = useState<NotesData | null>(null);
   const [loadingAlert, setLoadingAlert] = useState(false);
   const [folderIdAlert, setFolderIdAlert] = useState("");
   const [alertShow, setAlertShow] = useState(false);
   const [filterShow, setFilterShow] = useState(false);
   const [title, setTitle] = useState("");
   const [folders, setFolders] = useState<any[]>([]);
+  const [filteredNotes, setFilteredNotes] = useState<Notes[] | null>(null);
+  const [filteredFolders, setFilteredFolders] = useState<Folders[] | null>(null);
+  const [currentFilters, setCurrentFilters] = useState<FilterData>({});
 
   // Handlers
   const folderShowHandler = (isVisible: boolean) => setNewFolderPopUp(isVisible);
@@ -98,7 +101,55 @@ const Dashboard = () => {
     setAlertShow(isVisible);
   };
 
-  const searchTitleHandler = (newTitle: string) => setTitle(newTitle);
+  // Handle search input changes - handles both event object or direct value
+  const searchTitleHandler = (newValue: any) => {
+    // Check if newValue is an event or a direct string value
+    if (newValue && typeof newValue === 'object' && newValue.target) {
+      setTitle(newValue.target.value);
+    } else {
+      setTitle(newValue);
+    }
+  };
+
+  // Client-side search (for immediate feedback when API search is slow)
+  const performLocalSearch = useCallback(() => {
+    if (!notesData) return;
+
+    // If no search term, show all notes and folders
+    if (!title.trim() && Object.keys(currentFilters).length === 0) {
+      setFilteredNotes(null);
+      setFilteredFolders(null);
+      return;
+    }
+
+    const searchTerm = title.trim().toLowerCase();
+    
+    // Filter notes
+    const matchedNotes = notesData.notes.filter(note => {
+      const titleMatch = note.title?.toLowerCase().includes(searchTerm) || false;
+      const contentMatch = note.content?.toLowerCase().includes(searchTerm) || false;
+      
+      // Apply additional filters (if any)
+      let passesFilters = true;
+      if (currentFilters.type && currentFilters.type !== "none") {
+        passesFilters = passesFilters && note.type === currentFilters.type;
+      }
+      
+      if (currentFilters.reminder !== undefined) {
+        passesFilters = passesFilters && note.reminder === currentFilters.reminder;
+      }
+      
+      return (titleMatch || contentMatch) && passesFilters;
+    });
+    
+    // Filter folders
+    const matchedFolders = notesData.folders.filter(folder => 
+      folder.name?.toLowerCase().includes(searchTerm) || false
+    );
+    
+    setFilteredNotes(matchedNotes);
+    setFilteredFolders(matchedFolders);
+  }, [title, notesData, currentFilters]);
 
   const userDetails = useCallback(async () => {
     const apis = Apis();
@@ -135,6 +186,10 @@ const Dashboard = () => {
           folders: response.data.folders || [],
           folderInfo: response.data.folderInfo || null
         });
+        
+        // Reset filtered data when fetching fresh data
+        setFilteredNotes(null);
+        setFilteredFolders(null);
       }
     } catch (error: any) {
       console.error('Notes fetch error:', error);
@@ -161,19 +216,31 @@ const Dashboard = () => {
     }
   }, []);
 
-  const searchNotesHandler = async (filters: FilterData) => {
+  const searchNotesHandler = async (filters?: FilterData) => {
+    // Update current filters if provided
+    if (filters) {
+      setCurrentFilters(filters);
+    }
+    
+    // First perform local search for immediate feedback
+    performLocalSearch();
+    
+    // Then try API search if possible
     const apis = Apis();
     setLoading(true);
 
     try {
       const filteredData: Record<string, string> = {};
       
+      // Use provided filters or current filters
+      const activeFilters = filters || currentFilters;
+      
       // Safely add filters
-      if (filters.type && filters.type !== "none") {
-        filteredData.type = filters.type;
+      if (activeFilters.type && activeFilters.type !== "none") {
+        filteredData.type = activeFilters.type;
       }
-      if (filters.reminder) {
-        filteredData.reminder = String(filters.reminder);
+      if (activeFilters.reminder) {
+        filteredData.reminder = String(activeFilters.reminder);
       }
       if (title) {
         filteredData.title = title;
@@ -183,7 +250,16 @@ const Dashboard = () => {
       const response = await apis.SearchNotes(params);
 
       if (response.status === 200 && response.data) {
-        setNotesData(response);
+        // Update the notes data with search results
+        setNotesData({
+          notes: response.data.notes || [],
+          folders: response.data.folders || [],
+          folderInfo: response.data.folderInfo || null
+        });
+        
+        // Clear filtered states since we're now showing search results
+        setFilteredNotes(null);
+        setFilteredFolders(null);
       } else {
         dispatch(setAlert({ 
           data: { 
@@ -220,7 +296,7 @@ const Dashboard = () => {
       if (response.status === 200) {
         alertShowHandler(false, "");
         fetchNotesData();
-        dispatch(setAlert({data: {message: "Folder Deleted Succesfully", show: true, type: "success"}}))
+        dispatch(setAlert({data: {message: "Folder Deleted Successfully", show: true, type: "success"}}))
       } else {
         dispatch(setAlert({ data: { message: response.message, show: true, type: "error" } }));
       }
@@ -259,6 +335,13 @@ const Dashboard = () => {
     });
   }, []);
 
+  // Run local search when title or filters change
+  useEffect(() => {
+    if (notesData) {
+      performLocalSearch();
+    }
+  }, [notesData, title, currentFilters, performLocalSearch]);
+
   // Effects
   useEffect(() => {
     userDetails();
@@ -268,6 +351,10 @@ const Dashboard = () => {
 
   // Render Helper
   const renderContent = () => {
+    // Determine which data to render
+    const foldersToRender = filteredFolders || notesData?.folders || [];
+    const notesToRender = filteredNotes || notesData?.notes || [];
+
     return (
       <>
         {loading ? (
@@ -277,7 +364,7 @@ const Dashboard = () => {
                 key={index} 
                 loading={true} 
                 AlertShowHandler={() => {}} 
-                data={notesData?.folders || []}
+                data={{} as Folders}
               />
             ))}
             {Array.from({ length: 6 }).map((_, index) => (
@@ -286,19 +373,19 @@ const Dashboard = () => {
           </>
         ) : (
           <>
-            {notesData?.folders?.map((folder: Folders, index: number) => (
+            {foldersToRender.map((folder: Folders, index: number) => (
               <FolderCard 
-                key={index} 
-                AlertShowHandler={alertShowHandler} 
-                loading={loading} 
-                data={folder}
-                folders={notesData?.folders || []}
-                refresh={refreshNotes}
+              key={index} 
+              AlertShowHandler={alertShowHandler} 
+              loading={loading} 
+              data={folder}
+              folders={notesData?.folders || []}
+              refresh={refreshNotes}
               />
             ))}
-            {notesData?.notes?.map((note: Notes, index: string) => (
+            {notesToRender.map((note: Notes, index: number) => (
               <NotesCard 
-                key={index} 
+                key={index.toString()} 
                 data={note} 
                 loading={loading} 
                 folders={notesData?.folders || []} 
@@ -306,6 +393,11 @@ const Dashboard = () => {
                 moveNoteToFolder={moveNoteToFolder} 
               />
             ))}
+            {!loading && foldersToRender.length === 0 && notesToRender.length === 0 && title !== "" && (
+              <div className={style.noResults}>
+                <p>No matching folders or notes found for &quot;{title}&quot;</p>
+              </div>
+            )}
           </>
         )}
       </>

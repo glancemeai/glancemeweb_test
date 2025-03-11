@@ -343,3 +343,577 @@
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (min-width: 1200px) {
 }
+
+/* Add these styles to your NotesItem.module.css file */
+
+.clickable {
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.clickable:hover {
+  transform: scale(1.03);
+}
+
+.imageModalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.imageModalContent {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  max-width: 90%;
+  max-height: 90%;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.imageModalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #eaeaea;
+  padding-bottom: 10px;
+}
+
+.imageModalHeader h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.imageModalControls {
+  display: flex;
+  gap: 10px;
+}
+
+.imageControlButton {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  color: #555;
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.imageControlButton:hover {
+  background-color: #f5f5f5;
+  color: #000;
+}
+
+.imageContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: auto;
+}
+
+.imageEditContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.imagePreview {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 15px;
+  border: 1px dashed #ccc;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+.imageEditActions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.browseButton {
+  padding: 8px 15px;
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #333;
+  transition: background-color 0.2s ease;
+}
+
+.browseButton:hover {
+  background-color: #e5e5e5;
+}
+
+.saveButton {
+  padding: 8px 15px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-right: 10px;
+}
+
+.saveButton:hover {
+  background-color: #45a049;
+}
+
+.cancelButton {
+  padding: 8px 15px;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.cancelButton:hover {
+  background-color: #d32f2f;
+}
+
+/* Add these styles to your NotesItem.module.css file */
+
+/* Screenshot Editor */
+.screenshotEditorOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.screenshotEditorContent {
+  background-color: #1e1e1e;
+  border-radius: 8px;
+  width: 90%;
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.screenshotToolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background-color: #2d2d2d;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.screenshotToolbarTools {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.toolButton {
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
+}
+
+.toolButton:hover {
+  background-color: #444;
+}
+
+.activeTool {
+  background-color: #555;
+}
+
+.canvasContainer {
+  flex: 1;
+  position: relative;
+  overflow: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #333;
+}
+
+.drawingCanvas {
+  background-color: #fff;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.screenshotEditorFooter {
+  display: flex;
+  justify-content: flex-end;
+  padding: 15px 20px;
+  background-color: #2d2d2d;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  gap: 15px;
+}
+
+.closeTabButton, .saveScreenshotButton {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.closeTabButton {
+  background-color: #555;
+  color: #fff;
+}
+
+.closeTabButton:hover {
+  background-color: #666;
+}
+
+.saveScreenshotButton {
+  background-color: #1a73e8;
+  color: #fff;
+}
+
+.saveScreenshotButton:hover {
+  background-color: #1967d2;
+}
+
+/* Color Picker */
+.colorPickerContainer {
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  display: flex;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 5px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  z-index: 1000;
+}
+
+.colorOption {
+  width: 30px;
+  height: 30px;
+  margin: 0 5px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 1px solid rgba(0,0,0,0.1);
+}
+
+.colorOption:hover {
+  transform: scale(1.1);
+}
+
+.activeToolButton {
+  background-color: #4169E1;
+  color: white;
+}
+
+.lineWidthContainer {
+  display: flex;
+  align-items: center;
+  background-color: #444;
+  padding: 5px 10px;
+  border-radius: 4px;
+}
+
+.lineWidthSlider {
+  -webkit-appearance: none;
+  width: 80px;
+  height: 3px;
+  background: #666;
+  outline: none;
+  border-radius: 2px;
+}
+
+.lineWidthSlider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 15px;
+  height: 15px;
+  background: #fff;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+/* Text input */
+.textInputContainer {
+  display: flex;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 5px;
+  border-radius: 4px;
+  z-index: 5;
+}
+
+.textInput {
+  background: #fff;
+  border: none;
+  padding: 5px 10px;
+  margin-right: 5px;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.addTextButton {
+  background-color: #1a73e8;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/* Responsive adjustments */
+@media only screen and (max-width: 768px) {
+  .screenshotToolbarTools {
+    gap: 8px;
+  }
+  
+  .toolButton {
+    width: 35px;
+    height: 35px;
+  }
+  
+  .colorPalette {
+    grid-template-columns: repeat(4, 1fr);
+    right: 0;
+    left: auto;
+  }
+  
+  .lineWidthSlider {
+    width: 60px;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .screenshotEditorContent {
+    width: 95%;
+    height: 95%;
+  }
+  
+  .screenshotToolbar {
+    padding: 8px 10px;
+    flex-wrap: wrap;
+  }
+  
+  .screenshotToolbarTools {
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .screenshotEditorFooter {
+    padding: 10px 15px;
+  }
+  
+  .closeTabButton, .saveScreenshotButton {
+    padding: 8px 15px;
+    font-size: 14px;
+  }
+}
+
+.screenshotEditorOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.screenshotEditorContainer {
+  background-color: white;
+  width: 90%;
+  max-width: 1200px;
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.screenshotHeader {
+  padding: 15px;
+  border-bottom: 1px solid #eee;
+  background-color: white;
+}
+
+.screenshotHeader h2 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.screenshotContent {
+  display: flex;
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+
+.imageContainer {
+  flex: 1;
+  position: relative;
+  background-color: #f5f5f5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: auto;
+}
+
+.drawingCanvas {
+  max-width: 100%;
+  max-height: 100%;
+  display: block;
+  border: none;
+}
+
+.sideToolbar {
+  width: 60px;
+  background-color: white;
+  border-left: 1px solid #eee;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 15px 0;
+}
+
+.toolButton {
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  border: none;
+  background: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 15px;
+  cursor: pointer;
+}
+
+.toolButton:hover {
+  background-color: #f0f0f0;
+}
+
+.toolIcon {
+  font-size: 10px;
+  color: #333;
+}
+
+.profileButton {
+  margin-top: auto;
+  padding: 15px 0;
+}
+
+.profileCircle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #000;
+}
+
+
+.textInputContainer {
+  position: absolute;
+  display: flex;
+  z-index: 5;
+}
+
+.textInput {
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 4px 0 0 4px;
+  font-size: 14px;
+}
+
+.addTextButton {
+  padding: 5px 10px;
+  background-color: #1a73e8;
+  color: white;
+  border: none;
+  border-radius: 0 4px 4px 0;
+  cursor: pointer;
+}
+
+.screenshotFooter {
+  padding: 15px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  border-top: 1px solid #eee;
+  background-color: white;
+}
+
+.closeButton {
+  padding: 10px 20px;
+  background-color: white;
+  color: #333;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.saveButton {
+  padding: 10px 20px;
+  background-color: #000;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.saveButton::after {
+  content: "📷";
+  font-size: 16px;
+}
+
+.loadingSpinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  color: #666;
+  height: 100%;
+}
