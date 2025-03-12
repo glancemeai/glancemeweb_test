@@ -1,4 +1,3 @@
-// File: pages/blog/index.tsx
 import React from 'react';
 import Header from '../home/header/header';
 import Link from 'next/link';

@@ -25,7 +25,6 @@ export default function LoginContainer() {
     }
     const [loginCall, setLoginCall] = useState(false)
     const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
         setLoginCall(true);
 
         try {

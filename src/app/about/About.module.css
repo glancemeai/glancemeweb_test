@@ -12,7 +12,7 @@
     width: 100%;
     background-image: url('/images/herobanner.png');
     background-size: cover;
-    background-position: center 25%;
+    background-position: center;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -33,12 +33,13 @@
     font-size: 52px;
     font-weight: 700;
     margin: 0;
+    text-align: center;
   }
   
   /* Content Section */
   .contentSection {
     padding: 20px;
-    max-width: 1440px;
+    max-width: 1000px;
     margin: 0 auto;
   }
   
@@ -70,6 +71,9 @@
     font-weight: 600;
     margin-bottom: 8px;
     color: #333;
+  }
+  .benefitSection p {
+    margin-left: 20px;
   }
   
   .closingStatement {
@@ -141,6 +145,11 @@
   
   /* Responsive Design */
   @media (max-width: 768px) {
+    .heroBanner {
+      background-image: url('/images/aboutus-1.png');
+      background-size: cover;
+    }
+    
     .heroTitle {
       font-size: 42px;
     }
@@ -161,6 +170,7 @@
   @media (max-width: 480px) {
     .heroBanner {
       height: 150px;
+      background-image: url('/images/aboutus-1.png');
     }
     
     .heroTitle {

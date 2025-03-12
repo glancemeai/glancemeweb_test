@@ -1,7 +1,3 @@
-/* Base Styles */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-
-
 .container {
     display: flex;
     flex-direction: column;
@@ -9,11 +5,16 @@
     justify-content: center;
     min-height: 100vh;
     width: 100%;
-    background: linear-gradient(10deg, #C5FFF8, rgba(117, 52, 255, 0.8) 50%, rgba(255, 255, 255, 0.8) 100%);
+    background: linear-gradient(135deg, #e6f0ff, #f5f5ff, #f0e6ff);
     padding: 40px 20px;
     box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
     margin-top: 0;
+}
+
+/* Add required field indicator */
+.requiredAsterisk {
+    color: #FF4D4D;
+    margin-left: 4px;
 }
 
 .contactHeaderWrapper {
@@ -50,16 +51,28 @@
     padding: 40px;
     display: flex;
     flex-direction: column;
+    
     position: relative;
     overflow: hidden;
 }
 
+.circleOverlay1 {
+    position: absolute;
+    top: 40%;
+    right: -15px;
+    width: 138px;
+    height: 138px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    z-index: 1;
+}
+
 .circleOverlay {
     position: absolute;
-    top: 30%;
-    right: -50px;
-    width: 200px;
-    height: 200px;
+    top: 50%;
+    right: -145px;
+    width: 269px;
+    height: 269px;
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.1);
     z-index: 1;
@@ -205,6 +218,16 @@
     margin-top: 30px;
 }
 
+/* File Upload UI */
+.fileUploadContainer {
+    flex: 1;
+    margin-right: 20px;
+}
+
+.fileUpload {
+    display: inline-block;
+}
+
 .uploadButton {
     display: inline-block;
     padding: 10px 20px;
@@ -221,6 +244,48 @@
     color: #4D79FF;
 }
 
+.filePreview {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    background-color: #f5f7ff;
+    border: 1px solid #e0e6ff;
+    border-radius: 8px;
+    max-width: 300px;
+}
+
+.fileIcon {
+    color: #4D79FF;
+    margin-right: 8px;
+    font-size: 16px;
+}
+
+.fileName {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 14px;
+    color: #333;
+}
+
+.removeFileBtn {
+    background: none;
+    border: none;
+    color: #FF4D4D;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    margin-left: 8px;
+}
+
+.removeFileBtn:hover {
+    color: #ff2929;
+}
+
 .sendButton {
     padding: 12px 24px;
     background-color: #4D79FF;
@@ -231,10 +296,26 @@
     font-weight: 500;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    margin-left: auto;
 }
 
-.sendButton:hover {
+.sendButton:hover:not(:disabled) {
     background-color: #3A66FF;
+}
+
+.sendButton:disabled {
+    background-color: #a0b0e0;
+    cursor: not-allowed;
+}
+
+.inputError {
+    border-color: #ff0000;
+}
+
+.errorMessage {
+    color: #ff0000;
+    font-size: 0.8rem;
+    margin-top: 0.25rem;
 }
 
 /* Responsive Styles */
@@ -247,6 +328,17 @@
     .contactInfo, .contactForm {
         flex: 0 0 100%;
     }
+    
+    .formActions {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 15px;
+    }
+    
+    .fileUploadContainer {
+        margin-right: 0;
+        margin-bottom: 15px;
+    }
 }
 
 @media screen and (max-width: 600px) {
@@ -256,11 +348,6 @@
     }
     
     .inquiryTypes {
-        flex-direction: column;
-        gap: 15px;
-    }
-    
-    .formActions {
         flex-direction: column;
         gap: 15px;
     }

@@ -83,7 +83,7 @@ const blogPosts: BlogPost[] = [
 const sampleComments: Comment[] = [
   {
     id: '1',
-    author: 'Tarim Shivakotova',
+    author: 'Tarini Shrivastav',
     avatarUrl: '/api/placeholder/40/40',
     date: 'Mar 4, 2025',
     text: 'Great article 👏 You clearly demonstrated that UI design is mostly about following logical rules and guidelines!'
