@@ -17,7 +17,7 @@
 
 .topBar {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   margin-bottom: 1.5rem;
   padding-bottom: 1rem;
@@ -374,7 +374,6 @@
   font-weight: 500;
   cursor: pointer;
 }
-/* Add these styles to your blogpost.module.css file */
 
 .modalOverlay {
   position: fixed;

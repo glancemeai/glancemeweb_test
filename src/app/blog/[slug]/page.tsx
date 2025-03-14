@@ -1,11 +1,10 @@
 "use client"
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '../../home/header/header';
 import Image from 'next/image';
 import { useRouter, useParams } from 'next/navigation';
 import styles from './blogpost.module.css'
-import { FaWhatsapp, FaFacebook, FaPinterest } from 'react-icons/fa';
-import { MdEmail } from 'react-icons/md';
+
 
 interface BlogPost {
   id: string;
@@ -180,6 +179,11 @@ const BlogPostPage: React.FC = () => {
   const [comments, setComments] = useState<Comment[]>(sampleComments);
   const [showShareModal, setShowShareModal] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const [currentUrl, setCurrentUrl] = useState('');
+  
+  useEffect(() => {
+    setCurrentUrl(window.location.href);
+  }, []);
   
   // Find the blog post with the matching slug
   const blogPost = blogPosts.find(post => post.slug === slug);
@@ -191,8 +195,7 @@ const BlogPostPage: React.FC = () => {
 
   // Function to copy current URL to clipboard
   const copyToClipboard = () => {
-    const url = window.location.href;
-    navigator.clipboard.writeText(url);
+    navigator.clipboard.writeText(currentUrl);
     alert('Link copied to clipboard!');
   };
 
@@ -224,16 +227,16 @@ const BlogPostPage: React.FC = () => {
     
     switch(platform) {
       case 'whatsapp':
-        window.open(`https://wa.me/?text=${encodeURIComponent(title + ' ' + url)}`, '_blank');
+        window.open(`https://wa.me/?text=${encodeURIComponent(title + ' ' + currentUrl)}`, '_blank');
         break;
       case 'pinterest':
-        window.open(`https://pinterest.com/pin/create/button/?url=${encodeURIComponent(url)}&description=${encodeURIComponent(title)}`, '_blank');
+        window.open(`https://pinterest.com/pin/create/button/?url=${encodeURIComponent(currentUrl)}&description=${encodeURIComponent(title)}`, '_blank');
         break;
       case 'facebook':
-        window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank');
+        window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentUrl)}`, '_blank');
         break;
       case 'email':
-        window.open(`mailto:?subject=${encodeURIComponent(title)}&body=${encodeURIComponent(`Check out this article: ${url}`)}`, '_blank');
+        window.open(`mailto:?subject=${encodeURIComponent(title)}&body=${encodeURIComponent(`Check out this article: ${currentUrl}`)}`, '_blank');
         break;
       default:
         break;
@@ -390,7 +393,7 @@ const BlogPostPage: React.FC = () => {
             <div className={styles.copyLinkContainer}>
               <input 
                 type="text" 
-                value={`https://www.yourwebsite.com/blog/${blogPost.slug}`} 
+                value={currentUrl} 
                 readOnly 
                 className={styles.linkInput} 
               />
