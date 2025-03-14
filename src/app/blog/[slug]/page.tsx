@@ -4,6 +4,8 @@ import Header from '../../home/header/header';
 import Image from 'next/image';
 import { useRouter, useParams } from 'next/navigation';
 import styles from './blogpost.module.css'
+import { FaWhatsapp, FaFacebook, FaPinterest } from 'react-icons/fa';
+import { MdEmail } from 'react-icons/md';
 
 interface BlogPost {
   id: string;
@@ -48,11 +50,84 @@ const blogPosts: BlogPost[] = [
       Artificial Intelligence (AI) is all around us, seamlessly integrated into our daily lives and work. Enroll in this course to understand the key AI terminology and applications and launch your AI career or transform your existing one.
     `
   },
+
+  {
+    id: '2',
+    title: 'Introduction to Artificial Intelligence (AI)',
+    excerpt: 'Artificial Intelligence (AI) is all around us, seamlessly integrated into our daily lives and work. Enroll in this course to understand the key AI terminology and applications and launch your AI career or transform your existing one.',
+    coverImage: '/images/ai-intro.png',
+    category: 'Generative AI',
+    slug: 'ai-transparency-and-accountability',
+    content: `
+      Artificial Intelligence (AI) is all around us, seamlessly integrated into our daily lives and work. Enroll in this course to understand the key AI terminology and applications and launch your AI career or transform your existing one.
+
+      Artificial Intelligence (AI) is all around us, seamlessly integrated into our daily lives and work. Enroll in this course to understand the key AI terminology and applications and launch your AI career or transform your existing one.
+      
+      Artificial Intelligence (AI) is all around us, seamlessly integrated into our daily lives and work. Enroll in this course to understand the key AI terminology and applications and launch your AI career or transform your existing one.
+      
+      ## Key Concepts in AI
+      
+      - Machine Learning
+      - Neural Networks
+      - Deep Learning
+      - Natural Language Processing
+      
+      Artificial Intelligence (AI) is all around us, seamlessly integrated into our daily lives and work. Enroll in this course to understand the key AI terminology and applications and launch your AI career or transform your existing one.
+    `
+  },
+  {
+    id: '3',
+    title: 'Introduction to Artificial Intelligence (AI)',
+    excerpt: 'Artificial Intelligence (AI) is all around us, seamlessly integrated into our daily lives and work. Enroll in this course to understand the key AI terminology and applications and launch your AI career or transform your existing one.',
+    coverImage: '/images/chatgpt-intro.png',
+    category: 'Generative AI',
+    slug: 'introduction-to-chatgpt',
+    content: `
+      Artificial Intelligence (AI) is all around us, seamlessly integrated into our daily lives and work. Enroll in this course to understand the key AI terminology and applications and launch your AI career or transform your existing one.
+
+      Artificial Intelligence (AI) is all around us, seamlessly integrated into our daily lives and work. Enroll in this course to understand the key AI terminology and applications and launch your AI career or transform your existing one.
+      
+      Artificial Intelligence (AI) is all around us, seamlessly integrated into our daily lives and work. Enroll in this course to understand the key AI terminology and applications and launch your AI career or transform your existing one.
+      
+      ## Key Concepts in AI
+      
+      - Machine Learning
+      - Neural Networks
+      - Deep Learning
+      - Natural Language Processing
+      
+      Artificial Intelligence (AI) is all around us, seamlessly integrated into our daily lives and work. Enroll in this course to understand the key AI terminology and applications and launch your AI career or transform your existing one.
+    `
+  },
+  {
+    id: '4',
+    title: 'Introduction to Artificial Intelligence (AI)',
+    excerpt: 'Artificial Intelligence (AI) is all around us, seamlessly integrated into our daily lives and work. Enroll in this course to understand the key AI terminology and applications and launch your AI career or transform your existing one.',
+    coverImage: '/images/ai-tools.png',
+    category: 'Generative AI',
+    slug: 'introduction-to-artificial-intelligence-tools',
+    content: `
+      Artificial Intelligence (AI) is all around us, seamlessly integrated into our daily lives and work. Enroll in this course to understand the key AI terminology and applications and launch your AI career or transform your existing one.
+
+      Artificial Intelligence (AI) is all around us, seamlessly integrated into our daily lives and work. Enroll in this course to understand the key AI terminology and applications and launch your AI career or transform your existing one.
+      
+      Artificial Intelligence (AI) is all around us, seamlessly integrated into our daily lives and work. Enroll in this course to understand the key AI terminology and applications and launch your AI career or transform your existing one.
+      
+      ## Key Concepts in AI
+      
+      - Machine Learning
+      - Neural Networks
+      - Deep Learning
+      - Natural Language Processing
+      
+      Artificial Intelligence (AI) is all around us, seamlessly integrated into our daily lives and work. Enroll in this course to understand the key AI terminology and applications and launch your AI career or transform your existing one.
+    `
+  },
   {
     id: '5',
     title: '16 little UI design tips that make a big impact',
     excerpt: 'A step by step UI design case study to specify UI on example user interface using high-level design tips.',
-    coverImage: '/images/ui-design-tips.jpg',
+    coverImage: '/images/chatgpt-intro.png',
     category: 'Design',
     slug: '16-little-ui-design-tips',
     content: `
@@ -103,7 +178,7 @@ const BlogPostPage: React.FC = () => {
   const slug = params?.slug;
   const [newComment, setNewComment] = useState('');
   const [comments, setComments] = useState<Comment[]>(sampleComments);
-  const [showShareDropdown, setShowShareDropdown] = useState(false);
+  const [showShareModal, setShowShareModal] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   
   // Find the blog post with the matching slug
@@ -138,8 +213,33 @@ const BlogPostPage: React.FC = () => {
     setNewComment('');
   };
 
-  const toggleShareDropdown = () => {
-    setShowShareDropdown(!showShareDropdown);
+  const toggleShareModal = () => {
+    setShowShareModal(!showShareModal);
+  };
+
+  // Function to handle social media sharing
+  const handleShare = (platform: string) => {
+    const url = window.location.href;
+    const title = blogPost.title;
+    
+    switch(platform) {
+      case 'whatsapp':
+        window.open(`https://wa.me/?text=${encodeURIComponent(title + ' ' + url)}`, '_blank');
+        break;
+      case 'pinterest':
+        window.open(`https://pinterest.com/pin/create/button/?url=${encodeURIComponent(url)}&description=${encodeURIComponent(title)}`, '_blank');
+        break;
+      case 'facebook':
+        window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank');
+        break;
+      case 'email':
+        window.open(`mailto:?subject=${encodeURIComponent(title)}&body=${encodeURIComponent(`Check out this article: ${url}`)}`, '_blank');
+        break;
+      default:
+        break;
+    }
+
+    toggleShareModal();
   };
 
   return (
@@ -172,50 +272,134 @@ const BlogPostPage: React.FC = () => {
               </svg>
             </button>
             
-            <div className={styles.shareDropdown}>
+            <button 
+              className={styles.actionButton} 
+              aria-label="Share"
+              onClick={toggleShareModal}
+            >
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="18" cy="5" r="3"></circle>
+                <circle cx="6" cy="12" r="3"></circle>
+                <circle cx="18" cy="19" r="3"></circle>
+                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+              </svg>
+            </button>
+          </div>
+        </div>
+        
+        {/* Share Modal */}
+        {showShareModal && (
+        <div className={styles.modalOverlay}>
+          <div className={styles.shareModal}>
+            <div className={styles.modalHeader}>
+              <h3 className={styles.shareTitle}>Share</h3>
               <button 
-                className={styles.actionButton} 
-                aria-label="Share"
-                onClick={toggleShareDropdown}
+                className={styles.closeButton} 
+                onClick={toggleShareModal}
+                aria-label="Close"
               >
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <circle cx="18" cy="5" r="3"></circle>
-                  <circle cx="6" cy="12" r="3"></circle>
-                  <circle cx="18" cy="19" r="3"></circle>
-                  <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
-                  <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
                 </svg>
               </button>
+            </div>
+            <div className={styles.socialButtons}>
+              {/* WhatsApp */}
+              <button 
+                className={styles.socialButton}
+                onClick={() => handleShare('whatsapp')}
+                aria-label="Share on WhatsApp"
+              >
+                <div className={styles.iconWrapper}>
+                  <div className={`${styles.iconCircle} ${styles.whatsappBg}`}>
+                    <Image 
+                      src="/images/whatsapp.png" 
+                      alt="WhatsApp" 
+                      width={24} 
+                      height={24}
+                      className={styles.socialIcon} 
+                    />
+                  </div>
+                </div>
+                <span>WhatsApp</span>
+              </button>
               
-              <div className={`${styles.shareDropdownContent} ${showShareDropdown ? styles.visible : ''}`}>
-                <h3 className={styles.shareTitle}>Share</h3>
-                <div className={styles.shareOptions}>
-                  <button className={`${styles.shareButton} ${styles.whatsapp}`} aria-label="Share on WhatsApp">
-                    WhatsApp
-                  </button>
-                  <button className={`${styles.shareButton} ${styles.pinterest}`} aria-label="Share on Pinterest">
-                    Pinterest
-                  </button>
-                  <button className={`${styles.shareButton} ${styles.facebook}`} aria-label="Share on Facebook">
-                    Facebook
-                  </button>
-                  <button className={`${styles.shareButton} ${styles.email}`} aria-label="Share via Email">
-                    Email
-                  </button>
+              {/* Pinterest */}
+              <button 
+                className={styles.socialButton}
+                onClick={() => handleShare('pinterest')}
+                aria-label="Share on Pinterest"
+              >
+                <div className={styles.iconWrapper}>
+                  <div className={`${styles.iconCircle} ${styles.pinterestBg}`}>
+                    <Image 
+                      src="/images/mdi_pinterest.png" 
+                      alt="Pinterest" 
+                      width={24} 
+                      height={24}
+                      className={styles.socialIcon} 
+                    />
+                  </div>
                 </div>
-                <div className={styles.copyLinkContainer}>
-                  <input 
-                    type="text" 
-                    value={`https://www.yourwebsite.com/blog/${blogPost.slug}`} 
-                    readOnly 
-                    className={styles.linkInput} 
-                  />
-                  <button onClick={copyToClipboard} className={styles.copyButton}>Copy</button>
+                <span>Pinterest</span>
+              </button>
+              
+              {/* Facebook */}
+              <button 
+                className={styles.socialButton}
+                onClick={() => handleShare('facebook')}
+                aria-label="Share on Facebook"
+              >
+                <div className={styles.iconWrapper}>
+                  <div className={`${styles.iconCircle} ${styles.facebookBg}`}>
+                    <Image 
+                      src="/images/ri_facebook-fill.png" 
+                      alt="Facebook" 
+                      width={24} 
+                      height={24}
+                      className={styles.socialIcon} 
+                    />
+                  </div>
                 </div>
-              </div>
+                <span>Facebook</span>
+              </button>
+              
+              {/* Email */}
+              <button 
+                className={styles.socialButton}
+                onClick={() => handleShare('email')}
+                aria-label="Share via Email"
+              >
+                <div className={styles.iconWrapper}>
+                  <div className={`${styles.iconCircle} ${styles.emailBg}`}>
+                    <Image 
+                      src="/images/mail.png" 
+                      alt="Email" 
+                      width={24} 
+                      height={24}
+                      className={styles.socialIcon} 
+                    />
+                  </div>
+                </div>
+                <span>Email</span>
+              </button>
+            </div>
+            
+            <div className={styles.copyLinkContainer}>
+              <input 
+                type="text" 
+                value={`https://www.yourwebsite.com/blog/${blogPost.slug}`} 
+                readOnly 
+                className={styles.linkInput} 
+              />
+              <button onClick={copyToClipboard} className={styles.copyButton}>Copy</button>
             </div>
           </div>
         </div>
+      )}
+        
         
         <article className={styles.blogPost}>
           <div className={styles.blogHeader}>

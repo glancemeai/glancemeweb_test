@@ -8,6 +8,7 @@ import { AiOutlineMail } from "react-icons/ai"
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { FaInstagramSquare } from "react-icons/fa";
 
 const Header = () => {
   const [showMenu,setShowMenu] = useState(false)
@@ -79,10 +80,10 @@ const Header = () => {
                 <Link href={"/dashboard"} passHref><p>Dashboard</p></Link>
                 </div>
                 <div className={style.mainMenuSidePanelHolderItem}>
-                <Link href={"/about"} passHref><p>About Us</p></Link>
+                <Link href={"/support"} passHref><p>Contact Us</p></Link>
                 </div>
                 <div className={style.mainMenuSidePanelHolderItem}>
-                <Link href={"/contact"} passHref><p>Contact</p></Link>
+                <Link href={"/about"} passHref><p>About Us</p></Link>
                 </div>
                 <div className={style.mainMenuSidePanelHolderItem}>
                 <Link href={"/blog"} passHref><p>Blog</p></Link>
@@ -93,9 +94,9 @@ const Header = () => {
 
 
                 <div className={style.mainMenuSidePanelHolderfooter}>
-                    <Link href={"#"} target="_blank" passHref><p><BsMedium size={25} /></p></Link>
-                    <Link href={"#"} target="_blank" passHref><p><BsLinkedin size={20} /></p></Link>
-                    <Link href={"#"} target="_blank" passHref><p><BsTwitter size={20} /></p></Link>
+                    <Link href={"https://www.instagram.com/glancemeai/"} target="_blank" passHref><p><FaInstagramSquare size={25} /></p></Link>
+                    <Link href={"https://www.linkedin.com/company/glancemeai/"} target="_blank" passHref><p><BsLinkedin size={20} /></p></Link>
+                    <Link href={"https://x.com/GlancemeAi"} target="_blank" passHref><p><BsTwitter size={20} /></p></Link>
                     <Link href={"mailto:support@glanceme.ai"} target="_blank" passHref><p><AiOutlineMail size={20} /></p></Link>
                         
                 </div>
