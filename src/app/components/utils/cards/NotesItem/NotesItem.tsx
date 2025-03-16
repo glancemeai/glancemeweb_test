@@ -4,13 +4,13 @@ import style from "./NotesItem.module.css";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { FiExternalLink } from "react-icons/fi";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import { FaPencilAlt, FaFont, FaSave, FaTimes } from "react-icons/fa";
 import { MdColorLens } from "react-icons/md";
 import Notes from "../../Interfaces/Notes";
 import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { setAlert } from "../../../../redux/utils/message";
 import Apis from "../../../../service/hooks/ApiSlugs";
+import { FaTextHeight, FaPencilAlt, FaTrashAlt, FaPalette, FaTimes, FaSave } from "react-icons/fa";
 
 interface NotesCard {
     data?: Notes;
@@ -113,6 +113,8 @@ const NotesItem = (props: NotesCard) => {
             setShowScreenshotEditor(true);
         }
     };
+    
+    
 
     // Drawing functions
     const startDrawing = (e: React.MouseEvent<HTMLCanvasElement>) => {
@@ -149,6 +151,12 @@ const NotesItem = (props: NotesCard) => {
         const y = e.clientY - rect.top;
         
         if (ctx) {
+            // For smoother lines
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            ctx.shadowColor = currentColor;
+            ctx.shadowBlur = 1;
+            
             ctx.lineTo(x, y);
             ctx.stroke();
         }
@@ -183,7 +191,21 @@ const NotesItem = (props: NotesCard) => {
     };
     
     const handleColorButtonClick = () => {
-        setShowColorPicker(!showColorPicker);
+        setShowColorPicker(prev => !prev);
+    };
+    const colorPickerStyles = {
+        position: 'absolute',
+        right: '70px',  
+        top: '15px',   
+        display: 'flex',
+        flexWrap: 'wrap',
+        width: '120px',
+        backgroundColor: 'white',
+        border: '1px solid #ccc',
+        borderRadius: '4px',
+        padding: '8px',
+        boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
+        zIndex: 1000
     };
 
     const saveScreenshot = async () => {
@@ -455,68 +477,44 @@ const NotesItem = (props: NotesCard) => {
                                     <div className={style.loadingSpinner}>Loading...</div>
                                 )} */}
                                 
-                                {showTextInput && (
-                                    <div 
-                                        className={style.textInputContainer}
-                                        style={{
-                                            position: 'absolute',
-                                            left: `${textPosition.x}px`,
-                                            top: `${textPosition.y}px`,
-                                            zIndex: 1000, // Ensure it's above the canvas
-                                            backgroundColor: 'white',
-                                            padding: '10px',
-                                            border: '1px solid #ccc',
-                                            borderRadius: '4px',
-                                            boxShadow: '0 2px 10px rgba(0,0,0,0.1)'
+                            {showTextInput && (
+                                <div 
+                                    className={style.modernTextInputContainer}
+                                    style={{
+                                        position: 'absolute',
+                                        left: `${textPosition.x}px`,
+                                        top: `${textPosition.y}px`,
+                                    }}
+                                >
+                                    <input
+                                        type="text"
+                                        value={textInput}
+                                        onChange={(e) => setTextInput(e.target.value)}
+                                        onKeyDown={(e) => {
+                                            if (e.key === 'Enter') {
+                                                addTextToCanvas();
+                                            }
                                         }}
-                                    >
-                                        <input
-                                            type="text"
-                                            value={textInput}
-                                            onChange={(e) => setTextInput(e.target.value)}
-                                            onKeyDown={(e) => {
-                                                if (e.key === 'Enter') {
-                                                    addTextToCanvas();
-                                                }
-                                            }}
-                                            autoFocus
-                                            placeholder="Enter text"
-                                            className={style.textInput}
-                                            style={{
-                                                width: '200px',
-                                                marginBottom: '10px'
-                                            }}
-                                        />
-                                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                            <button 
-                                                onClick={addTextToCanvas}
-                                                style={{
-                                                    padding: '5px 10px',
-                                                    backgroundColor: '#4169E1',
-                                                    color: 'white',
-                                                    border: 'none',
-                                                    borderRadius: '4px',
-                                                    cursor: 'pointer'
-                                                }}
-                                            >
-                                                Add
-                                            </button>
-                                            <button 
-                                                onClick={() => setShowTextInput(false)}
-                                                style={{
-                                                    padding: '5px 10px',
-                                                    backgroundColor: '#f0f0f0',
-                                                    color: '#333',
-                                                    border: '1px solid #ccc',
-                                                    borderRadius: '4px',
-                                                    cursor: 'pointer'
-                                                }}
-                                            >
-                                                Cancel
-                                            </button>
-                                        </div>
+                                        autoFocus
+                                        placeholder="Enter text"
+                                        className={style.modernTextInput}
+                                    />
+                                    <div className={style.textInputControls}>
+                                        <button 
+                                            onClick={addTextToCanvas}
+                                            className={style.textAddButton}
+                                        >
+                                            <FaSave size={16} />
+                                        </button>
+                                        <button 
+                                            onClick={() => setShowTextInput(false)}
+                                            className={style.textCancelButton}
+                                        >
+                                            <FaTimes size={16} />
+                                        </button>
                                     </div>
-                                )}
+                                </div>
+                            )}
                             </div>
                             
                             <div className={style.sideToolbar}>
@@ -524,34 +522,45 @@ const NotesItem = (props: NotesCard) => {
                                     className={`${style.toolButton} ${currentTool === 'text' ? style.activeToolButton : ''}`} 
                                     onClick={() => handleToolChange('text')}
                                 >
-                                    <span className={style.toolIcon}>Text</span>
+                                    <FaTextHeight size={18} className={style.toolIcon} />
                                 </button>
                                 <button 
                                     className={`${style.toolButton} ${currentTool === 'pencil' ? style.activeToolButton : ''}`} 
                                     onClick={() => handleToolChange('pencil')}
                                 >
-                                    <span className={style.toolIcon}>Draw</span>
+                                    <FaPencilAlt size={18} className={style.toolIcon} />
                                 </button>
                                 <button 
                                     className={style.toolButton} 
                                     onClick={handleDeleteClick}
                                 >
-                                    <span className={style.toolIcon}>Delete</span>
+                                    <FaTrashAlt size={18} className={style.toolIcon} />
                                 </button>
                                 <button 
                                     className={style.toolButton} 
                                     onClick={handleColorButtonClick}
                                 >
-                                    <span className={style.toolIcon}>Color</span>
+
+                                    <FaPalette size={18} className={style.toolIcon} />
                                 </button>
                                 
                                 {showColorPicker && (
-                                    <div className={style.colorPickerContainer}>
+                                    <div 
+                                        className={style.colorPickerContainer}
+                                    >
                                         {colorOptions.map((color) => (
                                             <div 
                                                 key={color} 
                                                 className={style.colorOption}
-                                                style={{ backgroundColor: color }}
+                                                style={{ 
+                                                    backgroundColor: color,
+                                                    width: '25px',
+                                                    height: '25px',
+                                                    margin: '3px',
+                                                    borderRadius: '50%',
+                                                    cursor: 'pointer',
+                                                    border: currentColor === color ? '2px solid #333' : '1px solid rgba(0,0,0,0.1)'
+                                                }}
                                                 onClick={() => {
                                                     handleColorChange(color);
                                                     setShowColorPicker(false);
@@ -572,13 +581,13 @@ const NotesItem = (props: NotesCard) => {
                                 onClick={() => setShowScreenshotEditor(false)}
                                 className={style.closeButton}
                             >
-                                Close Tab
+                                <FaTimes size={16} style={{ marginRight: '5px' }} /> Close Tab
                             </button>
                             <button 
                                 onClick={saveScreenshot}
                                 className={style.saveButton}
                             >
-                                Save Screenshot
+                                <FaSave size={16} style={{ marginRight: '5px' }} /> Save Screenshot
                             </button>
                         </div>
                     </div>
