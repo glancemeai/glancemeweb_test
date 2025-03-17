@@ -6,13 +6,12 @@ import { setAlert } from '@/app/redux/utils/message';
 import Header from '../home/header/header';
 import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaFacebook, FaInstagram, FaTwitter, FaFile, FaTimesCircle } from 'react-icons/fa';
 import style from './support.module.css';
-import emailjs from 'emailjs-com';
-
-emailjs.init(`${process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY}`);
+import Apis from "../service/hooks/ApiSlugs"
 
 const SupportPage = () => {
+    const apiClient = Apis();
     const dispatch = useDispatch();
-    const [inquiryType, setInquiryType] = useState('general');
+    const [inquiryType, setInquiryType] = useState('General Inquiry');
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
@@ -21,81 +20,68 @@ const SupportPage = () => {
     const [message, setMessage] = useState('');
     const [file, setFile] = useState<File | null>(null);
     const [isUploading, setIsUploading] = useState(false);
+    const formData = new FormData();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         
-        // Validate phone number before submission
         if (isPhoneRequired && phoneNumber && !validatePhoneNumber(phoneNumber)) {
             setPhoneError('Phone number must contain only digits');
             return;
         }
         
-        const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
-        const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
-        const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
-        
-        if (!serviceId || !templateId || !publicKey) {
-            console.error('EmailJS configuration is missing.');
-            dispatch(setAlert({ data: { message: 'EmailJS configuration is missing.', show: true, type: 'error' } }));
-            return;
-        }
-        
-        // Base template params
-        const templateParams = {
-            from_name: lastName ? `${firstName} ${lastName}` : firstName,
-            inquiry_type: inquiryType,
-            to_name: 'Glanceme',
-            message: message || '(No message provided)',
-            reply_to: email,
-            phone: phoneNumber || '(Not provided)'
-        };
-        
         try {
             setIsUploading(true);
             
-            // Handle file attachment if present (for resume option)
-            if (file && inquiryType === 'resume') {
-                // Convert file to base64
-                const reader = new FileReader();
-                const filePromise = new Promise((resolve, reject) => {
-                    reader.onload = () => resolve(reader.result);
-                    reader.onerror = (error) => reject(error);
-                    reader.readAsDataURL(file);
-                });
+            const contactData: any = {
+                firstName,
+                email,
+                message: message || '(No message provided)',
+                inquiryType
+            };
+            
+            if (lastName) contactData.lastName = lastName;
+            if (phoneNumber) contactData.phoneNumber = phoneNumber;
+            
+            if (file && inquiryType === 'Send Resume') {
+                contactData.file = file;
+
                 
-                const base64File = await filePromise;
-                
-                // Add file to template params
-                Object.assign(templateParams, {
-                    file_content: base64File,
-                    file_name: file.name
-                });
+                formData.append('firstName', firstName);
+                formData.append('email', email);
+                formData.append('message', message || '(No message provided)');
+                formData.append('inquiryType', inquiryType);
+                if (lastName) formData.append('lastName', lastName);
+                if (phoneNumber) formData.append('phoneNumber', phoneNumber);
+                formData.append('file', file); 
             }
+
+            const result = await apiClient.ContactUs(formData);
+            console.log('Contact API response:', result);
             
-            // Send email
-            await emailjs.send(serviceId, templateId, templateParams, publicKey);
-            
-            // Reset form after successful submission
-            setFirstName('');
-            setLastName('');
-            setEmail('');
-            setPhoneNumber('');
-            setPhoneError('');
-            setMessage('');
-            setFile(null);
-            
-            dispatch(setAlert({ data: { message: 'Message sent successfully', show: true, type: 'success' } }));
-        } catch (error) {
-            console.error('Failed to send email:', error);
-            dispatch(setAlert({ data: { message: 'Failed to send message', show: true, type: 'error' } }));
+            if (result && (result.status === 200 || result.status === 201)) {
+                setFirstName('');
+                setLastName('');
+                setEmail('');
+                setPhoneNumber('');
+                setPhoneError('');
+                setMessage('');
+                setFile(null);
+                
+                dispatch(setAlert({ data: { message: result.message || 'Message sent successfully', show: true, type: 'success' } }));
+            } else {
+                throw new Error(result?.message || 'Failed to send message');
+            }
+        } catch (error: any) {
+            console.error('Failed to send message:', error);
+            dispatch(setAlert({ data: { message: error.message || 'Failed to send message', show: true, type: 'error' } }));
         } finally {
             setIsUploading(false);
         }
     };
 
+
     const validatePhoneNumber = (phone: string): boolean => {
-        // Check if phone contains only digits
         return /^\d+$/.test(phone);
     };
 
@@ -103,13 +89,11 @@ const SupportPage = () => {
         const value = e.target.value;
         setPhoneNumber(value);
         
-        // Clear error when field is empty
         if (!value) {
             setPhoneError('');
             return;
         }
         
-        // Validate as user types
         if (!validatePhoneNumber(value)) {
             setPhoneError('Phone number must contain only digits');
         } else {
@@ -125,16 +109,14 @@ const SupportPage = () => {
 
     const removeFile = () => {
         setFile(null);
-        // Reset the file input
         const fileInput = document.getElementById('fileUpload') as HTMLInputElement;
         if (fileInput) fileInput.value = '';
     };
 
-    // Determine if a field is required based on the inquiry type
-    const isLastNameRequired = inquiryType === 'resume';
-    const isPhoneRequired = inquiryType === 'resume';
-    const isMessageRequired = inquiryType !== 'resume';
-    const isFileRequired = inquiryType === 'resume';
+    const isLastNameRequired = inquiryType === 'Send Resume';
+    const isPhoneRequired = inquiryType === 'Send Resume';
+    const isMessageRequired = inquiryType !== 'Send Resume';
+    const isFileRequired = inquiryType === 'Send Resume';
 
     return (
         <>
@@ -176,9 +158,9 @@ const SupportPage = () => {
                                     <input 
                                         type="radio" 
                                         name="inquiryType" 
-                                        value="general" 
-                                        checked={inquiryType === 'general'}
-                                        onChange={() => setInquiryType('general')}
+                                        value="General Inquiry" 
+                                        checked={inquiryType === 'General Inquiry'}
+                                        onChange={() => setInquiryType('General Inquiry')}
                                     />
                                     <span className={style.radioCustom}></span>
                                     General Inquiry
@@ -187,9 +169,9 @@ const SupportPage = () => {
                                     <input 
                                         type="radio" 
                                         name="inquiryType" 
-                                        value="bug" 
-                                        checked={inquiryType === 'bug'}
-                                        onChange={() => setInquiryType('bug')}
+                                        value="Bug Report" 
+                                        checked={inquiryType === 'Bug Report'}
+                                        onChange={() => setInquiryType('Bug Report')}
                                     />
                                     <span className={style.radioCustom}></span>
                                     Bug Report
@@ -198,9 +180,9 @@ const SupportPage = () => {
                                     <input 
                                         type="radio" 
                                         name="inquiryType" 
-                                        value="resume" 
-                                        checked={inquiryType === 'resume'}
-                                        onChange={() => setInquiryType('resume')}
+                                        value="Send Resume" 
+                                        checked={inquiryType === 'Send Resume'}
+                                        onChange={() => setInquiryType('Send Resume')}
                                     />
                                     <span className={style.radioCustom}></span>
                                     Send Resume
@@ -277,7 +259,7 @@ const SupportPage = () => {
                             </div>
                             
                             <div className={style.formActions}>
-                                {inquiryType === 'resume' && (
+                                {inquiryType === 'Send Resume' && (
                                     <div className={style.fileUploadContainer}>
                                         {file ? (
                                             <div className={style.filePreview}>
@@ -313,7 +295,7 @@ const SupportPage = () => {
                                 <button 
                                     type="submit" 
                                     className={style.sendButton}
-                                    disabled={isUploading || (inquiryType === 'resume' && !file) || !!phoneError}
+                                    disabled={isUploading || (inquiryType === 'Send Resume' && !file) || !!phoneError}
                                 >
                                     {isUploading ? 'Sending...' : 'Send Message'}
                                 </button>

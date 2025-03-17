@@ -235,6 +235,34 @@ export default function Apis() {
         }
     }
 
+    const ContactUs = async (data: any) => {
+        try {
+            const result = await APIClient("POST", `${URL}/contactus`, true, data);
+            
+            // Normalize the response
+            if (result && result.status === 200) {
+                return {
+                    status: 200,
+                    data: result.data || {},
+                    message: result.message || 'Message sent successfully'
+                };
+            } else {
+                return {
+                    status: result?.status || 500,
+                    data: {},
+                    message: result?.message || 'Failed to send message'
+                };
+            }
+        } catch (error: any) {
+            console.error('ContactUs API Error:', error);
+            return {
+                status: 500,
+                data: {},
+                message: error.message || 'An unexpected error occurred'
+            };
+        }
+    }
+
     const moveFolderToFolder = async (folderId: string, parentId: string) => {
         try {
             const requestBody = {
@@ -272,6 +300,7 @@ export default function Apis() {
         GetChat,
         GetFolders,
         moveToFolder,
-        moveFolderToFolder
+        moveFolderToFolder,
+        ContactUs
     }
 }

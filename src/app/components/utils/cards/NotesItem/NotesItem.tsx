@@ -36,14 +36,12 @@ const NotesItem = (props: NotesCard) => {
 
     const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
-    const [editedTitle, setEditedTitle] = useState(props.data?.title || '');
-    const [editedDescription, setEditedDescription] = useState(props.data?.description || '');
+    const [editedTitle, setEditedTitle] = useState('');
+    const [editedDescription, setEditedDescription] = useState('');
     
-    // Screenshot editor states
     const [showScreenshotEditor, setShowScreenshotEditor] = useState(false);
     const [showMenu, setShowMenu] = useState(false);
     
-    // Canvas drawing states
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const [isDrawing, setIsDrawing] = useState(false);
     const [currentTool, setCurrentTool] = useState<string | null>(null);
@@ -58,6 +56,12 @@ const NotesItem = (props: NotesCard) => {
     const [showColorPicker, setShowColorPicker] = useState(false);
 
     const colorOptions = ['#FF0000', '#00FF00', '#0000FF', '#FFFF00', '#FF00FF', '#00FFFF', '#000000', '#FFFFFF'];
+
+    const htmlToPlainText = (html: string): string => {
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = html || '';
+        return tempDiv.textContent || tempDiv.innerText || '';
+    };
 
     useEffect(() => {
         console.log(showScreenshotEditor)
@@ -86,7 +90,6 @@ const NotesItem = (props: NotesCard) => {
                 
                 img.onerror = (e) => {
                     console.error("Failed to load image:", e);
-                    // Set default canvas with error message
                     canvas.width = 800;
                     canvas.height = 600;
                     ctx.fillStyle = "#FFFFFF";
@@ -116,7 +119,6 @@ const NotesItem = (props: NotesCard) => {
     
     
 
-    // Drawing functions
     const startDrawing = (e: React.MouseEvent<HTMLCanvasElement>) => {
         if (!canvasRef.current || !currentTool) return;
         
@@ -151,7 +153,6 @@ const NotesItem = (props: NotesCard) => {
         const y = e.clientY - rect.top;
         
         if (ctx) {
-            // For smoother lines
             ctx.lineCap = 'round';
             ctx.lineJoin = 'round';
             ctx.shadowColor = currentColor;
@@ -247,7 +248,7 @@ const NotesItem = (props: NotesCard) => {
     const handleDeleteClick = () => {
 
         setShowScreenshotEditor(false);
-        setCurrentTool(null); // Reset tool selection
+        setCurrentTool(null); 
         setIsDrawing(false);
         setEditedImage(null);
         setInitialImage(null);
@@ -260,6 +261,8 @@ const NotesItem = (props: NotesCard) => {
 
     const handleEditClick = () => {
         setIsEditing(true);
+        setEditedTitle(htmlToPlainText(props.data?.title || ''));
+        setEditedDescription(htmlToPlainText(props.data?.description || ''));
     }
 
     const handleCancelEdit = () => {
@@ -417,8 +420,8 @@ const NotesItem = (props: NotesCard) => {
                             </>
                         ) : (
                             <>
-                                <h3>{props?.data?.title}</h3>
-                                <p>{props?.data?.description}</p>
+                               <h3 dangerouslySetInnerHTML={{ __html: props?.data?.title || "" }}></h3>
+                                <p dangerouslySetInnerHTML={{ __html: props?.data?.description || "" }}></p>
                             </>
                         )}
                     </div>
@@ -446,7 +449,6 @@ const NotesItem = (props: NotesCard) => {
                 </div>
             </div>
 
-            {/* Screenshot Editor Modal - Updated to match the screenshot */}
             {showScreenshotEditor && (
                 <div className={style.screenshotEditorOverlay}>
                     <div className={style.screenshotEditorContainer}>
