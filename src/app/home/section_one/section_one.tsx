@@ -5,7 +5,52 @@ import { BsStars } from "react-icons/bs";
 import { FaChrome } from "react-icons/fa";
 import Tilt from "react-parallax-tilt";
 import Link from "next/link";
+import { useState, useEffect } from "react";
+
 const Section_one = () => {
+  const [textIndex, setTextIndex] = useState(0);
+  const textLines = [
+    "Save time with AI-powered summaries and topic search.",
+    "Learn smarter with interactive Q&A.",
+    "Stay organized with your personal knowledge hub.",
+    "With GlanceMe, master any subject with ease."
+  ];
+  const [currentText, setCurrentText] = useState("");
+  const [isTyping, setIsTyping] = useState(true);
+
+  useEffect(() => {
+    let typingTimer: NodeJS.Timeout;
+    let erasingTimer: NodeJS.Timeout;
+    
+    if (isTyping) {
+      if (currentText.length < textLines[textIndex].length) {
+        
+        typingTimer = setTimeout(() => {
+          setCurrentText(textLines[textIndex].substring(0, currentText.length + 1));
+        }, 50); 
+      } else {
+        typingTimer = setTimeout(() => {
+          setIsTyping(false);
+        }, 2000);
+      }
+    } else {
+      if (currentText.length > 0) {
+        
+        erasingTimer = setTimeout(() => {
+          setCurrentText(currentText.substring(0, currentText.length - 1));
+        }, 30);
+      } else {
+        setTextIndex((textIndex + 1) % textLines.length);
+        setIsTyping(true);
+      }
+    }
+
+    return () => {
+      clearTimeout(typingTimer);
+      clearTimeout(erasingTimer);
+    };
+  }, [currentText, isTyping, textIndex, textLines]);
+
   return (
     <div className={style.main}>
       <div className={style.mainBg}></div>
@@ -17,8 +62,8 @@ const Section_one = () => {
           </h3>
         </div>
         <div className={style.mainHolderSubHeading}>
-          <p>
-          From information overload to focused learning grasp key concepts faster with instant summaries and intuitive topic search. With Glanceme AI, ask questions interactively and build your personalized knowledge archive.
+          <p className={style.animatedText}>
+            {currentText}<span className={style.cursor}>|</span>
           </p>
         </div>
         <div className={style.mainHolderButton}>
