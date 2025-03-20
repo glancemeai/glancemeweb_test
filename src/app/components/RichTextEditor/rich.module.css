@@ -1,0 +1,287 @@
+.richTextEditor {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #fff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    max-width: 800px;
+    width: 100%;
+    transition: all 0.3s ease;
+  }
+  
+  .richTextEditor.expanded {
+    max-width: 100%;
+    position: relative;
+    z-index: 100;
+  }
+  
+  .titleContainer {
+    padding: 12px 15px;
+    border-bottom: 1px solid #e0e0e0;
+    background-color: #f9f9f9;
+  }
+  
+  .titleInput {
+    width: 100%;
+    padding: 8px 10px;
+    font-size: 16px;
+    font-weight: 500;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    outline: none;
+    transition: border-color 0.2s ease;
+  }
+  
+  .titleInput:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+  }
+  
+  /* Title formatting styles */
+  .boldText {
+    font-weight: bold;
+  }
+  
+  .italicText {
+    font-style: italic;
+  }
+  
+  .underlineText {
+    text-decoration: underline;
+  }
+  
+  .toolbar {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 8px 12px;
+    background-color: #f5f5f5;
+    border-bottom: 1px solid #e0e0e0;
+  }
+  
+  .inlineStyleControls, 
+  .blockStyleControls, 
+  .alignmentControls,
+  .historyControls,
+  .fontSizeControl,
+  .expandControl {
+    display: flex;
+    align-items: center;
+    margin-right: 15px;
+    padding-right: 0px;
+  }
+  
+  .expandControl {
+    margin-left: auto;
+    border-right: none;
+  }
+  
+  .fontSizeSelector {
+    padding: 4px 8px;
+    border: 1px solid #d0d0d0;
+    border-radius: 4px;
+    background-color: #fff;
+    font-size: 14px;
+    height: 30px;
+  }
+  
+  .styleButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 30px;
+    height: 30px;
+    border: 1px solid #d0d0d0;
+    border-radius: 4px;
+    background-color: #fff;
+    padding: 0 8px;
+    margin-right: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    transition: all 0.2s ease;
+  }
+  
+  .styleButton:hover:not(:disabled) {
+    background-color: #f0f0f0;
+  }
+  
+  .styleButton.active {
+    background-color: #e6f2ff;
+    border-color: #007bff;
+    color: #007bff;
+  }
+  
+  .styleButton:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
+  .editorContainer {
+    padding: 15px;
+    min-height: 180px;
+    max-height: 400px;
+    flex-grow: 1;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #c1c1c1 #f5f5f5;
+  }
+  
+  .expanded .editorContainer {
+    max-height: 600px;
+  }
+  
+  /* Custom scrollbar styling */
+  .editorContainer::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  .editorContainer::-webkit-scrollbar-track {
+    background: #f5f5f5;
+    border-radius: 4px;
+  }
+  
+  .editorContainer::-webkit-scrollbar-thumb {
+    background-color: #c1c1c1;
+    border-radius: 4px;
+    border: 2px solid #f5f5f5;
+  }
+  
+  .editorContainer::-webkit-scrollbar-thumb:hover {
+    background-color: #a8a8a8;
+  }
+  
+  /* Editor content styles */
+  .editorContainer :global(.public-DraftEditor-content) {
+    min-height: 150px;
+    font-size: 15px;
+    line-height: 1.5;
+    color: #333;
+  }
+  
+  .editorContainer :global(.public-DraftEditorPlaceholder-root) {
+    color: #999;
+    position: absolute;
+    pointer-events: none;
+  }
+  
+  /* Text alignment styles - These are critical for the alignment to work */
+  .alignLeft {
+    text-align: left;
+  }
+  
+  .alignCenter {
+    text-align: center !important;
+  }
+  
+  .alignRight {
+    text-align: right !important;
+  }
+  
+  .alignJustify {
+    text-align: justify !important;
+  }
+  
+  /* Editor block styles */
+  .editorContainer :global(.public-DraftStyleDefault-blockquote) {
+    border-left: 5px solid #eee;
+    color: #666;
+    font-family: 'Georgia', serif;
+    font-style: italic;
+    margin: 16px 0;
+    padding: 10px 20px;
+  }
+  
+  .actions {
+    display: flex;
+    justify-content: flex-end;
+    padding: 12px 15px;
+    background-color: #f5f5f5;
+    border-top: 1px solid #e0e0e0;
+  }
+  
+  .saveButton, .cancelButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 20px;
+    border-radius: 4px;
+    font-weight: 500;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .saveButton {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    margin-right: 10px;
+  }
+  
+  .saveButton:hover {
+    background-color: #0069d9;
+  }
+  
+  .cancelButton {
+    background-color: #fff;
+    color: #333;
+    border: 1px solid #ddd;
+  }
+  
+  .cancelButton:hover {
+    background-color: #f5f5f5;
+  }
+  
+  /* Responsiveness fixes */
+  @media (max-width: 768px) {
+    .toolbar {
+      flex-wrap: wrap;
+    }
+    
+    .inlineStyleControls, 
+    .blockStyleControls, 
+    .alignmentControls,
+    .historyControls,
+    .fontSizeControl {
+      margin-bottom: 8px;
+      margin-right: 10px;
+      padding-right: 10px;
+    }
+    
+    .expandControl {
+      margin-top: 8px;
+    }
+  }
+  
+  @media (max-width: 600px) {
+    .toolbar {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    
+    .inlineStyleControls, 
+    .blockStyleControls, 
+    .alignmentControls,
+    .historyControls,
+    .fontSizeControl {
+      margin-right: 0;
+      padding-right: 0;
+      border-right: none;
+      margin-bottom: 8px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #ddd;
+      width: 100%;
+    }
+    
+    .expandControl {
+      margin-left: 0;
+      width: 100%;
+      justify-content: flex-end;
+    }
+  }

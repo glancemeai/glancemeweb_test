@@ -1,0 +1,82 @@
+/* breadcrumb.module.css */
+.header {
+    width: 100%;
+    height: 76px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    border-bottom: 1px solid #f6f6f6;
+  }
+  
+  .headerParts {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 15px;
+  }
+  
+  .headerPartsOptions {
+    display: flex;
+    gap: 5px;
+  }
+  
+  .headerPartsOptionsBack,
+  .headerPartsOptionsForward {
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .headerPartsOptionsBack:hover,
+  .headerPartsOptionsForward:hover {
+    opacity: 0.7;
+  }
+  
+  .headerPartsBreadcrumb {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+  
+  .breadcrumbItem {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .breadcrumbItem a {
+    color: #848484;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
+  
+  .breadcrumbItem a:hover {
+    color: #323232;
+    text-decoration: underline;
+  }
+  
+  .activeBreadcrumb {
+    color: #323232 !important;
+    font-weight: 600 !important;
+  }
+  
+  .separator {
+    color: #848484;
+    margin: 0 5px;
+  }
+  
+  .headerProfile {
+    display: flex;
+    align-items: center;
+  }
+  
+  .headerProfileImage {
+    width: 50px;
+    height: 50px;
+    position: relative;
+    border-radius: 50%;
+    overflow: hidden;
+  }

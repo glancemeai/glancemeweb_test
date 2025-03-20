@@ -4,13 +4,13 @@ import style from "./NotesItem.module.css";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { FiExternalLink } from "react-icons/fi";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import { MdColorLens } from "react-icons/md";
 import Notes from "../../Interfaces/Notes";
 import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { setAlert } from "../../../../redux/utils/message";
 import Apis from "../../../../service/hooks/ApiSlugs";
-import { FaTextHeight, FaPencilAlt, FaTrashAlt, FaPalette, FaTimes, FaSave } from "react-icons/fa";
+import { FaPencilAlt, FaTimes } from "react-icons/fa";
+import RichTextEditor from "../../../RichTextEditor/RichText";
 
 interface NotesCard {
     data?: Notes;
@@ -42,20 +42,34 @@ const NotesItem = (props: NotesCard) => {
     const [showScreenshotEditor, setShowScreenshotEditor] = useState(false);
     const [showMenu, setShowMenu] = useState(false);
     
-    const canvasRef = useRef<HTMLCanvasElement>(null);
-    const [isDrawing, setIsDrawing] = useState(false);
-    const [currentTool, setCurrentTool] = useState<string | null>(null);
-    const [currentColor, setCurrentColor] = useState('#FF0000');
-    const [lineWidth, setLineWidth] = useState(3);
-    const [textInput, setTextInput] = useState('');
-    const [textPosition, setTextPosition] = useState({ x: 0, y: 0 });
-    const [showTextInput, setShowTextInput] = useState(false);
     const [editedImage, setEditedImage] = useState<string | null>(null);
-    const [isImageLoaded, setIsImageLoaded] = useState(false);
-    const [initialImage, setInitialImage] = useState<HTMLImageElement | null>(null);
-    const [showColorPicker, setShowColorPicker] = useState(false);
+    const menuRef = useRef<HTMLDivElement>(null);
 
-    const colorOptions = ['#FF0000', '#00FF00', '#0000FF', '#FFFF00', '#FF00FF', '#00FFFF', '#000000', '#FFFFFF'];
+    useEffect(() => {
+        if (props.data) {
+            setEditedTitle(htmlToPlainText(props.data.title || ''));
+            setEditedDescription(props.data.description || '');
+        }
+    }, [props.data]);
+
+    // Add click outside handler for the menu
+    useEffect(() => {
+        function handleClickOutside(event: MouseEvent) {
+            if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+                setShowMenu(false);
+            }
+        }
+
+        // Add event listener when menu is shown
+        if (showMenu) {
+            document.addEventListener("mousedown", handleClickOutside);
+        }
+
+        // Clean up the event listener
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [showMenu]);
 
     const htmlToPlainText = (html: string): string => {
         const tempDiv = document.createElement('div');
@@ -63,51 +77,8 @@ const NotesItem = (props: NotesCard) => {
         return tempDiv.textContent || tempDiv.innerText || '';
     };
 
-    useEffect(() => {
-        console.log(showScreenshotEditor)
-        console.log(canvasRef.current)
-
-       
-        if (showScreenshotEditor && canvasRef.current) {
-            console.log(props.data?.image)
-            const canvas = canvasRef.current;
-            const ctx = canvas.getContext('2d');
-            
-            if (ctx) {
-                const img = new window.Image();
-                img.crossOrigin = "anonymous";
-                
-                img.onload = () => {
-                    canvas.width = img.width;
-                    canvas.height = img.height;
-                    
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
-                    ctx.drawImage(img, 0, 0);
-                    
-                    setInitialImage(img);
-                    setIsImageLoaded(true);
-                };
-                
-                img.onerror = (e) => {
-                    console.error("Failed to load image:", e);
-                    canvas.width = 800;
-                    canvas.height = 600;
-                    ctx.fillStyle = "#FFFFFF";
-                    ctx.fillRect(0, 0, canvas.width, canvas.height);
-                    ctx.fillStyle = "#FF0000";
-                    ctx.font = "24px Arial";
-                    ctx.fillText("Unable to load image", 250, 300);
-                    setIsImageLoaded(true);
-                };
-                
-                const imageSrc = props.data?.image || '/images/notesArticlePlaceHolder.png';
-                console.log(imageSrc , "abc")
-                img.src = imageSrc;
-            }
-        }
-    }, [showScreenshotEditor, props.data?.image]);
-
-    const toggleMenu = () => {
+    const toggleMenu = (e: React.MouseEvent) => {
+        e.stopPropagation(); // Prevent the click from reaching document
         setShowMenu((prev) => !prev);
     };
 
@@ -116,143 +87,10 @@ const NotesItem = (props: NotesCard) => {
             setShowScreenshotEditor(true);
         }
     };
-    
-    
-
-    const startDrawing = (e: React.MouseEvent<HTMLCanvasElement>) => {
-        if (!canvasRef.current || !currentTool) return;
-        
-        const canvas = canvasRef.current;
-        const rect = canvas.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        
-        if (currentTool === 'pencil') {
-            const ctx = canvas.getContext('2d');
-            if (ctx) {
-                ctx.beginPath();
-                ctx.moveTo(x, y);
-                ctx.strokeStyle = currentColor;
-                ctx.lineWidth = lineWidth;
-                ctx.lineCap = 'round';
-                setIsDrawing(true);
-            }
-        } else if (currentTool === 'text') {
-            setTextPosition({ x, y });
-            setShowTextInput(true);
-        }
-    };
-    
-    const draw = (e: React.MouseEvent<HTMLCanvasElement>) => {
-        if (!isDrawing || !canvasRef.current || currentTool !== 'pencil') return;
-        
-        const canvas = canvasRef.current;
-        const ctx = canvas.getContext('2d');
-        const rect = canvas.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        
-        if (ctx) {
-            ctx.lineCap = 'round';
-            ctx.lineJoin = 'round';
-            ctx.shadowColor = currentColor;
-            ctx.shadowBlur = 1;
-            
-            ctx.lineTo(x, y);
-            ctx.stroke();
-        }
-    };
-    
-    const endDrawing = () => {
-        setIsDrawing(false);
-    };
-    
-    const addTextToCanvas = () => {
-        if (!canvasRef.current || !textInput) return;
-        
-        const canvas = canvasRef.current;
-        const ctx = canvas.getContext('2d');
-        
-        if (ctx) {
-            ctx.font = '20px Arial';
-            ctx.fillStyle = currentColor;
-            ctx.fillText(textInput, textPosition.x, textPosition.y);
-            setTextInput('');
-            setShowTextInput(false);
-        }
-    };
-    
-    const handleToolChange = (tool: string) => {
-        setCurrentTool(tool);
-        setShowTextInput(false);
-    };
-    
-    const handleColorChange = (color: string) => {
-        setCurrentColor(color);
-    };
-    
-    const handleColorButtonClick = () => {
-        setShowColorPicker(prev => !prev);
-    };
-    const colorPickerStyles = {
-        position: 'absolute',
-        right: '70px',  
-        top: '15px',   
-        display: 'flex',
-        flexWrap: 'wrap',
-        width: '120px',
-        backgroundColor: 'white',
-        border: '1px solid #ccc',
-        borderRadius: '4px',
-        padding: '8px',
-        boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
-        zIndex: 1000
-    };
-
-    const saveScreenshot = async () => {
-        if (!canvasRef.current || !props?.data?.notes_token) {
-            dispatch(setAlert({
-                data: {
-                    message: "Unable to save screenshot",
-                    show: true,
-                    type: "error"
-                }
-            }));
-            return;
-        }
-        
-        try {
-            const dataUrl = canvasRef.current.toDataURL('image/png');
-            setEditedImage(dataUrl);
-            
-            dispatch(setAlert({
-                data: {
-                    message: "Screenshot saved successfully",
-                    show: true,
-                    type: "success"
-                }
-            }));
-            
-            setShowScreenshotEditor(false);
-        } catch (error) {
-            dispatch(setAlert({
-                data: {
-                    message: "Failed to save screenshot",
-                    show: true,
-                    type: "error"
-                }
-            }));
-        }
-    };
 
     const handleDeleteClick = () => {
-
-        setShowScreenshotEditor(false);
-        setCurrentTool(null); 
-        setIsDrawing(false);
-        setEditedImage(null);
-        setInitialImage(null);
-        setTextInput('');
+        setShowMenu(false); // Close menu when delete dialog opens
+        setShowDeleteConfirm(true);
     }
 
     const handleCancelDelete = () => {
@@ -260,18 +98,17 @@ const NotesItem = (props: NotesCard) => {
     }
 
     const handleEditClick = () => {
+        setShowMenu(false); // Close menu when entering edit mode
         setIsEditing(true);
         setEditedTitle(htmlToPlainText(props.data?.title || ''));
-        setEditedDescription(htmlToPlainText(props.data?.description || ''));
+        setEditedDescription(props.data?.description || '');
     }
 
     const handleCancelEdit = () => {
         setIsEditing(false);
-        setEditedTitle(props.data?.title || '');
-        setEditedDescription(props.data?.description || '');
     }
 
-    const handleSaveEdit = async () => {
+    const handleSaveEdit = async (content: string, title?: string) => {
         if (!props?.data?.notes_token) {
             dispatch(setAlert({
                 data: {
@@ -283,12 +120,16 @@ const NotesItem = (props: NotesCard) => {
             return;
         }
 
+        // Use the content and title from the rich text editor
+        const updatedTitle = title || editedTitle;
+        const updatedDescription = content;
+
         try {
             const response = await apis.EditNotes({
                 notes_token: props.data.notes_token,
                 color: props.data.color,
-                description: editedDescription,
-                title: editedTitle,
+                description: updatedDescription,
+                title: updatedTitle,
                 folderId: props.data.folderId ?? undefined,
                 reminder: false,
                 reminderDate: undefined,
@@ -302,6 +143,12 @@ const NotesItem = (props: NotesCard) => {
                         type: "success"
                     }
                 }));
+                
+                // Update local state to avoid a full page reload
+                setEditedTitle(updatedTitle);
+                setEditedDescription(updatedDescription);
+                setIsEditing(false);
+                
                 
                 window.location.reload();
             } else {
@@ -321,8 +168,6 @@ const NotesItem = (props: NotesCard) => {
                     type: "error"
                 }
             }));
-        } finally {
-            setIsEditing(false);
         }
     }
 
@@ -399,25 +244,13 @@ const NotesItem = (props: NotesCard) => {
                     <div className={style.mainNotesItemDetailsLine} style={{background: `${props?.data?.color}`}}></div>
                     <div className={style.mainNotesItemDetailsText}>
                         {isEditing ? (
-                            <>
-                                <input 
-                                    type="text" 
-                                    value={editedTitle} 
-                                    onChange={(e) => setEditedTitle(e.target.value)}
-                                    placeholder="Note Title"
-                                    className={style.editInput}
-                                />
-                                <textarea 
-                                    value={editedDescription} 
-                                    onChange={(e) => setEditedDescription(e.target.value)}
-                                    placeholder="Note Description"
-                                    className={style.editTextarea}
-                                />
-                                <div className={style.editActions}>
-                                    <button className={style.simpleButton} onClick={handleSaveEdit}>Save</button>
-                                    <button className={style.cancelButton} onClick={handleCancelEdit}>Cancel</button>
-                                </div>
-                            </>
+                            <RichTextEditor 
+                                initialContent={props.data?.description || ''}
+                                initialTitle={htmlToPlainText(props.data?.title || '')}
+                                onSave={handleSaveEdit}
+                                onCancel={handleCancelEdit}
+                                placeholder="Enter your note here..."
+                            />
                         ) : (
                             <>
                                <h3 dangerouslySetInnerHTML={{ __html: props?.data?.title || "" }}></h3>
@@ -439,12 +272,14 @@ const NotesItem = (props: NotesCard) => {
                     >
                         <FiExternalLink size={20}/>
                     </a>
-                    <div className={style.mainNotesItemOptionsItemTwo}>
+                    <div className={style.mainNotesItemOptionsItemTwo} ref={menuRef}>
                         <p onClick={toggleMenu}><BsThreeDotsVertical size={20}/></p>
-                        <div className={`${style.mainNotesItemMenu} ${showMenu ? style.show : ''}`}>
-                            <p onClick={handleEditClick}><FaPencilAlt size={20}/> Edit</p>
-                            <p onClick={handleDeleteClick}><RiDeleteBin6Line size={20}/> Delete</p>
-                        </div>
+                        {showMenu && (
+                            <div className={`${style.mainNotesItemMenu} ${showMenu ? style.show : ''}`}>
+                                <p onClick={handleEditClick}><FaPencilAlt size={20}/> Edit</p>
+                                <p onClick={handleDeleteClick}><RiDeleteBin6Line size={20}/> Delete</p>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
@@ -458,139 +293,24 @@ const NotesItem = (props: NotesCard) => {
                         
                         <div className={style.screenshotContent}>
                             <div className={style.imageContainer}>
-                            <canvas
-                                        ref={canvasRef}
-                                        onMouseDown={startDrawing}
-                                        onMouseMove={draw}
-                                        onMouseUp={endDrawing}
-                                        onMouseLeave={endDrawing}
-                                        className={style.drawingCanvas}
-                                    />
-                                {/* {isImageLoaded ? (
-                                    <canvas
-                                        ref={canvasRef}
-                                        onMouseDown={startDrawing}
-                                        onMouseMove={draw}
-                                        onMouseUp={endDrawing}
-                                        onMouseLeave={endDrawing}
-                                        className={style.drawingCanvas}
-                                    />
-                                ) : (
-                                    <div className={style.loadingSpinner}>Loading...</div>
-                                )} */}
-                                
-                            {showTextInput && (
-                                <div 
-                                    className={style.modernTextInputContainer}
-                                    style={{
-                                        position: 'absolute',
-                                        left: `${textPosition.x}px`,
-                                        top: `${textPosition.y}px`,
-                                    }}
-                                >
-                                    <input
-                                        type="text"
-                                        value={textInput}
-                                        onChange={(e) => setTextInput(e.target.value)}
-                                        onKeyDown={(e) => {
-                                            if (e.key === 'Enter') {
-                                                addTextToCanvas();
-                                            }
-                                        }}
-                                        autoFocus
-                                        placeholder="Enter text"
-                                        className={style.modernTextInput}
-                                    />
-                                    <div className={style.textInputControls}>
-                                        <button 
-                                            onClick={addTextToCanvas}
-                                            className={style.textAddButton}
-                                        >
-                                            <FaSave size={16} />
-                                        </button>
-                                        <button 
-                                            onClick={() => setShowTextInput(false)}
-                                            className={style.textCancelButton}
-                                        >
-                                            <FaTimes size={16} />
-                                        </button>
-                                    </div>
-                                </div>
-                            )}
-                            </div>
-                            
-                            <div className={style.sideToolbar}>
-                                <button 
-                                    className={`${style.toolButton} ${currentTool === 'text' ? style.activeToolButton : ''}`} 
-                                    onClick={() => handleToolChange('text')}
-                                >
-                                    <FaTextHeight size={18} className={style.toolIcon} />
-                                </button>
-                                <button 
-                                    className={`${style.toolButton} ${currentTool === 'pencil' ? style.activeToolButton : ''}`} 
-                                    onClick={() => handleToolChange('pencil')}
-                                >
-                                    <FaPencilAlt size={18} className={style.toolIcon} />
-                                </button>
-                                <button 
-                                    className={style.toolButton} 
-                                    onClick={handleDeleteClick}
-                                >
-                                    <FaTrashAlt size={18} className={style.toolIcon} />
-                                </button>
-                                <button 
-                                    className={style.toolButton} 
-                                    onClick={handleColorButtonClick}
-                                >
-
-                                    <FaPalette size={18} className={style.toolIcon} />
-                                </button>
-                                
-                                {showColorPicker && (
-                                    <div 
-                                        className={style.colorPickerContainer}
-                                    >
-                                        {colorOptions.map((color) => (
-                                            <div 
-                                                key={color} 
-                                                className={style.colorOption}
-                                                style={{ 
-                                                    backgroundColor: color,
-                                                    width: '25px',
-                                                    height: '25px',
-                                                    margin: '3px',
-                                                    borderRadius: '50%',
-                                                    cursor: 'pointer',
-                                                    border: currentColor === color ? '2px solid #333' : '1px solid rgba(0,0,0,0.1)'
-                                                }}
-                                                onClick={() => {
-                                                    handleColorChange(color);
-                                                    setShowColorPicker(false);
-                                                }}
-                                            />
-                                        ))}
-                                    </div>
-                                )}
-                                
-                                <div className={style.profileButton}>
-                                    <div className={style.profileCircle}></div>
-                                </div>
+                                <NextImage 
+                                    src={props?.data?.image || "/images/notesArticlePlaceHolder.png"} 
+                                    alt={`${props?.data?.title || 'Note image'}`} 
+                                    fill 
+                                    style={{objectFit: "contain"}}
+                                />
                             </div>
                         </div>
                         
                         <div className={style.screenshotFooter}>
-                            <button 
-                                onClick={() => setShowScreenshotEditor(false)}
-                                className={style.closeButton}
-                            >
-                                <FaTimes size={16} style={{ marginRight: '5px' }} /> Close Tab
-                            </button>
-                            <button 
-                                onClick={saveScreenshot}
-                                className={style.saveButton}
-                            >
-                                <FaSave size={16} style={{ marginRight: '5px' }} /> Save Screenshot
-                            </button>
+                            <div className={style.closeButtonContainer}>
+                                <button 
+                                    onClick={() => setShowScreenshotEditor(false)}
+                                    className={style.closeButton}
+                                >
+                                    <FaTimes size={16} style={{ marginRight: '5px' }} /> Close Tab
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -1,27 +1,17 @@
 .mainNotes {
     position: relative;
-    width: 100%;
-    max-width: 250px;
-    height: auto;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    border-radius: 4px;
-    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+    width: 200px;
+    margin: 10px;
+    border-radius: 8px;
+    overflow: visible;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .mainNotesImage {
-    position: relative;
     width: 100%;
-    height: auto;
-    min-height: 200px;
-    padding: 20px 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-bottom: 1.5px solid #d8d8d8;
+    height: 150px;
+    position: relative;
 }
 
 .mainNotesImagePlay {
@@ -34,14 +24,7 @@
 }
 
 .mainNotesDetails {
-    position: relative;
-    width: 100%;
-    height: auto;
-    padding: 10px 0px;
-    display: flex;
-    gap: 15px;
-    flex-direction: column;
-    justify-content: left;
+    padding: 10px;
 }
 .mainNotesDetails p{
     white-space: nowrap;

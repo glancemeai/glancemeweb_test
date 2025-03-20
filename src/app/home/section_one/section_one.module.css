@@ -7,6 +7,7 @@
   max-height: 1200px;
   margin: 0px auto;
   margin-top: 70px;
+  overflow: hidden; /* Prevent animations from creating horizontal scrollbars */
 }
 
 .mainBg {
@@ -29,10 +30,10 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url("/images/home/glassmorphism.png"); /* First image */
+  background-image: url("/images/home/glassmorphism.png");
   background-size: cover;
   background-position: center;
-  opacity: 0.4; /* Apply opacity to the first image */
+  opacity: 0.4;
 }
 
 .mainHolder {
@@ -58,12 +59,21 @@
   align-items: center;
 }
 
-.mainHolderHeading h2 {
+/* Title animation styles */
+.titleAnimation {
   font-size: 70px;
   font-weight: 400;
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
 }
 
-.mainHolderHeading h3 {
+.titleAnimation.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.subtitleAnimation {
   font-size: 70px;
   font-weight: 400;
   background: linear-gradient(
@@ -74,8 +84,28 @@
   );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  background-clip: text; /* For Firefox */
+  background-clip: text;
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 1.2s ease-out, transform 1.2s ease-out;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
 
+.subtitleAnimation.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.starsIcon {
+  display: inline-block;
+  animation: sparkle 2s infinite;
+}
+
+@keyframes sparkle {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.2); opacity: 0.8; }
 }
 
 .mainHolderSubHeading {
@@ -87,14 +117,67 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  min-height: 100px; /* Fixed height to prevent jumping */
 }
 
-.mainHolderSubHeading p {
+/* Sentence animation styles */
+.sentenceContainer {
   position: relative;
   font-size: 25px;
   font-weight: 400;
   text-align: center;
   color: #686868;
+  width: 100%;
+  min-height: 1.5em;
+  transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
+}
+
+.fadeIn {
+  opacity: 1;
+  transform: translateY(0);
+  animation: fadeInAnimation 0.8s ease-in-out forwards;
+}
+
+.fadeOut {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeOutAnimation 0.8s ease-in-out forwards;
+}
+
+@keyframes fadeInAnimation {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeOutAnimation {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+}
+
+.highlightedKeyword {
+  font-weight: 600;
+  color: #223fda;
+  display: inline-block;
+  animation: glowKeyword 2s ease-in-out;
+  position: relative;
+}
+
+@keyframes glowKeyword {
+  0% { text-shadow: none; }
+  50% { text-shadow: 0 0 8px rgba(34, 63, 218, 0.7); }
+  100% { text-shadow: none; }
 }
 
 .mainHolderButton {
@@ -107,6 +190,24 @@
   gap: 10px;
   justify-content: center;
   align-items: center;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 1s ease-out, transform 1s ease-out;
+  transition-delay: 1s;
+}
+
+.mainHolderButton.buttonVisible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.magicIcon {
+  animation: floatIcon 3s ease-in-out infinite;
+}
+
+@keyframes floatIcon {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
 }
 
 .mainHolderButton button {
@@ -127,6 +228,28 @@
   background-color: #4169e1;
   cursor: pointer;
   white-space: nowrap;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.pulseButton {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(65, 105, 225, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(65, 105, 225, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(65, 105, 225, 0);
+  }
+}
+
+.mainHolderButton button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(65, 105, 225, 0.3);
 }
 
 .mainBanner {
@@ -135,6 +258,15 @@
   height: 100%;
   padding: 10px;
   margin: 0px auto;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 1.2s ease-out, transform 1.2s ease-out;
+  transition-delay: 1.2s;
+}
+
+.mainBanner.bannerVisible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .mainBannerImage {
@@ -143,13 +275,17 @@
   height: 600px;
 }
 
+.bannerImage {
+  transition: opacity 1s ease-in;
+}
+
+/* Media Queries - Keep your existing media queries and add the animation styles */
 @media only screen and (max-width: 600px) {
-  
-  .mainHolderHeading h2 {
+  .titleAnimation, .titleAnimation.visible {
     font-size: 45px;
     text-align: center;
   }
-  .mainHolderHeading h3 {
+  .subtitleAnimation, .subtitleAnimation.visible {
     font-size: 40px;
     text-align: center;
   }
@@ -157,7 +293,7 @@
     width: 100%;
   }
 
-  .mainHolderSubHeading p {
+  .sentenceContainer {
     font-size: 18px;
     text-align: center;
   }
@@ -179,12 +315,13 @@
   }
 }
 
+/* Include your other media queries here - I'm keeping them from your original CSS */
 @media only screen and (min-width: 600px) {
-    .mainHolderHeading h2 {
+    .titleAnimation, .titleAnimation.visible {
         font-size: 45px;
         text-align: center;
       }
-      .mainHolderHeading h3 {
+      .subtitleAnimation, .subtitleAnimation.visible {
         font-size: 40px;
         text-align: center;
       }
@@ -192,7 +329,7 @@
         width: 80%;
       }
     
-      .mainHolderSubHeading p {
+      .sentenceContainer {
         font-size: 18px;
         text-align: center;
       }
@@ -216,11 +353,11 @@
 
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (min-width: 768px) {
-    .mainHolderHeading h2 {
+    .titleAnimation, .titleAnimation.visible {
         font-size: 60px;
         text-align: center;
       }
-      .mainHolderHeading h3 {
+      .subtitleAnimation, .subtitleAnimation.visible {
         font-size: 60px;
         text-align: center;
       }
@@ -228,7 +365,7 @@
         width: 75%;
       }
     
-      .mainHolderSubHeading p {
+      .sentenceContainer {
         font-size: 18px;
         text-align: center;
       }
@@ -252,11 +389,11 @@
 
 /* Large devices (laptops/desktops, 992px and up) */
 @media only screen and (min-width: 992px) {
-    .mainHolderHeading h2 {
+    .titleAnimation, .titleAnimation.visible {
         font-size: 75px;
         text-align: center;
       }
-      .mainHolderHeading h3 {
+      .subtitleAnimation, .subtitleAnimation.visible {
         font-size: 70px;
         text-align: center;
       }
@@ -264,7 +401,7 @@
         width: 75%;
       }
     
-      .mainHolderSubHeading p {
+      .sentenceContainer {
         font-size: 25px;
         text-align: center;
       }
@@ -288,11 +425,11 @@
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (min-width: 1200px) {
-    .mainHolderHeading h2 {
+    .titleAnimation, .titleAnimation.visible {
         font-size: 75px;
         text-align: center;
       }
-      .mainHolderHeading h3 {
+      .subtitleAnimation, .subtitleAnimation.visible {
         font-size: 70px;
         text-align: center;
       }
@@ -300,7 +437,7 @@
         width: 75%;
       }
     
-      .mainHolderSubHeading p {
+      .sentenceContainer {
         font-size: 25px;
         text-align: center;
       }
@@ -320,23 +457,4 @@
       .mainBannerImage {
         height: 600px;
       }
-}
-.animatedText {
-  min-height: 1.5em;
-  display: inline-block;
-}
-
-.cursor {
-  display: inline-block;
-  width: 3px;
-  animation: blink 1s infinite;
-}
-
-@keyframes blink {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0;
-  }
 }

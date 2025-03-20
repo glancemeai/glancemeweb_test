@@ -3,6 +3,7 @@ import Folders from '../../components/utils/Interfaces/Folders';
 
 export default function Apis() {
     const URL = "https://glanceme.co.in/v1/api"
+    const NEW_URL = "https://glanceme.co.in/v2/api"
 
     const Login = async (data:any) => {
         var result = await APIClient("POST", `${URL}/users/login`, false, data);
@@ -84,6 +85,61 @@ export default function Apis() {
         });
         console.log('EditNotes API Call - Result:', result);
         return result;
+    }
+
+    const SendChatMessage = async (data: {
+        video_url?: string,
+        video_time?: number,
+        question: string,
+        video_details?: string,
+        tone?: string,
+        language?: string,
+        response_type?: string,
+        model?: string,
+        urlCode: string
+    }) => {
+        try {
+            const requestBody = {
+                video_url: data.video_url || "tp0OrhPnmm8",
+                video_time: data.video_time || 3245,        
+                question: data.question,                  
+                video_details: data.video_details || "AI Research Paper on LLMs",
+                tone: data.tone || "Professional",
+                language: data.language || "English",
+                response_type: data.response_type || "Concise", 
+                model: data.model || "llama-3.1-8b-instant"
+            };
+            
+            console.log("Sending data to API:", requestBody, "with urlCode:", data.urlCode);
+            
+            const result = await APIClient(
+                "POST", 
+                `${NEW_URL}/summarize/question?urlCode=${data.urlCode}`, 
+                true, 
+                requestBody
+            );
+            
+            if (result && result.status === 200) {
+                return {
+                    status: 200,
+                    data: result.data || {},
+                    message: result.message || 'Message sent successfully'
+                };
+            } else {
+                return {
+                    status: result?.status || 500,
+                    data: {},
+                    message: result?.message || 'Failed to send message'
+                };
+            }
+        } catch (error: any) {
+            console.error('SendChatMessage API Error:', error);
+            return {
+                status: 500,
+                data: {},
+                message: error.message || 'An unexpected error occurred'
+            };
+        }
     }
 
     const DeleteNotes = async (data:any) => {
@@ -301,6 +357,7 @@ export default function Apis() {
         GetFolders,
         moveToFolder,
         moveFolderToFolder,
-        ContactUs
+        ContactUs,
+        SendChatMessage
     }
 }

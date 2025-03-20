@@ -60,7 +60,7 @@ const SubHeader = ({
           value={search}
           onChange={onChange}
           type="text"
-          placeholder="Search Notes"
+          placeholder="Search in this Folder"
         />
         <ButtonFour onClick={() => searchHandler()} icon={<FiSearch size={18} />} />
         <p

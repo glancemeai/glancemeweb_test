@@ -47,6 +47,7 @@ const APIClient = async (method: string,
 
         const response = await fetch(url, options);
         console.log('API Response Status:', response.status);
+        console.log('Current token:', localStorage.getItem('token'));
         
         const responseText = await response.text();
         console.log('API Response Text:', responseText);

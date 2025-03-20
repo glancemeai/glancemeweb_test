@@ -13,7 +13,9 @@ import NewFolderPopUp from "@/app/components/utils/popups/newfolder/newfolderpop
 import DeleteAlert from "@/app/components/utils/popups/deleteAlert/deleteAlert";
 import Filters from "@/app/components/utils/cards/Filter/FIlter";
 import { FolderSkeleton } from "@/app/components/utils/skeleton/skeleton";
-import Header from "../../component/header_v1/header";
+
+import BreadcrumbHeader from "../../../component/BreadcumbHeader";
+
 
 import { LuPlus } from "react-icons/lu";
 import { HiOutlineAdjustmentsVertical } from "react-icons/hi2";
@@ -25,6 +27,7 @@ import { setAlert } from "@/app/redux/utils/message";
 
 import Folders from "@/app/components/utils/Interfaces/Folders";
 import Notes from "@/app/components/utils/Interfaces/Notes";
+import Header from "../../component/header_v1/header";
 
 interface SubHeaderProps {
   name?: string;
@@ -58,7 +61,7 @@ const SubHeader: React.FC<SubHeaderProps> = ({
           value={search}
           onChange={onChange}
           type="text"
-          placeholder="Search Notes"
+          placeholder="Search in this Folder"
         />
         <ButtonFour
           onClick={() => searchHandler()}
@@ -103,6 +106,7 @@ const Folder = () => {
   const [filteredFolders, setFilteredFolders] = useState<Folders[] | null>(null);
   const [currentFilters, setCurrentFilters] = useState<filterData>({});
   const [isFiltered, setIsFiltered] = useState(false);
+  
 
   // Handle search input changes - handles both event object or direct value
   const searchTitleHandler = useCallback((newValue: any) => {
@@ -333,7 +337,7 @@ const Folder = () => {
       <Header
         image={data?.data?.user?.image}
         title={folderData?.data?.folderInfo?.name || "folder"}
-        backlink="/dashboard"
+        onBackClick={() => router.back()}
       />
       <div className={style.mainHolder}>
         <SubHeader
