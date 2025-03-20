@@ -317,4 +317,95 @@
         display: none;
     }
 }
+/* Add these styles to your header.module.css file */
+
+/* Go to Notes button styling */
+.goToNotes {
+    position: relative;
+    width: auto;
+    height: 100%;
+    padding: 15px 25px;
+    border: none;
+    outline: none;
+    color: white;
+    font-size: 17px;
+    font-weight: 700;
+    border-radius: 35px;
+    background-color: #4169E1;
+    white-space: nowrap;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: all 0.3s ease;
+    overflow: hidden;
+  }
   
+  .goToNotes:hover {
+    background-color: #2a4fc1;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(65, 105, 225, 0.3);
+  }
+  
+  .goToNotes:hover .arrowIcon {
+    transform: translateX(5px);
+    animation: bounceRight 1s infinite;
+  }
+  
+  .arrowIcon {
+    transition: transform 0.3s ease;
+  }
+  
+  @keyframes bounceRight {
+    0%, 100% {
+      transform: translateX(0);
+    }
+    50% {
+      transform: translateX(5px);
+    }
+  }
+  
+  /* Modify existing login items to space them better for multiple buttons */
+  .mainHeaderHolderLogin {
+    gap: 15px;
+  }
+  
+  .mainHeaderHolderLoginItem p {
+    position: relative;
+    transition: all 0.2s ease;
+  }
+  
+  .mainHeaderHolderLoginItem p:hover {
+    color: #4169E1;
+  }
+  
+  .mainHeaderHolderLoginItem p::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -3px;
+    left: 0;
+    background-color: #4169E1;
+    transition: width 0.3s ease;
+  }
+  
+  .mainHeaderHolderLoginItem p:hover::after {
+    width: 100%;
+  }
+  
+  /* Animation for the login/signup options */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .mainHeaderHolderLogin {
+    animation: fadeIn 0.3s ease-out;
+  }
