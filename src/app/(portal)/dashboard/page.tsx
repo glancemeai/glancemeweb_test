@@ -24,6 +24,7 @@ import Apis from "@/app/service/hooks/ApiSlugs";
 import { setAlert } from "@/app/redux/utils/message";
 import Notes from "@/app/components/utils/Interfaces/Notes";
 import Folders from "@/app/components/utils/Interfaces/Folders";
+import Header1 from "../../home/header/header";
 
 interface FilterData {
   colors?: string[];

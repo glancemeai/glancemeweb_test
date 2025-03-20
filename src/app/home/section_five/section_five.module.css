@@ -1,37 +1,52 @@
 .main {
-  position: relative;
-  width: 100%;
-  max-width: 1300px;
-  margin: 0px auto;
-  height: auto;
-  padding: 20px;
-  background: white;
-  overflow: hidden;
-}
-
-.mainBg {
+    position: relative;
+    width: 100%;
+    height: auto;
+    min-height: calc(100vh - 70px);
+    max-width: 1300px;
+    margin: 0px auto;
+    overflow: visible; /* Changed from hidden to allow content to expand */
+    padding: 20px;
+  }
+  
+  .mainBg {
     position: absolute;
     top: 0px;
     left: 0px;
     width: 100%;
     height: 100%;
-    background-image: url("/images/home/bgsectionfive.png");
-    background-position: center;
+    background-image: url("/images/home/Lines_group.png");
     background-repeat: no-repeat;
+    background-position: center;
     background-size: cover;
-}
-
-.mainHolder {
-  position: relative;
-  width: 85%;
-  height: auto;
-  margin: 50px auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.mainHolderLeft {
+    z-index: -1; /* Ensure background stays behind content */
+  }
+  
+  .mainBg::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("/images/home/glassmorphism.png");
+    background-size: cover;
+    background-position: center;
+    opacity: 0.4;
+  }
+  
+  .mainHolder {
+    position: relative;
+    width: 85%;
+    height: auto;
+    margin: 50px auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 30px;
+  }
+  
+  .mainHolderLeft {
     position: relative;
     width: 100%;
     height: auto;
@@ -40,9 +55,10 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-}
-
-.mainHolderLeftDetails {
+    /* Removed opacity and animation */
+  }
+  
+  .mainHolderLeftDetails {
     position: relative;
     width: auto;
     height: auto;
@@ -50,24 +66,38 @@
     display: flex;
     gap: 25px;
     flex-direction: column;
-}
-
-.mainHolderLeftDetails h2{
+  }
+  
+  .mainHolderLeftDetails h2 {
     position: relative;
-    font-size: 35px;
-    font-weight: 500;
-    color: #333;
-}
-
-
-.mainHolderLeftDetails p{
-    position: relative;
-    font-size: 16px;
+    font-size: 45px;
     font-weight: 400;
-    color: #444;
-}
-
-.mainHolderRight {
+    color: #333;
+  }
+  
+  .mainHolderLeftDetails h2 b {
+    background: linear-gradient(
+      90.73deg,
+      #223fda 28.09%,
+      #8d53ff 50.59%,
+      #f94d86 72.2%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: inline-flex;
+    align-items: center;
+    /* Removed animation */
+  }
+  
+  .mainHolderLeftDetails p {
+    position: relative;
+    font-size: 18px;
+    font-weight: 400;
+    color: #686868;
+  }
+  
+  .mainHolderRight {
     position: relative;
     width: 100%;
     height: auto;
@@ -76,102 +106,154 @@
     flex-direction: column;
     justify-content: left;
     align-items: center;
-}
-
-.mainHolderItem {
+    gap: 15px;
+  }
+  
+  .mainHolderItem {
     position: relative;
     width: 100%;
     height: auto;
     padding: 10px;
-}
-
-.mainHolderItemHeader {
+    /* Removed opacity, transform and animation */
+  }
+  
+  /* Removed animation delays */
+  
+  .mainHolderItemHeader {
     position: relative;
     width: 100%;
     height: auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 5px 10px;
+    padding: 15px 10px;
     cursor: pointer;
-    border-bottom: .5px solid black;
-}
-
-.mainHolderItemHeader p{
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+  }
+  
+  .mainHolderItemHeader p {
     position: relative;
-    font-size: 18px;
+    font-size: 22px;
     font-weight: 500;
     line-height: 28px;
     color: #333;
-}
-
-.mainHolderItemHeaderIcon{ 
+    transition: color 0.3s ease;
+  }
+  
+  .mainHolderItemHeaderIcon {
     position: relative;
     width: auto;
     height: auto;
     padding: 10px;
     border-radius: 50%;
-}
-
-.mainHolderItemHeader:hover .mainHolderItemHeaderIcon {
-    background: #f4f4f4;
-}
-
-.mainHolderItemHeaderDetails {
+    transition: transform 0.3s ease, background 0.3s ease;
+  }
+  
+  .mainHolderItem.active .mainHolderItemHeaderIcon {
+    transform: rotate(180deg);
+    background: rgba(34, 63, 218, 0.1);
+    color: #223fda;
+  }
+  
+  .mainHolderItemHeader:hover .mainHolderItemHeaderIcon {
+    background: rgba(34, 63, 218, 0.1);
+  }
+  
+  .mainHolderItemHeader:hover p {
+    color: #223fda;
+  }
+  
+  .mainHolderItemHeaderDetails {
     position: relative;
     width: 100%;
     height: auto;
-    padding: 10px;
-    display: none;
-}
-
-.mainHolderItemHeaderDetails p{
+    padding: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: all 0.5s ease-out;
+  }
+  
+  .mainHolderItemHeaderDetails.visible {
+    padding: 20px 10px;
+    max-height: 1000px; /* Increased from 500px to prevent content getting cut off */
+  }
+  
+  .mainHolderItemHeaderDetails p {
     position: relative;
     width: 100%;
     height: auto;
     font-size: 16px;
     font-weight: 400;
-    line-height: 25px;
-    color: #444;
-}
-
-
-@media only screen and (max-width: 600px) {
+    line-height: 26px;
+    color: #686868;
+  }
+  
+  .tagLine {
+    font-weight: 600;
+    color: #223fda;
+    margin-top: 15px;
+    display: inline-block;
+    /* Removed animation */
+  }
+  
+  /* Removed keyframes for animations */
+  
+  /* Media Queries */
+  @media only screen and (max-width: 600px) {
     .main {
       padding: 10px;
     }
     .mainHolder {
-        width: 100%;
-    flex-wrap: wrap;
-    }
-}
-
-@media only screen and (min-width: 600px) {
- 
-      .mainHolder {
+      width: 100%;
       flex-wrap: wrap;
-      }
+      margin: 20px auto;
     }
-
-/* Medium devices (landscape tablets, 768px and up) */
-@media only screen and (min-width: 768px) {
-
-      .mainHolder {
+    .mainHolderLeftDetails h2 {
+      font-size: 30px;
+      text-align: center;
+    }
+    .mainHolderLeftDetails p {
+      font-size: 16px;
+      text-align: center;
+    }
+    .mainHolderItemHeader p {
+      font-size: 18px;
+    }
+  }
+  
+  @media only screen and (min-width: 600px) {
+    .mainHolder {
+      flex-wrap: wrap;
+    }
+    .mainHolderLeftDetails h2 {
+      font-size: 35px;
+    }
+  }
+  
+  /* Medium devices (landscape tablets, 768px and up) */
+  @media only screen and (min-width: 768px) {
+    .mainHolder {
       flex-wrap: nowrap;
-      }
-}
-
-/* Large devices (laptops/desktops, 992px and up) */
-@media only screen and (min-width: 992px) {
-
-      .mainHolder {
+    }
+    .mainHolderLeftDetails h2 {
+      font-size: 40px;
+    }
+  }
+  
+  /* Large devices (laptops/desktops, 992px and up) */
+  @media only screen and (min-width: 992px) {
+    .mainHolder {
       flex-wrap: nowrap;
-      }
-}
-
-/* Extra large devices (large laptops and desktops, 1200px and up) */
-@media only screen and (min-width: 1200px) {
-      .mainHolder {
+    }
+    .mainHolderLeftDetails h2 {
+      font-size: 45px;
+    }
+  }
+  
+  /* Extra large devices (large laptops and desktops, 1200px and up) */
+  @media only screen and (min-width: 1200px) {
+    .mainHolder {
       flex-wrap: nowrap;
-      }
-}
+    }
+  }

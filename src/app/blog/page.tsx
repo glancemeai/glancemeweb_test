@@ -1,8 +1,10 @@
-import React from 'react';
+"use client"
+import React, { useState, useEffect } from 'react';
 import Header from '../home/header/header';
 import Link from 'next/link';
 import Image from 'next/image';
 import styles from './blog.module.css';
+import { BsStars } from "react-icons/bs";
 
 interface BlogPost {
   id: string;
@@ -57,19 +59,50 @@ const blogPosts: BlogPost[] = [
 ];
 
 const BlogPage: React.FC = () => {
+  // State for animations
+  const [titleVisible, setTitleVisible] = useState(false);
+  const [subtitleVisible, setSubtitleVisible] = useState(false);
+  const [sectionTitleVisible, setSectionTitleVisible] = useState(false);
+  const [featuredVisible, setFeaturedVisible] = useState(false);
+  const [blogSectionVisible, setBlogSectionVisible] = useState(false);
+  
   // Filter the featured blog (latest post)
   const featuredBlog = blogPosts[0];
   const otherBlogs = blogPosts.slice(1);
+
+  // Animation sequence
+  useEffect(() => {
+    const timeout1 = setTimeout(() => setTitleVisible(true), 300);
+    const timeout2 = setTimeout(() => setSubtitleVisible(true), 600);
+    const timeout3 = setTimeout(() => setSectionTitleVisible(true), 900);
+    const timeout4 = setTimeout(() => setFeaturedVisible(true), 1200);
+    const timeout5 = setTimeout(() => setBlogSectionVisible(true), 1500);
+    
+    return () => {
+      clearTimeout(timeout1);
+      clearTimeout(timeout2);
+      clearTimeout(timeout3);
+      clearTimeout(timeout4);
+      clearTimeout(timeout5);
+    };
+  }, []);
 
   return (
     <div className={styles.container}>
       <Header />
       
       <main className={styles.main}>
-        <h1 className={styles.title}>Catch up with our latest blog</h1>
+        <div className={styles.mainHolderHeading}>
+          <h1 className={`${styles.titleAnimation} ${titleVisible ? styles.visible : ''}`}>
+            Catch up with our
+          </h1>
+          <div className={`${styles.subtitleAnimation} ${subtitleVisible ? styles.visible : ''}`}>
+            <span className={styles.starsIcon}><BsStars size={40} color='blue'/></span> Latest Blog
+          </div>
+        </div>
         
-        <section className={styles.featuredSection}>
-          <h2 className={styles.sectionTitle}>Recent Post</h2>
+        <section className={`${styles.featuredSection} ${featuredVisible ? styles.visible : ''}`}>
+          <h2 className={`${styles.sectionTitle} ${sectionTitleVisible ? styles.visible : ''}`}>Recent Post</h2>
           <div className={styles.featuredPost}>
             <div className={styles.featuredImageContainer}>
               <Image
@@ -88,8 +121,8 @@ const BlogPage: React.FC = () => {
           </div>
         </section>
 
-        <section className={styles.blogSection}>
-          <h2 className={styles.sectionTitle}>Other Blogs</h2>
+        <section className={`${styles.blogSection} ${blogSectionVisible ? styles.visible : ''}`}>
+          <h2 className={`${styles.sectionTitle} ${sectionTitleVisible ? styles.visible : ''}`}>Other Blogs</h2>
           <div className={styles.blogGrid}>
             {otherBlogs.map((blog) => (
               <Link href={`/blog/${blog.slug}`} key={blog.id} className={styles.blogCard}>

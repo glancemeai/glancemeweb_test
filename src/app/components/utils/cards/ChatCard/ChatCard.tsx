@@ -55,7 +55,6 @@ const ChatCard = () => {
         setSending(true);
         
         try {
-            // Add user message to the UI immediately
             const updatedChat = {
                 ...ChatData,
                 data: {
@@ -74,29 +73,26 @@ const ChatCard = () => {
             };
             
             setChatData(updatedChat);
-            setChatMsg(""); // Clear input field
-            
-            // Call the API to send the message
+            setChatMsg("");
+
             const response = await apis.SendChatMessage({
-                question: chatMsg,  // Make sure this is not empty
+                question: chatMsg,  
                 video_url: "tp0OrhPnmm8",
                 video_time: 3245,
                 video_details: "AI Research Paper on LLMs",
                 tone: "Professional",
                 language: "English",
                 response_type: "Concise",
-                model: "llama-3.1-8b-instant",
-                urlCode: Id
+                model: "llama-3.1-8b-instant"
             });
             
             console.log("Message sent, response:", response);
             console.log("Sending message with data:", {
-                question: chatMsg,
+                question: chatMsg
             });
 
             
             if (response.status === 200) {
-                // Refresh the chat to get the AI response
                 await chatHandler(Id);
             } else {
                 dispatch(setAlert({

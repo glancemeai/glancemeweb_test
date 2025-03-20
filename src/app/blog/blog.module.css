@@ -1,36 +1,162 @@
 .container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem 1rem;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: calc(100vh - 70px);
+  max-width: 1300px;
+  margin: 0px auto;
+  margin-top: 70px;
+  overflow: hidden; /* Prevent animations from creating horizontal scrollbars */
+}
+
+.container::before {
+  content: "";
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  max-height: 1200px;
+  background-image: url("/images/home/Lines_group.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  z-index: -2;
+}
+
+.container::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("/images/home/glassmorphism.png");
+  background-size: cover;
+  background-position: center;
+  opacity: 0.4;
+  z-index: -1;
 }
 
 .main {
-  padding: 2rem 0;
+  position: relative;
+  width: 80%;
+  height: auto;
+  margin: 0 auto;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
-.title {
-  font-size: 2.5rem;
-  font-weight: bold;
+.mainHolderHeading {
+  position: relative;
+  width: 100%;
+  height: auto;
+  padding: 10px;
+  margin-top: 20px;
+  display: flex;
+  gap: 15px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Title animation styles */
+.titleAnimation {
+  font-size: 70px;
+  font-weight: 400;
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
   text-align: center;
-  margin-top: 2rem;
-  margin-bottom: 3rem;
+  margin: 0;
+}
+
+.titleAnimation.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.subtitleAnimation {
+  font-size: 70px;
+  font-weight: 400;
+  background: linear-gradient(
+    90.73deg,
+    #223fda 28.09%,
+    #8d53ff 50.59%,
+    #f94d86 72.2%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 1.2s ease-out, transform 1.2s ease-out;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+  margin: 0;
+}
+
+.subtitleAnimation.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.starsIcon {
+  display: inline-block;
+  animation: sparkle 2s infinite;
+}
+
+@keyframes sparkle {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.2); opacity: 0.8; }
 }
 
 .sectionTitle {
-  font-size: 1.2rem;
-  font-weight: 500;
+  font-size: 28px;
+  font-weight: 400;
   margin-bottom: 1.5rem;
+  background: linear-gradient(
+    90.73deg,
+    #223fda 28.09%,
+    #8d53ff 50.59%,
+    #f94d86 72.2%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.sectionTitle.visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .featuredSection {
   margin-bottom: 3rem;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 1s ease-out, transform 1s ease-out;
 }
 
-/* Featured post is now using grid instead of flex to match design */
+.featuredSection.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 .featuredPost {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1.5rem; /* This creates the gap between image and text containers */
+  gap: 1.5rem;
+  box-shadow: 0 10px 20px rgba(65, 105, 225, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
 }
 
 .featuredImageContainer {
@@ -38,53 +164,74 @@
   height: 100%;
   border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .featuredImage {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.featuredPost:hover .featuredImage {
+  transform: scale(1.05);
 }
 
 .featuredContent {
-  background-color: rgba(255, 250, 234, 1); /* Light yellow background */
+  background-color: rgba(255, 255, 255, 0.85);
   border-radius: 8px;
-  padding: 2rem;
+  padding:2rem;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-width: 1px 4px 4px 1px;
-  border-style: solid;
-  border-color: rgba(0, 0, 0, 1);
 }
 
 .featuredTitle {
   font-size: 1.8rem;
   font-weight: bold;
   margin-bottom: 1rem;
+  color: #223fda;
 }
 
 .featuredExcerpt {
   margin-bottom: 1.5rem;
   line-height: 1.6;
-  color: #555;
+  color: #686868;
+  font-size: 18px;
 }
 
 .categoryTag {
   display: inline-block;
-  background-color: #e6f2ff; /* Light blue background for tags */
-  color: #3366cc; /* Blue text color */
+  background: linear-gradient(
+    90deg,
+    #223fda 0%,
+    #8d53ff 100%
+  );
+  color: white;
   padding: 0.5rem 1rem;
   border-radius: 20px;
   font-size: 0.9rem;
   font-weight: 500;
   margin-top: auto;
   width: fit-content;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.categoryTag:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 10px rgba(65, 105, 225, 0.3);
 }
 
 .blogSection {
   margin-top: 3rem;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 1s ease-out, transform 1s ease-out;
+  transition-delay: 0.5s;
+}
+
+.blogSection.visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .blogGrid {
@@ -97,15 +244,16 @@
   display: block;
   text-decoration: none;
   color: inherit;
-  background-color: #fff;
+  background-color: rgba(255, 255, 255, 0.85);
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .blogCard:hover {
   transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(65, 105, 225, 0.3);
 }
 
 .blogImageContainer {
@@ -118,6 +266,11 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.blogCard:hover .blogImage {
+  transform: scale(1.1);
 }
 
 .blogTitle {
@@ -125,12 +278,13 @@
   font-weight: bold;
   margin: 1rem;
   line-height: 1.4;
+  color: #223fda;
 }
 
 .blogExcerpt {
   margin: 0 1rem 1rem;
   font-size: 0.9rem;
-  color: #555;
+  color: #686868;
   line-height: 1.5;
   display: -webkit-box;
   -webkit-line-clamp: 3;
@@ -138,17 +292,129 @@
   overflow: hidden;
 }
 
-/* Additional style for category tags in blog cards */
-.blogCard .categoryTag {
-  margin: 0 1rem 1rem;
+/* Animations for blog cards */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-@media (max-width: 768px) {
+.blogCard {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+.blogCard:nth-child(1) { animation-delay: 0.2s; }
+.blogCard:nth-child(2) { animation-delay: 0.4s; }
+.blogCard:nth-child(3) { animation-delay: 0.6s; }
+.blogCard:nth-child(4) { animation-delay: 0.8s; }
+
+/* Media Queries */
+@media only screen and (max-width: 600px) {
+  .main {
+    width: 95%;
+  }
+  
+  .titleAnimation, 
+  .titleAnimation.visible {
+    font-size: 45px;
+    text-align: center;
+  }
+  
+  .subtitleAnimation, 
+  .subtitleAnimation.visible {
+    font-size: 40px;
+    text-align: center;
+  }
+  
+  .sectionTitle {
+    font-size: 20px;
+    text-align: center;
+  }
+  
   .featuredPost {
     grid-template-columns: 1fr;
   }
   
   .blogGrid {
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+  
+  .featuredExcerpt {
+    font-size: 16px;
+  }
+}
+
+@media only screen and (min-width: 600px) and (max-width: 768px) {
+  .main {
+    width: 90%;
+  }
+  
+  .titleAnimation, 
+  .titleAnimation.visible {
+    font-size: 45px;
+    text-align: center;
+  }
+  
+  .subtitleAnimation, 
+  .subtitleAnimation.visible {
+    font-size: 40px;
+    text-align: center;
+  }
+  
+  .sectionTitle {
+    font-size: 22px;
+  }
+  
+  .featuredPost {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 992px) {
+  .main {
+    width: 85%;
+  }
+  
+  .titleAnimation, 
+  .titleAnimation.visible {
+    font-size: 60px;
+    text-align: center;
+  }
+  
+  .subtitleAnimation, 
+  .subtitleAnimation.visible {
+    font-size: 60px;
+    text-align: center;
+  }
+  
+  .sectionTitle {
+    font-size: 24px;
+  }
+}
+
+@media only screen and (min-width: 992px) {
+  .main {
+    width: 80%;
+  }
+  
+  .titleAnimation, 
+  .titleAnimation.visible {
+    font-size: 75px;
+    text-align: center;
+  }
+  
+  .subtitleAnimation, 
+  .subtitleAnimation.visible {
+    font-size: 70px;
+    text-align: center;
+  }
+  
+  .sectionTitle {
+    font-size: 28px;
   }
 }

@@ -96,7 +96,6 @@ export default function Apis() {
         language?: string,
         response_type?: string,
         model?: string,
-        urlCode: string
     }) => {
         try {
             const requestBody = {
@@ -110,11 +109,11 @@ export default function Apis() {
                 model: data.model || "llama-3.1-8b-instant"
             };
             
-            console.log("Sending data to API:", requestBody, "with urlCode:", data.urlCode);
+            console.log("Sending data to API:", requestBody);
             
             const result = await APIClient(
                 "POST", 
-                `${NEW_URL}/summarize/question?urlCode=${data.urlCode}`, 
+                `${NEW_URL}/summarize/question`, 
                 true, 
                 requestBody
             );

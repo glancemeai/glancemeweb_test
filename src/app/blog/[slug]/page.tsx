@@ -19,7 +19,6 @@ interface BlogPost {
 interface Comment {
   id: string;
   author: string;
-  avatarUrl: string;
   date: string;
   text: string;
 }
@@ -158,14 +157,12 @@ const sampleComments: Comment[] = [
   {
     id: '1',
     author: 'Tarini Shrivastav',
-    avatarUrl: '/api/placeholder/40/40',
     date: 'Mar 4, 2025',
     text: 'Great article 👏 You clearly demonstrated that UI design is mostly about following logical rules and guidelines!'
   },
   {
     id: '2',
     author: 'Marc Kassel',
-    avatarUrl: '/api/placeholder/40/40',
     date: 'Feb 12, 2025',
     text: 'Good read! Clear structure and explaining every "rule" in a separate paragraph step by step. That\'s how it should be done.'
   }
@@ -207,7 +204,6 @@ const BlogPostPage: React.FC = () => {
     const newCommentObj: Comment = {
       id: (comments.length + 1).toString(),
       author: 'Current User',
-      avatarUrl: '/api/placeholder/40/40',
       date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
       text: newComment
     };
@@ -446,12 +442,7 @@ const BlogPostPage: React.FC = () => {
             <div key={comment.id} className={styles.commentItem}>
               <div className={styles.commentHeader}>
                 <div className={styles.commentAvatar}>
-                  <Image 
-                    src={comment.avatarUrl} 
-                    alt={comment.author} 
-                    width={40} 
-                    height={40} 
-                  />
+                 
                 </div>
                 <div className={styles.commentAuthorInfo}>
                   <span className={styles.commentAuthor}>{comment.author}</span>

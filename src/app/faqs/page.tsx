@@ -6,7 +6,7 @@ const FAQs = () => {
     return (
         <>
             <Header></Header>
-            <Section_Five show={true}/>
+            <Section_Five />
         </>
     )
 }
