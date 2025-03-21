@@ -409,3 +409,25 @@
   .mainHeaderHolderLogin {
     animation: fadeIn 0.3s ease-out;
   }
+  /* Add these styles at the end of your header.module.css file */
+
+.profilePicContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.profilePicContainer:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Make sure mobile view also displays profile image correctly */
+@media only screen and (max-width: 992px) {
+  .mainHeaderHolderLoginItem img {
+    width: 40px;
+    height: 40px;
+  }
+}

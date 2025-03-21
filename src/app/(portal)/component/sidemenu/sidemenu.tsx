@@ -12,20 +12,21 @@ import Link from "next/link";
 
 const Sidemenu = () => {
     return (
-        <div className={style.main}>
-            <div className={style.mainHeader}>
-                <Link href={"/"} passHref><Image src={"/images/logo.jpg"} alt="glanceme.ai" width={35} height={35} style={{objectFit:"cover",borderRadius:"50%"}} /></Link>
-            </div>
-            <div className={style.mainCenter}>
-                <Link href={"/dashboard"} passHref><p><RiHome2Fill size={25} /></p></Link>
-                <p><FaRegFolder size={25}/></p>
-                <p><RiOrganizationChart size={25}/></p>
-                <p><HiOutlineBell size={25}/></p>
-            </div>
-            <div className={style.mainFooter}>
-                <p onClick={() => {logout()}}><FiLogOut size={25}/></p>  
-            </div>
-        </div>
+        <></>
+        // <div className={style.main}>
+        //     <div className={style.mainHeader}>
+        //         <Link href={"/"} passHref><Image src={"/images/logo.jpg"} alt="glanceme.ai" width={35} height={35} style={{objectFit:"cover",borderRadius:"50%"}} /></Link>
+        //     </div>
+        //     <div className={style.mainCenter}>
+        //         <Link href={"/dashboard"} passHref><p><RiHome2Fill size={25} /></p></Link>
+        //         <p><FaRegFolder size={25}/></p>
+        //         <p><RiOrganizationChart size={25}/></p>
+        //         <p><HiOutlineBell size={25}/></p>
+        //     </div>
+        //     <div className={style.mainFooter}>
+        //         <p onClick={() => {logout()}}><FiLogOut size={25}/></p>  
+        //     </div>
+        // </div>
     )
 }
 

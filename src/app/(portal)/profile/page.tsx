@@ -9,6 +9,7 @@ import { setAlert } from "@/app/redux/utils/message";
 import Image from "next/image";
 import InputOne, { InputTen } from "@/app/components/utils/Edit/Input/Input";
 import ButtonOne, { ButtonThree, ButtonTwo } from "@/app/components/utils/Edit/buttons/Buttons";
+import { logout } from "@/app/components/utils/logout/logout";
 
 
 const Profile = () => {
@@ -57,28 +58,22 @@ const Profile = () => {
                         <p>Profile Details</p>
                     </div>
                     <div className={style.mainHolderBodyItem}>
-                        <InputTen name={"Name"} placeholder={"Enter Your Name"} value={data?.data?.user?.name}/>
+                        {/* <InputTen name={"Name"} placeholder={"Enter Your Name"} value={data?.data?.user?.name}/> */}
+                        <p>Name</p>
+                        {data?.data?.user?.name}
                     </div>
                     <div className={style.mainHolderBodyItem}>
-                        <InputTen name={"Email"} disable={true} placeholder={"Enter Your Email"} value={data?.data?.user?.email}/>
+                        {/* <InputTen name={"Email"} disable={true} placeholder={"Enter Your Email"} value={data?.data?.user?.email}/> */}
+                        <p>Email</p>
+                        {data?.data?.user?.email}
                     </div>
                     <div className={style.mainHolderBodyTitle}>
-                        <p>Credit Score</p>
+                        {/* <p>Credit Score</p> */}
                     </div>
 
-                    <div className={style.mainHolderBodyItemHolder}>
-                    {data?.data?.creditsData?.features?.map((value:any,index:string) => {
-                        return (
-                            <div key={index} className={style.mainHolderBodyItem}>
-                                <h3>{value.name}</h3> <p>{value?.credits == 1000000 ? "unlimited" :value?.credits }</p>
-                                {/* <InputTen name={`${value.name}`} disable={true} placeholder={"Enter Your Current Credits"} value={value?.credits == 1000000 ? "unlimited" :value?.credits }/> */}
-                            </div>
-                        )
-                    })}
-                    </div>
-
+                     {/* credit score displaying */}
                     <div className={style.mainHolderBodyItem}>
-                        <ButtonThree name={"Save Profile"}/>
+                        <p onClick={() => logout()}><ButtonThree name={"Logout"}/></p>
                     </div>
                 </div>
                 <div className={style.mainHolderFooter}>

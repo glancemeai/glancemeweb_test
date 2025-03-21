@@ -25,6 +25,7 @@ import { setAlert } from "@/app/redux/utils/message";
 import Notes from "@/app/components/utils/Interfaces/Notes";
 import Folders from "@/app/components/utils/Interfaces/Folders";
 import Header1 from "../../home/header/header";
+import Navigation from "@/app/home/navigation/navigation";
 
 interface FilterData {
   colors?: string[];
@@ -48,7 +49,8 @@ const SubHeader = ({
 }: any) => (
   <div className={style.mainHolderHeader}>
     <div className={style.mainHolderHeaderTitle}>
-      <p>DashBoard</p>
+      <Navigation />
+      <p>All Notes</p>
     </div>
     <div className={style.mainHolderHeaderOptions}>
       <ButtonFive
@@ -407,7 +409,7 @@ const Dashboard = () => {
 
   return (
     <div className={style.main}>
-      <Header image={data?.data?.user?.image} title="Dashboard" backlink="/" forward="" />
+      <Header1 />
       <div className={style.mainHolder}>
         <SubHeader
           search={title}

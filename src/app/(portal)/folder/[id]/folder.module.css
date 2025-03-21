@@ -25,17 +25,22 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-top: 75px;
 }
 
 .mainHolderHeaderTitle {
   position: relative;
   width: auto;
   height: auto;
+  display: flex;
+  flex-wrap: nowrap;
 }
 
 .mainHolderHeaderTitle p {
   font-size: 25px;
   font-weight: 400;
+  white-space: nowrap;
+  margin-left: 10px;
 }
 
 .mainHolderHeaderOptions {

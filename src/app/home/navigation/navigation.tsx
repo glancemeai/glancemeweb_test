@@ -32,7 +32,7 @@ const Navigation: React.FC<NavigationProps> = ({ backlink, forward, onBackClick 
         passHref
         onClick={handleBackClick}
       >
-        <p style={{ color: `${!backlink && !onBackClick ? "#BBBBBB" : "#161616"}` }}>
+        <p style={{ color: `${backlink && onBackClick ? "#BBBBBB" : "#161616"}` }}>
           <RiArrowLeftSLine size={25} />
         </p>
       </Link>

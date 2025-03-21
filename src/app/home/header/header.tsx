@@ -14,6 +14,8 @@ const Header = () => {
   const [showMenu, setShowMenu] = useState(false)
   const [activeTab, setActiveTab] = useState('home')
   const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [isDashboardOrFolder, setIsDashboardOrFolder] = useState(false)
+  const [userImage, setUserImage] = useState('1') // Default profile image
   const pathname = usePathname();
 
   // Check if user is logged in
@@ -24,6 +26,11 @@ const Header = () => {
         .find(row => row.startsWith('authorization='));
       
       setIsLoggedIn(!!token);
+      
+      // You could also fetch the user's image from localStorage or cookies here
+      // For example:
+      const userImg = localStorage.getItem('userProfileImage') || '1';
+      setUserImage(userImg);
     };
 
     checkLoginStatus();
@@ -33,12 +40,20 @@ const Header = () => {
   }, []);
 
   useEffect(() => {
+    // Check if the current page is dashboard or a folder
+    const dashboardPath = pathname.includes('/dashboard');
+    const folderPath = pathname.includes('/folder/');
+    const notesPath = pathname.includes('/notes/');
+    setIsDashboardOrFolder(dashboardPath || folderPath || notesPath);
+    
     if (pathname === '/support') {
       setActiveTab('contact');
     } else if (pathname === '/about') {
       setActiveTab('about');
     } else if (pathname === '/blog') {
       setActiveTab('blog');
+    } else if (pathname.includes('/dashboard') || pathname.includes('/folder/') || pathname.includes('/notes/')) {
+      setActiveTab('notes');
     } else if (pathname === '/home') {
       setActiveTab('home');
     } else {
@@ -66,18 +81,39 @@ const Header = () => {
           <div className={`${style.mainHeaderHolderMenuItem} ${activeTab === 'blog' ? style.active : ''}`}>
             <Link href={"/blog"} passHref><p onClick={() => { setActiveTab('blog') }}>Blog</p></Link>
           </div>
+          {isDashboardOrFolder && (
+            <div className={`${style.mainHeaderHolderMenuItem} ${activeTab === 'notes' ? style.active : ''}`}>
+              <Link href={"/dashboard"} passHref><p onClick={() => { setActiveTab('notes') }}>Notes</p></Link>
+            </div>
+          )}
         </div>
 
         {isLoggedIn ? (
           // Logged-in user options
           <div className={style.mainHeaderHolderLogin}>
-            <div className={style.notesButton}>
-              <Link href={"/dashboard"} passHref>
-                <button className={style.goToNotes}>
-                  Go to Notes Section <BsArrowRightShort size={22} className={style.arrowIcon} />
-                </button>
-              </Link>
-            </div>
+            {isDashboardOrFolder ? (
+              // Show profile picture when on dashboard or in a folder
+              <div className={style.profilePicContainer}>
+                <Link href={"/profile"} passHref>
+                  <Image 
+                    src={`/images/${userImage}.png`} 
+                    alt="profile" 
+                    width={50} 
+                    height={50} 
+                    style={{ objectFit: "cover", borderRadius: "50%" }} 
+                  />
+                </Link>
+              </div>
+            ) : (
+              // Show Go to Notes button on other pages
+              <div className={style.notesButton}>
+                <Link href={"/dashboard"} passHref>
+                  <button className={style.goToNotes}>
+                    Go to Notes Section <BsArrowRightShort size={22} className={style.arrowIcon} />
+                  </button>
+                </Link>
+              </div>
+            )}
           </div>
         ) : (
           // New user options
@@ -98,9 +134,23 @@ const Header = () => {
 
         <div className={`${style.mainHeaderHolderSideMenu}`} onClick={() => { setShowMenu(!showMenu) }}>
           {isLoggedIn ? (
-            <div className={style.mainHeaderHolderLoginItem}>
-              <Link href={"/dashboard"} passHref><p>Dashboard</p></Link>
-            </div>
+            isDashboardOrFolder ? (
+              <div className={style.mainHeaderHolderLoginItem}>
+                <Link href={"/profile"} passHref>
+                  <Image 
+                    src={`/images/${userImage}.png`} 
+                    alt="profile" 
+                    width={40} 
+                    height={40} 
+                    style={{ objectFit: "cover", borderRadius: "50%" }} 
+                  />
+                </Link>
+              </div>
+            ) : (
+              <div className={style.mainHeaderHolderLoginItem}>
+                <Link href={"/dashboard"} passHref><p>Dashboard</p></Link>
+              </div>
+            )
           ) : (
             <div className={style.mainHeaderHolderLoginItem}>
               <Link href={"/login"} passHref><p>Login</p></Link>
@@ -119,7 +169,7 @@ const Header = () => {
           </div>
 
           <div className={style.mainMenuSidePanelHolderItem}>
-            <Link href={"/dashboard"} passHref><p>Dashboard</p></Link>
+            <Link href={"/home"} passHref><p>Home</p></Link>
           </div>
           <div className={style.mainMenuSidePanelHolderItem}>
             <Link href={"/support"} passHref><p>Contact Us</p></Link>
@@ -131,11 +181,20 @@ const Header = () => {
             <Link href={"/blog"} passHref><p>Blog</p></Link>
           </div>
           
-          {isLoggedIn ? (
-            <div className={style.mainMenuSidePanelHolderItem}>
-              <Link href={"/dashboard"} passHref><p>Go to Notes</p></Link>
-            </div>
-          ) : (
+          {isLoggedIn && (
+            <>
+              <div className={style.mainMenuSidePanelHolderItem}>
+                <Link href={"/dashboard"} passHref><p>Dashboard</p></Link>
+              </div>
+              {isDashboardOrFolder && (
+                <div className={style.mainMenuSidePanelHolderItem}>
+                  <Link href={"/profile"} passHref><p>Profile</p></Link>
+                </div>
+              )}
+            </>
+          )}
+
+          {!isLoggedIn && (
             <>
               <div className={style.mainMenuSidePanelHolderItem}>
                 <Link href={"/signup"} passHref><p>Sign Up</p></Link>

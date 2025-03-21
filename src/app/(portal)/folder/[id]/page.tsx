@@ -15,6 +15,7 @@ import Filters from "@/app/components/utils/cards/Filter/FIlter";
 import { FolderSkeleton } from "@/app/components/utils/skeleton/skeleton";
 
 import BreadcrumbHeader from "../../../component/BreadcumbHeader";
+import Header1 from "@/app/home/header/header";
 
 
 import { LuPlus } from "react-icons/lu";
@@ -28,6 +29,7 @@ import { setAlert } from "@/app/redux/utils/message";
 import Folders from "@/app/components/utils/Interfaces/Folders";
 import Notes from "@/app/components/utils/Interfaces/Notes";
 import Header from "../../component/header_v1/header";
+import Navigation from "@/app/home/navigation/navigation";
 
 interface SubHeaderProps {
   name?: string;
@@ -48,6 +50,7 @@ const SubHeader: React.FC<SubHeaderProps> = ({
 }) => (
   <div className={style.mainHolderHeader}>
     <div className={style.mainHolderHeaderTitle}>
+      <Navigation />
       <p>{name || "folder"}</p>
     </div>
     <div className={style.mainHolderHeaderOptions}>
@@ -334,11 +337,7 @@ const Folder = () => {
 
   return (
     <div className={style.main}>
-      <Header
-        image={data?.data?.user?.image}
-        title={folderData?.data?.folderInfo?.name || "folder"}
-        onBackClick={() => router.back()}
-      />
+      <Header1 />
       <div className={style.mainHolder}>
         <SubHeader
           search={title}

@@ -10,6 +10,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { useDispatch } from 'react-redux';
 import Image from 'next/image';
 
+import Header1 from '@/app/home/header/header';
 import Header from '../../component/header_v1/header';
 import NotesItem from '@/app/components/utils/cards/NotesItem/NotesItem';
 import ChatCard from '@/app/components/utils/cards/ChatCard/ChatCard';
@@ -21,6 +22,7 @@ import Apis from '@/app/service/hooks/ApiSlugs';
 import { setAlert } from '@/app/redux/utils/message';
 import type Notes from '@/app/components/utils/Interfaces/Notes';
 import DeleteAlert from '@/app/components/utils/popups/deleteAlert/deleteAlert';
+import Navigation from '@/app/home/navigation/navigation';
 interface FilterData {
   colors?: string[];
   type?: string;
@@ -44,6 +46,7 @@ const SubHeader = ({
 }) => (
   <div className={style.mainHolderHeader}>
     <div className={style.mainHolderHeaderTitle}>
+      <Navigation />
       <p>{title}</p>
     </div>
     <div className={style.mainHolderHeaderOptions}>
@@ -217,7 +220,7 @@ const NotesPage = () => {
 
   return (
     <div className={style.main}>
-      <Header image={userData?.user?.image} title="Notes" backlink="/dashboard" />
+      <Header1 />
       <div className={style.mainHolder}>
         <SubHeader
           title={notesData?.data[0]?.type === 'youtube' ? 'YouTube Notes' : "Article's Notes"}

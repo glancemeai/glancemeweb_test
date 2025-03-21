@@ -1,41 +1,59 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, ChangeEvent, FormEvent } from 'react';
 import { useDispatch } from 'react-redux';
 import { setAlert } from '@/app/redux/utils/message';
 import Header from '../home/header/header';
 import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaFacebook, FaInstagram, FaTwitter, FaFile, FaTimesCircle } from 'react-icons/fa';
 import style from './support.module.css';
-import Apis from "../service/hooks/ApiSlugs"
+import Apis from "../service/hooks/ApiSlugs";
 import { BsStars } from "react-icons/bs";
 import { RiMagicFill } from 'react-icons/ri';
+
+// Define types for the component
+type InquiryType = 'General Inquiry' | 'Bug Report' | 'Send Resume';
+
+interface ApiResponse {
+  status: number;
+  message?: string;
+  data?: any;
+}
 
 const SupportPage = () => {
     const apiClient = Apis();
     const dispatch = useDispatch();
-    const [inquiryType, setInquiryType] = useState('General Inquiry');
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [email, setEmail] = useState('');
-    const [phoneNumber, setPhoneNumber] = useState('');
-    const [phoneError, setPhoneError] = useState('');
-    const [message, setMessage] = useState('');
+    const [inquiryType, setInquiryType] = useState<InquiryType>('General Inquiry');
+    const [firstName, setFirstName] = useState<string>('');
+    const [lastName, setLastName] = useState<string>('');
+    const [email, setEmail] = useState<string>('');
+    const [phoneNumber, setPhoneNumber] = useState<string>('');
+    const [phoneError, setPhoneError] = useState<string>('');
+    const [message, setMessage] = useState<string>('');
     const [file, setFile] = useState<File | null>(null);
-    const [isUploading, setIsUploading] = useState(false);
+    const [isUploading, setIsUploading] = useState<boolean>(false);
     const formData = new FormData();
 
-    const [titleVisible, setTitleVisible] = useState(false);
-    const [subtitleVisible, setSubtitleVisible] = useState(false);
-    const [contentVisible, setContentVisible] = useState(false);
+    // Animation state variables
+    const [animationStarted, setAnimationStarted] = useState<boolean>(false);
+    const [titleVisible, setTitleVisible] = useState<boolean>(false);
+    const [subtitleVisible, setSubtitleVisible] = useState<boolean>(false);
+    const [messageVisible, setMessageVisible] = useState<boolean>(false);
+    const [contentVisible, setContentVisible] = useState<boolean>(false);
 
     useEffect(() => {
-        // Staggered animations
-        setTimeout(() => setTitleVisible(true), 300);
-        setTimeout(() => setSubtitleVisible(true), 800);
-        setTimeout(() => setContentVisible(true), 1200);
-    }, []);
+        // Start animation sequence only once when component mounts
+        if (!animationStarted) {
+            setAnimationStarted(true);
+            
+            // Sequential animation with clear timing
+            setTimeout(() => setTitleVisible(true), 300);
+            setTimeout(() => setSubtitleVisible(true), 1000);
+            setTimeout(() => setMessageVisible(true), 1700);
+            setTimeout(() => setContentVisible(true), 2400);
+        }
+    }, [animationStarted]);
 
-    const handleSubmit = async (e: React.FormEvent) => {
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         
         if (isPhoneRequired && phoneNumber && !validatePhoneNumber(phoneNumber)) {
@@ -46,7 +64,7 @@ const SupportPage = () => {
         try {
             setIsUploading(true);
             
-            const contactData: any = {
+            const contactData: Record<string, any> = {
                 firstName,
                 email,
                 message: message || '(No message provided)',
@@ -58,7 +76,6 @@ const SupportPage = () => {
             
             if (file && inquiryType === 'Send Resume') {
                 contactData.file = file;
-
                 
                 formData.append('firstName', firstName);
                 formData.append('email', email);
@@ -69,7 +86,7 @@ const SupportPage = () => {
                 formData.append('file', file); 
             }
 
-            const result = await apiClient.ContactUs(formData);
+            const result = await apiClient.ContactUs(formData) as ApiResponse;
             console.log('Contact API response:', result);
             
             if (result && (result.status === 200 || result.status === 201)) {
@@ -85,20 +102,25 @@ const SupportPage = () => {
             } else {
                 throw new Error(result?.message || 'Failed to send message');
             }
-        } catch (error: any) {
+        } catch (error) {
             console.error('Failed to send message:', error);
-            dispatch(setAlert({ data: { message: error.message || 'Failed to send message', show: true, type: 'error' } }));
+            dispatch(setAlert({ 
+                data: { 
+                    message: error instanceof Error ? error.message : 'Failed to send message', 
+                    show: true, 
+                    type: 'error' 
+                } 
+            }));
         } finally {
             setIsUploading(false);
         }
     };
 
-
     const validatePhoneNumber = (phone: string): boolean => {
         return /^\d+$/.test(phone);
     };
 
-    const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handlePhoneChange = (e: ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
         setPhoneNumber(value);
         
@@ -114,7 +136,7 @@ const SupportPage = () => {
         }
     };
 
-    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length > 0) {
             setFile(e.target.files[0]);
         }
@@ -143,12 +165,12 @@ const SupportPage = () => {
                     <BsStars className={style.starsIcon} size={40} color='blue'/> 
                     Any question or remarks? 
                 </div>
-                <p className={`${style.sentenceContainer} ${contentVisible ? style.fadeIn : style.fadeOut}`}>
+                <p className={`${style.sentenceContainer} ${messageVisible ? style.visible : ''}`}>
                     <span className={style.highlightedKeyword}>Just write us a message!</span>
                 </p>
             </div>
             
-            <div className={`${style.contactWrapper} ${contentVisible ? style.fadeIn : ''}`}>
+            <div className={`${style.contactWrapper} ${contentVisible ? style.visible : ''}`}>
                 <div className={style.contactInfo}>
                     <div className={style.circleOverlay1}></div>
                     <div className={style.circleOverlay}></div>
@@ -217,7 +239,7 @@ const SupportPage = () => {
                                     type="text" 
                                     id="firstName"
                                     value={firstName} 
-                                    onChange={(e) => setFirstName(e.target.value)} 
+                                    onChange={(e: ChangeEvent<HTMLInputElement>) => setFirstName(e.target.value)} 
                                     required 
                                 />
                             </div>
@@ -230,7 +252,7 @@ const SupportPage = () => {
                                     type="text" 
                                     id="lastName"
                                     value={lastName}
-                                    onChange={(e) => setLastName(e.target.value)}
+                                    onChange={(e: ChangeEvent<HTMLInputElement>) => setLastName(e.target.value)}
                                     required={isLastNameRequired}
                                 />
                             </div>
@@ -243,7 +265,7 @@ const SupportPage = () => {
                                     type="email" 
                                     id="email"
                                     value={email} 
-                                    onChange={(e) => setEmail(e.target.value)} 
+                                    onChange={(e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)} 
                                     required 
                                 />
                             </div>
@@ -274,7 +296,7 @@ const SupportPage = () => {
                                 id="message"
                                 placeholder="Write your message.." 
                                 value={message} 
-                                onChange={(e) => setMessage(e.target.value)} 
+                                onChange={(e: ChangeEvent<HTMLInputElement>) => setMessage(e.target.value)} 
                                 required={isMessageRequired}
                             />
                         </div>
