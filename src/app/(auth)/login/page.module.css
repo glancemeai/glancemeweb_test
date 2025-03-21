@@ -2,12 +2,42 @@
   position: relative;
   width: 100%;
   height: calc(100vh - 70px);
+  min-height: calc(100vh - 70px);
+  max-width: 1300px;
+  margin: 0px auto;
   margin-top: 70px;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #f5f5f5;
+  overflow: hidden;
 }
+
+.mainBg {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  background-image: url("/images/home/Lines_group.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  z-index: -1;
+}
+
+.mainBg::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("/images/home/glassmorphism.png");
+  background-size: cover;
+  background-position: center;
+  opacity: 0.4;
+}
+
 .mainOne {
   position: relative;
   width: 50%;
@@ -16,7 +46,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 1;
 }
+
 .mainTwo {
   position: relative;
   width: 50%;
@@ -25,9 +57,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0.7);
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  backdrop-filter: blur(5px);
+  overflow: hidden;
+  z-index: 1;
 }
+
 .mainTwoImage {
   position: relative;
   width: 100%;
@@ -36,17 +72,66 @@
   max-height: 100%;
 }
 
+/* Title animation styles */
+.titleAnimation {
+  font-size: 45px;
+  font-weight: 400;
+  opacity: 0;
+  transform: translateY(-20px);
+  animation: fadeInAnimation 0.8s ease-out forwards;
+}
+
+.subtitleAnimation {
+  font-size: 40px;
+  font-weight: 400;
+  background: linear-gradient(
+    90.73deg,
+    #223fda 28.09%,
+    #8d53ff 50.59%,
+    #f94d86 72.2%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  opacity: 0;
+  transform: translateY(-20px);
+  animation: fadeInAnimation 1.2s ease-out forwards;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+@keyframes fadeInAnimation {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @media only screen and (max-width: 600px) {
-.main {
+  .main {
     height: calc(100vh - 70px);
     align-items: center;
-}
-.mainOne {
+    flex-direction: column;
+  }
+  
+  .mainOne {
     width: 95%;
-    align-items:center;
-
-}
-.mainTwo {
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .mainTwo {
     display: none;
-}
+  }
+  
+  .titleAnimation, 
+  .subtitleAnimation {
+    font-size: 40px;
+    text-align: center;
+  }
 }

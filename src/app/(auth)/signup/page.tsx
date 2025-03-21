@@ -1,10 +1,13 @@
+// Signup page component
 import Image from 'next/image'
 import SignupContainer from '../Components/signup/SignupContainer'
 import styles from './page.module.css'
+
 export default function SignupHome() {
   return (
     <>
       <div className={styles.main}>
+        <div className={styles.mainBg}></div>
         <div className={styles.mainOne}>
           <SignupContainer />
         </div>

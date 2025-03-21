@@ -1,10 +1,13 @@
+// Login page component
 import Image from 'next/image'
 import LoginContainer from '../Components/login/LoginContainer'
 import styles from './page.module.css'
+
 export default function LoginHome() {
   return (
     <>
       <div className={styles.main}>
+        <div className={styles.mainBg}></div>
         <div className={styles.mainOne}>
           <LoginContainer />
         </div>
