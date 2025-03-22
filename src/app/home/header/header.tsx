@@ -35,35 +35,36 @@ const Header = () => {
           .split('; ')
           .find(row => row.startsWith('authorization='));
       
-      // Only make the API call if the user is logged in
-      if (token) {
-          const apis = Apis()
-          setloading(true)
-          setData({})
-          await apis.UserDetails("profile").then((data) => {
-              if(data.status == 200){
-                  console.log(data);
-                  setData(data)
-                  setloading(false)
-              } else {
-                  // Token exists but API call failed - token might be invalid
-                  // Clear the token and redirect
-                  document.cookie = "authorization=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
-                  router.push("/login")
-                  setloading(false)
-                  dispatch(setAlert({data:{message:data.message,show:true,type:"error"}}))
-              }
-          }).catch((error) => {
-              setloading(false)
-              setData({})
-              dispatch(setAlert({data:{message:error.message,show:true,type:"error"}}))
-          })
-      } else {
-          // User is not logged in, but we shouldn't redirect them
-          setloading(false)
+      if (!token) {
+          // User is not logged in
           setIsLoggedIn(false);
+          setloading(false);
+          return; // Exit early, don't make API call
       }
-  },[dispatch,router])
+      
+      // User has a token, proceed with API call
+      const apis = Apis()
+      setloading(true)
+      setData({})
+      
+      try {
+          const data = await apis.UserDetails("profile");
+          if(data.status == 200){
+              setData(data);
+              setIsLoggedIn(true);
+          } else {
+              // Token is invalid, clear it
+              document.cookie = "authorization=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+              setIsLoggedIn(false);
+          }
+      } catch (error) {
+          console.error("API error:", error);
+          setData({});
+          setIsLoggedIn(false);
+      } finally {
+          setloading(false);
+      }
+  },[dispatch]);
     useEffect(() => {
         userDetails()
     }, [userDetails])

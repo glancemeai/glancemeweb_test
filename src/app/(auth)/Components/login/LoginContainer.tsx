@@ -26,26 +26,44 @@ export default function LoginContainer() {
     const [loginCall, setLoginCall] = useState(false)
     const handleSubmit = async (e: React.FormEvent) => {
         setLoginCall(true);
-
+    
         try {
             const apis = Apis()
             const data = await apis.Login({ email: email, password: password });
             setLoginCall(false);
-
+    
             if (data.status === 200) {
+                // Set the cookie
                 let cookie = `authorization=${data?.data?.token}; `;        
                 cookie += "path=/; ";
                 cookie += `max-age=${60 * 60 * 24 * 365}; `;
-                // For production environment
-                if (window.location.hostname !== "localhost" && window.location.hostname !== "127.0.0.1") {
-                    cookie += "domain=.glanceme.ai; ";  // Uncomment and adjust to your domain
+                cookie += "SameSite=Lax; ";
+                cookie += "Secure;";
+                document.cookie = cookie;
+                
+                // Store user data in localStorage if needed
+                if (data?.data?.user?.name) {
+                    localStorage.setItem('userName', data.data.user.name);
                 }
-                cookie += "SameSite=Lax; ";  // Changed from None to Lax
-                cookie += "Secure; ";  // Separate from SameSite
-                document.cookie = cookie;                       
-                router.push("/dashboard");
+                if (data?.data?.user?.image) {
+                    localStorage.setItem('userProfileImage', data.data.user.image);
+                }
+                
+                // Add a small delay before redirecting
+                setTimeout(() => {
+                    router.push("/dashboard");
+                }, 100);
+                
+                // Dispatch a success alert
+                dispatch(setAlert({ 
+                    data: { 
+                        message: "Login successful! Redirecting to dashboard...", 
+                        show: true, 
+                        type: "success" 
+                    } 
+                }));
             } else {
-                // Use optional chaining and fallback for error message
+                // Error handling (unchanged)
                 const errorMessage = 
                     (data as any).error || 
                     data.message || 
@@ -60,6 +78,7 @@ export default function LoginContainer() {
                 }));
             }
         } catch (error: any) {
+            // Error handling (unchanged)
             setLoginCall(false);
             const errorMessage = 
                 error.message || 
