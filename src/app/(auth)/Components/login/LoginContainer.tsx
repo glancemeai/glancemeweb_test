@@ -37,8 +37,7 @@ export default function LoginContainer() {
                 let cookie = `authorization=${data?.data?.token}; `;        
                 cookie += "path=/; ";
                 cookie += `max-age=${60 * 60 * 24 * 365}; `;
-                cookie += "SameSite=Lax; ";
-                cookie += "Secure;";
+                cookie += "SameSite=None; Secure;";
                 document.cookie = cookie;
                 
                 // Store user data in localStorage if needed
