@@ -5,10 +5,14 @@ import { HiOutlineViewGrid } from "react-icons/hi";
 import { TbMenu3 } from "react-icons/tb";
 import { BsMedium, BsLinkedin, BsTwitter, BsArrowRightShort } from "react-icons/bs"
 import { AiOutlineMail } from "react-icons/ai"
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FaInstagramSquare } from "react-icons/fa";
+import { useDispatch } from "react-redux";
+import Apis from "@/app/service/hooks/ApiSlugs";
+import {useRouter} from 'next/navigation';
+import { setAlert } from "@/app/redux/utils/message";
 
 const Header = () => {
   const [showMenu, setShowMenu] = useState(false)
@@ -16,7 +20,39 @@ const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [isDashboardOrFolder, setIsDashboardOrFolder] = useState(false)
   const [userImage, setUserImage] = useState('1') // Default profile image
+  const [userName, setUserName] = useState('User') // Default user name
   const pathname = usePathname();
+  const [loading,setloading] = useState(true)
+  const router  = useRouter();
+
+  const [data,setData] = useState<any>()
+
+    const dispatch = useDispatch()
+
+    const userDetails = useCallback(async () => {
+        const apis = Apis()
+        setloading(true)
+        setData({})
+        await apis.UserDetails("profile").then((data) => {
+            if(data.status == 200){
+                console.log(data);
+                
+                setData(data)
+                setloading(false)
+            }else{
+                router.push("/login")
+                setloading(false)
+                dispatch(setAlert({data:{message:data.message,show:true,type:"error"}}))
+            }
+        }).catch((error) => {
+            setloading(false)
+            setData({})
+            dispatch(setAlert({data:{message:error.message,show:true,type:"error"}}))
+        })
+    },[dispatch,router])
+    useEffect(() => {
+        userDetails()
+    }, [userDetails])
 
   // Check if user is logged in
   useEffect(() => {
@@ -31,6 +67,10 @@ const Header = () => {
       // For example:
       const userImg = localStorage.getItem('userProfileImage') || '1';
       setUserImage(userImg);
+      
+      // Get user name from localStorage
+      const name = localStorage.getItem('userName') || 'User';
+      setUserName(name);
     };
 
     checkLoginStatus();
@@ -38,6 +78,8 @@ const Header = () => {
     window.addEventListener('storage', checkLoginStatus);
     return () => window.removeEventListener('storage', checkLoginStatus);
   }, []);
+
+
 
   useEffect(() => {
     // Check if the current page is dashboard or a folder
@@ -92,16 +134,19 @@ const Header = () => {
           // Logged-in user options
           <div className={style.mainHeaderHolderLogin}>
             {isDashboardOrFolder ? (
-              // Show profile picture when on dashboard or in a folder
-              <div className={style.profilePicContainer}>
+              // Show profile button with name and picture when on dashboard or in a folder
+              <div className={style.profileButton}>
                 <Link href={"/profile"} passHref>
-                  <Image 
-                    src={`/images/${userImage}.png`} 
-                    alt="profile" 
-                    width={50} 
-                    height={50} 
-                    style={{ objectFit: "cover", borderRadius: "50%" }} 
-                  />
+                  <button className={style.profileBtn}>
+                    <span className={style.userName}>{data?.data?.user?.name}</span>
+                    <Image 
+                      src={`/images/${userImage}.png`} 
+                      alt="profile" 
+                      width={40} 
+                      height={40} 
+                      className={style.profileImage}
+                    />
+                  </button>
                 </Link>
               </div>
             ) : (
@@ -109,7 +154,7 @@ const Header = () => {
               <div className={style.notesButton}>
                 <Link href={"/dashboard"} passHref>
                   <button className={style.goToNotes}>
-                    Go to Notes Section <BsArrowRightShort size={22} className={style.arrowIcon} />
+                   Go to Your Notes <BsArrowRightShort size={22} className={style.arrowIcon} />
                   </button>
                 </Link>
               </div>
@@ -137,13 +182,16 @@ const Header = () => {
             isDashboardOrFolder ? (
               <div className={style.mainHeaderHolderLoginItem}>
                 <Link href={"/profile"} passHref>
-                  <Image 
-                    src={`/images/${userImage}.png`} 
-                    alt="profile" 
-                    width={40} 
-                    height={40} 
-                    style={{ objectFit: "cover", borderRadius: "50%" }} 
-                  />
+                  <div className={style.mobileProfileButton}>
+                    <span className={style.mobileUserName}>{userName}</span>
+                    <Image 
+                      src={`/images/${userImage}.png`} 
+                      alt="profile" 
+                      width={40} 
+                      height={40} 
+                      style={{ objectFit: "cover", borderRadius: "50%" }} 
+                    />
+                  </div>
                 </Link>
               </div>
             ) : (

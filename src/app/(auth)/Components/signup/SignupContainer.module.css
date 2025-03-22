@@ -2,84 +2,186 @@
   position: relative;
   width: 100%;
   height: auto;
-  max-width: 350px;
+  max-width: 500px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   background-color: white;
   border-radius: 6px;
-  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
+
 .mainOne {
   position: relative;
   width: 100%;
   height: auto;
-  padding: 20px;
+  padding: 20px 20px 0;
   display: flex;
   gap: 10px;
   flex-direction: column;
-  justify-content: left;
+  align-items: center;
   text-align: center;
 }
-.mainOne h1 {
-  position: relative;
-  width: auto;
-  height: auto;
-  font-size: 30px;
-  font-weight: 500;
-}
-.mainOne p {
-  position: relative;
-  width: auto;
-  font-size: 14px;
+
+/* Title animation styles */
+.titleAnimation {
+  font-size: 45px;
   font-weight: 400;
-  color: #626262;
+  margin: 0;
+  opacity: 0;
+  transform: translateY(-20px);
+  animation: fadeInAnimation 0.8s ease-out forwards;
 }
+
+.subtitleAnimation {
+  font-size: 40px;
+  font-weight: 400;
+  margin: 0;
+  background: linear-gradient(
+      90.73deg,
+      #223fda 28.09%,
+      #8d53ff 50.59%,
+      #f94d86 72.2%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  opacity: 0;
+  transform: translateY(-20px);
+  animation: fadeInAnimation 1.2s ease-out forwards;
+}
+
+.sentenceContainer {
+  position: relative;
+  font-size: 18px;
+  font-weight: 400;
+  color: #686868;
+  margin-top: 10px;
+  opacity: 0;
+  transform: translateY(-20px);
+  animation: fadeInAnimation 1.5s ease-out forwards;
+}
+
+@keyframes fadeInAnimation {
+  from {
+      opacity: 0;
+      transform: translateY(20px);
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
+
 .mainTwo {
   position: relative;
   width: 100%;
   height: auto;
   padding: 20px;
 }
+
+.inputWrapper {
+  margin-bottom: 20px;
+}
+
+.inputWithIcon {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.inputIcon {
+  position: absolute;
+  left: 15px;
+  margin-top: 25px;
+  font-size: 20px;
+  color: #223fda;
+  z-index: 2;
+  opacity: 0.8;
+}
+
+.inputWithIcon input {
+  padding-left: 65px !important;
+  transition: all 0.3s ease;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  border-radius: 8px !important;
+  padding: 14px 15px !important;
+  font-size: 15px !important;
+  border: 1px solid #e9ecef !important;
+}
+
+
+
+.inputWithIcon input:focus {
+  border-color: #223fda !important;
+  box-shadow: 0 0 0 3px rgba(34, 63, 218, 0.15) !important;
+  outline: none !important;
+  transform: translateY(-2px);
+}
+
+.buttonWrapper {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.buttonWrapper button {
+  width: 100% !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(90.73deg, #223fda 28.09%, #8d53ff 80.59%) !important;
+  border: none !important;
+  border-radius: 8px !important;
+  padding: 14px 20px !important;
+  font-weight: 500 !important;
+  transition: all 0.3s ease !important;
+}
+
+.buttonIcon {
+  margin-left: 8px;
+  animation: slideRight 1.5s infinite;
+}
+
+@keyframes slideRight {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(4px); }
+}
+
 .mainTwoItemSignup {
   position: relative;
   width: 100%;
   height: auto;
   padding: 10px;
   display: flex;
-  font-size: 17px;
+  font-size: 16px;
   gap: 5px;
-  justify-content: left;
+  justify-content: center;
+  align-items: center;
 }
-.mainTwoItemSignup p {
-  position: relative;
-  width: auto;
-  height: auto;
 
-  color: #2478fe;
-  cursor: pointer;
-  text-decoration: underline;
-}
-.mainTwoItem {
-  position: relative;
-  width: 100%;
-  height: auto;
-  padding: 10px;
-  display: flex;
-  justify-content: right;
-}
-.mainTwoItem p {
+.loginLink {
   position: relative;
   width: auto;
   height: auto;
-  color: #000;
-}
-.mainTwoItem p:hover {
-  color: #2478fe;
+  color: #223fda;
   cursor: pointer;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.loginLink:hover {
+  color: #8d53ff;
+  background: rgba(34, 63, 218, 0.1);
   text-decoration: underline;
 }
+
 .mainTwoItemTwo {
   position: relative;
   width: 100%;
@@ -89,59 +191,87 @@
   justify-content: center;
   align-items: center;
 }
+
 .mainTwoItemTwo p {
   position: relative;
   width: 100%;
   height: auto;
   text-align: center;
+  color: #686868;
 }
+
 .mainTwoItemTwo p::after {
-  content: "";
+  content: '';
   position: absolute;
   top: 50%;
   right: 0;
   transform: translateY(-50%);
   width: 40%;
   height: auto;
-  border: 2px solid #eee;
+  border: 1px solid #eee;
 }
+
 .mainTwoItemTwo p::before {
-  content: "";
+  content: '';
   position: absolute;
   top: 50%;
   left: 0;
   transform: translateY(-50%);
   width: 40%;
   height: auto;
-  border: 2px solid #eee;
+  border: 1px solid #eee;
 }
 
-
+/* OTP Modal Styling */
 .mainOTP {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: #00000034;
-  z-index: 999999 !important;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 999999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(5px);
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .mainOTPHolder {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%,-50%);
-  width: 100%;
-  max-width: 330px;
+  position: relative;
+  width: 90%;
+  max-width: 420px;
   height: auto;
-  padding: 10px;
+  padding: 30px;
   display: flex;
-  gap: 10px;
+  gap: 25px;
   flex-direction: column;
   justify-content: center;
   background: white;
-  border-radius: 8px;
+  border-radius: 12px;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+  animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes popIn {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 .mainOTPHolderHeading {
@@ -150,31 +280,40 @@
   height: auto;
   padding: 5px;
   display: flex;
-  gap: 10px;
+  gap: 15px;
+  align-items: center;
+  border-bottom: 1px solid #f1f1f1;
+  padding-bottom: 15px;
 }
-.mainOTPHolderHeading span{
+
+.mainOTPHolderHeading span {
   position: relative;
-  width: 35px;
-  height: 35px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  color: #223fda;
+  transition: all 0.3s ease;
 }
 
-.mainOTPHolderHeading span:hover{
-  background: #eee;
+.mainOTPHolderHeading span:hover {
+  background: #f0f4ff;
+  transform: scale(1.05);
 }
 
-.mainOTPHolderHeading p{
+.mainOTPHolderHeading p {
   position: relative;
-  font-size: 20px;
-  font-weight: 500;
+  font-size: 22px;
+  font-weight: 600;
   text-transform: capitalize;
   display: flex;
   justify-content: center;
   align-items: center;
+  color: #333;
+  margin: 0;
 }
 
 .mainOTPHolderInput {
@@ -183,19 +322,64 @@
   height: auto;
 }
 
-.mainOTPHolderInput p{
-  position: relative;
-  width: auto;
-  height: auto;
-  padding: 5px;
+.resendOTP {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.resendOTP p {
   font-size: 14px;
-  font-weight: 400;
+  color: #686868;
+  margin: 0;
+}
+
+.resendButton {
+  position: relative;
+  font-size: 14px;
+  font-weight: 500;
   cursor: pointer;
-  display: inline-block;
+  color: #223fda;
+  transition: all 0.3s ease;
 }
 
-.mainOTPHolderInput p:hover{
+.resendButton:hover {
   text-decoration: underline;
-  color: #2478fe;
+  color: #8d53ff;
 }
 
+.mainOTPHolderButton {
+  margin-top: 10px;
+  width: 100%;
+}
+
+.mainOTPHolderButton button {
+  width: 100% !important;
+  background: linear-gradient(90.73deg, #223fda 28.09%, #8d53ff 80.59%) !important;
+  border: none !important;
+  border-radius: 8px !important;
+  padding: 14px 20px !important;
+  font-weight: 500 !important;
+  transition: all 0.3s ease !important;
+}
+
+.mainOTPHolderButton button:hover {
+  transform: translateY(-3px) !important;
+}
+
+/* Responsive styles for mobile */
+@media only screen and (max-width: 600px) {
+  .main {
+    max-width: 100%;
+  }
+  
+  .titleAnimation,
+  .subtitleAnimation {
+    font-size: 35px;
+  }
+  
+  .sentenceContainer {
+    font-size: 16px;
+  }
+}

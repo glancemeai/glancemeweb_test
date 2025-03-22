@@ -21,8 +21,8 @@ export default function LoginContainer() {
         } else if (type == "Password") {
             setPassword(data)
         }
-
     }
+    
     const [loginCall, setLoginCall] = useState(false)
     const handleSubmit = async (e: React.FormEvent) => {
         setLoginCall(true);
@@ -70,19 +70,41 @@ export default function LoginContainer() {
             }));
         }
     };
+    
     return (
         <div className={styles.main}>
             <div className={styles.mainOne}>
-                <h1>Welcome Back</h1>
-                <p>please login to your account</p>
+                <h1 className={styles.titleAnimation}>Welcome</h1>
+                <h2 className={styles.subtitleAnimation}>Back</h2>
+                <p className={styles.sentenceContainer}>Please login to your account</p>
             </div>
             <div className={styles.mainTwo}>
-                <InputOne disable={loginCall} name={"Email"} id={"Email"} placeholder={"Email"} value={email} onChange={Handler} />
-                <InputOne disable={loginCall} type={"password"} name={"Password"} id={"Password"} placeholder={"Password"} value={password} onChange={Handler} />
-                {/* <div className={styles.mainTwoItem}><p>forget password??</p></div> */}
-                <ButtonThree laod={loginCall} name={loginCall ? "Preparing Dashboard..." : "Login To Glanceme.Ai"} onClick={handleSubmit} />
+                <InputOne 
+                    disable={loginCall} 
+                    name={"Email"} 
+                    id={"Email"} 
+                    placeholder={"Email"} 
+                    value={email} 
+                    onChange={Handler} 
+                />
+                <InputOne 
+                    disable={loginCall} 
+                    type={"password"} 
+                    name={"Password"} 
+                    id={"Password"} 
+                    placeholder={"Password"} 
+                    value={password} 
+                    onChange={Handler} 
+                />
+                <ButtonThree 
+                    laod={loginCall} 
+                    name={loginCall ? "Preparing Dashboard..." : "Login To Glanceme.Ai"} 
+                    onClick={handleSubmit} 
+                />
                 <div className={styles.mainTwoItemTwo}><p>or</p></div>
-                <div className={styles.mainTwoItemSignup}>New to Glanceme.Ai? <Link href={"/signup"} passHref><p>Create Account</p></Link></div>
+                <div className={styles.mainTwoItemSignup}>
+                    New to Glanceme.Ai? <Link href={"/signup"} passHref><p>Create Account</p></Link>
+                </div>
             </div>
         </div>
     )

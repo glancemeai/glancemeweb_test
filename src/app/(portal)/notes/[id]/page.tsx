@@ -220,6 +220,7 @@ const NotesPage = () => {
 
   return (
     <div className={style.main}>
+      <div className={style.mainBg}></div>
       <Header1 />
       <div className={style.mainHolder}>
         <SubHeader

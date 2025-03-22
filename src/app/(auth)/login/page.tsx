@@ -2,21 +2,52 @@
 import Image from 'next/image'
 import LoginContainer from '../Components/login/LoginContainer'
 import styles from './page.module.css'
+import { FaFacebook, FaInstagram, FaTwitter } from 'react-icons/fa'
 
 export default function LoginHome() {
   return (
-    <>
-      <div className={styles.main}>
-        <div className={styles.mainBg}></div>
-        <div className={styles.mainOne}>
-          <LoginContainer />
-        </div>
-        <div className={styles.mainTwo}>
-          <div className={styles.mainTwoImage}>
-            <Image src={"/images/login.jpg"} fill style={{ objectFit: "contain" }} alt='login' />
+    <div className={styles.container}>
+      {/* Background elements */}
+      
+      <div className={styles.signupWrapper}>
+        {/* Left side - Info section with gradient */}
+        <div className={styles.signupInfo}>
+          <h2>Welcome to Glanceme.Ai</h2>
+          
+          <div className={styles.signupDetails}>
+            <div className={styles.signupItem}>
+              <span className={styles.icon}>🚀</span>
+              <span>Join our growing community</span>
+            </div>
+            
+            <div className={styles.signupItem}>
+              <span className={styles.icon}>🔒</span>
+              <span>Secure and private</span>
+            </div>
+            
+            <div className={styles.signupItem}>
+              <span className={styles.icon}>💡</span>
+              <span>Access to exclusive features</span>
+            </div>
+          </div>
+          
+          {/* Decorative circles */}
+          <div className={styles.circleOverlay1}></div>
+          <div className={styles.circleOverlay}></div>
+          
+          {/* Social icons if needed */}
+          <div className={styles.socialIcons}>
+              <a href="https://www.facebook.com/glancemeai" aria-label="Facebook"><FaFacebook /></a>
+              <a href="https://www.instagram.com/glancemeai/" aria-label="Instagram"><FaInstagram /></a>
+              <a href="https://x.com/GlancemeAi" aria-label="Twitter"><FaTwitter /></a>
           </div>
         </div>
+        
+        {/* Right side - Form section */}
+        <div className={styles.signupForm}>
+          <LoginContainer />
+        </div>
       </div>
-    </>
+    </div>
   )
 }

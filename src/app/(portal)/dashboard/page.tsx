@@ -5,11 +5,12 @@ import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import Image from "next/image";
 
-import Header from "../component/header_v1/header";
+import Header1 from "../../home/header/header";
 import style from "./dashboard.module.css";
 import { LuPlus } from "react-icons/lu";
 import { HiOutlineAdjustmentsVertical } from "react-icons/hi2";
 import { FiSearch } from "react-icons/fi";
+import { RiSparklingFill } from "react-icons/ri";
 
 import ButtonOne, { ButtonFive, ButtonFour } from "@/app/components/utils/Edit/buttons/Buttons";
 import { SearchInput } from "@/app/components/utils/Edit/Input/Input";
@@ -24,8 +25,9 @@ import Apis from "@/app/service/hooks/ApiSlugs";
 import { setAlert } from "@/app/redux/utils/message";
 import Notes from "@/app/components/utils/Interfaces/Notes";
 import Folders from "@/app/components/utils/Interfaces/Folders";
-import Header1 from "../../home/header/header";
 import Navigation from "@/app/home/navigation/navigation";
+import DeleteAccount from "../component/deleteaccount/page";
+import Link from "next/link";
 
 interface FilterData {
   colors?: string[];
@@ -55,7 +57,7 @@ const SubHeader = ({
     <div className={style.mainHolderHeaderOptions}>
       <ButtonFive
         name="New Folder"
-        icon={<LuPlus size={20} color="#848484" />}
+        icon={<LuPlus size={20} color="#4169e1" />}
         onClick={() => folderShowHandler(true)}
       />
       <div className={style.mainHolderHeaderOptionsSearch}>
@@ -65,7 +67,7 @@ const SubHeader = ({
           type="text"
           placeholder="Search in this Folder"
         />
-        <ButtonFour onClick={() => searchHandler()} icon={<FiSearch size={18} />} />
+        <ButtonFour onClick={() => searchHandler()} icon={<FiSearch size={18} color="#4169e1" />} />
         <p
           className={style.mainHolderHeaderOptionsSearchFilter}
           onClick={() => filterShowHandler(true)}
@@ -180,9 +182,6 @@ const Dashboard = () => {
     try {
       const response = await apis.AllNotes();
 
-      if (response?.data?.notes?.length > 0) {
-        console.log('First note structure:', response.data.notes[0]);
-      }
       if (response?.data) {
         setNotesData({
           notes: response.data.notes || [],
@@ -396,9 +395,13 @@ const Dashboard = () => {
                 moveNoteToFolder={moveNoteToFolder} 
               />
             ))}
-            {!loading && foldersToRender.length === 0 && notesToRender.length === 0 && title !== "" && (
+            {!loading && foldersToRender.length === 0 && notesToRender.length === 0 && (
               <div className={style.noResults}>
-                <p>No matching folders or notes found for &quot;{title}&quot;</p>
+                {title !== "" ? (
+                  <p>No matching folders or notes found for &quot;{title}&quot;</p>
+                ) : (
+                  <p>No notes found. Create your first note to get started!</p>
+                )}
               </div>
             )}
           </>
@@ -409,6 +412,7 @@ const Dashboard = () => {
 
   return (
     <div className={style.main}>
+      <div className={style.mainBg}></div>
       <Header1 />
       <div className={style.mainHolder}>
         <SubHeader

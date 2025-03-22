@@ -1,31 +1,35 @@
-.main {
+/* Login page.module.css */
+.container {
   position: relative;
   width: 100%;
-  height: calc(100vh - 70px);
   min-height: calc(100vh - 70px);
   max-width: 1300px;
-  margin: 0px auto;
-  margin-top: 70px;
+  margin: 0 auto;
+  margin-top: 0; /* Removed top margin for better positioning */
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
+  justify-content: flex-start; /* Changed from center to flex-start */
+  padding: 40px 20px;
+  box-sizing: border-box;
   overflow: hidden;
 }
 
-.mainBg {
+.container::before {
+  content: "";
   position: absolute;
-  top: 0px;
-  left: 0px;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   background-image: url("/images/home/Lines_group.png");
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
-  z-index: -1;
+  z-index: -2;
 }
 
-.mainBg::before {
+.container::after {
   content: "";
   position: absolute;
   top: 0;
@@ -36,102 +40,188 @@
   background-size: cover;
   background-position: center;
   opacity: 0.4;
+  z-index: -1;
 }
 
-.mainOne {
-  position: relative;
-  width: 50%;
-  height: 100%;
-  padding: 10px;
+/* Main login wrapper */
+.signupWrapper {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1;
-}
-
-.mainTwo {
-  position: relative;
-  width: 50%;
-  height: 100%;
-  padding: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: rgba(255, 255, 255, 0.7);
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-  backdrop-filter: blur(5px);
-  overflow: hidden;
-  z-index: 1;
-}
-
-.mainTwoImage {
-  position: relative;
   width: 100%;
-  height: 500px;
-  max-width: 100%;
-  max-height: 100%;
+  max-width: 900px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  overflow: hidden;
+  background-color: white;
+  margin: 80px auto 0; /* Add top margin to the wrapper */
 }
 
-/* Title animation styles */
-.titleAnimation {
-  font-size: 45px;
-  font-weight: 400;
-  opacity: 0;
-  transform: translateY(-20px);
-  animation: fadeInAnimation 0.8s ease-out forwards;
+/* Left side - Info section with gradient */
+.signupInfo {
+  flex: 0 0 40%;
+  background: linear-gradient(135deg, #223FDA, #F94D86);
+  color: white;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
 }
 
-.subtitleAnimation {
-  font-size: 40px;
-  font-weight: 400;
-  background: linear-gradient(
-    90.73deg,
-    #223fda 28.09%,
-    #8d53ff 50.59%,
-    #f94d86 72.2%
-  );
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  opacity: 0;
-  transform: translateY(-20px);
-  animation: fadeInAnimation 1.2s ease-out forwards;
+.circleOverlay1 {
+  position: absolute;
+  top: 40%;
+  right: -15px;
+  width: 138px;
+  height: 138px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  z-index: 1;
+}
+
+.circleOverlay {
+  position: absolute;
+  top: 50%;
+  right: -145px;
+  width: 269px;
+  height: 269px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  z-index: 1;
+}
+
+.signupInfo h2 {
+  font-size: 24px;
+  margin-bottom: 40px;
+  position: relative;
+  z-index: 2;
+}
+
+.signupDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  margin-bottom: 40px;
+  position: relative;
+  z-index: 2;
+}
+
+.signupItem {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 15px;
+  font-size: 16px;
 }
 
-@keyframes fadeInAnimation {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.icon {
+  font-size: 20px;
 }
 
-@media only screen and (max-width: 600px) {
-  .main {
-    height: calc(100vh - 70px);
-    align-items: center;
+.socialIcons {
+  display: flex;
+  gap: 20px;
+  margin-top: auto;
+  position: relative;
+  z-index: 2;
+}
+
+.socialIcons a {
+  color: white;
+  font-size: 22px;
+  transition: all 0.3s ease;
+}
+
+.socialIcons a:hover {
+  transform: translateY(-3px);
+  opacity: 0.8;
+}
+
+/* Right side - Form section */
+.signupForm {
+  flex: 0 0 60%;
+  padding: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Tablet Responsiveness (601px - 991px) */
+@media screen and (min-width: 601px) and (max-width: 991px) {
+  .signupWrapper {
     flex-direction: column;
+    max-width: 700px;
+    margin-top: 40px; /* Reduced top margin for tablets */
   }
   
-  .mainOne {
-    width: 95%;
-    justify-content: center;
-    align-items: center;
+  .signupInfo, 
+  .signupForm {
+    flex: 0 0 100%;
+    width: 100%;
+  }
+}
+
+/* Mobile Responsiveness (600px and below) */
+@media screen and (max-width: 600px) {
+  .container {
+    padding: 20px;
+    min-height: auto;
+    margin-top: 15px;
   }
   
-  .mainTwo {
-    display: none;
+  .signupWrapper {
+    flex-direction: column;
+    margin-top: 20px; /* Reduced top margin for mobile */
   }
   
-  .titleAnimation, 
-  .subtitleAnimation {
-    font-size: 40px;
-    text-align: center;
+  .signupInfo, 
+  .signupForm {
+    flex: 0 0 100%;
+    width: 100%;
+  }
+  
+  .signupForm {
+    padding: 25px 20px;
+  }
+
+  /* Modified: Keep gradient box visible on mobile but with adjusted height */
+  .signupInfo {
+    padding: 20px;
+    min-height: 180px;
+  }
+  
+  /* Adjust text size and spacing for mobile */
+  .signupInfo h2 {
+    font-size: 20px;
+    margin-bottom: 15px;
+  }
+  
+  .signupDetails {
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+  
+  .signupItem {
+    font-size: 14px;
+  }
+  
+  /* Make circles smaller on mobile */
+  .circleOverlay1, .circleOverlay {
+    transform: scale(0.7);
+  }
+}
+
+/* Very small screens */
+@media screen and (max-width: 350px) {
+  .signupInfo h2 {
+    margin-top: 15px;
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  .signupItem {
+    font-size: 13px;
+  }
+  
+  .signupForm {
+    padding: 20px 15px;
   }
 }
