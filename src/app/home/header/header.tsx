@@ -30,23 +30,25 @@ const Header = () => {
     const dispatch = useDispatch()
 
     const userDetails = useCallback(async () => {
-      const apis = Apis()
-      setloading(true)
-      setData({})
-      
-      // Check if user is logged in first before making the API call
+      // First check if the user is logged in
       const token = document.cookie
           .split('; ')
           .find(row => row.startsWith('authorization='));
       
       // Only make the API call if the user is logged in
       if (token) {
+          const apis = Apis()
+          setloading(true)
+          setData({})
           await apis.UserDetails("profile").then((data) => {
               if(data.status == 200){
                   console.log(data);
                   setData(data)
                   setloading(false)
-              }else{
+              } else {
+                  // Token exists but API call failed - token might be invalid
+                  // Clear the token and redirect
+                  document.cookie = "authorization=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
                   router.push("/login")
                   setloading(false)
                   dispatch(setAlert({data:{message:data.message,show:true,type:"error"}}))
@@ -59,6 +61,7 @@ const Header = () => {
       } else {
           // User is not logged in, but we shouldn't redirect them
           setloading(false)
+          setIsLoggedIn(false);
       }
   },[dispatch,router])
     useEffect(() => {

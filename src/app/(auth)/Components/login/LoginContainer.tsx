@@ -34,11 +34,15 @@ export default function LoginContainer() {
 
             if (data.status === 200) {
                 let cookie = `authorization=${data?.data?.token}; `;        
-                cookie += "path=/;";
-                cookie += `max-age=${60 * 60 * 24 * 365};`;
-                cookie += "SameSite=None; Secure;";
-                // cookie += "domain=.glanceme.ai;";
-                document.cookie = cookie;                        
+                cookie += "path=/; ";
+                cookie += `max-age=${60 * 60 * 24 * 365}; `;
+                // For production environment
+                if (window.location.hostname !== "localhost" && window.location.hostname !== "127.0.0.1") {
+                    cookie += "domain=.glanceme.ai; ";  // Uncomment and adjust to your domain
+                }
+                cookie += "SameSite=Lax; ";  // Changed from None to Lax
+                cookie += "Secure; ";  // Separate from SameSite
+                document.cookie = cookie;                       
                 router.push("/dashboard");
             } else {
                 // Use optional chaining and fallback for error message
