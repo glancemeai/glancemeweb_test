@@ -30,26 +30,37 @@ const Header = () => {
     const dispatch = useDispatch()
 
     const userDetails = useCallback(async () => {
-        const apis = Apis()
-        setloading(true)
-        setData({})
-        await apis.UserDetails("profile").then((data) => {
-            if(data.status == 200){
-                console.log(data);
-                
-                setData(data)
-                setloading(false)
-            }else{
-                router.push("/login")
-                setloading(false)
-                dispatch(setAlert({data:{message:data.message,show:true,type:"error"}}))
-            }
-        }).catch((error) => {
-            setloading(false)
-            setData({})
-            dispatch(setAlert({data:{message:error.message,show:true,type:"error"}}))
-        })
-    },[dispatch,router])
+      const apis = Apis()
+      setloading(true)
+      setData({})
+      
+      // Check if user is logged in first before making the API call
+      const token = document.cookie
+          .split('; ')
+          .find(row => row.startsWith('authorization='));
+      
+      // Only make the API call if the user is logged in
+      if (token) {
+          await apis.UserDetails("profile").then((data) => {
+              if(data.status == 200){
+                  console.log(data);
+                  setData(data)
+                  setloading(false)
+              }else{
+                  router.push("/login")
+                  setloading(false)
+                  dispatch(setAlert({data:{message:data.message,show:true,type:"error"}}))
+              }
+          }).catch((error) => {
+              setloading(false)
+              setData({})
+              dispatch(setAlert({data:{message:error.message,show:true,type:"error"}}))
+          })
+      } else {
+          // User is not logged in, but we shouldn't redirect them
+          setloading(false)
+      }
+  },[dispatch,router])
     useEffect(() => {
         userDetails()
     }, [userDetails])
@@ -183,7 +194,7 @@ const Header = () => {
               <div className={style.mainHeaderHolderLoginItem}>
                 <Link href={"/profile"} passHref>
                   <div className={style.mobileProfileButton}>
-                    <span className={style.mobileUserName}>{userName}</span>
+                    <span className={style.mobileUserName}>{data?.data?.user?.name}</span>
                     <Image 
                       src={`/images/${userImage}.png`} 
                       alt="profile" 
