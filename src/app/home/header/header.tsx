@@ -78,8 +78,6 @@ const Header = () => {
       
       setIsLoggedIn(!!token);
       
-      // You could also fetch the user's image from localStorage or cookies here
-      // For example:
       const userImg = localStorage.getItem('userProfileImage') || '1';
       setUserImage(userImg);
       

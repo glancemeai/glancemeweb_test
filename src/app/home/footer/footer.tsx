@@ -7,7 +7,7 @@ const Footer = () => {
     return (
         <div className={style.main}>
             <div className={style.mainHolder}>
-                <div className={style.mainHolderOne}>
+                {/* <div className={style.mainHolderOne}>
                     <div className={style.mainHolderOneheading}>
                         <h3>Get discount instantly____________</h3>
                     </div>
@@ -18,7 +18,7 @@ const Footer = () => {
                         <input type="email" placeholder="Enter Your Email"/>
                         <button>Get Started</button>
                     </div>
-                </div>
+                </div> */}
                 <div className={style.mainHolderTwo}>
                     <div className={style.mainHolderTwoLeft}>
                         <div className={style.mainHolderTwoLeftOne}>
@@ -32,20 +32,18 @@ const Footer = () => {
 
                             <div className={style.mainHolderTwoRightItem}>
                                 <h4>Help and services</h4>
-                                <p>How does it work</p>
                                 <Link href={"/faqs"} passHref><p>FAQs</p></Link>
                                 <Link href={"/support"} passHref><p>Contact Us</p></Link>
                             </div>
                             <div className={style.mainHolderTwoRightItem}>
                                 <h4>To Explore</h4>
-                                <p>Blogs</p>
-                                <p>Docs</p>
+                                <Link href={"/blog"} passHref><p>Blog</p></Link>
                                 <Link href={"/privacy"} passHref><p>Privacy</p></Link>
                             </div>
                             <div className={style.mainHolderTwoRightItem}>
                                 <h4>Tools</h4>
-                                <Link href={"https://chromewebstore.google.com/detail/glancemeai/pgjkednjpnkamnajfabgfigcldpgpokp"} passHref><p>Extension</p></Link>
-                                <p>App</p>
+                                <Link href={"https://chromewebstore.google.com/detail/glancemeai/pgjkednjpnkamnajfabgfigcldpgpokp"} passHref><p>Chrome Extension</p></Link>
+                                <p>Android App</p>
                             </div>
                         </div>
                         <div className={style.mainHolderTwoRightTwo}>

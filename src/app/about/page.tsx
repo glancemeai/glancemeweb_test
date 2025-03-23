@@ -45,7 +45,7 @@ const About: React.FC = () => {
     {
       name: 'Sajal',
       role: 'Chief Executive Officer',
-      imagePath: '/images/sajal.png',
+      imagePath: '/images/home/sajal.jpeg',
     },
     {
       name: 'Anshit',
