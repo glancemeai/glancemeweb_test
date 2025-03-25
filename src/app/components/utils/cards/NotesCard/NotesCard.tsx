@@ -310,11 +310,14 @@ const NotesCard = (props: NotesCard) => {
     ? props.folders.filter(folder => folder._id !== props.data?.folderId)
     : [];
 
+
+ if (props.loading) {
+    return <FolderSkeleton />;
+}
+
+
   return (
     <div className={style.notesCard}>
-      {props.loading ? (
-        <FolderSkeleton />
-      ) : (
         <div className={style.mainNotes}>
           <div className={style.mainNotesImage}>
             <Link href={`/notes/${props?.data?.urlHash}`} passHref>
@@ -386,7 +389,6 @@ const NotesCard = (props: NotesCard) => {
             )}
           </div>
         </div>
-      )}
     </div>
   );
 };

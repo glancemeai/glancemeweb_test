@@ -5,11 +5,11 @@
   min-height: calc(100vh - 70px);
   max-width: 1300px;
   margin: 0 auto;
-  margin-top: 0; /* Removed top margin for better positioning */
+  margin-top: 70px; /* Removed top margin for better positioning */
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start; /* Changed from center to flex-start */
+  justify-content: center; /* Changed from center to flex-start */
   padding: 40px 20px;
   box-sizing: border-box;
   overflow: hidden;

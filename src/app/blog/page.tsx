@@ -137,7 +137,7 @@ const BlogPage: React.FC = () => {
                 </div>
                 <h3 className={styles.blogTitle}>{blog.title}</h3>
                 <p className={styles.blogExcerpt}>{blog.excerpt}</p>
-                <div className={styles.categoryTag}>{blog.category}</div>
+                {/* <div className={styles.categoryTag}>{blog.category}</div> */}
               </Link>
             ))}
           </div>

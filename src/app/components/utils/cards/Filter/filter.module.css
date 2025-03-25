@@ -6,7 +6,7 @@
     width: 100vw;
     height: 100vh;
     background-color: #22222231;
-    z-index: 999 !important;
+    z-index: 9999999999999999 !important;
   }
   .mainSideFilterHolder{
     position: absolute;

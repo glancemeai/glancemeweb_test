@@ -2,7 +2,7 @@
     position: relative;
     width: 100%;
     height: auto;
-    min-height: calc(100vh - 70px);
+    min-height: 100%;
     max-width: 1300px;
     margin: 0px auto;
     overflow: visible; /* Changed from hidden to allow content to expand */

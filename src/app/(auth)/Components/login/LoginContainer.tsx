@@ -96,8 +96,8 @@ export default function LoginContainer() {
     return (
         <div className={styles.main}>
             <div className={styles.mainOne}>
-                <h1 className={styles.titleAnimation}>Welcome</h1>
-                <h2 className={styles.subtitleAnimation}>Back</h2>
+                <h1 className={styles.titleAnimation}>Welcome <span className={styles.subtitleAnimation}>Back</span></h1>
+                
                 <p className={styles.sentenceContainer}>Please login to your account</p>
             </div>
             <div className={styles.mainTwo}>

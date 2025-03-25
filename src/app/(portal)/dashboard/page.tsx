@@ -57,7 +57,7 @@ const SubHeader = ({
     <div className={style.mainHolderHeaderOptions}>
       <ButtonFive
         name="New Folder"
-        icon={<LuPlus size={20} color="#4169e1" />}
+        icon={<LuPlus size={20} color="#848484" />}
         onClick={() => folderShowHandler(true)}
       />
       <div className={style.mainHolderHeaderOptionsSearch}>
@@ -67,7 +67,7 @@ const SubHeader = ({
           type="text"
           placeholder="Search in this Folder"
         />
-        <ButtonFour onClick={() => searchHandler()} icon={<FiSearch size={18} color="#4169e1" />} />
+        <ButtonFour onClick={() => searchHandler()} icon={<FiSearch size={18} color="#fff" />} />
         <p
           className={style.mainHolderHeaderOptionsSearchFilter}
           onClick={() => filterShowHandler(true)}
