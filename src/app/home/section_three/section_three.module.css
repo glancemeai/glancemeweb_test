@@ -1,7 +1,6 @@
 .main {
   position: relative;
   width: 100%;
-  height: auto;
   max-width: 1300px;
   padding: 20px 10px;
   margin: 0px auto;
@@ -10,70 +9,66 @@
 .mainHolder {
   position: relative;
   width: 85%;
-  height: auto;
   margin: 0px auto;
   display: flex;
-  gap: 20px;
+  gap: 40px;
   flex-direction: column;
 }
 
 .mainHolderItem {
   position: relative;
   width: 100%;
-  height: auto;
-  padding: 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 20px;
+  padding: 20px 0;
+}
+
+.textLeft {
+  flex-direction: row-reverse;
+}
+
+.textRight {
+  flex-direction: row;
 }
 
 .mainHolderItemImage {
   position: relative;
   width: 40%;
-  height: 100%;
-  min-height: 450px;
-  padding: 10px;
+  aspect-ratio: 16 / 9;
+  max-height: 400px;
 }
 
 .mainHolderItemText {
   position: relative;
   width: 55%;
-  height: auto;
-  padding: 10px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 15px;
 }
 
 .mainHolderItemText h2 {
-  position: relative;
-  width: 100%;
-  height: auto;
-  font-size: 30px;
+  font-size: 28px;
   font-weight: 500;
-  line-height: 45px;
+  line-height: 1.3;
   color: #111;
   text-transform: capitalize;
+  margin: 0;
 }
 
 .mainHolderItemText p {
-  position: relative;
-  width: 100%;
-  height: auto;
   font-size: 16px;
   font-weight: 400;
-  line-height: 28px;
+  line-height: 1.6;
   color: #111;
-  text-transform: capitalize;
+  margin: 0;
 }
 
 .mainHolderItemText span {
-  position: relative;
-  width: 100%;
-  height: auto;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 400;
-  line-height: 25px;
+  line-height: 1.4;
   display: inline-block;
   background: linear-gradient(
     90deg,
@@ -83,125 +78,124 @@
   );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  background-clip: text; /* For Firefox */
+  background-clip: text;
 }
 
 .mainHolderItemText button {
-  position: relative;
   width: min-content;
-  height: auto;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 500;
-  padding: 10px;
+  padding: 8px 0;
   border: none;
   outline: none;
   color: #223fda;
   background: transparent;
   border-bottom: 1px solid #223fda;
   display: flex;
-  gap: 20px;
-  justify-content: center;
+  gap: 10px;
   align-items: center;
   white-space: nowrap;
   cursor: pointer;
+  margin-top: 10px;
 }
 
-@media only screen and (max-width: 600px) {
+/* Responsive Adjustments */
+@media only screen and (max-width: 768px) {
   .main {
     padding: 10px;
   }
   .mainHolder {
     width: 95%;
+    gap: 20px;
   }
-  .mainHolderItem{
-    flex-wrap: wrap;
+  .mainHolderItem {
+    flex-direction: column !important;
+    gap: 15px;
+    padding: 15px 0;
+  }
+  .mainHolderItemImage,
+  .mainHolderItemText {
+    width: 100%;
+    max-height: none;
   }
   .mainHolderItemImage {
-    width: 100%;
-    height: 250px;
-    min-height: 250px;
-  }
-  .mainHolderItemText{ 
-    width: 100%;
+    aspect-ratio: 16 / 9;
+    height: auto;
   }
 }
 
-@media only screen and (min-width: 600px) {
-  .main {
-    padding: 10px;
-  }
-  .mainHolder {
-    width: 90%;
-  }
-  .mainHolderItem{
-    flex-wrap: wrap;
-  }
-  .mainHolderItemImage {
-    width: 100%;
-    height: 350px;
-    min-height: 350px;
-  }
-  .mainHolderItemText{ 
-    width: 100%;
-  }
+/* Image Modal Styles */
+.clickableImage {
+  cursor: pointer;
+  transition: transform 0.2s ease;
 }
 
-/* Medium devices (landscape tablets, 768px and up) */
-@media only screen and (min-width: 768px) {
-  .main {
-    padding: 10px;
-  }
-  .mainHolder {
-    width: 90%;
-  }
-  .mainHolderItem{
-    flex-wrap: nowrap;
-  }
-  .mainHolderItemImage {
-    height: 350px;
-    min-height: 350px;
-  }
-  .mainHolderItemText{ 
-    width: 100%;
-  }
+.clickableImage:hover {
+  transform: scale(1.03);
 }
 
-/* Large devices (laptops/desktops, 992px and up) */
-@media only screen and (min-width: 992px) {
-  .main {
-    padding: 10px;
-  }
-  .mainHolder {
-    width: 85%;
-  }
-  .mainHolderItem{
-    flex-wrap: nowrap;
-  }
-  .mainHolderItemImage {
-    height: 400px;
-    min-height: 400px;
-  }
-  .mainHolderItemText{ 
-    width: 100%;
-  }
+.imageModalOverlay {
+  position: fixed;
+  top: 56px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+  height: max-content;
 }
 
-/* Extra large devices (large laptops and desktops, 1200px and up) */
-@media only screen and (min-width: 1200px) {
-  .main {
-    padding: 10px;
-  }
-  .mainHolder {
-    width: 85%;
-  }
-  .mainHolderItem{
-    flex-wrap: nowrap;
-  }
-  .mainHolderItemImage {
-    height: 450px;
-    min-height: 450px;
-  }
-  .mainHolderItemText{ 
-    width: 100%;
-  }
+.imageModalContent {
+  background-color: white;
+  border-radius: 10px;
+  max-width: 90%;
+  max-height: 90%;
+  width: auto;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.imageModalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  border-bottom: 1px solid #eee;
+}
+
+.imageModalHeader h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.closeModalButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #333;
+  font-size: 20px;
+  padding: 5px;
+  transition: color 0.2s ease;
+}
+
+.closeModalButton:hover {
+  color: #666;
+}
+
+.imageModalImageContainer {
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  max-height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
 }

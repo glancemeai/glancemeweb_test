@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { BsThreeDotsVertical } from 'react-icons/bs';
-import { RiDeleteBin6Line } from 'react-icons/ri';
+import { RiDeleteBin6Line, RiEditLine } from 'react-icons/ri';
 import { MdOutlineDriveFileMove } from 'react-icons/md';
 import { FaChevronRight, FaChevronDown } from 'react-icons/fa';
 import Link from 'next/link';
@@ -103,6 +103,10 @@ const FolderCard = (props: FolderCardProps) => {
   const [showOptions, setShowOptions] = useState(false);
   const [showMoveModal, setShowMoveModal] = useState(false);
   const [selectedFolderId, setSelectedFolderId] = useState<string>("");
+  const [folderName, setFolderName] = useState<string>(props.data.name);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [editingFolderName, setEditingFolderName] = useState<string>(props.data.name);
+
 
   const toggleOptions = (isVisible: boolean) => {
     setShowOptions(isVisible);
@@ -113,10 +117,20 @@ const FolderCard = (props: FolderCardProps) => {
     setShowOptions(false);
   };
 
+  const handleEditClick = () => {
+    setShowEditModal(true);
+    setShowOptions(false);
+  };
   const handleCancelMove = () => {
     setShowMoveModal(false);
     setSelectedFolderId("");
   }
+  const handleCancelEdit = () => {
+    setShowEditModal(false);
+    setEditingFolderName(folderName);
+  }
+
+  
 
   const handleMove = async () => {
     if (!selectedFolderId) return;
@@ -144,6 +158,52 @@ const FolderCard = (props: FolderCardProps) => {
       dispatch(setAlert({
         data: {
           message: error.message || "Failed to move folder",
+          show: true,
+          type: "error"
+        }
+      }));
+    }
+  };
+
+  const handleEditFolder = async () => {
+    if (!editingFolderName.trim()) {
+      dispatch(setAlert({
+        data: {
+          message: "Folder name cannot be empty",
+          show: true,
+          type: "error"
+        }
+      }));
+      return;
+    }
+
+    const apis = Apis();
+    try {
+      const response = await apis.EditFolder({
+        name: editingFolderName,
+        folderId: props.data._id
+      });
+      
+      if (response.status === 200) {
+        dispatch(setAlert({
+          data: {
+            message: "Folder name updated successfully",
+            show: true,
+            type: "success"
+          }
+        }));
+        setFolderName(editingFolderName);
+        setShowEditModal(false);
+        if (props.refresh) {
+          props.refresh();
+        }
+      } else {
+        throw new Error(response.message);
+      }
+    } catch (error: any) {
+      dispatch(setAlert({
+        data: {
+          message: error.message || "Failed to update folder name",
           show: true,
           type: "error"
         }
@@ -180,6 +240,9 @@ const FolderCard = (props: FolderCardProps) => {
                 <p onClick={handleMoveClick}>
                   <MdOutlineDriveFileMove size={20} /> Move to Folder
                 </p>
+                <p onClick={handleEditClick}>
+                <RiEditLine size={20} /> Edit Folder Name
+              </p>
                 <p onClick={() => props.AlertShowHandler(true, props.data._id)}>
                   <RiDeleteBin6Line size={20} /> Delete
                 </p>
@@ -188,6 +251,31 @@ const FolderCard = (props: FolderCardProps) => {
           </div>
         </div>
       </div>
+
+      {showEditModal && (
+        <div className={style.moveModal}>
+          <div className={style.moveModalContent}>
+            <h3>Edit Folder Name</h3>
+            <input 
+              type="text"
+              value={editingFolderName}
+              onChange={(e) => setEditingFolderName(e.target.value)}
+              className={style.editFolderInput}
+              placeholder="Enter new folder name"
+            />
+            <div className={style.modalButtons}>
+              <button onClick={handleCancelEdit}>Cancel</button>
+              <button 
+                onClick={handleEditFolder}
+                disabled={!editingFolderName.trim()}
+                className={!editingFolderName.trim() ? style.disabled : ''}
+              >
+                Save
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {showMoveModal && (
         <div className={style.moveModal}>

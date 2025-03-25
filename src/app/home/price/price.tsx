@@ -1,62 +1,73 @@
-'use client'
-import Apis from "@/app/service/hooks/ApiSlugs"
-import style from "./price.module.css"
-import { useRouter } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
-import { setAlert } from "@/app/redux/utils/message";
-import { useDispatch } from "react-redux";
-import { PriceCardSkeleton } from "@/app/components/utils/skeleton/skeleton";
-import { PlansData } from "@/app/(portal)/price/page";
-import PriceCard from "@/app/components/utils/cards/price/price";
+'use client';
+import { useState } from "react";
+import style from "./price.module.css";
 
 const StaticPrice = () => {
-    const router = useRouter();
-    const [loading, setloading] = useState(true)
-    const [plansData, setPlansData] = useState<any>()
-    const dispatch = useDispatch()
+    const [selectedAmount, setSelectedAmount] = useState<number | null>(null);
+    const [showPopup, setShowPopup] = useState(false);
 
-    const PlanDetails = useCallback(async () => {
-        const apis = Apis()
-        setloading(true)
-        setPlansData({})
-        await apis.GetPlans().then((data) => {
-            if(data.status == 200){
-                console.log(data);
-                
-                setPlansData(data)
-                setloading(false)
-            }else{
-                setloading(false)
-                dispatch(setAlert({data:{message:data.message,show:true,type:"error"}}))
-            }
-        }).catch((error) => {
-            setloading(false)
-            setPlansData({})
-            dispatch(setAlert({data:{message:error.message,show:true,type:"error"}}))
-        })
-    },[dispatch])
-
-    useEffect(() => {
-        PlanDetails()
-    }, [PlanDetails])
+    const donationOptions = [
+        { amount: 5, description: "Amazing Product", icon: "🌟" },
+        { amount: 10, description: "Support a Feature", icon: "🚀" },
+        { amount: 20, description: "Fuel Our Mission", icon: "💡" }
+    ];
 
     return (
-        <div className={style.main}>
-            {loading ? (
-                <>
-                    <PriceCardSkeleton />
-                    <PriceCardSkeleton />
-                    <PriceCardSkeleton />
-                </>
-            ) : (
-                plansData?.data?.map((value:PlansData,index:string) => {
-                    return (
-                        <PriceCard key={index} id={value?._id} features={value?.features} name={value?.name} price={value?.price} videoLimit={value?.videoLimit}/>
-                    )
-                })
+        <div className={style.container}>
+            <h2 className={style.heading}>
+                Discover Glanceme, <span className={style.free}>Free </span> During Our Launch!
+            </h2>
+            <p className={style.text}>
+                We're a passionate team of individuals committed to transforming the way you learn from online videos and text content. During our trial phase, enjoy complete, <strong>free access to all our features.</strong> If you encounter any issues or bugs, our support team is here to assist. Your insights, suggestions, and even small donations go a long way in helping us maintain and evolve this service for everyone.
+            </p>
+            <button className={style.donateButton} onClick={() => setShowPopup(true)}>
+                <img src="images/donate.png" alt="Donate" /> Donate
+            </button>
+            
+            {showPopup && (
+                <div className={style.popupOverlay}>
+                    <div className={style.popupContent}>
+                        <div className={style.popupHeader}>
+                            <h3>Support Our Mission</h3>
+                            <p>Help us keep Glanceme free and growing!</p>
+                        </div>
+                        <div className={style.donationOptions}>
+                            {donationOptions.map((option) => (
+                                <div 
+                                    key={option.amount} 
+                                    className={`${style.donationCard} ${selectedAmount === option.amount ? style.selected : ''}`}
+                                    onClick={() => setSelectedAmount(option.amount)}
+                                >
+                                    <div className={style.donationIcon}>{option.icon}</div>
+                                    <div className={style.donationDetails}>
+                                        <span className={style.donationAmount}>${option.amount}</span>
+                                        <span className={style.donationDescription}>{option.description}</span>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                        <div className={style.popupButtonsCenter}>
+                            <button 
+                                className={`${style.payButton} ${selectedAmount ? style.active : style.disabled}`}
+                                disabled={!selectedAmount}
+                            >
+                                Pay ${selectedAmount || 0}
+                            </button>
+                            <button 
+                                className={style.cancelButton} 
+                                onClick={() => {
+                                    setShowPopup(false);
+                                    setSelectedAmount(null);
+                                }}
+                            >
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
             )}
         </div>
-    )
-}
+    );
+};
 
-export default StaticPrice
+export default StaticPrice;

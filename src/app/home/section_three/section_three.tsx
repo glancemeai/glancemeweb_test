@@ -1,27 +1,79 @@
-import React from "react";
+"use client"
+import React, { useState } from "react";
 import style from "./section_three.module.css";
 import Image from "next/image";
 import Link from "next/link";
-import { BsArrowRight } from "react-icons/bs";
+import { BsArrowRight, BsXLg } from "react-icons/bs";
 
 const Card = ({heading,paragraph,tagLine,textSide="right",image,altText}:{heading:string,paragraph:string,tagLine?:string,textSide?:"right" | "left",image:string,altText:string}) => {
+    const [showImageModal, setShowImageModal] = useState(false);
+
+    const handleImageClick = () => {
+        setShowImageModal(true);
+    };
+
+    const handleCloseModal = () => {
+        setShowImageModal(false);
+    };
+
     return (
-      <div className={style.mainHolderItem} style={{flexDirection:`${textSide == "left" ? "row-reverse" : "row"}`}}>
-        <div className={style.mainHolderItemImage}>
-          <Image src={image} alt={altText} fill style={{objectFit:"contain"}} />
+      <>
+        <div className={`${style.mainHolderItem} ${style[textSide === "left" ? "textLeft" : "textRight"]}`}>
+          <div 
+            className={`${style.mainHolderItemImage} ${style.clickableImage}`} 
+            onClick={handleImageClick}
+          >
+            <Image 
+              src={image} 
+              alt={altText} 
+              fill 
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              style={{objectFit:"contain", cursor: "pointer"}} 
+            />
+          </div>
+          <div className={style.mainHolderItemText}>
+            <span>{tagLine}</span>
+            <h2>{heading}</h2>
+            <p>{paragraph}</p>
+            <Link href={"https://chromewebstore.google.com/detail/glancemeai/pgjkednjpnkamnajfabgfigcldpgpokp"} passHref>
+              <button>
+                Add to Chrome <BsArrowRight size={20}/>
+              </button>
+            </Link>
+          </div>
         </div>
-        <div className={style.mainHolderItemText}>
-          <span>{tagLine}</span>
-          <h2>{heading}</h2>
-          <p>{paragraph}</p>
-          <Link href={"https://chromewebstore.google.com/detail/glancemeai/pgjkednjpnkamnajfabgfigcldpgpokp"} passHref><button>
-            Add to Chrome <BsArrowRight size={20}/>
-          </button></Link>
-        </div>
-        
-      </div>
+
+        {showImageModal && (
+          <div className={style.imageModalOverlay} onClick={handleCloseModal}>
+            <div 
+              className={style.imageModalContent} 
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className={style.imageModalHeader}>
+                <h3>{altText}</h3>
+                <button 
+                  className={style.closeModalButton} 
+                  onClick={handleCloseModal}
+                >
+                  <BsXLg />
+                </button>
+              </div>
+              <div className={style.imageModalImageContainer}>
+                <Image 
+                  src={image} 
+                  alt={altText} 
+                  layout="responsive" 
+                  width={1200}
+                  height={600}
+                  objectFit="contain"
+                />
+              </div>
+            </div>
+          </div>
+        )}
+      </>
     )
-  }
+}
 
 const Section_three = () => {
     return (
@@ -36,4 +88,4 @@ const Section_three = () => {
     )
 }
 
-export default Section_three
+export default Section_three;

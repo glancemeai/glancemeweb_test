@@ -3,7 +3,7 @@ import Folders from '../../components/utils/Interfaces/Folders';
 
 export default function Apis() {
     const URL = "https://glanceme.co.in/v1/api"
-    const NEW_URL = "https://glanceme.co.in/v2/api"
+    const NEW_URL = "http://localhost:9000/v2/api/"
 
     const Login = async (data:any) => {
         var result = await APIClient("POST", `${URL}/users/login`, false, data);
@@ -87,6 +87,39 @@ export default function Apis() {
         return result;
     }
 
+    const EditFolder = async (data: {
+        name: string,
+        folderId: string
+    }) => {
+        try {
+            const result = await APIClient("PUT", `${URL}/folder/detail`, true, {
+                name: data.name,
+                folderId: data.folderId
+            });
+            
+            if (result && result.status === 200) {
+                return {
+                    status: 200,
+                    data: result.data || {},
+                    message: result.message || 'Folder updated successfully'
+                };
+            } else {
+                return {
+                    status: result?.status || 500,
+                    data: {},
+                    message: result?.message || 'Failed to update folder'
+                };
+            }
+        } catch (error: any) {
+            console.error('EditFolder API Error:', error);
+            return {
+                status: 500,
+                data: {},
+                message: error.message || 'An unexpected error occurred'
+            };
+        }
+    }
+
     const SendChatMessage = async (data: {
         video_url?: string,
         video_time?: number,
@@ -106,14 +139,14 @@ export default function Apis() {
                 tone: data.tone || "Professional",
                 language: data.language || "English",
                 response_type: data.response_type || "Concise", 
-                model: data.model || "llama-3.1-8b-instant"
+                model: data.model || "llama-3.1-8b-instant",
             };
             
             console.log("Sending data to API:", requestBody);
             
             const result = await APIClient(
                 "POST", 
-                `${NEW_URL}/summarize/question`, 
+                `${NEW_URL}/websitequestion`, 
                 true, 
                 requestBody
             );
@@ -357,6 +390,7 @@ export default function Apis() {
         moveToFolder,
         moveFolderToFolder,
         ContactUs,
-        SendChatMessage
+        SendChatMessage,
+        EditFolder
     }
 }

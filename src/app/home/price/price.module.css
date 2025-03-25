@@ -1,65 +1,184 @@
-.main {
-    position: relative;
-    width: 100%;
-    max-width: 1300px;
-    margin: 0px auto;
-    height: auto;
-    padding: 10px;
-    display: flex;
-    gap: 10px;
-    justify-content: space-between;
-    align-items: flex-start;
+.container {
+  text-align: center;
+  padding: 20px;
+  max-width: 700px;
+  margin: auto;
 }
 
-
-
-@media only screen and (max-width: 600px) {
-.main {
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.heading {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
 }
-  }
-  
-  @media only screen and (min-width: 600px) {
-    .main {
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-    }
-  }
 
-
-
-
-/* Medium devices (landscape tablets, 768px and up) */
-@media only screen and (min-width: 768px) {
-    .main {
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: center;
-        align-items: flex-start;
-    }
-  }
-  
-  /* Large devices (laptops/desktops, 992px and up) */
-  @media only screen and (min-width: 992px) {
-    .main {
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: center;
-        align-items: flex-start;
-    }
-  }
-  
-  
-  /* Extra large devices (large laptops and desktops, 1200px and up) */
-  @media only screen and (min-width: 1200px) {
-    .main {
-        flex-direction: row;
-        flex-wrap: nowrap;
-        justify-content: center;
-        align-items: flex-start;
-    }
+.free {
+  font-weight: 400;
+  background: linear-gradient(
+    90.73deg,
+    #223fda 28.09%,
+    #8d53ff 50.59%,
+    #f94d86 72.2%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-style: italic;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
-  
+
+.text {
+  font-size: 16px;
+  color: #555;
+  margin-top: 10px;
+}
+
+.donateButton {
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  align-items: center;
+  gap: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.donateButton:hover {
+  background-color: #2563eb;
+}
+
+.popupOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.popupContent {
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  width: 500px;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.popupHeader {
+  margin-bottom: 20px;
+}
+
+.popupHeader h3 {
+  font-size: 22px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.popupHeader p {
+  color: #666;
+  font-size: 14px;
+}
+
+.donationOptions {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.donationCard {
+  flex: 1;
+  margin: 0 10px;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  padding: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  max-width: 180px;
+}
+
+.donationCard:hover {
+  border-color: #3b82f6;
+  transform: scale(1.05);
+}
+
+.donationCard.selected {
+  border-color: #3b82f6;
+  background-color: #f0f5ff;
+}
+
+.donationIcon {
+  font-size: 30px;
+  margin-right: 15px;
+}
+
+.donationDetails {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.donationAmount {
+  font-weight: bold;
+  color: #333;
+  font-size: 18px;
+}
+
+.donationDescription {
+  color: #666;
+  font-size: 12px;
+}
+
+.popupButtonsCenter {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.payButton {
+  background: #22c55e;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  min-width: 150px;
+  transition: background-color 0.3s ease;
+}
+
+.payButton.active:hover {
+  background: #16a34a;
+}
+
+.payButton.disabled {
+  background: #a1a1a1;
+  cursor: not-allowed;
+}
+
+.cancelButton {
+  background: #ef4444;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  min-width: 150px;
+  transition: background-color 0.3s ease;
+}
+
+.cancelButton:hover {
+  background: #dc2626;
+}
