@@ -3,7 +3,7 @@ import Folders from '../../components/utils/Interfaces/Folders';
 
 export default function Apis() {
     const URL = "https://glanceme.co.in/v1/api"
-    const NEW_URL = "http://localhost:9000/v2/api/"
+    const NEW_URL = "https://glanceme.co.in/v2/api"
 
     const Login = async (data:any) => {
         var result = await APIClient("POST", `${URL}/users/login`, false, data);

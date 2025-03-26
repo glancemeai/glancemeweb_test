@@ -4,6 +4,7 @@ import style from "./section_two.module.css"
 const Section_two = () => {
     return (
         <div className={style.main}>
+        <div className={style.mainBg}></div>
         <div className={style.mainHolder}>
             <div className={style.mainHeading}>
                 <p>Revolutionize Learning with AI driven Platform</p>

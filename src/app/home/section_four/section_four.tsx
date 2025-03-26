@@ -5,6 +5,7 @@ import Link from "next/link"
 const Section_Four = () => {
     return (
         <div className={style.main}>
+            <div className={style.mainBg}></div>
             <div className={style.mainHolder}>
                 <h3>Elevate your productivity with Glanceme.Ai</h3>
                 <p>Sign up today to witness its magic — for free.</p>

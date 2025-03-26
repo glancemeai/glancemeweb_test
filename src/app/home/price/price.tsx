@@ -1,9 +1,7 @@
 'use client';
 import { useState } from "react";
 import style from "./price.module.css";
-import donateImage from '../../../../../glanceme_web/public/images/donate.png';
 import Image from 'next/image';
-
 
 const StaticPrice = () => {
     const [selectedAmount, setSelectedAmount] = useState<number | null>(null);
@@ -21,16 +19,15 @@ const StaticPrice = () => {
                 Discover Glanceme, <span className={style.free}>Free </span> During Our Launch!
             </h2>
             <p className={style.text}>
-                We arere a passionate team of individuals committed to transforming the way you learn from online videos and text content. During our trial phase, enjoy complete, <strong>free access to all our features.</strong> If you encounter any issues or bugs, our support team is here to assist. Your insights, suggestions, and even small donations go a long way in helping us maintain and evolve this service for everyone.
+                We are a passionate team of individuals committed to transforming the way you learn from online videos and text content. During our trial phase, enjoy complete, <strong>free access to all our features.</strong> If you encounter any issues or bugs, our support team is here to assist. Your insights, suggestions, and even small donations go a long way in helping us maintain and evolve this service for everyone.
             </p>
             <button className={style.donateButton} onClick={() => setShowPopup(true)}>
-            <Image
-                src={donateImage}
-                alt="Donate"
-                width={500} 
-                height={300} 
-                layout="responsive"
-    /> Donate
+            <Image 
+                 src="/images/donate.png" 
+                alt="Donate" 
+                width={20} 
+                height={20} 
+                /> Donate
             </button>
             
             {showPopup && (
