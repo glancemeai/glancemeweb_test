@@ -26,7 +26,6 @@ import { setAlert } from "@/app/redux/utils/message";
 import Notes from "@/app/components/utils/Interfaces/Notes";
 import Folders from "@/app/components/utils/Interfaces/Folders";
 import Navigation from "@/app/home/navigation/navigation";
-import DeleteAccount from "../component/deleteaccount/page";
 import Link from "next/link";
 
 interface FilterData {

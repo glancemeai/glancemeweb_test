@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Ubuntu } from "next/font/google";
+import { Roboto } from "next/font/google";
 import "./globals.css";
 import Alert from "./components/utils/alert/alert";
 import Providers from "./redux/provider/provider";
@@ -7,6 +8,7 @@ import Footer from "./home/footer/footer";
 import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const ubuntu = Ubuntu({ weight:['300','400','500','700'],subsets:['cyrillic','latin'] });
+const roboto = Roboto({ weight:['300','400','500','700'],subsets:['cyrillic','latin'] });
 
 export const metadata: Metadata = {
   title: "Glanceme.Ai",
@@ -22,7 +24,7 @@ export default function RootLayout({
     <html lang="en">
       <head>
       </head>
-      <body className={ubuntu.className}>
+      <body className={roboto.className}>
       <Providers>
         {children}
         <section>
