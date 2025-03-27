@@ -4,7 +4,7 @@ import { useEffect, useState, ChangeEvent, FormEvent } from 'react';
 import { useDispatch } from 'react-redux';
 import { setAlert } from '@/app/redux/utils/message';
 import Header from '../home/header/header';
-import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaFacebook, FaInstagram, FaTwitter, FaFile, FaTimesCircle } from 'react-icons/fa';
+import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaFacebook, FaInstagram, FaTwitter, FaFile, FaTimesCircle, FaLink } from 'react-icons/fa';
 import style from './support.module.css';
 import Apis from "../service/hooks/ApiSlugs";
 import { BsStars } from "react-icons/bs";
@@ -27,7 +27,8 @@ const SupportPage = () => {
     const [lastName, setLastName] = useState<string>('');
     const [email, setEmail] = useState<string>('');
     const [phoneNumber, setPhoneNumber] = useState<string>('');
-    const [phoneError, setPhoneError] = useState<string>('');
+    const [url, setUrl] = useState<string>('');
+    const [urlError, setUrlError] = useState<string>('');
     const [message, setMessage] = useState<string>('');
     const [file, setFile] = useState<File | null>(null);
     const [isUploading, setIsUploading] = useState<boolean>(false);
@@ -53,52 +54,82 @@ const SupportPage = () => {
         }
     }, [animationStarted]);
 
+    const validateUrl = (inputUrl: string): boolean => {
+        const urlPattern = new RegExp(
+            '^(https?:\\/\\/)?' + // protocol
+            '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+            '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+            '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+            '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+            '(\\#[-a-z\\d_]*)?$', 'i' // fragment locator
+        );
+        return urlPattern.test(inputUrl);
+    };
+
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        
-        if (isPhoneRequired && phoneNumber && !validatePhoneNumber(phoneNumber)) {
-            setPhoneError('Phone number must contain only digits');
-            return;
-        }
         
         try {
             setIsUploading(true);
             
-            const contactData: Record<string, any> = {
-                firstName,
-                email,
-                message: message || '(No message provided)',
-                inquiryType
-            };
+            // Create a new FormData object to handle file uploads and other data
+            const formData = new FormData();
             
-            if (lastName) contactData.lastName = lastName;
-            if (phoneNumber) contactData.phoneNumber = phoneNumber;
+            // Always add these required fields
+            formData.append('firstName', firstName);
+            formData.append('email', email);
+            formData.append('inquiryType', inquiryType);
             
-            if (file && inquiryType === 'Send Resume') {
-                contactData.file = file;
-                
-                formData.append('firstName', firstName);
-                formData.append('email', email);
-                formData.append('message', message || '(No message provided)');
-                formData.append('inquiryType', inquiryType);
-                if (lastName) formData.append('lastName', lastName);
-                if (phoneNumber) formData.append('phoneNumber', phoneNumber);
-                formData.append('file', file); 
+            // Conditionally add other fields based on inquiry type
+            if (lastName) {
+                formData.append('lastName', lastName);
             }
-
+            
+            // Message handling
+            if (message) {
+                formData.append('message', message);
+            }
+            
+            // Phone number handling
+            if (phoneNumber && (inquiryType === 'General Inquiry' || inquiryType === 'Send Resume')) {
+                formData.append('phoneNumber', phoneNumber);
+            }
+            
+            // URL handling for Bug Report
+            if (inquiryType === 'Bug Report' && url) {
+                if (!validateUrl(url)) {
+                    setUrlError('Please enter a valid URL');
+                    return;
+                }
+                formData.append('url', url);
+            }
+            
+            // File handling
+            if (file && (inquiryType === 'Send Resume' || inquiryType === 'Bug Report')) {
+                formData.append('file', file);
+            }
+    
             const result = await apiClient.ContactUs(formData) as ApiResponse;
             console.log('Contact API response:', result);
             
             if (result && (result.status === 200 || result.status === 201)) {
+                // Reset form fields
                 setFirstName('');
                 setLastName('');
                 setEmail('');
                 setPhoneNumber('');
-                setPhoneError('');
+                setUrl('');
+                setUrlError('');
                 setMessage('');
                 setFile(null);
                 
-                dispatch(setAlert({ data: { message: result.message || 'Message sent successfully', show: true, type: 'success' } }));
+                dispatch(setAlert({ 
+                    data: { 
+                        message: result.message || 'Message sent successfully', 
+                        show: true, 
+                        type: 'success' 
+                    } 
+                }));
             } else {
                 throw new Error(result?.message || 'Failed to send message');
             }
@@ -116,23 +147,19 @@ const SupportPage = () => {
         }
     };
 
-    const validatePhoneNumber = (phone: string): boolean => {
-        return /^\d+$/.test(phone);
-    };
-
-    const handlePhoneChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const handleUrlChange = (e: ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
-        setPhoneNumber(value);
+        setUrl(value);
         
         if (!value) {
-            setPhoneError('');
+            setUrlError('');
             return;
         }
         
-        if (!validatePhoneNumber(value)) {
-            setPhoneError('Phone number must contain only digits');
+        if (!validateUrl(value)) {
+            setUrlError('Please enter a valid URL');
         } else {
-            setPhoneError('');
+            setUrlError('');
         }
     };
 
@@ -149,9 +176,9 @@ const SupportPage = () => {
     };
 
     const isLastNameRequired = inquiryType === 'Send Resume';
-    const isPhoneRequired = inquiryType === 'Send Resume';
-    const isMessageRequired = inquiryType !== 'Send Resume';
-    const isFileRequired = inquiryType === 'Send Resume';
+    const isMessageRequired = inquiryType === 'Send Resume' || inquiryType === 'General Inquiry' || inquiryType=='Bug Report';
+    const isPhoneOrUrlRequired = inquiryType === 'Bug Report' || inquiryType === 'General Inquiry' || inquiryType === 'Send Resume';
+    const isFileRequired = inquiryType === 'Send Resume' || inquiryType === 'Bug Report';
 
     return (
         <>
@@ -203,7 +230,11 @@ const SupportPage = () => {
                                     name="inquiryType" 
                                     value="General Inquiry" 
                                     checked={inquiryType === 'General Inquiry'}
-                                    onChange={() => setInquiryType('General Inquiry')}
+                                    onChange={() => {
+                                        setInquiryType('General Inquiry');
+                                        setUrl('');
+                                        setUrlError('');
+                                    }}
                                 />
                                 <span className={style.radioCustom}></span>
                                 General Inquiry
@@ -214,7 +245,10 @@ const SupportPage = () => {
                                     name="inquiryType" 
                                     value="Bug Report" 
                                     checked={inquiryType === 'Bug Report'}
-                                    onChange={() => setInquiryType('Bug Report')}
+                                    onChange={() => {
+                                        setInquiryType('Bug Report');
+                                        setPhoneNumber('');
+                                    }}
                                 />
                                 <span className={style.radioCustom}></span>
                                 Bug Report
@@ -225,7 +259,11 @@ const SupportPage = () => {
                                     name="inquiryType" 
                                     value="Send Resume" 
                                     checked={inquiryType === 'Send Resume'}
-                                    onChange={() => setInquiryType('Send Resume')}
+                                    onChange={() => {
+                                        setInquiryType('Send Resume');
+                                        setUrl('');
+                                        setUrlError('');
+                                    }}
                                 />
                                 <span className={style.radioCustom}></span>
                                 Send Resume
@@ -270,19 +308,36 @@ const SupportPage = () => {
                                 />
                             </div>
                             <div className={style.formGroup}>
-                                <label htmlFor="phoneNumber">
-                                    Phone Number
-                                    {isPhoneRequired && <span className={style.requiredAsterisk}>*</span>}
-                                </label>
-                                <input 
-                                    type="tel" 
-                                    id="phoneNumber"
-                                    value={phoneNumber}
-                                    onChange={handlePhoneChange}
-                                    required={isPhoneRequired}
-                                    className={phoneError ? style.inputError : ''}
-                                />
-                                {phoneError && <div className={style.errorMessage}>{phoneError}</div>}
+                                {inquiryType === 'Bug Report' ? (
+                                    <>
+                                        <label htmlFor="url">
+                                            YouTube/Medium URL <span className={style.requiredAsterisk}>*</span>
+                                        </label>
+                                        <input 
+                                            type="text" 
+                                            id="url"
+                                            value={url}
+                                            onChange={handleUrlChange}
+                                            required
+                                            className={urlError ? style.inputError : ''}
+                                            placeholder="Paste video/article URL"
+                                        />
+                                        {urlError && <div className={style.errorMessage}>{urlError}</div>}
+                                    </>
+                                ) : (
+                                    <>
+                                        <label htmlFor="phoneNumber">
+                                            Phone Number <span className={style.requiredAsterisk}>*</span>
+                                        </label>
+                                        <input 
+                                            type="tel" 
+                                            id="phoneNumber"
+                                            value={phoneNumber}
+                                            onChange={(e: ChangeEvent<HTMLInputElement>) => setPhoneNumber(e.target.value)}
+                                            required={isPhoneOrUrlRequired}
+                                        />
+                                    </>
+                                )}
                             </div>
                         </div>
                         
@@ -302,7 +357,7 @@ const SupportPage = () => {
                         </div>
                         
                         <div className={style.formActions}>
-                            {inquiryType === 'Send Resume' && (
+                            {(inquiryType === 'Send Resume' || inquiryType === 'Bug Report') && (
                                 <div className={style.fileUploadContainer}>
                                     {file ? (
                                         <div className={style.filePreview}>
@@ -320,13 +375,18 @@ const SupportPage = () => {
                                     ) : (
                                         <div className={style.fileUpload}>
                                             <label htmlFor="fileUpload" className={style.uploadButton}>
-                                                Upload Resume <span className={style.requiredAsterisk}>*</span>
+                                                {inquiryType === 'Send Resume' ? 'Upload Resume' : 'Upload Screenshot'} 
+                                                <span className={style.requiredAsterisk}>*</span>
                                             </label>
                                             <input 
                                                 type="file" 
                                                 id="fileUpload" 
                                                 onChange={handleFileChange}
-                                                accept=".pdf,.doc,.docx"
+                                                accept={
+                                                    inquiryType === 'Send Resume' 
+                                                    ? '.pdf,.doc,.docx' 
+                                                    : 'image/png,image/jpeg,image/jpg,image/gif'
+                                                }
                                                 style={{ display: 'none' }}
                                                 required={isFileRequired}
                                             />
@@ -338,7 +398,12 @@ const SupportPage = () => {
                             <button 
                                 type="submit" 
                                 className={`${style.sendButton} ${contentVisible ? style.pulseButton : ''}`}
-                                disabled={isUploading || (inquiryType === 'Send Resume' && !file) || !!phoneError}
+                                disabled={
+                                    isUploading || 
+                                    (inquiryType === 'Send Resume' && (!file || !message)) || 
+                                    (inquiryType === 'Bug Report' && (!file || !url || !!urlError)) ||
+                                    (inquiryType === 'General Inquiry' && (!phoneNumber || !message))
+                                }
                             >
                                 {isUploading ? 'Sending...' : 'Send Message'}
                                 <RiMagicFill className={style.magicIcon} />

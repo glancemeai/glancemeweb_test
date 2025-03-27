@@ -170,7 +170,7 @@ const Section_one = () => {
         >
           <div className={style.mainBannerImage}>
             <Image
-              src={"/images/home/banner.png"}
+              src={"/images/mainPageHolder.png"}
               alt="magic"
               fill
               style={{ objectFit: "contain" }}
