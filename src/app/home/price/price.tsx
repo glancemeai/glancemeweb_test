@@ -42,7 +42,7 @@ const StaticPrice = () => {
             </p>
             <button className={style.donateButton} onClick={() => setShowPopup(true)}>
             <Image 
-                 src="/images/donate.png" 
+                src="/images/donate.png" 
                 alt="Donate" 
                 width={20} 
                 height={20} 

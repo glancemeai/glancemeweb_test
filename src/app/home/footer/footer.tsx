@@ -46,7 +46,7 @@ const Footer = () => {
                     <div className={style.mainHolderTwoLeft}>
                         <div className={style.mainHolderTwoLeftOne}>
                             <h4>Subscribe up for our newsletter</h4>
-                            <p>Don't worry we reserve our newsletter for an important news. so we only send few important update in a year.</p>
+                            <p>Dont worry we reserve our newsletter for an important news. so we only send few important update in a year.</p>
                             <button onClick={handleSubscribeButtonClick} className={style.subscribeButton}>Subscribe</button>
                         </div>
                     </div>
