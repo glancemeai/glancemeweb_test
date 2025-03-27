@@ -1,11 +1,30 @@
 'use client';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import style from "./price.module.css";
 import Image from 'next/image';
 
 const StaticPrice = () => {
     const [selectedAmount, setSelectedAmount] = useState<number | null>(null);
     const [showPopup, setShowPopup] = useState(false);
+    const [isMobile, setIsMobile] = useState(false);
+
+    // Check for mobile screens
+    useEffect(() => {
+        const checkMobileScreen = () => {
+            setIsMobile(window.innerWidth <= 600);
+        };
+
+        // Check on mount
+        checkMobileScreen();
+
+        // Add event listener for window resize
+        window.addEventListener('resize', checkMobileScreen);
+
+        // Cleanup event listener
+        return () => {
+            window.removeEventListener('resize', checkMobileScreen);
+        };
+    }, []);
 
     const donationOptions = [
         { amount: 5, description: "Amazing Product", icon: "🌟" },
@@ -31,8 +50,21 @@ const StaticPrice = () => {
             </button>
             
             {showPopup && (
-                <div className={style.popupOverlay}>
-                    <div className={style.popupContent}>
+                <div 
+                    className={style.popupOverlay} 
+                    onClick={(e) => {
+                        // Close popup if clicking outside the content
+                        if (e.target === e.currentTarget) {
+                            setShowPopup(false);
+                            setSelectedAmount(null);
+                        }
+                    }}
+                >
+                    <div 
+                        className={style.popupContent} 
+                        // Prevent event from bubbling to overlay
+                        onClick={(e) => e.stopPropagation()}
+                    >
                         <div className={style.popupHeader}>
                             <h3>Support Our Mission</h3>
                             <p>Help us keep Glanceme free and growing!</p>

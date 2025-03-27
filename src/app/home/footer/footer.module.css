@@ -4,6 +4,7 @@
   height: auto;
   padding: 20px;
   background-color: #222222;
+  overflow: hidden; /* To contain animations */
 }
 
 .mainHolder {
@@ -13,6 +14,7 @@
   margin: 0px auto;
   padding: 10px;
 }
+
 
 .mainHolderOne {
   position: relative;
@@ -387,5 +389,199 @@
     flex-direction: row;
     justify-content: right;
     align-items: flex-start;
+  }
+}
+
+.mainHolderTwoRightTwo {
+  position: relative;
+  width: 100%;
+  height: auto;
+  padding: 10px;
+  display: flex;
+  justify-content: right;
+  gap: 15px; /* Space between app store logos */
+}
+
+.appStoreLogo,
+.playStoreLogo {
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out; /* Smooth transition for hover and click */
+}
+
+.appStoreLogo:hover,
+.playStoreLogo:hover {
+  transform: scale(1.05); /* Slight scale up on hover */
+  opacity: 0.9;
+}
+
+.appStoreLogo:active,
+.playStoreLogo:active {
+  transform: scale(0.95); /* Slight scale down on click */
+  opacity: 0.8;
+}
+
+/* Subscribe Button Styling */
+.subscribeButton {
+  position: relative;
+  width: 100%;
+  max-width: 250px;
+  height: auto;
+  padding: 10px 15px;
+  font-size: 16px;
+  font-weight: 400;
+  color: white;
+  border: 1px solid white;
+  border-radius: 18px;
+  background: transparent;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease-in-out;
+}
+
+.subscribeButton:hover {
+  background-color: white;
+  color: #222222;
+  transform: translateY(-2px); /* Slight lift on hover */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow on hover */
+}
+
+.subscribeButton:active {
+  transform: translateY(0); /* Reset transform on click */
+  box-shadow: none;
+}
+
+/* Popup Styles */
+.popupOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Ensure it's on top */
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease-in-out, visibility 0s linear 0.3s;
+}
+
+.popupOverlay.open {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.popupContent {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  position: relative;
+  transform: scale(0.9);
+  opacity: 0;
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+.popupOverlay.open .popupContent {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.popupHeading {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.popupText {
+  font-size: 18px;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.popupInput {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.popupButton {
+  padding: 12px 25px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  color: white;
+  background-color: #8f46af;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease-in-out;
+  margin: 5px;
+}
+
+.popupButton:hover {
+  background-color: #6a2e84;
+  transform: translateY(-2px);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+.popupButton:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.popupCloseButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: #777;
+  cursor: pointer;
+  transition: color 0.2s ease-in-out;
+}
+
+.popupCloseButton:hover {
+  color: #333;
+}
+
+.popupSubscribeButton {
+  background-color: #360d48;
+}
+
+.popupSubscribeButton:hover {
+  background-color: #1e0728;
+}
+
+/* Media Queries for Popup Responsiveness */
+@media only screen and (max-width: 600px) {
+  .popupContent {
+      padding: 20px;
+      margin: 20px; /* Add some margin on smaller screens */
+  }
+
+  .popupHeading {
+      font-size: 20px;
+  }
+
+  .popupText {
+      font-size: 16px;
+  }
+
+  .popupInput {
+      padding: 10px;
+      font-size: 14px;
+  }
+
+  .popupButton {
+      font-size: 14px;
+      padding: 10px 20px;
   }
 }

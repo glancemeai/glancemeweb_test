@@ -60,10 +60,11 @@ const Card = ({heading,paragraph,tagLine,textSide="right",image,altText}:{headin
               </div>
               <div className={style.imageModalImageContainer}>
                 <Image 
+                className={style.imageInTheBox}
                   src={image} 
                   alt={altText} 
                   width={1200}
-                  height={600}
+                  height={550}
                   objectFit="contain"
                 />
               </div>
@@ -77,7 +78,6 @@ const Card = ({heading,paragraph,tagLine,textSide="right",image,altText}:{headin
 const Section_three = () => {
     return (
         <div className={style.main}>
-          <div className={style.mainBg}></div>
         <div className={style.mainHolder}>
        <Card heading="Decide at a Glance!" paragraph={`Quickly grasp the key takeaways of any video with a concise summary. Glanceme provides clear, structured summaries, allowing you to understand the core insights at a glance saving you time and effort.`} tagLine="Quick Insights" image="/images/summary.png" altText="Quickly glance"/>
        <Card heading="Your Personal Mentor, On Demand" paragraph={`Turn videos into a two-way learning experience with real-time Q&A—just like having a personal mentor by your side.`} tagLine="Engage and Enquire" image="/images/QA.png" textSide="left" altText="Fast Track"/>

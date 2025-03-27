@@ -199,3 +199,17 @@
   align-items: center;
   padding: 20px;
 }
+
+@media only screen and (max-width: 768px) {
+  .imageInTheBox {
+    width: 600px;
+    height: 300px;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .imageInTheBox {
+    width: 400px;
+    height: 200px;
+  }
+}
