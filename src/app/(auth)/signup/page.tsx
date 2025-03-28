@@ -3,7 +3,9 @@ import Image from 'next/image'
 import SignupContainer from '../Components/signup/SignupContainer'
 import styles from './page.module.css'
 import { BsStars } from "react-icons/bs";
-import { FaFacebook, FaInstagram, FaTwitter } from 'react-icons/fa';
+import { FaFacebook, FaInstagram, FaInstagramSquare, FaLinkedin, FaTwitter, FaYoutube } from 'react-icons/fa';
+import Link from 'next/link';
+import { FaXTwitter } from 'react-icons/fa6';
 
 export default function SignupHome() {
   return (
@@ -48,9 +50,11 @@ export default function SignupHome() {
             </div>
             
             <div className={styles.socialIcons}>
-              <a href="https://www.facebook.com/glancemeai" aria-label="Facebook"><FaFacebook /></a>
-                            <a href="https://www.instagram.com/glancemeai/" aria-label="Instagram"><FaInstagram /></a>
-                            <a href="https://x.com/GlancemeAi" aria-label="Twitter"><FaTwitter /></a>
+            <Link href={"https://www.linkedin.com/company/glancemeai/"} passHref target="_blank"><p><FaLinkedin size={25} color="white" /></p></Link>
+                            <Link href={"https://x.com/GlancemeAi"} passHref target="_blank"><p><FaXTwitter size={25} color="white" /></p></Link>
+                            <Link href={"https://www.instagram.com/glancemeai/"} passHref target="_blank"><p><FaInstagramSquare size={25} color="white" /></p></Link>
+                            <Link href={"https://www.facebook.com/glancemeai"} passHref target="_blank"><p><FaFacebook size={25} color="white" /></p></Link>
+                            <Link href={"https://www.youtube.com/@Glancemeai"} passHref target="_blank"><p><FaYoutube size={25} color="white" /></p></Link>
             </div>
           </div>
           

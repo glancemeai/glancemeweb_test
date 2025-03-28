@@ -82,7 +82,7 @@ const Footer = () => {
                     <hr />
                     <div className={style.mainHolderthreeItem}>
                         <div className={style.mainHolderthreeItemOne}>
-                            <p>© 2025 Glanceme.Ai</p>
+                            <p>@ 2025 Glanceme.Ai</p>
                         </div>
                         <div className={style.mainHolderthreeItemTwo}>
                             <Link href={"https://www.linkedin.com/company/glancemeai/"} passHref target="_blank"><p><FaLinkedin size={25} color="white" /></p></Link>

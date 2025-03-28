@@ -18,9 +18,11 @@ interface BlogPost {
 const blogPosts: BlogPost[] = [
   {
     id: '1',
-    title: 'Introduction to Artificial Intelligence (AI)',
-    excerpt: 'Artificial Intelligence (AI) is all around us, seamlessly integrated into our daily lives and work. Enroll in this course to understand the key AI terminology and applications and launch your AI career or transform your existing one.',
-    coverImage: '/images/ai-intro.png',
+    title: 'Generative AI: Revolutionizing Education by 2045',
+    excerpt: `
+      As we look towards the future of education, Generative AI stands poised to transform how we learn, teach, and interact with knowledge. This comprehensive exploration reveals the profound changes expected in the educational landscape by 2045.
+`,
+    coverImage: '/images/gen-ai-blog.png',
     category: 'Generative AI',
     slug: 'introduction-to-artificial-intelligence'
   },
@@ -103,22 +105,24 @@ const BlogPage: React.FC = () => {
         
         <section className={`${styles.featuredSection} ${featuredVisible ? styles.visible : ''}`}>
           <h2 className={`${styles.sectionTitle} ${sectionTitleVisible ? styles.visible : ''}`}>Recent Post</h2>
-          <div className={styles.featuredPost}>
-            <div className={styles.featuredImageContainer}>
-              <Image
-                src={featuredBlog.coverImage}
-                alt={featuredBlog.title}
-                width={500}
-                height={300}
-                className={styles.featuredImage}
-              />
+          <Link href={`/blog/${featuredBlog.slug}`} className={styles.featuredPostLink}>
+            <div className={styles.featuredPost}>
+              <div className={styles.featuredImageContainer}>
+                <Image
+                  src={featuredBlog.coverImage}
+                  alt={featuredBlog.title}
+                  width={500}
+                  height={300}
+                  className={styles.featuredImage}
+                />
+              </div>
+              <div className={styles.featuredContent}>
+                <h3 className={styles.featuredTitle}>{featuredBlog.title}</h3>
+                <p className={styles.featuredExcerpt}>{featuredBlog.excerpt}</p>
+                <div className={styles.categoryTag}>{featuredBlog.category}</div>
+              </div>
             </div>
-            <div className={styles.featuredContent}>
-              <h3 className={styles.featuredTitle}>{featuredBlog.title}</h3>
-              <p className={styles.featuredExcerpt}>{featuredBlog.excerpt}</p>
-              <div className={styles.categoryTag}>{featuredBlog.category}</div>
-            </div>
-          </div>
+          </Link>
         </section>
 
         <section className={`${styles.blogSection} ${blogSectionVisible ? styles.visible : ''}`}>
@@ -137,7 +141,6 @@ const BlogPage: React.FC = () => {
                 </div>
                 <h3 className={styles.blogTitle}>{blog.title}</h3>
                 <p className={styles.blogExcerpt}>{blog.excerpt}</p>
-                {/* <div className={styles.categoryTag}>{blog.category}</div> */}
               </Link>
             ))}
           </div>

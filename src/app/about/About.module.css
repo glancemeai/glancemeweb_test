@@ -381,3 +381,180 @@
     text-align: center;
   }
 }
+
+.memberPopupOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.memberPopupOverlay.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.memberPopupContent {
+  position: relative;
+  background-color: white;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 800px;
+  max-height: 80vh;
+  overflow-y: auto;
+  padding: 30px;
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.1);
+  transform: scale(0.7);
+  opacity: 0;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), 
+              opacity 0.3s ease;
+}
+
+.memberPopupOverlay.visible .memberPopupContent {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.closePopupButton {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 36px;
+  color: #223fda;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.closePopupButton:hover {
+  color: #8d53ff;
+}
+
+.popupHeader {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+  border-bottom: 2px solid #E7E7FF;
+  padding-bottom: 20px;
+}
+
+.popupImageContainer {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 30px;
+  box-shadow: 0 10px 25px rgba(64, 64, 224, 0.1);
+}
+
+.popupMemberImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.popupHeaderText {
+  flex-grow: 1;
+}
+
+.popupMemberName {
+  font-size: 32px;
+  color: #223fda;
+  margin-bottom: 10px;
+}
+
+.popupMemberRole {
+  font-size: 20px;
+  color: #686868;
+}
+
+.popupBody {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.popupBioSection h3,
+.popupDetailsGrid h3 {
+  color: #4169e1;
+  font-size: 22px;
+  margin-bottom: 15px;
+  border-bottom: 2px solid #E7E7FF;
+  padding-bottom: 10px;
+}
+
+.popupBioSection p {
+  color: #686868;
+  line-height: 1.6;
+}
+
+.popupDetailsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.popupExpertiseSection ul,
+.popupAchievementsSection ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.popupExpertiseSection li,
+.popupAchievementsSection li {
+  position: relative;
+  padding-left: 25px;
+  margin-bottom: 10px;
+  color: #686868;
+}
+
+.popupExpertiseSection li::before,
+.popupAchievementsSection li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: #223fda;
+  font-weight: bold;
+}
+
+/* Responsive Adjustments */
+@media only screen and (max-width: 768px) {
+  .memberPopupContent {
+    width: 95%;
+    padding: 20px;
+  }
+
+  .popupHeader {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .popupImageContainer {
+    width: 150px;
+    height: 150px;
+    margin-right: 0;
+    margin-bottom: 20px;
+  }
+
+  .popupMemberName {
+    font-size: 26px;
+  }
+
+  .popupMemberRole {
+    font-size: 18px;
+  }
+
+  .popupDetailsGrid {
+    grid-template-columns: 1fr;
+  }
+}

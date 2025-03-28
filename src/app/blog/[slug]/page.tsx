@@ -28,24 +28,57 @@ const blogPosts: BlogPost[] = [
     id: '1',
     title: 'Introduction to Artificial Intelligence (AI)',
     excerpt: 'Artificial Intelligence (AI) is all around us, seamlessly integrated into our daily lives and work. Enroll in this course to understand the key AI terminology and applications and launch your AI career or transform your existing one.',
-    coverImage: '/images/ai-intro.jpg',
+    coverImage: '/images/gen-ai-blog.png',
     category: 'Generative AI',
     slug: 'introduction-to-artificial-intelligence',
     content: `
-      Artificial Intelligence (AI) is all around us, seamlessly integrated into our daily lives and work. Enroll in this course to understand the key AI terminology and applications and launch your AI career or transform your existing one.
+      # Generative AI: Revolutionizing Education by 2045
 
-      Artificial Intelligence (AI) is all around us, seamlessly integrated into our daily lives and work. Enroll in this course to understand the key AI terminology and applications and launch your AI career or transform your existing one.
-      
-      Artificial Intelligence (AI) is all around us, seamlessly integrated into our daily lives and work. Enroll in this course to understand the key AI terminology and applications and launch your AI career or transform your existing one.
-      
-      ## Key Concepts in AI
-      
-      - Machine Learning
-      - Neural Networks
-      - Deep Learning
-      - Natural Language Processing
-      
-      Artificial Intelligence (AI) is all around us, seamlessly integrated into our daily lives and work. Enroll in this course to understand the key AI terminology and applications and launch your AI career or transform your existing one.
+      As we look towards the future of education, Generative AI stands poised to transform how we learn, teach, and interact with knowledge. This comprehensive exploration reveals the profound changes expected in the educational landscape by 2045.
+
+      ## Key Transformative Trends
+
+      ## 1. From Formal to Informal Learning
+      The traditional 70:20:10 learning model is evolving. Companies are increasingly focusing on peer-based learning and developing AI-powered corporate brain systems that enhance collaborative knowledge sharing. Universities will create specialized AI systems that facilitate more dynamic, interactive learning experiences.
+
+      ## 2. Skill-Based Learning Revolution
+      The current education system's limitations are being addressed through innovative approaches:
+      - Game-based learning scenarios
+      - Interactive, role-playing educational experiences
+      - Practical, skill-oriented content delivery
+
+      ## 3. Learner-Centric Education Model
+      Much like the transformation from broadcast television to streaming platforms, education is shifting:
+      - From top-down information delivery
+      - To personalized, learner-driven experiences
+      - Empowering individuals to create and customize their learning paths
+
+      ## 4. Scalable and Personalized Learning
+      By 2045, education will become incredibly flexible:
+      - Personalized course selection
+      - Multilingual content options
+      - Global access to top educators
+      - Advanced technologies like AR and digital twins enabling immersive learning experiences
+
+      ## Potential Challenges
+
+      While the future looks promising, there are significant challenges to address:
+      - Academic integrity concerns
+      - Risk of over-dependence on AI
+      - Potential increase in educational disparities
+      - Privacy and ethical use of AI in education
+
+      ## Economic and Social Impact
+
+      Generative AI is expected to:
+      - Contribute trillions to the global economy
+      - Create new job opportunities in tech and education
+      - Require careful policy development
+      - Potentially increase energy consumption
+
+      ## Conclusion
+
+      The future of education is not just about technology, but about creating more personalized, accessible, and engaging learning experiences. Generative AI offers a transformative path that balances technological innovation with human-centric learning approaches.
     `
   },
 
@@ -246,6 +279,7 @@ const BlogPostPage: React.FC = () => {
       <Header />
       
       <main className={styles.main}>
+        <div className={styles.mainBg}></div>
         {/* Top Bar with Search and Action Buttons */}
         <div className={styles.topBar}>
           <div className={styles.searchContainer}>

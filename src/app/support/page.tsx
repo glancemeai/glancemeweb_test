@@ -4,11 +4,13 @@ import { useEffect, useState, ChangeEvent, FormEvent } from 'react';
 import { useDispatch } from 'react-redux';
 import { setAlert } from '@/app/redux/utils/message';
 import Header from '../home/header/header';
-import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaFacebook, FaInstagram, FaTwitter, FaFile, FaTimesCircle, FaLink } from 'react-icons/fa';
+import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaFacebook, FaInstagram, FaTwitter, FaFile, FaTimesCircle, FaLink, FaLinkedin, FaInstagramSquare, FaYoutube } from 'react-icons/fa';
 import style from './support.module.css';
 import Apis from "../service/hooks/ApiSlugs";
 import { BsStars } from "react-icons/bs";
 import { RiMagicFill } from 'react-icons/ri';
+import Link from 'next/link';
+import { FaXTwitter } from 'react-icons/fa6';
 
 // Define types for the component
 type InquiryType = 'General Inquiry' | 'Bug Report' | 'Send Resume';
@@ -215,9 +217,11 @@ const SupportPage = () => {
                     </div>
                     
                     <div className={style.socialIcons}>
-                        <a href="https://www.facebook.com/glancemeai" aria-label="Facebook"><FaFacebook /></a>
-                        <a href="https://www.instagram.com/glancemeai/" aria-label="Instagram"><FaInstagram /></a>
-                        <a href="https://x.com/GlancemeAi" aria-label="Twitter"><FaTwitter /></a>
+                    <Link href={"https://www.linkedin.com/company/glancemeai/"} passHref target="_blank"><p><FaLinkedin size={25} color="white" /></p></Link>
+                            <Link href={"https://x.com/GlancemeAi"} passHref target="_blank"><p><FaXTwitter size={25} color="white" /></p></Link>
+                            <Link href={"https://www.instagram.com/glancemeai/"} passHref target="_blank"><p><FaInstagramSquare size={25} color="white" /></p></Link>
+                            <Link href={"https://www.facebook.com/glancemeai"} passHref target="_blank"><p><FaFacebook size={25} color="white" /></p></Link>
+                            <Link href={"https://www.youtube.com/@Glancemeai"} passHref target="_blank"><p><FaYoutube size={25} color="white" /></p></Link>
                     </div>
                 </div>
                 

@@ -120,7 +120,7 @@ const Header = () => {
     <div className={style.mainHeader}>
       <div className={style.mainHeaderHolder}>
         <Link href={"/"} passHref><div className={style.mainHeaderHolderLogo}>
-          <Image src={"/images/logo-1.png"} alt="Glanceme.Ai" width={40} height={40} style={{ objectFit: "cover", borderRadius: "50%" }} />
+          <Image src={"/images/logo-1.png"} alt="Glanceme.ai" width={40} height={40} style={{ objectFit: "cover", borderRadius: "50%" }} />
           <h1>Glanceme.Ai</h1>
         </div></Link>
         <div className={style.mainHeaderHolderMenu}>

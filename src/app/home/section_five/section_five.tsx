@@ -67,7 +67,7 @@ export default function Section_Five(): React.ReactNode {
         <div className={style.mainHolderRight}>
           <Card 
             heading="What is Glanceme.Ai" 
-            paragraph={`Don't waste hours on empty content. Know if it's worth your time in just a glance—because your time is better spent on what truly matters`} 
+            paragraph={`Glanceme.AI is an AI-powered platform that enables users to efficiently process, summarize, and engage with videos and articles. It also offers flashcards for effective revision and a dedicated note-taking feature for better knowledge retention`} 
             tagLine="Snap it. Save it. Own your time."
             index={0}
           />
@@ -86,14 +86,13 @@ export default function Section_Five(): React.ReactNode {
           />
           <Card 
             heading="How to enable Glanceme.Ai" 
-            paragraph={`Effortlessly curate content with Glanceme.Ai. Summarize key points, organize your learnings, and access everything you need—all at your fingertips. Say goodbye to information overload and hello to smarter, faster, and more focused learning.`} 
+            paragraph={`​To enable Glanceme.AI, install our browser extension by clicking "Add to Chrome for Free" on our website. Once installed, the Glanceme icon will appear beside YouTube videos and articles, allowing you to access features like Summarization, real-time Q&A, topic-Search, Notes and Flashcards directly within your browser.`} 
             tagLine="Your Knowledge, Just a Tap Away."
             index={3}
           />
           <Card 
             heading="How to contact us" 
-            paragraph={`Effortlessly curate content with Glanceme.Ai. Summarize key points, organize your learnings, and access everything you need—all at your fingertips. Say goodbye to information overload and hello to smarter, faster, and more focused learning.`} 
-            tagLine="Your Knowledge, Just a Tap Away."
+            paragraph={`You can contact us By email: support@glanceme.ai`} 
             index={4}
           />
         </div>

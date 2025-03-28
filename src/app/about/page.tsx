@@ -9,6 +9,9 @@ interface TeamMember {
   name: string;
   role: string;
   imagePath: string;
+  bio: string;
+  expertise: string[];
+  achievements: string[];
 }
 
 const About: React.FC = () => {
@@ -17,6 +20,8 @@ const About: React.FC = () => {
   const [isContentVisible, setIsContentVisible] = useState(false);
   const [isTeamSectionVisible, setIsTeamSectionVisible] = useState(false);
   const [visibleBenefits, setVisibleBenefits] = useState<boolean[]>([false, false, false]);
+  const [selectedMember, setSelectedMember] = useState<TeamMember | null>(null);
+
 
   useEffect(() => {
     // Staggered animations
@@ -43,21 +48,66 @@ const About: React.FC = () => {
 
   const teamMembers: TeamMember[] = [
     {
-      name: 'Sajal',
+      name: 'Sajal Pahariya',
       role: 'Chief Executive Officer',
       imagePath: '/images/home/sajal.jpeg',
+      bio: "Visionary leader with a passion for AI and technology innovation. Dedicated to pushing the boundaries of AI and transforming businesses through cutting-edge solutions.",
+      expertise: [
+        "Generative AI",
+        "Machine Learning",
+        "Image Segmentation",
+        "Strategic Leadership"
+      ],
+      achievements: [
+        "M.Tech in Advanced AI Technologies",
+        "Published Research in IEEE Xplore",
+        "Founded Glanceme.ai",
+        "Expert in Medical Imaging Analysis"
+      ]
     },
     {
       name: 'Anshit',
       role: 'Chief Technology Officer',
       imagePath: '/images/home/ans2.png',
+      bio: "Technical mastermind driving innovation and technological strategy at Glanceme.ai.",
+      expertise: [
+        "Cloud Architecture",
+        "AI/ML Infrastructure",
+        "Software Engineering",
+        "Technology Strategy"
+      ],
+      achievements: [
+        "Advanced Cloud Deployment Specialist",
+        "Multiple Patent Filings",
+        "Scalable System Design Expert"
+      ]
     },
     {
       name: 'Harsh',
       role: 'Head Of Product',
       imagePath: '/images/home/harsh.jpg',
-    },
+      bio: "Product visionary focused on creating user-centric solutions that drive meaningful innovation.",
+      expertise: [
+        "Product Strategy",
+        "User Experience Design",
+        "Market Analysis",
+        "Product Development"
+      ],
+      achievements: [
+        "Successfully Launched Multiple AI Products",
+        "User Experience Design Awards",
+        "Innovative Product Roadmap Development"
+      ]
+    }
   ];
+
+  const openMemberPopup = (member: TeamMember) => {
+    setSelectedMember(member);
+  };
+
+  const closeMemberPopup = () => {
+    setSelectedMember(null);
+  };
 
   return (
     <>
@@ -131,6 +181,7 @@ const About: React.FC = () => {
                   key={index} 
                   className={styles.teamMember}
                   style={{"--index": index} as React.CSSProperties}
+                  onClick={() => openMemberPopup(member)}
                 >
                   <div className={styles.imageContainer}>
                     <Image 
@@ -149,6 +200,65 @@ const About: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* Member Details Popup */}
+      {selectedMember && (
+        <div 
+          className={`${styles.memberPopupOverlay} ${styles.visible}`}
+          onClick={closeMemberPopup}
+        >
+          <div 
+            className={styles.memberPopupContent}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button 
+              className={styles.closePopupButton}
+              onClick={closeMemberPopup}
+            >
+              &times;
+            </button>
+            <div className={styles.popupHeader}>
+              <div className={styles.popupImageContainer}>
+                <Image 
+                  src={selectedMember.imagePath} 
+                  alt={selectedMember.name} 
+                  width={200} 
+                  height={200} 
+                  className={styles.popupMemberImage} 
+                />
+              </div>
+              <div className={styles.popupHeaderText}>
+                <h2 className={styles.popupMemberName}>{selectedMember.name}</h2>
+                <p className={styles.popupMemberRole}>{selectedMember.role}</p>
+              </div>
+            </div>
+            <div className={styles.popupBody}>
+              <div className={styles.popupBioSection}>
+                <h3>Bio</h3>
+                <p>{selectedMember.bio}</p>
+              </div>
+              <div className={styles.popupDetailsGrid}>
+                <div className={styles.popupExpertiseSection}>
+                  <h3>Expertise</h3>
+                  <ul>
+                    {selectedMember.expertise.map((skill, index) => (
+                      <li key={index}>{skill}</li>
+                    ))}
+                  </ul>
+                </div>
+                <div className={styles.popupAchievementsSection}>
+                  <h3>Key Achievements</h3>
+                  <ul>
+                    {selectedMember.achievements.map((achievement, index) => (
+                      <li key={index}>{achievement}</li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 };

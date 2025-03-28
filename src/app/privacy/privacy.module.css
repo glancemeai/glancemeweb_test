@@ -1,68 +1,218 @@
 .main {
     position: relative;
     width: 100%;
-    height: auto;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-
-.mainHolder {
+    height: auto; /* Change from fixed height to auto */
+    min-height: calc(100vh - 70px);
+    max-width: 1300px;
+    margin: 0px auto;
+    margin-top: 70px;
+    overflow: visible; /* Change from overflow-hidden to visible */
+  }
+  
+  .mainBg {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background-image: url("/images/home/Lines_group.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    z-index: -2;
+  }
+  
+  .mainBg::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("/images/home/glassmorphism.png");
+    background-size: cover;
+    background-position: center;
+    opacity: 0.4;
+    z-index: -1;
+  }
+  
+  .mainHolder {
     position: relative;
     width: 100%;
-    max-width: 700px;
-    height: auto;
-    padding: 5px;
-}
- 
-.mainContainer {
-    position: relative;
-    width: 100%;
-    height: auto;
-    padding: 10px;
-    display: flex;
-    gap: 20px;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-
-
-.mainContainerHeading {
-    position: relative;
-    width: 100%;
-    height: auto;
-}
-
-.mainContainerHeading h1{
-    position: relative;
-    width: 100%;
-    color: #111;
-    font-size: 35px;
-    font-weight: 500;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    overflow: visible; /* Change from overflow-hidden to visible */
+  }
+  
+  .mainContainer {
+    margin-bottom: 30px;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  }
+  
+  .mainContainerHeading {
+    margin-bottom: 20px;
     text-align: center;
-}
-
-.mainContainerHeading h2{
-    position: relative;
-    width: 100%;
-    color: #111;
-    font-size: 25px;
-    font-weight: 500;
-}
-
-.mainContainerPara {
-    position: relative;
-    width: 100%;
-    height: auto;
+  }
+  
+  .mainTitle {
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+  }
+  
+  .subtitleAnimation {
+    font-size: 70px;
+    font-weight: 400;
+    background: linear-gradient(
+      90.73deg,
+      #223fda 28.09%,
+      #8d53ff 50.59%,
+      #f94d86 72.2%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    transition: opacity 1.2s ease-out, transform 1.2s ease-out;
+  }
+  
+  .mainTitle.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .sectionTitleGradient {
+    background: linear-gradient(
+      90.73deg,
+      #223fda 28.09%,
+      #8d53ff 50.59%,
+      #f94d86 72.2%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-size: 28px;
+    font-weight: 600;
+    border-bottom: 2px solid transparent;
+    border-image: linear-gradient(
+      90.73deg,
+      #223fda 28.09%,
+      #8d53ff 50.59%,
+      #f94d86 72.2%
+    );
+    border-image-slice: 1;
+    padding-bottom: 10px;
+  }
+  
+  .mainContainerPara {
     color: #333;
-    font-size: 16px;
+    line-height: 1.6;
+  }
+  
+  .updateDate,
+  .effectiveDate {
+    color: #7f8c8d;
+    font-style: italic;
+    text-align: center;
+  }
+  
+  .sectionSubheading {
+    color: #2980b9;
+    font-size: 22px;
+    font-weight: 600;
+    margin-top: 15px;
+    margin-bottom: 10px;
+  }
+  
+  .subsectionHeading {
+    color: #34495e;
+    font-size: 20px;
     font-weight: 500;
-    display: flex;
-    gap: 10px;
-    flex-direction: column;
-}
+    margin-top: 15px;
+    margin-bottom: 10px;
+  }
+  
+  .definitionList p {
+    margin-bottom: 10px;
+  }
+  
+  .definitionList strong {
+    color: #2c3e50;
+  }
+  
+  .purposeList {
+    list-style-type: disc;
+    padding-left: 30px;
+  }
+  
+  .purposeList li {
+    margin-bottom: 10px;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 600px) {
+    .mainTitle, .subtitleAnimation {
+      font-size: 45px;
+    }
+  
+    .mainHolder {
+      max-width: 95%;
+      padding: 10px;
+    }
+  
+    .sectionTitleGradient {
+      font-size: 24px;
+    }
+  }
+  
+  @media (min-width: 601px) and (max-width: 768px) {
+    .mainTitle, .subtitleAnimation {
+      font-size: 55px;
+    }
+  
+    .mainHolder {
+      max-width: 90%;
+      padding: 15px;
+    }
+  
+    .sectionTitleGradient {
+      font-size: 26px;
+    }
+  }
+  
+  @media (min-width: 769px) and (max-width: 992px) {
+    .mainTitle, .subtitleAnimation {
+      font-size: 65px;
+    }
+  
+    .mainHolder {
+      max-width: 90%;
+      padding: 20px;
+    }
+  
+    .sectionTitleGradient {
+      font-size: 28px;
+    }
+  }
+  
+  @media (min-width: 993px) {
+    .mainTitle, .subtitleAnimation {
+      font-size: 70px;
+    }
+  
+    .mainHolder {
+      max-width: 1000px;
+      padding: 20px;
+    }
+  
+    .sectionTitleGradient {
+      font-size: 28px;
+    }
+  }

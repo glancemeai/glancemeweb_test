@@ -33,8 +33,8 @@ const Section_one = () => {
       keywords: ["organized", "personal knowledge hub"]
     },
     {
-      text: "With GlanceMe, master any subject with ease.",
-      keywords: ["GlanceMe", "master", "ease"]
+      text: "With Glanceme, master any subject with ease.",
+      keywords: ["Glanceme", "master", "ease"]
     }
   ];
 
@@ -172,7 +172,7 @@ const Section_one = () => {
             <Image
               src={"/images/mainPageHolder.png"}
               alt="magic"
-              fill
+              fill 
               style={{ objectFit: "contain" }}
               className={style.bannerImage}
             />
