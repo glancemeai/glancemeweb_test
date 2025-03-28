@@ -3,6 +3,7 @@ import Folders from '../../components/utils/Interfaces/Folders';
 
 export default function Apis() {
     const URL = "https://glanceme.co.in/v1/api"
+    // const URL = "http://localhost:8000/v1/api"
     const NEW_URL = "https://glanceme.co.in/v2/api"
 
     const Login = async (data:any) => {
@@ -204,6 +205,16 @@ export default function Apis() {
         return result;
     }
 
+    const CreateDonation = async (data:any) => {
+        var result = await APIClient("POST", `${URL}/donate/create`, false, data);
+        return result;
+    }
+
+    const VerifyDonation = async (data:any) => {
+        var result = await APIClient("POST", `${URL}/donate/verify`, false, data);
+        return result;
+    }
+
     const GetPlans = async () => {
         var result = await APIClient("GET", `${URL}/plans`, false, null);
         return result;
@@ -391,6 +402,8 @@ export default function Apis() {
         moveFolderToFolder,
         ContactUs,
         SendChatMessage,
-        EditFolder
+        EditFolder,
+        CreateDonation,
+        VerifyDonation
     }
 }
