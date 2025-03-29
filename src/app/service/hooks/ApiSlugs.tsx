@@ -263,7 +263,7 @@ export default function Apis() {
                 folders.forEach(folder => {
                     folderMap.set(folder._id, {
                         ...folder,
-                        children: [] // Initialize children array
+                        children: [] 
                     });
                 });
 
