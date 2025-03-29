@@ -197,7 +197,7 @@ const Footer = () => {
                                 )}
                                 
                                 <h3 className={style.successHeading}>Thanks for subscribing!</h3>
-                                <p className={style.successText}>We'll keep you updated with our latest news.</p>
+                                <p className={style.successText}>We will keep you updated with our latest news.</p>
                             </div>
                         )}
                     </div>
