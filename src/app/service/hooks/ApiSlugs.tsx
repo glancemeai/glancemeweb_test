@@ -3,7 +3,6 @@ import Folders from '../../components/utils/Interfaces/Folders';
 
 export default function Apis() {
     const URL = "https://glanceme.co.in/v1/api"
-    // const URL = "http://localhost:8000/v1/api"
     const NEW_URL = "https://glanceme.co.in/v2/api"
 
     const Login = async (data:any) => {
@@ -133,7 +132,7 @@ export default function Apis() {
     }) => {
         try {
             const requestBody = {
-                video_url: data.video_url || "tp0OrhPnmm8",
+                video_url: data.video_url || "9696200225cbb13630c8fb08115e8b45",
                 video_time: data.video_time || 3245,        
                 question: data.question,                  
                 video_details: data.video_details || "AI Research Paper on LLMs",

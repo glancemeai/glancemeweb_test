@@ -76,9 +76,9 @@ const ChatCard = () => {
             setChatMsg("");
 
             const response = await apis.SendChatMessage({
-                question: chatMsg,  
-                video_url: "tp0OrhPnmm8",
+                video_url: "9696200225cbb13630c8fb08115e8b45",
                 video_time: 3245,
+                question: chatMsg,  
                 video_details: "AI Research Paper on LLMs",
                 tone: "Professional",
                 language: "English",
