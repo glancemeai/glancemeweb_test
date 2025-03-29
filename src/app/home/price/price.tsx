@@ -12,7 +12,7 @@ import ButtonOne, { ButtonFour, ButtonThree, ButtonTwo } from "@/app/components/
 const StaticPrice = () => {
     const router = useRouter();
     const dispatch = useDispatch();
-    const [selectedAmount, setSelectedAmount] = useState<number | null>(null);
+    const [selectedAmount, setSelectedAmount] = useState<number | null>(0);
     const [showPopup, setShowPopup] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
 

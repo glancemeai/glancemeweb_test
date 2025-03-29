@@ -19,6 +19,9 @@ const ChatCard = () => {
     const [sending, setSending] = useState(false);
     const [Id, setId] = useState("");
     const [ChatData, setChatData] = useState<any>();
+    const [videoUrl, setVideoUrl] = useState("");
+    const [videoTime, setVideoTime] = useState(0);
+    const [videoDetails, setVideoDetails] = useState("");
     const dispatch = useDispatch();
     const [chatMsg, setChatMsg] = useState("");
 
@@ -37,6 +40,17 @@ const ChatCard = () => {
             if (data.status == 200) {
                 setLoading(false);
                 setChatData(data);
+                
+                if (data?.data?.video_url) {
+                    setVideoUrl(data?.data?.video_url);
+                }
+                if (data?.data?.video_time) {
+                    setVideoTime(data.data.video_time);
+                }
+                if (data?.data?.video_details) {
+                    setVideoDetails(data.data.video_details);
+                }
+                
                 console.log("Chat data received:", data);
             } else {
                 setLoading(false);
@@ -55,31 +69,34 @@ const ChatCard = () => {
         setSending(true);
         
         try {
-            const updatedChat = {
-                ...ChatData,
-                data: {
-                    ...ChatData?.data,
-                    chat: {
-                        ...ChatData?.data?.chat,
-                        messages: [
-                            ...(ChatData?.data?.chat?.messages || []),
-                            {
-                                role: 'user',
-                                content: chatMsg
-                            }
-                        ]
-                    }
-                }
+            const newUserMessage = {
+                role: 'user',
+                content: chatMsg
             };
             
-            setChatData(updatedChat);
+            const updatedMessages = [
+                ...(ChatData?.data?.chat?.messages || []),
+                newUserMessage
+            ];
+            
+            setChatData((prevData: any) => ({
+                ...prevData,
+                data: {
+                    ...prevData?.data,
+                    chat: {
+                        ...prevData?.data?.chat,
+                        messages: updatedMessages
+                    }
+                }
+            }));
+            
             setChatMsg("");
 
             const response = await apis.SendChatMessage({
-                video_url: "9696200225cbb13630c8fb08115e8b45",
-                video_time: 3245,
+                video_url: videoUrl || "9696200225cbb13630c8fb08115e8b45",
+                video_time: videoTime || 3245,
                 question: chatMsg,  
-                video_details: "AI Research Paper on LLMs",
+                video_details: videoDetails || "AI Research Paper on LLMs",
                 tone: "Professional",
                 language: "English",
                 response_type: "Concise",
@@ -87,13 +104,27 @@ const ChatCard = () => {
             });
             
             console.log("Message sent, response:", response);
-            console.log("Sending message with data:", {
-                question: chatMsg
-            });
-
             
             if (response.status === 200) {
-                await chatHandler(Id);
+                if (response.data?.answer) {
+                    const aiMessage = {
+                        role: 'ai',
+                        content: response.data.answer
+                    };
+                    
+                    setChatData((prevData: any) => ({
+                        ...prevData,
+                        data: {
+                            ...prevData?.data,
+                            chat: {
+                                ...prevData?.data?.chat,
+                                messages: [...updatedMessages, aiMessage]
+                            }
+                        }
+                    }));
+                } else {
+                    await chatHandler(Id);
+                }
             } else {
                 dispatch(setAlert({
                     data: {
@@ -102,6 +133,7 @@ const ChatCard = () => {
                         type: "error"
                     }
                 }));
+                await chatHandler(Id);
             }
         } catch (error: any) {
             dispatch(setAlert({
@@ -111,6 +143,7 @@ const ChatCard = () => {
                     type: "error"
                 }
             }));
+            await chatHandler(Id);
         } finally {
             setSending(false);
         }
@@ -163,7 +196,7 @@ const ChatCard = () => {
                         
                         {ChatData?.data?.chat?.messages?.length > 0 ? 
                             ChatData?.data?.chat?.messages?.map((value: any, index: number) => (
-                                <div key={index} className={style.mainCenterItem}>
+                                <div key={`msg-${index}-${value.role}`} className={style.mainCenterItem}>
                                     {value?.role === 'ai' ? (
                                         <div className={style.mainCenterItemLeft}>
                                             <div 

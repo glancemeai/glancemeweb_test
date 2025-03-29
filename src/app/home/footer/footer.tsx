@@ -4,12 +4,15 @@ import style from "./footer.module.css";
 import { FaFacebook, FaInstagramSquare, FaLinkedin } from "react-icons/fa";
 import Link from "next/link";
 import { FaXTwitter, FaYoutube } from "react-icons/fa6";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 
 const Footer = () => {
     const [showComingSoonPopup, setShowComingSoonPopup] = useState(false);
     const [showSubscribePopup, setShowSubscribePopup] = useState(false);
     const [email, setEmail] = useState("");
+    const [subscribeSuccess, setSubscribeSuccess] = useState(false);
+    const [animateConfetti, setAnimateConfetti] = useState(false);
+    const popupRef = useRef<HTMLDivElement | null>(null);
 
     const handleAppStoreClick = () => {
         setShowComingSoonPopup(true);
@@ -21,11 +24,21 @@ const Footer = () => {
 
     const handleSubscribeButtonClick = () => {
         setShowSubscribePopup(true);
+        setSubscribeSuccess(false);
     };
 
     const handleClosePopup = () => {
         setShowComingSoonPopup(false);
-        setShowSubscribePopup(false);
+        if (subscribeSuccess) {
+            // Delay closing the popup to show the success animation
+            setTimeout(() => {
+                setShowSubscribePopup(false);
+                setSubscribeSuccess(false);
+                setAnimateConfetti(false);
+            }, 2000);
+        } else {
+            setShowSubscribePopup(false);
+        }
     };
 
     const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,11 +46,50 @@ const Footer = () => {
     };
 
     const handleSubscribeSubmit = () => {
+        if (!email || !email.includes('@')) {
+            return; // Basic validation
+        }
+        
         // In a real application, you would send this email to your backend
         console.log("Subscribed with email:", email);
-        alert(`Thank you for subscribing with: ${email}!`); // Replace with your actual logic
-        handleClosePopup();
+        
+        // Show success state
+        setSubscribeSuccess(true);
+        setAnimateConfetti(true);
+        
+        // Reset form after success animation completes
+        setTimeout(() => {
+            setEmail("");
+        }, 2000);
     };
+
+    // Handle outside clicks
+    const handleOutsideClick = (event: MouseEvent): void => {
+        if (popupRef.current && popupRef.current.contains && !popupRef.current.contains(event.target as Node)) {
+            handleClosePopup();
+        }
+    };
+
+    // Add outside click listener
+    useEffect(() => {
+        if (showSubscribePopup || showComingSoonPopup) {
+            document.addEventListener('mousedown', handleOutsideClick);
+        } else {
+            document.removeEventListener('mousedown', handleOutsideClick);
+        }
+        
+        return () => {
+            document.removeEventListener('mousedown', handleOutsideClick);
+        };
+    }, [showSubscribePopup, showComingSoonPopup]);
+
+    // Clean up animation states when popup closes
+    useEffect(() => {
+        if (!showSubscribePopup) {
+            setSubscribeSuccess(false);
+            setAnimateConfetti(false);
+        }
+    }, [showSubscribePopup]);
 
     return (
         <div className={style.main}>
@@ -82,7 +134,7 @@ const Footer = () => {
                     <hr />
                     <div className={style.mainHolderthreeItem}>
                         <div className={style.mainHolderthreeItemOne}>
-                            <p>@ 2025 Glanceme.Ai</p>
+                            <p>© 2025 Glanceme.Ai Pvt. Ltd.</p>
                         </div>
                         <div className={style.mainHolderthreeItemTwo}>
                             <Link href={"https://www.linkedin.com/company/glancemeai/"} passHref target="_blank"><p><FaLinkedin size={25} color="white" /></p></Link>
@@ -96,7 +148,7 @@ const Footer = () => {
 
                 {/* Coming Soon Popup */}
                 <div className={`${style.popupOverlay} ${showComingSoonPopup ? style.open : ''}`}>
-                    <div className={style.popupContent}>
+                    <div className={style.popupContent} ref={popupRef}>
                         <button onClick={handleClosePopup} className={style.popupCloseButton}>×</button>
                         <h3 className={style.popupHeading}>Coming Soon!</h3>
                         <p className={style.popupText}>This feature is currently under development. Stay tuned!</p>
@@ -106,17 +158,48 @@ const Footer = () => {
 
                 {/* Subscribe Popup */}
                 <div className={`${style.popupOverlay} ${showSubscribePopup ? style.open : ''}`}>
-                    <div className={style.popupContent}>
-                        <button onClick={handleClosePopup} className={style.popupCloseButton}>×</button>
-                        <h3 className={style.popupHeading}>Subscribe to our Newsletter</h3>
-                        <input
-                            type="email"
-                            placeholder="Enter your email"
-                            value={email}
-                            onChange={handleEmailChange}
-                            className={style.popupInput}
-                        />
-                        <button onClick={handleSubscribeSubmit} className={`${style.popupButton} ${style.popupSubscribeButton}`}>Subscribe</button>
+                    <div className={`${style.popupContent} ${subscribeSuccess ? style.successState : ''}`} ref={popupRef}>
+                        {!subscribeSuccess ? (
+                            <>
+                                <button onClick={handleClosePopup} className={style.popupCloseButton}>×</button>
+                                <h3 className={style.popupHeading}>Subscribe to our Newsletter</h3>
+                                <div className={style.gradientBar}></div>
+                                <input
+                                    type="email"
+                                    placeholder="Enter your email"
+                                    value={email}
+                                    onChange={handleEmailChange}
+                                    className={style.popupInput}
+                                />
+                                <button 
+                                    onClick={handleSubscribeSubmit} 
+                                    className={`${style.popupButton} ${style.popupSubscribeButton}`}
+                                >
+                                    Subscribe
+                                </button>
+                            </>
+                        ) : (
+                            <div className={style.successContent}>
+                                <div className={style.checkmarkContainer}>
+                                    <svg className={style.checkmark} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                                        <circle className={style.checkmarkCircle} cx="26" cy="26" r="25" fill="none"/>
+                                        <path className={style.checkmarkCheck} fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                                    </svg>
+                                </div>
+                                
+                                {/* Confetti elements */}
+                                {animateConfetti && (
+                                    <div className={style.confettiContainer}>
+                                        {[...Array(20)].map((_, i) => (
+                                            <div key={i} className={`${style.confetti} ${style['confetti' + (i % 5)]}`}></div>
+                                        ))}
+                                    </div>
+                                )}
+                                
+                                <h3 className={style.successHeading}>Thanks for subscribing!</h3>
+                                <p className={style.successText}>We'll keep you updated with our latest news.</p>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
