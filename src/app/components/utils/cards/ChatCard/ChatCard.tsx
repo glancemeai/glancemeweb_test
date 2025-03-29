@@ -34,6 +34,7 @@ const ChatCard = () => {
         setLoading(true);
         const params = new URLSearchParams({ urlCode: notes_token } as any).toString();
         console.log("Fetching chat with params:", params);
+        setVideoUrl(notes_token);
         
         try {
             const data = await apis.GetChat(params);
@@ -41,9 +42,6 @@ const ChatCard = () => {
                 setLoading(false);
                 setChatData(data);
                 
-                if (data?.data?.video_url) {
-                    setVideoUrl(data?.data?.video_url);
-                }
                 if (data?.data?.video_time) {
                     setVideoTime(data.data.video_time);
                 }
@@ -89,11 +87,11 @@ const ChatCard = () => {
                     }
                 }
             }));
-            
+            alert(videoUrl)
             setChatMsg("");
 
             const response = await apis.SendChatMessage({
-                video_url: videoUrl || "9696200225cbb13630c8fb08115e8b45",
+                video_url: videoUrl,
                 video_time: videoTime || 3245,
                 question: chatMsg,  
                 video_details: videoDetails || "AI Research Paper on LLMs",
