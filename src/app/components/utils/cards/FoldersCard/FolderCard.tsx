@@ -107,7 +107,6 @@ const FolderCard = (props: FolderCardProps) => {
   const [showEditModal, setShowEditModal] = useState(false);
   const [editingFolderName, setEditingFolderName] = useState<string>(props.data.name);
 
-
   const toggleOptions = (isVisible: boolean) => {
     setShowOptions(isVisible);
   };
@@ -118,6 +117,7 @@ const FolderCard = (props: FolderCardProps) => {
   };
 
   const handleEditClick = () => {
+    setEditingFolderName(props.data.name);
     setShowEditModal(true);
     setShowOptions(false);
   };
@@ -267,8 +267,8 @@ const FolderCard = (props: FolderCardProps) => {
               <button onClick={handleCancelEdit}>Cancel</button>
               <button 
                 onClick={handleEditFolder}
-                disabled={!editingFolderName.trim()}
-                className={!editingFolderName.trim() ? style.disabled : ''}
+                disabled={!editingFolderName?.trim()}
+                className={!editingFolderName?.trim() ? style.disabled : ''}
               >
                 Save
               </button>
