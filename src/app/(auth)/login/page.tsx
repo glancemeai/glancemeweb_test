@@ -22,7 +22,7 @@ export default function LoginHome() {
               <span>Join our growing community</span>
             </div>
             
-            <div className={styles.signupItem}>+
+            <div className={styles.signupItem}>
               <span className={styles.icon}>🔒</span>
               <span>Secure and private</span>
             </div>
