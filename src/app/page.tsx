@@ -16,7 +16,7 @@ export default function Home() {
       <Section_three ></Section_three>
       <StaticPrice />
       <Section_Four></Section_Four>
-      <Section_Five/>
+      {/* <Section_Five/> */}
       {/* <HomeOne/>
       <HomeTwo/>
       <HomeThree />
