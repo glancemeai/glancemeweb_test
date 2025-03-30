@@ -107,6 +107,8 @@ const Header = () => {
       setActiveTab('about');
     } else if (pathname === '/blog') {
       setActiveTab('blog');
+    } else if (pathname === '/faqs') {
+      setActiveTab('faqs');
     } else if (pathname.includes('/dashboard') || pathname.includes('/folder/') || pathname.includes('/notes/')) {
       setActiveTab('notes');
     } else if (pathname === '/home') {
@@ -135,6 +137,9 @@ const Header = () => {
           </div>
           <div className={`${style.mainHeaderHolderMenuItem} ${activeTab === 'blog' ? style.active : ''}`}>
             <Link href={"/blog"} passHref><p onClick={() => { setActiveTab('blog') }}>Blog</p></Link>
+          </div>
+          <div className={`${style.mainHeaderHolderMenuItem} ${activeTab === 'faqs' ? style.active : ''}`}>
+            <Link href={"/faqs"} passHref><p onClick={() => { setActiveTab('faqs') }}>faqs</p></Link>
           </div>
           {isDashboardOrFolder && (
             <div className={`${style.mainHeaderHolderMenuItem} ${activeTab === 'notes' ? style.active : ''}`}>
