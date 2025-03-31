@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Apis from '@/app/service/hooks/ApiSlugs';
 import { setAllFolders } from '@/app/redux/utils/folders';
 import { RootState } from '@/app/redux/store';
+import Folders from '../../Interfaces/Folders';
 
 // Define the folder structure based on the API response
 interface FolderHierarchy {
@@ -28,6 +29,7 @@ interface FolderCardProps {
   loading: boolean;
   AlertShowHandler: (show: boolean, id?: string) => void;
   refresh?: () => void;
+  folders?: Folders[];
 }
 
 const FolderCard = (props: FolderCardProps) => {

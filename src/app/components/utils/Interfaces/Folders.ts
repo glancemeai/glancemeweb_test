@@ -5,7 +5,8 @@ interface Folders {
     sharedWith: string[],
     parentFolder: string | null,
     createdAt: string,
-    children?: Folders[]
+    children?: Folders[],
+    subfolders: Folders[];
 }
 
 export default Folders

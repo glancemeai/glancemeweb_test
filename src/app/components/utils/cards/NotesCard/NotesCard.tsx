@@ -13,6 +13,7 @@ import { setAlert } from '../../../../redux/utils/message';
 import { setAllFolders } from '../../../../redux/utils/folders';
 import { MdOutlineDriveFileMove } from 'react-icons/md';
 import { RiDeleteBin6Line } from 'react-icons/ri';
+import Folders from '../../Interfaces/Folders';
 
 // Define the FolderHierarchy interface to match the API response
 interface FolderHierarchy {
@@ -26,6 +27,8 @@ interface NotesCard {
   data?: Notes;
   loading: boolean;
   refreshNotes?: () => void;
+  folders?: Folders[];
+  moveNoteToFolder?: (noteToken: string, targetFolderId: string) => void;
 }
 
 const NotesCard = (props: NotesCard) => {
