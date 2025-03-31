@@ -47,7 +47,7 @@
 
 .mainNotesItemMenu {
     position: absolute;
-    bottom: -5px; 
+    bottom: -5px;
     right: -10px;
     transform: translateY(100%);
     background-color: white;
@@ -55,11 +55,9 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     z-index: 9999;
     min-width: 160px;
-    display: none; /* Initially hidden */
     padding: 8px 0;
-    opacity: 0;
-    transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
-    visibility: hidden;
+    opacity: 1;
+    visibility: visible;
 }
 
 /* Expanding the hoverable area */
@@ -67,8 +65,8 @@
     content: "";
     position: absolute;
     width: 100%;
-    height: 20px; /* Expands hover area downward */
-    bottom: -20px; /* Makes sure it's connected to the menu */
+    height: 20px;
+    bottom: -20px;
     left: 0;
 }
 
@@ -97,145 +95,261 @@
     color: #666;
 }
 
-/* Move Modal Styles */
-.moveModal {
+/* Move Folder Modal Styles */
+.moveFolderModal {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+    right: 0;
+    bottom: 0;
     background-color: rgba(0, 0, 0, 0.5);
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     z-index: 1000;
 }
 
-.moveModalContent {
+.moveFolderContent {
     background-color: white;
-    padding: 20px;
     border-radius: 8px;
-    width: 90%;
-    max-width: 400px;
+    padding: 20px;
+    width: 450px;
+    max-width: 85vw;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
 }
 
-.moveModalContent h3 {
-    margin: 0 0 16px;
-    color: #333;
+.dialogHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #eee;
+}
+
+.dialogHeader h3 {
+    margin: 0;
     font-size: 18px;
+    font-weight: 500;
+    color: #333;
 }
 
 .folderList {
-    max-height: 300px;
-    overflow-y: auto;
-    margin-bottom: 16px;
+    flex: 1;
+    height: 280px; /* Fixed height */
+    border: 1px solid #eee;
+    border-radius: 6px;
+    overflow: hidden; /* Hide overflow for inner scrolling */
+    background-color: #f9f9f9;
+    display: flex;
+    flex-direction: column;
+}
+
+.folderListContainer {
+    flex: 1;
+    padding: 8px;
+    overflow-y: auto; /* Enable vertical scrolling */
+    overflow-x: hidden; /* Hide horizontal scrolling */
+    scrollbar-width: thin; /* For Firefox */
+    scrollbar-color: rgba(0, 0, 0, 0.2) transparent; /* For Firefox */
+}
+
+/* Custom scrollbar for Webkit browsers */
+.folderListContainer::-webkit-scrollbar {
+    width: 6px;
+}
+
+.folderListContainer::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+}
+
+.folderListContainer::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+/* Hierarchical Folder Tree Styles */
+.recursiveFolderList {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    width: 100%;
+}
+
+.recursiveFolderItem {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    position: relative;
+}
+
+.nestedFolder {
+    margin-left: 16px;
 }
 
 .folderItem {
-    padding: 10px;
+    display: flex;
+    align-items: center;
+    padding: 8px 10px;
     cursor: pointer;
     border-radius: 4px;
     transition: background-color 0.2s;
+    min-height: 36px; /* Consistent height */
+    max-height: 36px; /* Maximum height */
+    overflow: hidden;
 }
 
 .folderItem:hover {
-    background-color: #f5f5f5;
+    background-color: rgba(0, 0, 0, 0.05);
 }
 
-.folderItem.selected {
-    background-color: #e3f2fd;
+.folderItemSelected {
+    background-color: rgba(0, 123, 255, 0.1);
+    border-left: 3px solid #0066cc;
 }
 
-.modalButtons {
+.folderItemSelected svg {
+    color: #0066cc;
+}
+
+.folderExpandIcon {
     display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-    margin-top: 15px;
-}
-
-.modalButtons button {
-    padding: 8px 16px;
-    border-radius: 4px;
-    border: none;
+    align-items: center;
+    justify-content: center;
+    min-width: 20px;
+    width: 20px;
+    height: 20px;
+    color: #666;
     cursor: pointer;
-    font-weight: 500;
+    margin-right: 4px;
 }
 
-.modalButtons button:first-child {
-    background-color: #f5f5f5;
+.folderExpandIconPlaceholder {
+    min-width: 20px;
+    width: 20px;
+    margin-right: 4px;
+}
+
+.folderExpandIcon:hover {
+    color: #333;
+}
+
+.folderNameWrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+    min-width: 0; /* Important for text truncation */
+    cursor: pointer;
+}
+
+.folderIcon {
+    flex-shrink: 0;
     color: #666;
 }
 
-.modalButtons button:last-child {
-    background-color: #2196f3;
-    color: white;
-}
-
-.modalButtons button:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-}
-
-.disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
+.folderName {
+    font-size: 14px;
+    color: #333;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; /* Add ellipsis for long names */
+    max-width: 100%;
 }
 
 .nestedFolderList {
-  max-height: 300px;
-  overflow-y: auto;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  padding: 10px;
+    margin-top: 2px;
+    margin-left: 10px;
+    border-left: 1px dashed #ccc;
+    padding-left: 8px;
+    width: calc(100% - 18px); /* Prevent pushing content beyond parent width */
 }
 
-.nestedFolderItem {
-  position: relative;
-  margin-bottom: 5px;
+.childCount {
+    flex-shrink: 0;
+    margin-left: 8px;
+    font-size: 11px;
+    color: #888;
+    padding: 2px 6px;
+    background-color: rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
+    white-space: nowrap;
 }
 
-.folderItem {
-  display: flex;
-  align-items: center;
-  padding: 8px;
-  cursor: pointer;
-  transition: background-color 0.2s;
-  border-radius: 4px;
+.noFolders {
+    text-align: center;
+    color: #999;
+    padding: 20px;
+    font-style: italic;
 }
 
-.folderItem:hover {
-  background-color: rgba(0, 0, 0, 0.05);
+.loadingFolders {
+    text-align: center;
+    color: #666;
+    padding: 20px;
 }
 
-.folderItem.selected {
-  background-color: rgba(33, 150, 243, 0.1);
-  color: #2196F3;
+/* Modal Actions */
+.modalActions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    padding-top: 16px;
+    border-top: 1px solid #eee;
 }
 
-.expandIcon {
-  margin-right: 8px;
-  display: flex;
-  align-items: center;
-  color: #757575;
+.cancelButton,
+.moveButton {
+    padding: 8px 16px;
+    border-radius: 4px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s ease;
 }
 
-.folderName {
-  flex-grow: 1;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+.cancelButton {
+    background-color: #f5f7fa;
+    color: #666;
+    border-color: #eee;
 }
+
+.cancelButton:hover {
+    background-color: #edf0f5;
+    color: #333;
+}
+
+.moveButton {
+    background-color: #0066cc;
+    color: white;
+}
+
+.moveButton:hover {
+    background-color: #0052a3;
+}
+
+.moveButtonDisabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+/* Edit Folder Input */
 .editFolderInput {
     width: 100%;
     padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #e0e0e0;
+    border: 1px solid #ddd;
     border-radius: 4px;
     font-size: 14px;
+    color: #333;
 }
 
 .editFolderInput:focus {
     outline: none;
-    border-color: #2196f3;
-    box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.1);
+    border-color: #0066cc;
+    box-shadow: 0 0 0 2px rgba(0, 102, 204, 0.1);
 }
