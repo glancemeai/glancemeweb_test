@@ -49,7 +49,6 @@ const ChatCard = () => {
                     setVideoDetails(data.data.video_details);
                 }
                 
-                console.log("Chat data received:", data);
             } else {
                 setLoading(false);
                 dispatch(setAlert({data:{message: data.message || "Failed to fetch chat", show: true, type: "error"}}));
