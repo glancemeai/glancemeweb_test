@@ -5,7 +5,7 @@ import { IoClose } from "react-icons/io5";
 import ButtonOne, { ButtonFive, ButtonFour, ButtonTwo } from "../../Edit/buttons/Buttons";
 import { BsSendFill } from "react-icons/bs";
 import { InputTen } from "../../Edit/Input/Input";
-import { useCallback, useEffect, useState, KeyboardEvent } from "react";
+import { useCallback, useEffect, useState, KeyboardEvent, useRef } from "react";
 import Apis from "@/app/service/hooks/ApiSlugs";
 import { useParams, useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
@@ -24,10 +24,20 @@ const ChatCard = () => {
     const [videoDetails, setVideoDetails] = useState("");
     const dispatch = useDispatch();
     const [chatMsg, setChatMsg] = useState("");
+    const chatContainerRef = useRef<HTMLDivElement>(null);
 
     const chatMsgHandler = (data: string) => {
         setChatMsg(data);
     }
+
+    const scrollToBottom = () => {
+        if (chatContainerRef.current) {
+            chatContainerRef.current.scrollTo({
+                top: chatContainerRef.current.scrollHeight,
+                behavior: "smooth"
+            });
+        }
+    };
 
     const chatHandler = useCallback(async (notes_token: string) => {
         const apis = Apis();
@@ -49,6 +59,9 @@ const ChatCard = () => {
                     setVideoDetails(data.data.video_details);
                 }
                 
+                console.log("Chat data received:", data);
+                // Scroll to the bottom after chat data is loaded
+                setTimeout(scrollToBottom, 100);
             } else {
                 setLoading(false);
                 dispatch(setAlert({data:{message: data.message || "Failed to fetch chat", show: true, type: "error"}}));
@@ -86,7 +99,10 @@ const ChatCard = () => {
                     }
                 }
             }));
-            alert(videoUrl)
+            
+            // Scroll to bottom after adding user message
+            setTimeout(scrollToBottom, 50);
+            
             setChatMsg("");
 
             const response = await apis.SendChatMessage({
@@ -119,6 +135,9 @@ const ChatCard = () => {
                             }
                         }
                     }));
+                    
+                    // Scroll to bottom after adding AI response
+                    setTimeout(scrollToBottom, 50);
                 } else {
                     await chatHandler(Id);
                 }
@@ -153,6 +172,11 @@ const ChatCard = () => {
         }
     };
 
+    // Effect to scroll to bottom when messages change
+    useEffect(() => {
+        scrollToBottom();
+    }, [ChatData?.data?.chat?.messages]);
+
     useEffect(() => {
         if (params?.id) {
             const id = Array.isArray(params.id) ? params.id[0] : params.id;
@@ -171,7 +195,7 @@ const ChatCard = () => {
                     <p>Glanceme.Ai</p>
                 </div> 
             </div>
-            <div className={style.mainCenter}>
+            <div className={style.mainCenter} ref={chatContainerRef}>
                 {loading ? (
                     <div className={style.mainCenterItem}>
                         <div className={style.mainCenterItemLeft}>
@@ -222,7 +246,10 @@ const ChatCard = () => {
                         
                         {!ChatData?.data?.summary?.[0]?.summary && 
                          !ChatData?.data?.chat?.messages?.length && 
-                         !sending && "No Chat Found"}
+                         !sending && 
+                         <div className={style.noChat}>No Chat Found</div>}
+                         
+                         <div className={style.scrollAnchor} />
                     </>
                 )}
             </div>

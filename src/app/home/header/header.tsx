@@ -139,7 +139,7 @@ const Header = () => {
             <Link href={"/blog"} passHref><p onClick={() => { setActiveTab('blog') }}>Blog</p></Link>
           </div>
           <div className={`${style.mainHeaderHolderMenuItem} ${activeTab === 'faqs' ? style.active : ''}`}>
-            <Link href={"/faqs"} passHref><p onClick={() => { setActiveTab('faqs') }}>faqs</p></Link>
+            <Link href={"/faqs"} passHref><p onClick={() => { setActiveTab('faqs') }}>FAQs</p></Link>
           </div>
           {isDashboardOrFolder && (
             <div className={`${style.mainHeaderHolderMenuItem} ${activeTab === 'notes' ? style.active : ''}`}>

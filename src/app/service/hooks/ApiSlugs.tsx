@@ -121,6 +121,44 @@ export default function Apis() {
         }
     }
 
+    // Add this to your Apis function in ApiSlugs.tsx
+const GetFlashcards = async (videoUrl: string, urlCode?: string) => {
+    try {
+        const queryParams = new URLSearchParams();
+        if (videoUrl) queryParams.append('videoUrl', videoUrl);
+        if (urlCode) queryParams.append('urlCode', urlCode);
+        
+        const result = await APIClient(
+            "GET", 
+            `${URL}/flashcard?${queryParams.toString()}`, 
+            true, 
+            null
+        );
+        
+        // Normalize the response
+        if (result && result.status === 200) {
+            return {
+                status: 200,
+                data: result.data || [],
+                message: result.message || 'Flashcards fetched successfully'
+            };
+        } else {
+            return {
+                status: result?.status || 500,
+                data: [],
+                message: result?.message || 'Failed to fetch flashcards'
+            };
+        }
+    } catch (error: any) {
+        console.error('GetFlashcards API Error:', error);
+        return {
+            status: 500,
+            data: [],
+            message: error.message || 'An unexpected error occurred'
+        };
+    }
+};
+
     const SendChatMessage = async (data: {
         video_url?: string,
         video_time?: number,
@@ -255,55 +293,33 @@ export default function Apis() {
 
     const GetFolders = async () => {
         try {
-            var result = await APIClient("GET", `${URL}/folder`, true, null);
+            // Fetch the hierarchical structure
+            var result = await APIClient("GET", `${URL}/folder/hierarchy`, true, null);
             
             if (result && result.status === 200) {
-                const folders: Folders[] = Array.isArray(result.data) ? result.data : [];
-    
-                const folderMap = new Map<string, Folders & { children: Folders[] }>();
-                folders.forEach(folder => {
-                    folderMap.set(folder._id, {
-                        ...folder,
-                        children: [] 
-                    });
-                });
-
-                const rootFolders: (Folders & { children: Folders[] })[] = [];
+                // The API now returns a hierarchical structure directly
+                const hierarchyData = result.data || [];
                 
-                folders.forEach(folder => {
-                    if (!folder.parentFolder) {
-                        rootFolders.push(folderMap.get(folder._id)!);
-                    } else {
-                        const parent = folderMap.get(folder.parentFolder);
-                        if (parent) {
-                            parent.children.push(folderMap.get(folder._id)!);
-                        } else {
-                            rootFolders.push(folderMap.get(folder._id)!);
-                        }
-                    }
-                });
-
-                // Debug logging
-                console.log('Processed Folders:', {
-                    totalFolders: folders.length,
-                    rootFolders: rootFolders.length,
-                    rootFolderDetails: rootFolders.map(f => ({
+                // Add appropriate debug logging
+                console.log('Fetched Folder Hierarchy:', {
+                    totalRootFolders: hierarchyData.length,
+                    rootFolderDetails: hierarchyData.map((f: any) => ({
                         id: f._id,
                         name: f.name,
-                        childrenCount: f.children.length
+                        childrenCount: (f.subfolders || []).length
                     }))
                 });
-
+                
                 return {
                     status: 200,
-                    data: rootFolders,
-                    message: result.message || 'Folders fetched successfully'
+                    data: hierarchyData,
+                    message: result.message || 'Folders hierarchy fetched successfully'
                 };
             } else {
                 return {
                     status: result?.status || 500,
                     data: [],
-                    message: result?.message || 'Failed to fetch folders'
+                    message: result?.message || 'Failed to fetch folders hierarchy'
                 };
             }
         } catch (error: any) {
@@ -315,8 +331,9 @@ export default function Apis() {
             };
         }
     };
+    
+    
 
-    // Simple function to move a note to a folder
     const moveToFolder = async (folderId: string, noteToken: string) => {
         try {
             const requestBody = {
@@ -338,7 +355,6 @@ export default function Apis() {
         try {
             const result = await APIClient("POST", `${URL}/contactus`, true, data);
             
-            // Normalize the response
             if (result && result.status === 200) {
                 return {
                     status: 200,
@@ -404,6 +420,7 @@ export default function Apis() {
         SendChatMessage,
         EditFolder,
         CreateDonation,
-        VerifyDonation
+        VerifyDonation,
+        GetFlashcards
     }
 }
