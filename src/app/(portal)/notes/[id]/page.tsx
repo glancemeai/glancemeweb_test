@@ -32,14 +32,14 @@ interface FilterData {
   noteUrlCode?: string;
 }
 
-// interface Flashcard {
-//   id: string;
-//   question: string;
-//   answer: string;
-//   videoUrl?: string;
-//   urlCode?: string;
-//   createdAt: string;
-// }
+interface Flashcard {
+  _id: string;
+  title: string;
+  content: string;
+  importance: string;
+  color: string;
+  timestamp: string;
+}
 
 const SubHeader = ({
   title = 'Folder',
@@ -76,27 +76,34 @@ const SubHeader = ({
   </div>
 );
 
-// const FlashcardItem = ({ flashcard }: { flashcard: Flashcard }) => {
-//   const [flipped, setFlipped] = useState(false);
+const FlashcardItem = ({ flashcard }: { flashcard: Flashcard }) => {
+  const [flipped, setFlipped] = useState(false);
   
-//   return (
-//     <div 
-//       className={style.flashcardItem} 
-//       onClick={() => setFlipped(!flipped)}
-//     >
-//       <div className={`${style.flashcardInner} ${flipped ? style.flipped : ''}`}>
-//         <div className={style.flashcardFront}>
-//           <h3>Question</h3>
-//           <p>{flashcard.question}</p>
-//         </div>
-//         <div className={style.flashcardBack}>
-//           <h3>Answer</h3>
-//           <p>{flashcard.answer}</p>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
+  // Convert color string to actual color (remove backticks if present)
+  const getColor = (colorStr: string) => {
+    if (colorStr?.startsWith('`') && colorStr?.endsWith('`')) {
+      return colorStr.substring(1, colorStr.length - 1);
+    }
+    return colorStr || '#6086F8';
+  };
+  
+  return (
+    <div className={style.flashcardItem} onClick={() => setFlipped(!flipped)}>
+      <div className={`${style.flashcardInner} ${flipped ? style.flipped : ''}`}>
+        <div className={style.flashcardFront} style={{ background: getColor(flashcard.color) }}>
+          <h3>Question</h3>
+          <p>{flashcard.title}</p>
+          <small>Importance: {flashcard.importance}</small>
+          <small>Timestamp: {flashcard.timestamp}</small>
+        </div>
+        <div className={style.flashcardBack}>
+          <h3>Answer</h3>
+          <p>{flashcard.content}</p>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const NotesPage = () => {
   const params = useParams();
@@ -110,13 +117,14 @@ const NotesPage = () => {
   const [userId, setUserId] = useState<string>('');
   const [userData, setUserData] = useState<any>(null);
   const [notesData, setNotesData] = useState<any>(null);
-  // const [flashcardsData, setFlashcardsData] = useState<Flashcard[]>([]);
+  const [flashcardsData, setFlashcardsData] = useState<Flashcard[]>([]);
   const [filterVisible, setFilterVisible] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [alertShow, setAlertShow] = useState(false);
   const [folderIdAlert, setFolderIdAlert] = useState("");
   const [loadingAlert, setLoadingAlert] = useState(false);
   const [activeTab, setActiveTab] = useState('notes'); // 'notes' or 'flashcards'
+  const [isYoutubeNote, setIsYoutubeNote] = useState(false);
 
   const AlertShowHandler = useCallback((show: boolean, folderId: string) => {
     setFolderIdAlert(folderId);
@@ -146,6 +154,14 @@ const NotesPage = () => {
         const response = await apis.SingleNotes({ urlCode: notesToken });
         if (response.status === 200) {
           setNotesData(response);
+          // Check if it's a YouTube note and set state accordingly
+          if (response.data && response.data[0] && response.data[0].type === 'youtube') {
+            setIsYoutubeNote(true);
+          } else {
+            setIsYoutubeNote(false);
+            // Set active tab to notes if it's not a YouTube note
+            setActiveTab('notes');
+          }
         } else {
           dispatch(setAlert({ data: { message: response.message, show: true, type: 'error' } }));
         }
@@ -158,24 +174,25 @@ const NotesPage = () => {
     []
   );
 
-  // const fetchFlashcards = useCallback(
-  //   async (videoUrl: string, urlCode?: string) => {
-  //     try {
-  //       setFlashcardsLoading(true);
-  //       const response = await apis.GetFlashcards(videoUrl, urlCode);
-  //       if (response.status === 200) {
-  //         setFlashcardsData(response.data);
-  //       } else {
-  //         dispatch(setAlert({ data: { message: response.message, show: true, type: 'error' } }));
-  //       }
-  //     } catch (error: any) {
-  //       dispatch(setAlert({ data: { message: error.message, show: true, type: 'error' } }));
-  //     } finally {
-  //       setFlashcardsLoading(false);
-  //     }
-  //   },
-  //   []
-  // );
+  const fetchFlashcards = useCallback(
+    async (videoUrl: string) => {
+      try {
+        setFlashcardsLoading(true);
+        // Only fetch flashcards if it's a YouTube note
+        const response = await apis.GetFlashCards(videoUrl);
+        if (response.status === 200) {
+          setFlashcardsData(response.data);
+        } else {
+          dispatch(setAlert({ data: { message: response.message, show: true, type: 'error' } }));
+        }
+      } catch (error: any) {
+        dispatch(setAlert({ data: { message: error.message, show: true, type: 'error' } }));
+      } finally {
+        setFlashcardsLoading(false);
+      }
+    },
+    []
+  );
 
   const handleSearch = useCallback(
     async (filters: FilterData) => {
@@ -266,19 +283,22 @@ const NotesPage = () => {
     if (params?.id) {
       const noteId = Array.isArray(params.id) ? params.id[0] : params.id;
       setId(noteId);
+      setUserId(noteId);
       fetchNotes(noteId);
     } else {
       setLoading(false);
+      setFlashcardsLoading(false);
     }
   }, [fetchUserDetails, fetchNotes, params?.id]);
 
-  // useEffect(() => {
-  //   if (notesData?.data?.[0]) {
-  //     const videoUrl = notesData.data[0].urlCode;
-  //     const urlCode = id;
-  //     fetchFlashcards(videoUrl, urlCode);
-  //   }
-  // }, [notesData, id, fetchFlashcards]);
+  // Fetch flashcards only if it's a YouTube note
+  useEffect(() => {
+    if (isYoutubeNote && userId) {
+      fetchFlashcards(userId);
+    } else {
+      setFlashcardsLoading(false);
+    }
+  }, [isYoutubeNote, userId, fetchFlashcards]);
 
   return (
     <div className={style.main}>
@@ -294,6 +314,7 @@ const NotesPage = () => {
         />
         <div className={style.mainHolderBody}>
           <div className={style.mainHolderBodyLeft}>
+            {/* Always show the Notes tab, but only show Flashcards tab for YouTube notes */}
             <div className={style.mainHolderBodyLeftSection}>
               <p 
                 className={activeTab === 'notes' ? style.activeTab : ''}
@@ -302,17 +323,19 @@ const NotesPage = () => {
               >
                 Notes
               </p>
-              {/* <p 
-                className={activeTab === 'flashcards' ? style.activeTab : ''}
-                onClick={() => setActiveTab('flashcards')}
-                style={{borderBottom: activeTab === 'flashcards' ? "2px solid black" : "none"}}
-              >
-                Flashcards
-              </p> */}
+              {isYoutubeNote && (
+                <p 
+                  className={activeTab === 'flashcards' ? style.activeTab : ''}
+                  onClick={() => setActiveTab('flashcards')}
+                  style={{borderBottom: activeTab === 'flashcards' ? "2px solid black" : "none"}}
+                >
+                  Flashcards
+                </p>
+              )}
             </div>
             <br />
 
-            {activeTab === 'notes' ? (
+            {activeTab === 'notes' && (
               <div className={style.mainHolderBodyLeftNotes}>
                 <div className={style.mainHolderBodyLeftNotesOptions}>
                   <div className={style.mainHolderBodyLeftNotesOptionsItems}>
@@ -353,25 +376,27 @@ const NotesPage = () => {
                   ))
                 )}
               </div>
-            ) : (
-              // <div className={style.flashcardsContainer}>
-              //   {flashcardsLoading ? (
-              //     <div style={{position:"relative",width:"100%",display:"flex",gap:"20px"}}>
-              //       {Array.from({ length: 3 }, (_, index) => <FolderSkeleton key={index} />)}
-              //     </div>
-              //   ) : flashcardsData.length > 0 ? (
-              //     <div className={style.flashcardsGrid}>
-              //       {flashcardsData.map((flashcard, index) => (
-              //         <FlashcardItem key={index} flashcard={flashcard} />
-              //       ))}
-              //     </div>
-              //   ) : (
-              //     <div className={style.emptyFlashcards}>
-              //       <p>No flashcards available for this content</p>
-              //     </div>
-              //   )}
-              // </div>
-              <div></div>
+            )}
+
+            {/* Only show flashcards tab content if it's a YouTube note and flashcards tab is active */}
+            {isYoutubeNote && activeTab === 'flashcards' && (
+              <div className={style.flashcardsContainer}>
+                {flashcardsLoading ? (
+                  <div style={{position:"relative",width:"100%",display:"flex",gap:"20px"}}>
+                    {Array.from({ length: 3 }, (_, index) => <FolderSkeleton key={index} />)}
+                  </div>
+                ) : flashcardsData && flashcardsData.length > 0 ? (
+                  <div className={style.flashcardsGrid}>
+                    {flashcardsData.map((flashcard) => (
+                      <FlashcardItem key={flashcard._id} flashcard={flashcard} />
+                    ))}
+                  </div>
+                ) : (
+                  <div className={style.emptyFlashcards}>
+                    <p>No flashcards available for this content.</p>
+                  </div>
+                )}
+              </div>
             )}
           </div>
           <div className={style.mainHolderBodyRight}>

@@ -121,43 +121,6 @@ export default function Apis() {
         }
     }
 
-    // Add this to your Apis function in ApiSlugs.tsx
-const GetFlashcards = async (videoUrl: string, urlCode?: string) => {
-    try {
-        const queryParams = new URLSearchParams();
-        if (videoUrl) queryParams.append('videoUrl', videoUrl);
-        if (urlCode) queryParams.append('urlCode', urlCode);
-        
-        const result = await APIClient(
-            "GET", 
-            `${URL}/flashcard?${queryParams.toString()}`, 
-            true, 
-            null
-        );
-        
-        // Normalize the response
-        if (result && result.status === 200) {
-            return {
-                status: 200,
-                data: result.data || [],
-                message: result.message || 'Flashcards fetched successfully'
-            };
-        } else {
-            return {
-                status: result?.status || 500,
-                data: [],
-                message: result?.message || 'Failed to fetch flashcards'
-            };
-        }
-    } catch (error: any) {
-        console.error('GetFlashcards API Error:', error);
-        return {
-            status: 500,
-            data: [],
-            message: error.message || 'An unexpected error occurred'
-        };
-    }
-};
 
     const SendChatMessage = async (data: {
         video_url?: string,
@@ -290,7 +253,23 @@ const GetFlashcards = async (videoUrl: string, urlCode?: string) => {
         var result = await APIClient("GET", `${URL}/chat?${data}`, false, null);
         return result;
     }
-
+    
+    const GetFlashCards = async(videoUrl : string) => {
+        var result = await APIClient("GET", `${URL}/flashcard?videoUrl=${videoUrl}`, true, null);
+        if (result && result.status === 200) {
+            return {
+                status: 200,
+                data: result.data || result || [],
+                message: result.message || 'FlashCard Fetched Successfully'
+            };
+        } else {
+            return {
+                status: result?.status || 500,
+                data: [],
+                message: result?.message || 'Failed to search notes'
+            };
+        }
+    }
     const GetFolders = async () => {
         try {
             // Fetch the hierarchical structure
@@ -421,6 +400,6 @@ const GetFlashcards = async (videoUrl: string, urlCode?: string) => {
         EditFolder,
         CreateDonation,
         VerifyDonation,
-        GetFlashcards
+        GetFlashCards
     }
 }
