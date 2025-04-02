@@ -30,6 +30,7 @@ interface FolderCardProps {
   AlertShowHandler: (show: boolean, id?: string) => void;
   refresh?: () => void;
   folders?: Folders[];
+  
 }
 
 const FolderCard = (props: FolderCardProps) => {

@@ -79,7 +79,6 @@ const SubHeader = ({
 const FlashcardItem = ({ flashcard }: { flashcard: Flashcard }) => {
   const [flipped, setFlipped] = useState(false);
   
-  // Convert color string to actual color (remove backticks if present)
   const getColor = (colorStr: string) => {
     if (colorStr?.startsWith('`') && colorStr?.endsWith('`')) {
       return colorStr.substring(1, colorStr.length - 1);
@@ -90,11 +89,11 @@ const FlashcardItem = ({ flashcard }: { flashcard: Flashcard }) => {
   return (
     <div className={style.flashcardItem} onClick={() => setFlipped(!flipped)}>
       <div className={`${style.flashcardInner} ${flipped ? style.flipped : ''}`}>
-        <div className={style.flashcardFront} style={{ background: getColor(flashcard.color) }}>
+        <div className={style.flashcardFront} style={{ background: '#4169E1'}}>
           <h3>Question</h3>
           <p>{flashcard.title}</p>
-          <small>Importance: {flashcard.importance}</small>
-          <small>Timestamp: {flashcard.timestamp}</small>
+          {/* <small>Importance: {flashcard.importance}</small>
+          <small>Timestamp: {flashcard.timestamp}</small> */}
         </div>
         <div className={style.flashcardBack}>
           <h3>Answer</h3>
@@ -183,10 +182,10 @@ const NotesPage = () => {
         if (response.status === 200) {
           setFlashcardsData(response.data);
         } else {
-          dispatch(setAlert({ data: { message: response.message, show: true, type: 'error' } }));
+          // dispatch(setAlert({ data: { message: response.message, show: true, type: 'error' } }));
         }
       } catch (error: any) {
-        dispatch(setAlert({ data: { message: error.message, show: true, type: 'error' } }));
+        // dispatch(setAlert({ data: { message: error.message, show: true, type: 'error' } }));
       } finally {
         setFlashcardsLoading(false);
       }
@@ -393,7 +392,7 @@ const NotesPage = () => {
                   </div>
                 ) : (
                   <div className={style.emptyFlashcards}>
-                    <p>No flashcards available for this content.</p>
+                    <p>No flashcards Saved for this content.</p>
                   </div>
                 )}
               </div>
