@@ -11,7 +11,7 @@ const Section_two = () => {
                 <h3>See What Glanceme.Ai Can Do</h3>
             </div>
             <div className={style.mainBanner}>
-                <Image src={"/images/home/banner2.png"} alt="banner2" fill style={{objectFit:"contain"}}/>
+                <Image src={"/images/FeaturesBanner.png"} alt="banner2" fill style={{objectFit:"contain"}}/>
             </div>
         </div>
         </div>
