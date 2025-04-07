@@ -183,7 +183,7 @@
   width: 100%;
   height: auto;
   display: flex;
-  gap: 5px;
+  gap: 10px;
   justify-content: space-between;
   align-items: center;
   padding-top: 10px;
@@ -196,10 +196,28 @@
   height: auto;
 }
 
-.mainFooterBtn{
+.mainFooterBtn {
   position: relative;
-  width: auto;
-  height: auto;
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(84.49deg, rgba(40, 64, 220, 0.7) -5.52%, rgba(242, 77, 141, 0.7) 109.09%);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.mainFooterBtn:hover {
+  transform: scale(1.05);
+}
+
+.mainFooterBtn svg {
+  width: 22px;
+  height: 22px;
+  color: white;
 }
 
 .noChat {
@@ -240,4 +258,28 @@
 .customInput:disabled {
   background-color: #f5f5f5;
   cursor: not-allowed;
+}
+
+/* Make the footer responsive */
+@media (max-width: 768px) {
+  .mainFooter {
+    gap: 8px;
+  }
+  
+  .mainFooterBtn {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+  }
+  
+  .mainFooterBtn svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .mainFooter {
+    gap: 6px;
+  }
 }
