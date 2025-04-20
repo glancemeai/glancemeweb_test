@@ -37,7 +37,6 @@ import {
 
 interface RichTextEditorProps {
   initialContent: string;
-  initialTitle?: string;
   onSave: (content: string, title?: string) => void;
   onCancel: () => void;
   placeholder?: string;
@@ -45,7 +44,6 @@ interface RichTextEditorProps {
 
 const RichTextEditor: React.FC<RichTextEditorProps> = ({
   initialContent,
-  initialTitle = '',
   onSave,
   onCancel,
   placeholder = 'Start writing...'
@@ -85,7 +83,6 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
   };
 
   const [editorState, setEditorState] = useState(getInitialState);
-  const [title, setTitle] = useState(initialTitle);
   const [expanded, setExpanded] = useState(false);
   const [isTitleFocused, setIsTitleFocused] = useState(false);
   const [titleFormatting, setTitleFormatting] = useState({
@@ -219,14 +216,9 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
   const handleSave = () => {
     const contentState = editorState.getCurrentContent();
     const html = stateToHTML(contentState, exportOptions);
+  
     
-    // Create formatted title HTML
-    let formattedTitle = title;
-    if (titleFormatting.bold) formattedTitle = `<strong>${formattedTitle}</strong>`;
-    if (titleFormatting.italic) formattedTitle = `<em>${formattedTitle}</em>`;
-    if (titleFormatting.underline) formattedTitle = `<u>${formattedTitle}</u>`;
-    
-    onSave(html, formattedTitle);
+    onSave(html);
   };
 
   const toggleBlockType = (blockType: string) => {
@@ -529,25 +521,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
           </button>
         </div>
       </div>
-      
-      <div className={styles.titleContainer}>
-        <input
-          ref={titleInputRef}
-          type="text"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          placeholder="Enter title here..."
-          className={`${styles.titleInput} ${
-            titleFormatting.bold ? styles.boldText : ''
-          } ${
-            titleFormatting.italic ? styles.italicText : ''
-          } ${
-            titleFormatting.underline ? styles.underlineText : ''
-          }`}
-          onFocus={() => setIsTitleFocused(true)}
-          onBlur={() => setIsTitleFocused(false)}
-        />
-      </div>
+    
       
       <div 
         className={styles.editorContainer} 

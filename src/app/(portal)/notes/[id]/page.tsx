@@ -23,6 +23,7 @@ import { setAlert } from '@/app/redux/utils/message';
 import type Notes from '@/app/components/utils/Interfaces/Notes';
 import DeleteAlert from '@/app/components/utils/popups/deleteAlert/deleteAlert';
 import Navigation from '@/app/home/navigation/navigation';
+import NotesCard from '@/app/components/utils/cards/NotesCard/NotesCard';
 
 interface FilterData {
   colors?: string[];
@@ -152,7 +153,10 @@ const NotesPage = () => {
         setLoading(true);
         const response = await apis.SingleNotes({ urlCode: notesToken });
         if (response.status === 200) {
-          setNotesData(response);
+          const sortedData = [...response.data].sort(
+            (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+          );
+  setNotesData({ ...response, data: sortedData });
           // Check if it's a YouTube note and set state accordingly
           if (response.data && response.data[0] && response.data[0].type === 'youtube') {
             setIsYoutubeNote(true);
@@ -305,7 +309,7 @@ const NotesPage = () => {
       <Header1 />
       <div className={style.mainHolder}>
         <SubHeader
-          title={notesData?.data[0]?.type === 'youtube' ? 'YouTube Notes' : "Article's Notes"}
+          title={notesData?.data[0]?.type === 'youtube' ? notesData?.data[0]?.title : notesData?.data[0]?.title}
           search={searchQuery}
           onSearchChange={setSearchQuery}
           onSearchSubmit={() => handleSearch({})}

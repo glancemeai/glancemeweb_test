@@ -246,16 +246,15 @@ const NotesItem = (props: NotesCard) => {
                         {isEditing ? (
                             <RichTextEditor 
                                 initialContent={props.data?.description || ''}
-                                initialTitle={htmlToPlainText(props.data?.title || '')}
                                 onSave={handleSaveEdit}
                                 onCancel={handleCancelEdit}
                                 placeholder="Enter your note here..."
                             />
                         ) : (
                             <>
-                               <h3 dangerouslySetInnerHTML={{ __html: props?.data?.title || "" }}></h3>
+                               {/* <h3 dangerouslySetInnerHTML={{ __html: props?.data?.title || "" }}></h3> */}
                                 <p dangerouslySetInnerHTML={{ __html: props?.data?.description || "" }}></p>
-                            </>
+                            </> 
                         )}
                     </div>
                 </div>
