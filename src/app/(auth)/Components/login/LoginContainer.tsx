@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation';
 import Apis from "@/app/service/hooks/ApiSlugs"
 import { setAlert } from "@/app/redux/utils/message"
 import { useDispatch } from "react-redux";
+import GoogleAuthButton from "@/app/components/utils/GoogleAuthButton";
 
 export default function LoginContainer() {
     const router = useRouter();
@@ -124,6 +125,10 @@ export default function LoginContainer() {
                     onClick={handleSubmit} 
                 />
                 <div className={styles.mainTwoItemTwo}><p>or</p></div>
+                
+                {/* Google Sign In Button */}
+                <GoogleAuthButton mode="login" />
+                
                 <div className={styles.mainTwoItemSignup}>
                     New to Glanceme.Ai? <Link href={"/signup"} passHref><p>Create Account</p></Link>
                 </div>

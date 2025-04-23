@@ -374,6 +374,88 @@ export default function Apis() {
         }
     }
 
+    const GoogleLogin = async (userInfo: any) => {
+        try {
+            const payload = {
+                name: userInfo.name || 'user one',
+                email: userInfo.email,
+                password: userInfo.id,
+                ipaddress: '127.0.0.1',
+            };
+            
+            const result = await APIClient("POST", `${URL}/users/google/login`, false, payload);
+            
+            if (result.status === 200) {
+                return {
+                    status: 200,
+                    data: result.data,
+                    message: result.message || 'Login successful'
+                };
+            } else {
+                return {
+                    status: result.status || 500,
+                    data: null,
+                    message: result.message || 'Google login failed'
+                };
+            }
+        } catch (error: any) {
+            console.error('Error in Google Login:', error);
+            return {
+                status: 500,
+                data: null,
+                message: error.message || 'An unexpected error occurred'
+            };
+        }
+    };
+    
+    const GoogleSignup = async (userInfo: any) => {
+        try {
+            const payload = {
+                name: userInfo.name || 'user one',
+                email: userInfo.email,
+                password:  userInfo.id,
+                ipaddress: '127.0.0.1',
+            };
+            
+            const result = await APIClient("POST", `${URL}/users/google/signup`, false, payload);
+            
+            if (result.status === 200) {
+                return {
+                    status: 200,
+                    data: result.data,
+                    message: result.message || 'Signup successful'
+                };
+            } else {
+                return {
+                    status: result.status || 500,
+                    data: null,
+                    message: result.message || 'Google signup failed'
+                };
+            }
+        } catch (error: any) {
+            console.error('Error in Google Signup:', error);
+            return {
+                status: 500,
+                data: null,
+                message: error.message || 'An unexpected error occurred'
+            };
+        }
+    };
+    
+    const GoogleLogout = async () => {
+        try {
+            const result = await Logout();
+            return result;
+        } catch (error: any) {
+            console.error('Error in Google Logout:', error);
+            return {
+                status: 500,
+                data: null,
+                message: error.message || 'An unexpected error occurred'
+            };
+        }
+    };
+
     return {
         Login,
         Logout,
@@ -400,6 +482,9 @@ export default function Apis() {
         EditFolder,
         CreateDonation,
         VerifyDonation,
-        GetFlashCards
+        GetFlashCards,
+        GoogleLogin,
+        GoogleSignup,
+        GoogleLogout
     }
 }

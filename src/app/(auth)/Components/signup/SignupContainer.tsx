@@ -12,6 +12,7 @@ import { FaArrowLeftLong } from "react-icons/fa6";
 import { FaRocket, FaUserAstronaut } from "react-icons/fa";
 import { HiOutlineMail } from "react-icons/hi";
 import { RiLockPasswordLine } from "react-icons/ri";
+import GoogleAuthButton from "@/app/components/utils/GoogleAuthButton";
 
 export default function SignupContainer() {
     const dispatch = useDispatch()
@@ -144,6 +145,10 @@ export default function SignupContainer() {
                         />
                     </div>
                     <div className={styles.mainTwoItemTwo}><p>or</p></div>
+                    
+                    {/* Google Sign Up Button */}
+                    <GoogleAuthButton mode="signup" />
+                    
                     <div className={styles.mainTwoItemSignup}>
                         Already Have Account? <Link href={"/login"} className={styles.loginLink}>Login Now</Link>
                     </div>
