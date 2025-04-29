@@ -58,10 +58,8 @@ export default function GoogleAuthButton({ mode, onSuccess }: GoogleAuthButtonPr
     try {
       const decoded = decodeJwtResponse(response.credential);
       console.log('Google user info:', decoded);
-
-      // Use different API methods based on mode
       if (mode === 'login') {
-        // Login flow
+        
         const result = await apis.GoogleLogin(decoded);
         
         if (result.status === 200) {
@@ -106,7 +104,6 @@ export default function GoogleAuthButton({ mode, onSuccess }: GoogleAuthButtonPr
           }));
         }
       } else {
-        // Signup flow
         const result = await apis.GoogleSignup(decoded);
         
         if (result.status === 200) {

@@ -455,6 +455,33 @@ export default function Apis() {
             };
         }
     };
+    
+    const GetAudioMcqs = async (id: string) => {
+        try {
+            const result = await APIClient("GET", `${URL}/audio-mcqs/${id}`, true, null);
+            
+            if (result && result.status === 200) {
+                return {
+                    status: 200,
+                    data: result.data || [],
+                    message: result.message || 'Audio MCQs fetched successfully'
+                };
+            } else {
+                return {
+                    status: result?.status || 500,
+                    data: [],
+                    message: result?.message || 'Failed to fetch Audio MCQs'
+                };
+            }
+        } catch (error: any) {
+            console.error('GetAudioMcqs API Error:', error);
+            return {
+                status: 500,
+                data: [],
+                message: error.message || 'An unexpected error occurred'
+            };
+        }
+    }
 
     return {
         Login,
@@ -485,6 +512,7 @@ export default function Apis() {
         GetFlashCards,
         GoogleLogin,
         GoogleSignup,
-        GoogleLogout
+        GoogleLogout,
+        GetAudioMcqs
     }
 }
