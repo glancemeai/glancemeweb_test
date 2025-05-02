@@ -1,29 +1,29 @@
 "use client"
 import React, { useState, useEffect, useRef } from "react";
 import style from "./section_three.module.css";
-import Image from "next/image";
 import Link from "next/link";
 import { BsArrowRight, BsXLg } from "react-icons/bs";
 
-const Card = ({heading, paragraph, tagLine, textSide="right", image, altText, index}:{
+const Card = ({heading, paragraph, tagLine, textSide="right", videoSrc, altText, index}:{
   heading: string,
   paragraph: string,
   tagLine?: string,
   textSide?: "right" | "left",
-  image: string,
+  videoSrc: string,
   altText: string,
   index: number
 }) => {
-    const [showImageModal, setShowImageModal] = useState(false);
+    const [showVideoModal, setShowVideoModal] = useState(false);
     const [isVisible, setIsVisible] = useState(false);
     const cardRef = useRef<HTMLDivElement>(null);
+    const videoRef = useRef<HTMLVideoElement>(null);
 
-    const handleImageClick = () => {
-        setShowImageModal(true);
+    const handleVideoClick = () => {
+        setShowVideoModal(true);
     };
 
     const handleCloseModal = () => {
-        setShowImageModal(false);
+        setShowVideoModal(false);
     };
 
     useEffect(() => {
@@ -52,7 +52,6 @@ const Card = ({heading, paragraph, tagLine, textSide="right", image, altText, in
         };
     }, []);
 
-    // Calculate staggered animation delay
     const animationDelay = `${index * 0.15}s`;
 
     return (
@@ -72,22 +71,21 @@ const Card = ({heading, paragraph, tagLine, textSide="right", image, altText, in
               ${style.clickableImage}
               ${isVisible ? style.fadeInImage : ''}
             `} 
-            onClick={handleImageClick}
+            onClick={handleVideoClick}
             style={{ animationDelay }}
           >
-            <div className={style.imageWrapper}>
-              <Image 
-                src={image} 
-                alt={altText} 
-                fill 
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                style={{objectFit:"contain", cursor: "pointer"}} 
-                className={style.cardImage}
-                loading="lazy"
-                quality={90}
+            <div className={style.videoWrapper}>
+              <video 
+                ref={videoRef}
+                src={videoSrc} 
+                autoPlay
+                loop
+                muted
+                playsInline
+                className={style.cardVideo}
+                style={{objectFit:"contain", cursor: "pointer", width: "100%", height: "100%"}}
               />
             </div>
-            <div className={style.imageBg}></div>
           </div>
           <div 
             className={`
@@ -107,7 +105,7 @@ const Card = ({heading, paragraph, tagLine, textSide="right", image, altText, in
           </div>
         </div>
 
-        {showImageModal && (
+        {showVideoModal && (
           <div className={style.imageModalOverlay} onClick={handleCloseModal}>
             <div 
               className={style.imageModalContent} 
@@ -123,14 +121,12 @@ const Card = ({heading, paragraph, tagLine, textSide="right", image, altText, in
                 </button>
               </div>
               <div className={style.imageModalImageContainer}>
-                <Image 
-                  className={style.imageInTheBox}
-                  src={image} 
-                  alt={altText} 
-                  width={1200}
-                  height={550}
-                  style={{objectFit:"contain"}}
-                  priority={true}
+                <video 
+                  className={style.videoInTheBox}
+                  src={videoSrc} 
+                  controls
+                  autoPlay
+                  style={{objectFit:"contain", width: "100%", maxHeight: "80vh"}}
                 />
               </div>
             </div>
@@ -181,17 +177,17 @@ const Section_three = () => {
                     heading="Decide at a Glance!" 
                     paragraph={`Quickly grasp the key takeaways of any video with a concise summary. Glanceme provides clear, structured summaries, allowing you to understand the core insights at a glance saving you time and effort.`} 
                     tagLine="Quick Insights" 
-                    image="/images/new-summary.png" 
-                    altText="Quickly glance"
+                    videoSrc="/images/VideosGifs/SummaryV1.mp4" 
+                    altText="Summary Feature"
                     index={0}
                 />
                 <Card 
                     heading="Your Personal Mentor, On Demand" 
                     paragraph={`Turn videos into a two-way learning experience with real-time Q&A—just like having a personal mentor by your side.`} 
                     tagLine="Engage and Enquire" 
-                    image="/images/new-qa.png" 
+                    videoSrc="/images/VideosGifs/FlashCardV1.mp4" 
                     textSide="left" 
-                    altText="Fast Track"
+                    altText="Flashcard Feature"
                     index={1}
                 />
                 <Card 
@@ -199,8 +195,8 @@ const Section_three = () => {
                     paragraph={`Cut through the clutter with our intuitive Topic Search. Find what matters in seconds. Instantly search for key topics and jump to the exact moments that matter most.`} 
                     tagLine="Glanceme.AI – Spotlight Search" 
                     textSide="right" 
-                    image="/images/mainPageHolder.png" 
-                    altText="Quickly glance"
+                    videoSrc="/images/VideosGifs/TopicSearchV1.mp4" 
+                    altText="Topic Search Feature"
                     index={2}
                 />
                 <Card 
@@ -208,8 +204,8 @@ const Section_three = () => {
                     paragraph={`Build your own searchable repository of insights. Save notes, screenshots, and timestamps to create a personalized archive and access it across different devices (Windows, Android, iOS). Organize your insights effortlessly use folders, reminders, and cross-device access to keep your knowledge structured and accessible anytime. Turn everyday learning into a structured journey of lifelong mastery.`} 
                     tagLine="Learning Vault" 
                     textSide="left" 
-                    image="/images/new-notes.png" 
-                    altText="Quickly glance"
+                    videoSrc="/images/VideosGifs/NotesTabV1.mp4" 
+                    altText="Notes Feature"
                     index={3}
                 />
             </div>
