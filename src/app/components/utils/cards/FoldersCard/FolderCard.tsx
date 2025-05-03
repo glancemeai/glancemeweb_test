@@ -45,14 +45,12 @@ const FolderCard = (props: FolderCardProps) => {
   const [editingFolderName, setEditingFolderName] = useState<string>(props.data.name);
   const [loading, setLoading] = useState(false);
   
-  // Use Redux selector to get folders
   const folderHierarchy = useSelector((state: RootState) => state.folders.allFolders as unknown as FolderHierarchy[]);
 
   useEffect(() => {
     const fetchFolders = async () => {
       try {
         setLoading(true);
-        // Only fetch if we don't have data yet
         if (folderHierarchy.length === 0) {
           const response = await apis.GetFolders();
           if (response.status === 200) {
@@ -96,25 +94,17 @@ const FolderCard = (props: FolderCardProps) => {
     setSelectedFolderId(folderId);
   };
 
-  // Function to filter out the current folder to prevent circular references
   const filterFolders = (folders: FolderHierarchy[]): FolderHierarchy[] => {
     return folders.filter(folder => {
-      // Skip the current folder
       if (folder._id === props.data._id) {
         return false;
       }
-      
-      // Recursively filter subfolders if they exist
-      // if (folder.subfolders && folder.subfolders.length > 0) {
-      //   folder.subfolders = filterFolders(folder.subfolders);
-      // }
-      
       return true;
     });
   };
 
   const renderFolderTree = (folders: FolderHierarchy[], depth = 0) => {
-    // Filter folders to prevent circular references
+
     const filteredFolders = filterFolders(folders);
     
     return filteredFolders.map(folder => {
