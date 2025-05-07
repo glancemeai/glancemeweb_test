@@ -37,7 +37,6 @@ export default function McqPage({ params }: { params: { id: string } }) {
   const api = Apis();
 
   useEffect(() => {
-    // Check if user data is available
     const storedUser = localStorage.getItem('user');
     if (!storedUser) {
       router.push('/mcq');
@@ -47,7 +46,7 @@ export default function McqPage({ params }: { params: { id: string } }) {
     setUserData(JSON.parse(storedUser));
     
     const fetchQuestions = async () => {
-      try {
+      try { 
         setIsLoading(true);
         const result = await api.GetAudioMcqs(params.id);
         console.log('API Result:', result);
@@ -86,17 +85,16 @@ export default function McqPage({ params }: { params: { id: string } }) {
     };
     
     setUserAnswers([...userAnswers, newUserAnswer]);
-    
-    // Wait for animation to complete before moving to next question
-    setTimeout(() => {
-      if (currentQuestion < questions.length - 1) {
-        setCurrentQuestion(currentQuestion + 1);
-        setOptionSelected(null);
-        setShowAnswer(false);
-      } else {
-        setIsCompleted(true);
-      }
-    }, 1500);
+  };
+
+  const handleNextQuestion = () => {
+    if (currentQuestion < questions.length - 1) {
+      setCurrentQuestion(currentQuestion + 1);
+      setOptionSelected(null);
+      setShowAnswer(false);
+    } else {
+      setIsCompleted(true);
+    }
   };
 
   const getScore = () => {
@@ -256,6 +254,12 @@ export default function McqPage({ params }: { params: { id: string } }) {
                   Incorrect! The correct answer is {currentQ.correct_answer}.
                 </div>
               )}
+              <button 
+                onClick={handleNextQuestion} 
+                className={styles.nextButton}
+              >
+                {currentQuestion < questions.length - 1 ? 'Next Question' : 'Finish Quiz'}
+              </button>
             </div>
           )}
         </div>

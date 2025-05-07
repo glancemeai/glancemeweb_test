@@ -175,19 +175,19 @@ const Section_three = () => {
             <div className={style.mainHolder}>
                 <Card 
                     heading="Decide at a Glance!" 
-                    paragraph={`Quickly grasp the key takeaways of any video with a concise summary. Glanceme provides clear, structured summaries, allowing you to understand the core insights at a glance saving you time and effort. Turn videos into a two-way learning experience with real-time Q&A—just like having a personal mentor by your side.`} 
+                    paragraph={`Quickly grasp the key takeaways of any video with a concise summary. Glanceme provides clear, structured summaries, allowing you to understand the core insights at a glance saving you time and effort.`} 
                     tagLine="Quick Insights" 
-                    videoSrc="/images/VideosGifs/SummaryV1.mp4" 
+                    videoSrc="/images/VideosGifs/SummaryV2.mp4" 
                     altText="Summary Feature"
                     index={0}
                 />
                 <Card 
-                    heading="Flashcards for A Quick Recap" 
-                    paragraph={`Active Recall is a powerful technique for improved learning. Use Flash Cards for a quick recap of the content that you consumed. This knowledge check strengthens your memory and also helps you find areas where you need more work.`} 
-                    tagLine="Review and Recall" 
-                    videoSrc="/images/VideosGifs/FlashCardV1.mp4" 
+                    heading="Your Personal Mentor, On Demand" 
+                    paragraph={`Turn videos into a two-way learning experience with real-time Q&A—just like having a personal mentor by your side.`} 
+                    tagLine="Engage and Enquire" 
+                    videoSrc="/images/VideosGifs/QuestionSearchV2.mp4" 
                     textSide="left" 
-                    altText="Flashcard Feature"
+                    altText="Question Search Feature"
                     index={1}
                 />
                 <Card 
@@ -204,9 +204,18 @@ const Section_three = () => {
                     paragraph={`Build your own searchable repository of insights. Save notes, screenshots, and timestamps to create a personalized archive and access it across different devices (Windows, Android, iOS). Organize your insights effortlessly use folders, reminders, and cross-device access to keep your knowledge structured and accessible anytime. Turn everyday learning into a structured journey of lifelong mastery.`} 
                     tagLine="Learning Vault" 
                     textSide="left" 
-                    videoSrc="/images/VideosGifs/NotesTabV1.mp4" 
+                    videoSrc="/images/VideosGifs/NotesTabV2.mp4" 
                     altText="Notes Feature"
                     index={3}
+                />
+                <Card 
+                    heading="Flashcards for A Quick Recap " 
+                    paragraph={`Active Recall is a powerful technique for improved learning. Use Flash Cards for a quick recap of the content that you consumed. This knowledge check strengthens your memory and also helps you find areas where you need more work.`} 
+                    tagLine="Review and Recall" 
+                    textSide="right" 
+                    videoSrc="/images/VideosGifs/FlashCardV2.mp4" 
+                    altText="Flashcard Feature"
+                    index={4}
                 />
             </div>
            

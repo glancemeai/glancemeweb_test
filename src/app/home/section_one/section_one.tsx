@@ -161,23 +161,26 @@ const Section_one = () => {
       </div>
 
       <div className={`${style.mainBanner} ${subtitleVisible ? style.bannerVisible : ''}`}>
-        <Tilt
+        {/* <Tilt
           glareEnable={true}
           glareMaxOpacity={0.2}
           glareColor="#ffffff"
           glarePosition="all"
           glareBorderRadius="20px"
-        >
-          <div className={style.mainBannerImage}>
-            <Image
-              src={"/images/mainPageHolder.png"}
-              alt="magic"
-              fill 
-              style={{ objectFit: "contain" }}
-              className={style.bannerImage}
-            />
+        > */}
+          <div className={style.mainBannerVideo}>
+            <video
+              className={style.bannerVideo}
+              autoPlay
+              muted
+              playsInline
+              controls
+            >
+              <source src="/images/VideosGifs/Glanceme_Main.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
           </div>
-        </Tilt>
+        {/* </Tilt> */}
       </div>
     </div>
   );

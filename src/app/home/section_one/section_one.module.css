@@ -279,6 +279,31 @@
   transition: opacity 1s ease-in;
 }
 
+.mainBannerVideo {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 400px;
+  border-radius: 20px;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+}
+
+.bannerVideo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 20px;
+}
+
+.bannerVideo::-webkit-media-controls {
+  border-radius: 0 0 20px 20px;
+}
+
+.bannerVideo::-webkit-media-controls-panel {
+  padding: 0 10px;
+}
+
 /* Media Queries - Keep your existing media queries and add the animation styles */
 @media only screen and (max-width: 600px) {
   .titleAnimation, .titleAnimation.visible {
