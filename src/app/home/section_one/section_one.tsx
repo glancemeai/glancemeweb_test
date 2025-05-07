@@ -181,7 +181,7 @@ const Section_one = () => {
             </video>
           </div>
         {/* </Tilt> */}
-      </div>
+      </div> 
     </div>
   );
 };
