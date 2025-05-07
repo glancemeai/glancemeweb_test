@@ -178,7 +178,7 @@ const Section_one = () => {
             >
               <source src="/images/VideosGifs/Glanceme_Main.mp4" type="video/mp4" />
               Your browser does not support the video tag.
-            </video>
+            </video> 
           </div>
         {/* </Tilt> */}
       </div> 
