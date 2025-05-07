@@ -85,18 +85,18 @@ const About: React.FC = () => {
     {
       name: 'Harsh',
       role: 'Head Of Product',
-      imagePath: '/images/home/harsh.jpg',
-      bio: "Product visionary focused on creating user-centric solutions that drive meaningful innovation.",
+      imagePath: '/images/home/HarshKhannaV2.jpg',
+      bio: "Industry veteran with a passion for using technology to enhance learning. I believe AI shouldn't replace educators — it should augment them. My focus is on building intuitive solutions that bring structure, personalization, and efficiency to digital education.",
       expertise: [
-        "Product Strategy",
-        "User Experience Design",
-        "Market Analysis",
-        "Product Development"
+        "Product Design",
+        "Customer Experience",
+        "Business Process Improvement",
+        "Analytics"
       ],
       achievements: [
-        "Successfully Launched Multiple AI Products",
-        "User Experience Design Awards",
-        "Innovative Product Roadmap Development"
+        "MTech in Data Science and Engineering (BITS Pilani)",
+        "Pursuing Professional Certificate in Product Management (ISB)",
+        "20+ years of experience at Dell Technologies in various roles including process optimization and product design"
       ]
     }
   ];
