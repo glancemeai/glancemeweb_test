@@ -79,9 +79,9 @@
 
 .mainHolderItemImage {
   position: relative;
-  width: 45%;
+  width: 50%;
   aspect-ratio: 16 / 9;
-  max-height: 400px;
+  max-height: 450px;
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
@@ -141,7 +141,7 @@
 
 .mainHolderItemText {
   position: relative;
-  width: 55%;
+  width: 50%;
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -496,4 +496,20 @@
     width: 100%;
     height: auto;
   }
+}
+
+.videoWrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cardVideo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transform: scale(1.05);
 }

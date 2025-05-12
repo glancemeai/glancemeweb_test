@@ -383,6 +383,7 @@
     font-size: 14px;
     color: #666;
     line-height: 1.5;
+    text-wrap: wrap;
 }
 
 .deleteButton {

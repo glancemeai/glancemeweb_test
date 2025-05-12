@@ -83,9 +83,18 @@ const Card = ({heading, paragraph, tagLine, textSide="right", videoSrc, altText,
                 muted
                 playsInline
                 className={style.cardVideo}
-                style={{objectFit:"contain", cursor: "pointer", width: "100%", height: "100%"}}
+                style={{
+                  objectFit: "contain", 
+                  cursor: "pointer", 
+                  width: "100%", 
+                  height: "100%", 
+                  maxWidth: "100%", 
+                  maxHeight: "100%", 
+                  display: "block"
+                }}
               />
             </div>
+            
           </div>
           <div 
             className={`
@@ -126,7 +135,7 @@ const Card = ({heading, paragraph, tagLine, textSide="right", videoSrc, altText,
                   src={videoSrc} 
                   controls
                   autoPlay
-                  style={{objectFit:"contain", width: "100%", maxHeight: "80vh"}}
+                  style={{objectFit:"contain", width: "100%", maxHeight: "90vh"}}
                 />
               </div>
             </div>

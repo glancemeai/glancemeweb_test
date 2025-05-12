@@ -287,13 +287,20 @@
   border-radius: 20px;
   overflow: hidden;
   backdrop-filter: blur(10px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 }
 
 .bannerVideo {
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
   border-radius: 20px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: none;
+  min-height: 400px;
+  background-color: rgba(0, 0, 0, 0.05);
 }
 
 .bannerVideo::-webkit-media-controls {
@@ -338,6 +345,12 @@
   .mainBannerImage {
     height: 300px;
   }
+  .mainBannerVideo {
+    min-height: 200px;
+  }
+  .bannerVideo {
+    min-height: 200px;
+  }
 }
 
 /* Include your other media queries here - I'm keeping them from your original CSS */
@@ -373,6 +386,12 @@
       }
       .mainBannerImage {
         height: 450px;
+      }
+      .mainBannerVideo {
+        min-height: 250px;
+      }
+      .bannerVideo {
+        min-height: 250px;
       }
 }
 
@@ -410,6 +429,12 @@
       .mainBannerImage {
         height: 600px;
       }
+      .mainBannerVideo {
+        min-height: 350px;
+      }
+      .bannerVideo {
+        min-height: 350px;
+      }
 }
 
 /* Large devices (laptops/desktops, 992px and up) */
@@ -446,6 +471,12 @@
       .mainBannerImage {
         height: 600px;
       }
+      .mainBannerVideo {
+        min-height: 450px;
+      }
+      .bannerVideo {
+        min-height: 450px;
+      }
 }
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */
@@ -481,5 +512,11 @@
       }
       .mainBannerImage {
         height: 600px;
+      }
+      .mainBannerVideo {
+        min-height: 500px;
+      }
+      .bannerVideo {
+        min-height: 500px;
       }
 }

@@ -169,16 +169,17 @@ const Section_one = () => {
           glareBorderRadius="20px"
         > */}
           <div className={style.mainBannerVideo}>
-            <video
+            <iframe
               className={style.bannerVideo}
-              autoPlay
-              muted
-              playsInline
-              controls
-            >
-              <source src="/images/VideosGifs/Glanceme_Main.mp4" type="video/mp4" />
-              Your browser does not support the video tag.
-            </video> 
+              width="100%"
+              height="100%"
+              src="https://www.youtube.com/embed/YyCbaqxfQsY?si=AicRz-5vnN60q22Q&autoplay=1&mute=1&loop=1&playlist=YyCbaqxfQsY&controls=1&modestbranding=1&rel=0"
+              title="YouTube video player"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerPolicy="strict-origin-when-cross-origin"
+              allowFullScreen
+            ></iframe>
           </div>  
         {/* </Tilt> */}
       </div> 
