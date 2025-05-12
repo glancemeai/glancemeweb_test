@@ -226,6 +226,16 @@ const Section_three = () => {
                     altText="Flashcard Feature"
                     index={4}
                 />
+                <Card 
+                    heading="Configure Glanceme Your Way " 
+                    paragraph={`Take full control of your learning experience.
+                      Choose the tone, response style, language, and even the AI model that powers your insights. Prefer light or dark mode? You decide. Glanceme adapts to how you like to learn.`} 
+                    tagLine="Customize it, personalize it" 
+                    textSide="left" 
+                    videoSrc="/images/VideosGifs/Settings.mp4" 
+                    altText="Save Personalization Feature"
+                    index={5}
+                />
             </div>
            
         </div>
