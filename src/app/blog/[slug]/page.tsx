@@ -301,12 +301,12 @@ const BlogPostPage: React.FC = () => {
           </div>
           
           <div className={styles.actionButtons}>
-            <button className={styles.actionButton} aria-label="Comment"   onClick={() => commentsSectionRef.current?.scrollIntoView({ behavior: 'smooth' })}
+            {/* <button className={styles.actionButton} aria-label="Comment"   onClick={() => commentsSectionRef.current?.scrollIntoView({ behavior: 'smooth' })}
             >
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
               </svg>
-            </button>
+            </button> */}
             
             <button 
               className={styles.actionButton} 
@@ -470,7 +470,7 @@ const BlogPostPage: React.FC = () => {
         </article>
         
         {/* Comments Section */}
-        <section className={styles.commentsSection}  ref={commentsSectionRef}>
+        {/* <section className={styles.commentsSection}  ref={commentsSectionRef}>
           <h3 className={styles.commentsTitle}>
             Comments <span className={styles.commentsCount}>({comments.length})</span>
           </h3>
@@ -491,7 +491,7 @@ const BlogPostPage: React.FC = () => {
                 <button className={styles.commentAction}>Reply</button>
               </div>
             </div>
-          ))}
+          ))} */}
           
           {/* New Comment Form */}
           {/* <form onSubmit={handleCommentSubmit} className={styles.newCommentForm}>
@@ -510,7 +510,7 @@ const BlogPostPage: React.FC = () => {
               </button>
             </div>
           </form> */}
-        </section>
+        {/* </section> */}
       </main>
     </div>
   );

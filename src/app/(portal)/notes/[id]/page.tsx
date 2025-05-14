@@ -416,7 +416,7 @@ const NotesPage = () => {
         loading={loadingAlert}
         show={alertShow}
         Title="Delete Notes"
-        message="Click On Delete Button Your All Notes and Folder Related to this Notes will be deleted."
+        message="This will delete all the notes on this video/article. This action cannot be undone. Please click Delete to continue."
         cancle={AlertShowHandler}
         folderIdAlert={folderIdAlert}
         Delete={deleteAllNotes}

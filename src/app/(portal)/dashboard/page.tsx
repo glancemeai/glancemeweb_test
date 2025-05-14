@@ -67,12 +67,12 @@ const SubHeader = ({
           placeholder="Search in this Folder"
         />
         <ButtonFour onClick={() => searchHandler()} icon={<FiSearch size={18} color="#fff" />} />
-        <p
+        {/* <p
           className={style.mainHolderHeaderOptionsSearchFilter}
           onClick={() => filterShowHandler(true)}
         >
           <HiOutlineAdjustmentsVertical size={25} />
-        </p>
+        </p> */}
       </div>
     </div>
   </div>

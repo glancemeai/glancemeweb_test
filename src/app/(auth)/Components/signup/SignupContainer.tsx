@@ -97,9 +97,9 @@ export default function SignupContainer() {
         <>
             <div className={styles.main}>
                 <div className={styles.mainOne}>
-                    <h1 className={styles.titleAnimation}>Hello Buddy</h1>
-                    <h2 className={styles.subtitleAnimation}>Join</h2>
-                    <div className={styles.sentenceContainer}>The largest community</div>
+                    <h1 className={styles.titleAnimation}>Hello! Please Share</h1>
+                    <h2 className={styles.subtitleAnimation}>The Following Details</h2>
+                    <div className={styles.sentenceContainer}>To Create your Free Glanceme Account</div>
                 </div>
                 <div className={styles.mainTwo}>
                     <div className={styles.inputWrapper}>

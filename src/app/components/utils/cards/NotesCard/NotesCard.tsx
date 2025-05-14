@@ -231,36 +231,39 @@ const NotesCard = (props: NotesCard) => {
 
   const handleDelete = async () => {
     try {
-      const result = await apis.DeleteNotes({
-        notes_token: props.data?.notes_token || ''
+      if (!props.data?.urlHash) {
+        throw new Error('URL hash is required');
+      }
+  
+      const result = await apis.DeleteAllNotes({
+        urlCode: props.data.urlHash
       });
-
+  
       if (result.status === 200) {
         dispatch(setAlert({
           data: {
-            message: "Note deleted successfully",
+            message: "Notes deleted successfully",
             show: true,
             type: "success"
           }
         }));
         
-        if (props.refreshNotes) {
-          props.refreshNotes();
-        }
-        
-        setShowDeleteConfirm(false);
+        // Navigate to dashboard after deletion
+        window.location.href = '/dashboard';
       } else {
-        throw new Error(result.message || 'Failed to delete note');
+        throw new Error(result.message || 'Failed to delete notes');
       }
     } catch (error: any) {
       dispatch(setAlert({
         data: {
-          message: error.message || "Failed to delete note",
+          message: error.message || "Failed to delete notes",
           show: true,
           type: "error"
         }
       }));
-      console.error('Delete note error:', error);
+      console.error('Delete notes error:', error);
+    } finally {
+      setShowDeleteConfirm(false);
     }
   };
 
@@ -323,7 +326,7 @@ const NotesCard = (props: NotesCard) => {
             <div className={style.deleteModal}>
               <div className={style.deleteContent}>
                 <h3>Delete Note</h3>
-                <p>Are you sure you want to delete this note? This action cannot be undone.</p>
+                <p>This will delete all the notes on this video/article. This action cannot be undone. Please click Delete to continue.</p>
                 <div className={style.modalActions}>
                   <button 
                     className={style.cancelButton}
