@@ -307,7 +307,7 @@ export default function LoginContainer() {
                                     onChange={Handler} 
                                 />
                                 <div className={styles.resendOTP}>
-                                    <p>Didn't receive code?</p>
+                                    <p>Didnt receive code?</p>
                                     <span 
                                         className={styles.resendButton} 
                                         onClick={handleForgotPassword}
