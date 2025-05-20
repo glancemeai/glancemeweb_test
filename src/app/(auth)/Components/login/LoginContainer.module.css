@@ -178,3 +178,88 @@
         font-size: 16px;
     }
 }
+
+.forgotPasswordLink {
+    position: relative;
+    width: 100%;
+    text-align: right;
+    margin-bottom: 15px;
+}
+
+.forgotPasswordLink p {
+    color: #2478fe;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.forgotPasswordLink p:hover {
+    text-decoration: underline;
+}
+
+/* OTP Modal styles - similar to signup OTP modal */
+.mainOTP {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+.mainOTPHolder {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.mainOTPHolderHeading {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px; 
+    gap: 15px;
+}
+
+.mainOTPHolderHeading span {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.mainOTPHolderHeading p {
+    font-size: 18px;
+    font-weight: 500;
+    margin: 0;
+}
+
+.mainOTPHolderInput {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.mainOTPHolderButton {
+    margin-top: 20px;
+}
+
+.resendOTP {
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+    font-size: 14px;
+}
+
+.resendButton {
+    color: #2478fe;
+    cursor: pointer;
+}
+
+.resendButton:hover {
+    text-decoration: underline;
+}

@@ -455,6 +455,60 @@ export default function Apis() {
             };
         }
     };
+
+    const ForgotPassword = async (data: { email: string }) => {
+    try {
+        const result = await APIClient("POST", `${URL}/users/forget`, false, data);
+        
+        if (result && result.status === 200) {
+            return {
+                status: 200,
+                data: result.data || {},
+                message: result.message || 'OTP sent to your email successfully'
+            };
+        } else {
+            return {
+                status: result?.status || 500,
+                data: {},
+                message: result?.message || 'Failed to send OTP'
+            };
+        }
+    } catch (error: any) {
+        console.error('ForgotPassword API Error:', error);
+        return {
+            status: 500,
+            data: {},
+            message: error.message || 'An unexpected error occurred'
+        };
+      }
+    }
+
+    const VerifyForgotPassword = async (data: { email: string, otp: string, newPassword: string }) => {
+    try {
+        const result = await APIClient("POST", `${URL}/users/forget-verify`, false, data);
+        
+        if (result && result.status === 200) {
+            return {
+                status: 200,
+                data: result.data || {},
+                message: result.message || 'Password reset successful'
+            };
+        } else {
+            return {
+                status: result?.status || 500,
+                data: {},
+                message: result?.message || 'Failed to reset password'
+            };
+        }
+    } catch (error: any) {
+        console.error('VerifyForgotPassword API Error:', error);
+        return {
+            status: 500,
+            data: {},
+            message: error.message || 'An unexpected error occurred'
+        };
+    }
+}
     
     const GetAudioMcqs = async (id: string) => {
         try {
@@ -513,6 +567,8 @@ export default function Apis() {
         GoogleLogin,
         GoogleSignup,
         GoogleLogout,
-        GetAudioMcqs
+        GetAudioMcqs,
+        ForgotPassword,
+        VerifyForgotPassword
     }
 }

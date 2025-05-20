@@ -9,6 +9,7 @@ import Apis from "@/app/service/hooks/ApiSlugs"
 import { setAlert } from "@/app/redux/utils/message"
 import { useDispatch } from "react-redux";
 import GoogleAuthButton from "@/app/components/utils/GoogleAuthButton";
+import { FaArrowLeftLong } from "react-icons/fa6"
 
 export default function LoginContainer() {
     const router = useRouter();
@@ -16,11 +17,23 @@ export default function LoginContainer() {
     // data init
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const [showForgotPasswordModal, setShowForgotPasswordModal] = useState(false)
+    const [forgotEmail, setForgotEmail] = useState("")
+    const [otp, setOtp] = useState("")
+    const [newPassword, setNewPassword] = useState("")
+    const [forgotPasswordStep, setForgotPasswordStep] = useState(1) // 1 = email entry, 2 = OTP verification
     const Handler = async (data: string, type: string) => {
         if (type == "Email") {
             setEmail(data)
         } else if (type == "Password") {
             setPassword(data)
+        }
+        else if (type == "forgotEmail") {
+            setForgotEmail(data)
+        } else if (type == "OTP") {
+            setOtp(data)
+        } else if (type == "newPassword") {
+            setNewPassword(data)
         }
     }
     
@@ -93,8 +106,113 @@ export default function LoginContainer() {
             }));
         }
     };
+
+    const handleForgotPassword = async () => {
+        if (!forgotEmail) {
+            dispatch(setAlert({ 
+                data: { 
+                    message: "Please enter your email address", 
+                    show: true, 
+                    type: "error" 
+                } 
+            }));
+            return;
+        }
+
+        setLoginCall(true);
+        try {
+            const apis = Apis();
+            const data = await apis.ForgotPassword({ email: forgotEmail });
+            setLoginCall(false);
+
+            if (data.status === 200) {
+                setForgotPasswordStep(2); // Move to OTP verification step
+                dispatch(setAlert({ 
+                    data: { 
+                        message: "OTP sent to your email!", 
+                        show: true, 
+                        type: "success" 
+                    } 
+                }));
+            } else {
+                dispatch(setAlert({ 
+                    data: { 
+                        message: data.message || "Failed to send OTP", 
+                        show: true, 
+                        type: "error" 
+                    } 
+                }));
+            }
+        } catch (error: any) {
+            setLoginCall(false);
+            dispatch(setAlert({ 
+                data: { 
+                    message: error.message || "An unexpected error occurred", 
+                    show: true, 
+                    type: "error" 
+                } 
+            }));
+        }
+    };
+    const handleVerifyOTP = async () => {
+        if (!otp || !newPassword) {
+            dispatch(setAlert({ 
+                data: { 
+                    message: "Please enter OTP and new password", 
+                    show: true, 
+                    type: "error" 
+                } 
+            }));
+            return;
+        }
+         setLoginCall(true);
+    try {
+        const apis = Apis();
+            const data = await apis.VerifyForgotPassword({ 
+                email: forgotEmail, 
+                otp: otp, 
+                newPassword: newPassword 
+            });
+            setLoginCall(false);
+
+            if (data.status === 200) {
+                setShowForgotPasswordModal(false);
+                setForgotPasswordStep(1);
+                setOtp("");
+                setNewPassword("");
+                setForgotEmail("");
+                
+                dispatch(setAlert({ 
+                    data: { 
+                        message: "Password reset successful! Please login with your new password", 
+                        show: true, 
+                        type: "success" 
+                    } 
+                }));
+            } else {
+                dispatch(setAlert({ 
+                    data: { 
+                        message: data.message || "Failed to verify OTP", 
+                        show: true, 
+                        type: "error" 
+                    } 
+                }));
+            }
+        }
+        catch (error: any) {
+            setLoginCall(false);
+            dispatch(setAlert({ 
+                data: { 
+                    message: error.message || "An unexpected error occurred", 
+                    show: true, 
+                    type: "error" 
+                } 
+            }));
+        }
+    };
     
     return (
+        <>
         <div className={styles.main}>
             <div className={styles.mainOne}>
                 <h1 className={styles.titleAnimation}>Welcome <span className={styles.subtitleAnimation}>Back</span></h1>
@@ -119,6 +237,9 @@ export default function LoginContainer() {
                     value={password} 
                     onChange={Handler} 
                 />
+                <div className={styles.forgotPasswordLink}>
+                        <p onClick={() => setShowForgotPasswordModal(true)}>Forgot Password?</p>
+                </div>
                 <ButtonThree 
                     laod={loginCall} 
                     name={loginCall ? "Preparing Dashboard..." : "Login To Glanceme.Ai"} 
@@ -134,5 +255,78 @@ export default function LoginContainer() {
                 </div>
             </div>
         </div>
-    )
+        {showForgotPasswordModal && (
+                <div className={styles.mainOTP}>
+                    <div className={styles.mainOTPHolder}>
+                        <div className={styles.mainOTPHolderHeading}>
+                            <span onClick={() => {
+                                setShowForgotPasswordModal(false);
+                                setForgotPasswordStep(1);
+                                setOtp("");
+                                setNewPassword("");
+                            }}>
+                                <FaArrowLeftLong size={20}/> 
+                            </span>
+                            <p>{forgotPasswordStep === 1 ? "Forgot Password" : "OTP Verification"}</p>
+                        </div>
+                        
+                        {forgotPasswordStep === 1 ? (
+                            <div className={styles.mainOTPHolderInput}>
+                                <InputOne 
+                                    disable={loginCall} 
+                                    placeholder={"Enter your email address"} 
+                                    name={"Enter your email"} 
+                                    id={"forgotEmail"} 
+                                    value={forgotEmail} 
+                                    onChange={Handler} 
+                                />
+                                <div className={styles.mainOTPHolderButton}>
+                                    <ButtonThree 
+                                        laod={loginCall} 
+                                        name={"Send OTP"} 
+                                        onClick={handleForgotPassword} 
+                                    />
+                                </div>
+                            </div>
+                        ) : (<div className={styles.mainOTPHolderInput}>
+                                <InputOne 
+                                    disable={loginCall} 
+                                    placeholder={"Enter OTP sent to your email"} 
+                                    name={"Enter OTP"} 
+                                    id={"OTP"} 
+                                    value={otp} 
+                                    onChange={Handler} 
+                                />
+                                <InputOne 
+                                    disable={loginCall} 
+                                    type={"password"}
+                                    placeholder={"Enter new password"} 
+                                    name={"Enter new password"} 
+                                    id={"newPassword"} 
+                                    value={newPassword} 
+                                    onChange={Handler} 
+                                />
+                                <div className={styles.resendOTP}>
+                                    <p>Didn't receive code?</p>
+                                    <span 
+                                        className={styles.resendButton} 
+                                        onClick={handleForgotPassword}
+                                    >
+                                        Resend OTP
+                                    </span>
+                                </div>
+                                <div className={styles.mainOTPHolderButton}>
+                                    <ButtonThree 
+                                        laod={loginCall} 
+                                        name={"Reset Password"} 
+                                        onClick={handleVerifyOTP} 
+                                    />
+                                </div>
+                            </div>
+                        )}
+                        </div>
+                </div>
+            )}
+    </>
+ )
 }
