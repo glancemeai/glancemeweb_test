@@ -124,8 +124,8 @@ const Footer = () => {
                             <div className={style.appStoreLogo} onClick={handleAppStoreClick}>
                                 <Image src={"/images/appstore.png"} alt="app store" width={150} height={60} />
                             </div>
-                            <div className={style.playStoreLogo} onClick={handlePlayStoreClick}>
-                                <Image src={"/images/playstore.png"} alt="play store" width={150} height={60} />
+                            <div className={style.playStoreLogo}>
+                                <Link href={'https://play.google.com/store/apps/details?id=com.glanceme.glanceme&pcampaignid=web_share'}><Image src={"/images/playstore.png"} alt="play store" width={150} height={60} /></Link>
                             </div>
                         </div>
                     </div>

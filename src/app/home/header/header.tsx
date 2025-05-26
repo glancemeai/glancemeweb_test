@@ -113,6 +113,8 @@ const Header = () => {
       setActiveTab('notes');
     } else if (pathname === '/home') {
       setActiveTab('home');
+    } else if (pathname === '/products') {
+      setActiveTab('products');
     } else {
       setActiveTab('home'); // Default case
     }
@@ -140,6 +142,9 @@ const Header = () => {
           </div>
           <div className={`${style.mainHeaderHolderMenuItem} ${activeTab === 'faqs' ? style.active : ''}`}>
             <Link href={"/faqs"} passHref><p onClick={() => { setActiveTab('faqs') }}>FAQs</p></Link>
+          </div>
+          <div className={`${style.mainHeaderHolderMenuItem} ${activeTab === 'products' ? style.active : ''}`}>
+            <Link href={"/products"} passHref><p onClick={() => { setActiveTab('products') }}>Products</p></Link>
           </div>
           {isDashboardOrFolder && (
             <div className={`${style.mainHeaderHolderMenuItem} ${activeTab === 'notes' ? style.active : ''}`}>

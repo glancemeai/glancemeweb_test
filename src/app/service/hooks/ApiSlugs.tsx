@@ -4,6 +4,32 @@ import Folders from '../../components/utils/Interfaces/Folders';
 export default function Apis() {
     const URL = "https://glanceme.co.in/v1/api"
     const NEW_URL = "https://glanceme.co.in/v2/api"
+    const bot_url = "https://glanceme.co.in/v1/api/bot"
+    
+interface MeetingParticipant {
+    name: string;
+    email: string;
+  }
+  
+  interface MeetingStorage {
+    audioPath: string;
+    videoPath: string;
+    captionPath: string;
+  }
+  
+  interface MeetingRequest {
+    title: string;
+    description: string;
+    platform: string;
+    meetingUrl: string;
+    startTime: string;
+    endTime: string;
+    recordAudio: boolean;
+    recordVideo: boolean;
+    recordCaptions: boolean;
+    storage: MeetingStorage;
+    participants: MeetingParticipant[];
+  }
 
     
     const Login = async (data:any) => {
@@ -120,6 +146,33 @@ export default function Apis() {
             };
         }
     }
+
+    const CreateMeeting = async (data: MeetingRequest) => {
+        try {
+          const result = await APIClient("POST", `${URL}/meeting`, true, data);
+          
+          if (result && result.status === 200) {
+            return {
+              status: 200,
+              data: result.data || {},
+              message: result.message || 'Meeting created successfully'
+            };
+          } else {
+            return {
+              status: result?.status || 500,
+              data: {},
+              message: result?.message || 'Failed to create meeting'
+            };
+          }
+        } catch (error: any) {
+          console.error('CreateMeeting API Error:', error);
+          return {
+            status: 500,
+            data: {},
+            message: error.message || 'An unexpected error occurred'
+          };
+        }
+      }
 
 
     const SendChatMessage = async (data: {
@@ -569,6 +622,7 @@ export default function Apis() {
         GoogleLogout,
         GetAudioMcqs,
         ForgotPassword,
-        VerifyForgotPassword
+        VerifyForgotPassword,
+        CreateMeeting
     }
 }

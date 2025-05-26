@@ -1,0 +1,475 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+.container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: calc(100vh - 70px);
+  max-width: 1300px;
+  margin: 0px auto;
+  margin-top: 70px;
+  overflow: hidden;
+  font-family: 'Poppins', sans-serif;
+  color: #333;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 20px 0;
+}
+
+.containerBg {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  background-image: url("/images/home/Lines_group.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  z-index: 1;
+}
+
+.containerBg::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("/images/home/glassmorphism.png");
+  background-size: cover;
+  background-position: center;
+  opacity: 0.4;
+}
+
+/* Additional gradient overlay for enhanced visual appeal */
+.containerBg::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, 
+    rgba(34, 63, 218, 0.08) 0%, 
+    rgba(141, 83, 255, 0.08) 35%, 
+    rgba(249, 77, 134, 0.08) 70%,
+    rgba(255, 255, 255, 0.1) 100%
+  );
+  backdrop-filter: blur(0.5px);
+}
+
+.contentHolder {
+  position: relative;
+  width: 100%;
+  height: auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  z-index: 10;
+}
+
+.teamHeaderSection {
+  position: relative;
+  width: 100%;
+  height: auto;
+  padding: 20px;
+  margin-top: 20px;
+  display: flex;
+  gap: 30px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.heroSection {
+  margin-bottom: 20px;
+}
+
+/* Title animation */
+.titleAnimation {
+  font-size: clamp(2.5rem, 8vw, 4rem);
+  font-weight: 700;
+  opacity: 0;
+  transform: translateY(-30px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  margin: 0;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: #333;
+}
+
+.titleAnimation.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.subtitleAnimation {
+  font-size: clamp(2.5rem, 8vw, 4rem);
+  font-weight: 700;
+  background: linear-gradient(
+    90.73deg,
+    #223fda 28.09%,
+    #8d53ff 50.59%,
+    #f94d86 72.2%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  opacity: 0;
+  transform: translateY(-30px);
+  transition: opacity 1.2s ease-out, transform 1.2s ease-out;
+  transition-delay: 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  margin: 0;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  flex-wrap: wrap;
+}
+
+.subtitleAnimation.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.starsIcon {
+  display: inline-block;
+  animation: sparkle 2s infinite;
+  font-size: 0.8em;
+  filter: drop-shadow(0 0 10px rgba(249, 77, 134, 0.3));
+}
+
+
+@keyframes sparkle {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.2); opacity: 0.8; }
+}
+
+.heroSubtitle {
+  font-size: clamp(1.1rem, 3vw, 1.3rem);
+  color: rgba(51, 51, 51, 0.8);
+  font-weight: 500;
+  margin: 10px 0 0 0;
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  transition-delay: 0.6s;
+}
+
+.heroSubtitle.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Card Styles */
+.scheduleCard {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.1),
+    0 4px 16px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  max-width: 600px;
+  width: 100%;
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  transition-delay: 0.9s;
+}
+
+.scheduleCard.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.cardTitle {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333;
+  margin: 0 0 25px 0;
+  text-align: left;
+}
+
+.cardIcon {
+  color: #223fda;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.inputLabel {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #374151;
+  margin: 0;
+}
+
+.optionalNote {
+  font-size: 0.85rem;
+  color: #6b7280;
+  font-weight: 400;
+}
+
+.inputField {
+  padding: 12px 16px;
+  border: 2px solid rgba(34, 63, 218, 0.2);
+  border-radius: 12px;
+  font-size: 1rem;
+  font-family: 'Poppins', sans-serif;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.inputField:focus {
+  outline: none;
+  border-color: #223fda;
+  box-shadow: 0 0 0 3px rgba(34, 63, 218, 0.1);
+  background: rgba(255, 255, 255, 0.95);
+}
+
+.inputField::placeholder {
+  color: #9ca3af;
+}
+
+.datePickerWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.inputIcon {
+  position: absolute;
+  left: 16px;
+  color: #6b7280;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.datePickerWrapper .inputField {
+  padding-left: 48px;
+}
+
+.scheduleButton {
+  background: linear-gradient(135deg, #223fda 0%, #8d53ff 100%);
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 600;
+  font-family: 'Poppins', sans-serif;
+  padding: 16px 24px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 
+    0 4px 15px rgba(34, 63, 218, 0.3),
+    0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-top: 10px;
+}
+
+.scheduleButton:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 8px 25px rgba(34, 63, 218, 0.4),
+    0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.scheduleButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.liveCard {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 20px;
+  padding: 25px;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.1),
+    0 4px 16px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(34, 218, 63, 0.3);
+  max-width: 600px;
+  width: 100%;
+  animation: slideInUp 0.5s ease-out;
+}
+
+.cardSubtitle {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #059669;
+  margin: 0 0 15px 0;
+  text-align: center;
+}
+
+.cardInfo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 10px 0;
+  font-size: 1rem;
+  color: #374151;
+}
+
+.linkSection {
+  margin: 20px 0;
+  padding: 15px;
+  background: rgba(34, 63, 218, 0.05);
+  border-radius: 12px;
+  border: 1px solid rgba(34, 63, 218, 0.1);
+}
+
+.linkLabel {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 8px;
+}
+
+.linkValue {
+  display: inline-block;
+  color: #223fda;
+  text-decoration: none;
+  word-break: break-all;
+  font-family: 'Courier New', monospace;
+  font-size: 0.95rem;
+  padding: 2px 4px;
+  border-radius: 4px;
+  background: rgba(34, 63, 218, 0.1);
+}
+
+.linkValue:hover {
+  background: rgba(34, 63, 218, 0.2);
+}
+
+.secondaryButton {
+  background: rgba(255, 255, 255, 0.9);
+  color: #333;
+  font-size: 1rem;
+  font-weight: 500;
+  font-family: 'Poppins', sans-serif;
+  padding: 12px 24px;
+  border: 2px solid rgba(34, 63, 218, 0.2);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+  margin-top: 15px;
+}
+
+.secondaryButton:hover {
+  background: rgba(34, 63, 218, 0.05);
+  border-color: rgba(34, 63, 218, 0.4);
+  transform: translateY(-1px);
+}
+
+.checkboxGroup {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.checkboxLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.checkboxLabel input[type="checkbox"] {
+  width: 1rem;
+  height: 1rem;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    margin-top: 50px;
+    min-height: calc(100vh - 50px);
+    padding: 10px;
+  }
+  
+  .contentHolder {
+    padding: 10px;
+  }
+  
+  .teamHeaderSection {
+    padding: 15px;
+    gap: 20px;
+  }
+  
+  .scheduleCard {
+    padding: 20px;
+  }
+  
+  .titleAnimation,
+  .subtitleAnimation {
+    font-size: clamp(2rem, 6vw, 3rem);
+  }
+  
+  .cardTitle {
+    font-size: 1.3rem;
+  }
+  
+  .liveCard {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 5px;
+  }
+  
+  .scheduleCard,
+  .liveCard {
+    padding: 15px;
+  }
+  
+  .cardTitle {
+    font-size: 1.2rem;
+  }
+  
+  .inputField {
+    padding: 10px 14px;
+  }
+  
+  .datePickerWrapper .inputField {
+    padding-left: 40px;
+  }
+}
