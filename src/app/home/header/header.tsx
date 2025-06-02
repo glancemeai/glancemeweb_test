@@ -7,6 +7,7 @@ import { BsMedium, BsLinkedin, BsTwitter, BsArrowRightShort } from "react-icons/
 import { AiOutlineMail } from "react-icons/ai"
 import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
+import { ChevronDown } from 'lucide-react';
 import { usePathname } from "next/navigation";
 import { FaInstagramSquare } from "react-icons/fa";
 import { useDispatch } from "react-redux";
@@ -15,6 +16,7 @@ import {useRouter} from 'next/navigation';
 import { setAlert } from "@/app/redux/utils/message";
 
 const Header = () => {
+  const [dropdownOpen, setDropdownOpen] = useState(false)
   const [showMenu, setShowMenu] = useState(false)
   const [activeTab, setActiveTab] = useState('home')
   const [isLoggedIn, setIsLoggedIn] = useState(false)
@@ -26,7 +28,6 @@ const Header = () => {
   const router  = useRouter();
 
   const [data,setData] = useState<any>()
-
     const dispatch = useDispatch()
 
     const userDetails = useCallback(async () => {
@@ -131,21 +132,60 @@ const Header = () => {
           <div className={`${style.mainHeaderHolderMenuItem} ${activeTab === 'home' ? style.active : ''}`}>
             <Link href={"/home"} passHref><p onClick={() => { setActiveTab('home') }}>Home</p></Link>
           </div>
-          <div className={`${style.mainHeaderHolderMenuItem} ${activeTab === 'contact' ? style.active : ''}`}>
-            <Link href={"/support"} passHref><p onClick={() => { setActiveTab('contact') }}>Contact Us</p></Link>
+           <div className={`${style.mainHeaderHolderMenuItem} ${activeTab === 'products' ? style.active : ''}`}>
+            <Link href={"/products"} passHref><p onClick={() => { setActiveTab('products') }}>Products</p></Link>
           </div>
           <div className={`${style.mainHeaderHolderMenuItem} ${activeTab === 'about' ? style.active : ''}`}>
             <Link href={"/about"} passHref><p onClick={() => { setActiveTab('about') }}>About Us</p></Link>
           </div>
-          <div className={`${style.mainHeaderHolderMenuItem} ${activeTab === 'blog' ? style.active : ''}`}>
+          <div className={`${style.mainHeaderHolderMenuItem} ${activeTab === 'contact' ? style.active : ''}`}>
+            <Link href={"/support"} passHref><p onClick={() => { setActiveTab('contact') }}>Contact Us</p></Link>
+          </div>
+
+
+          <div className={` ${activeTab === 'blog' || activeTab === 'faqs'? style.active : ''}`}>
+          <div  onMouseEnter={() => setDropdownOpen(true)} onMouseLeave={() => setDropdownOpen(false)}>
+            <div className={`${style.mainHeaderHolderMenuItem}`}>
+             
+             <div className="flex items-center space-x-1 cursor-pointer ">
+             <p className="cursor-pointer" onClick={() => { setActiveTab('blog || faqs') }}>Resources
+              <ChevronDown size={16} />
+             </p>
+              {/* <ChevronDown
+          className={`transition-transform duration-300 ${dropdownOpen ? 'rotate-180' : ''}`}
+        /> */}
+        </div>
+             {dropdownOpen && (
+    
+      <ul className={style.subheader_menu}>
+        <li>
+          <Link href="/blog" passHref>
+            <div className={` ${activeTab === 'blog' ? style.active : ''}`} onClick={() => setActiveTab('blog')}>
+              Blog
+            </div>
+          </Link>
+        </li>
+        <li>
+          <Link href="/faqs" passHref>
+            <div className={` ${activeTab === 'faqs' ? style.active : ''}`} onClick={() => setActiveTab('faqs')} >
+              FAQs
+            </div>
+          </Link>
+        </li>
+      </ul>
+    
+  )}
+          </div>
+               </div>
+        </div>
+
+          {/* <div className={`${style.mainHeaderHolderMenuItem} ${activeTab === 'blog' ? style.active : ''}`}>
             <Link href={"/blog"} passHref><p onClick={() => { setActiveTab('blog') }}>Blog</p></Link>
           </div>
           <div className={`${style.mainHeaderHolderMenuItem} ${activeTab === 'faqs' ? style.active : ''}`}>
             <Link href={"/faqs"} passHref><p onClick={() => { setActiveTab('faqs') }}>FAQs</p></Link>
-          </div>
-          <div className={`${style.mainHeaderHolderMenuItem} ${activeTab === 'products' ? style.active : ''}`}>
-            <Link href={"/products"} passHref><p onClick={() => { setActiveTab('products') }}>Products</p></Link>
-          </div>
+          </div> */}
+         
           {isDashboardOrFolder && (
             <div className={`${style.mainHeaderHolderMenuItem} ${activeTab === 'notes' ? style.active : ''}`}>
               <Link href={"/dashboard"} passHref><p onClick={() => { setActiveTab('notes') }}>Notes</p></Link>
@@ -241,6 +281,9 @@ const Header = () => {
 
           <div className={style.mainMenuSidePanelHolderItem}>
             <Link href={"/home"} passHref><p>Home</p></Link>
+          </div>
+          <div className={style.mainMenuSidePanelHolderItem}>
+            <Link href={"/products"} passHref><p>Product</p></Link>
           </div>
           <div className={style.mainMenuSidePanelHolderItem}>
             <Link href={"/support"} passHref><p>Contact Us</p></Link>

@@ -22,9 +22,10 @@ const ProductsPage: React.FC = () => {
   const products: Product[] = [
     {
       id: 'recap',
-      title: 'Recap Product',
+      title: 'Recap',
       subtitle: 'AI-Powered Learning Assistant',
-      description: 'Transform any audio lecture into comprehensive summaries and interactive quizzes. Perfect for students and educators looking to maximize learning efficiency.',
+      // description: 'Transform any audio lecture into comprehensive summaries and interactive quizzes. Perfect for students and educators looking to maximize learning efficiency.',
+      description: 'Recap is designed to enhance learner engagement by generating real-time quizzes and assignments during in-person sessions. Perfect for students and educators seeking to maximize interaction and learning outcomes.',
       features: [
         'Real-time audio transcription and summarization',
         'AI-generated quizzes based on lecture content',

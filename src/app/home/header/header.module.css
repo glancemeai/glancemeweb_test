@@ -14,6 +14,53 @@
   z-index: 99999;
 }
 
+.subheader_menu {
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  padding: 0.5rem 0;
+  list-style: none;
+  width: 150px;
+  position: absolute;
+  top: 100%;
+  left: 95%;
+  transform: translateX(-50%);
+  /* margin-top: 0.5rem; */
+  z-index: 50;
+  animation: fadeIn 0.3s ease-out;
+}
+.dropdownIcon {
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+.rotate-180 {
+  transform: rotate(180deg);
+}
+
+.transition-transform {
+  transition: transform 0.3s ease;
+}
+
+
+.subheader_menu li div {
+  color: black;
+  padding: 10px 16px;
+  font-weight: 500;
+  border-radius: 8px;
+  transition: background 0.25s, color 0.25s;
+}
+
+.subheader_menu li div:hover {
+  background-color: #eef2ff;
+  color: #4f46e5;
+}
+
+
+
+
+
+
 .mainHeaderHolder {
     position: relative;
     width: 95%;
