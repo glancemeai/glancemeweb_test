@@ -1,0 +1,213 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+.popupOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.3s ease-in-out;
+  z-index: 1000;
+  font-family: 'Roboto', sans-serif;
+}
+
+.popupContent {
+  width: 380px; /* smaller popup width */
+  padding: 1.5rem;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+.cardTitle {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333;
+  margin: 0 0 25px 0;
+  text-align: left;
+}
+
+.popupTitle {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+}
+.popupInput {
+  width: 100%;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+.formRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+   /* flex-direction: column; */
+}
+
+.inlineLabel {
+  min-width: 120px;
+  font-weight: 500;
+  color: #333;
+  font-size: 0.9rem;
+}
+.cardIcon {
+  color: #223fda;
+}
+.nextButton {
+  align-self: flex-start;
+  padding: 8px 16px;
+  background-color: #7b1fa2;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.buttonRow {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem; /* spacing from above */
+}
+.nextButton:hover {
+  background: #5b21b6;
+}
+.errorText {
+  color: red;
+  font-size: 0.875rem;
+  margin-top: 1px;
+    text-align: center;
+}
+
+.radioGroup {
+  display: flex;
+  flex-wrap: nowrap; /* Prevent line break */
+  gap: 1rem;
+  align-items: center;
+  margin-top: 0.4rem;
+  margin-bottom: 1rem;
+}
+
+.radioGroup label {
+  display: flex;
+  align-items: center;
+  font-size: 0.9rem;
+  gap: 0.3rem;
+  white-space: nowrap; /* Ensure Google Meet stays on same line */
+}
+.radioGroup input[type="radio"] {
+  accent-color: #6366f1; /* Tailwind indigo-500 */
+}
+
+.radioGroup label:hover {
+  border-color: #6366f1;
+  background-color: #f0f4ff;
+}
+
+.radioGroup label:has(input:checked) {
+  border-color: #4f46e5;
+  background-color: #e0e7ff;
+}
+
+.participantInputWrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.participantInput {
+  flex: 1;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.addParticipantButton {
+  background-color: #4f46e5; /* Indigo */
+  color: white;
+  border: none;
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.2s ease;
+}
+
+.addParticipantButton:hover {
+  background-color: #4338ca;
+}
+.participantList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.participantItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #f3f4f6;
+  border-radius: 6px;
+  padding: 0.5rem 0.75rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.removeButton {
+  background: transparent;
+  border: none;
+  color: #ef4444; /* Red */
+  cursor: pointer;
+  font-size: 1.1rem;
+}
+
+/* Animations */
+
+@keyframes popIn {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+
+/* Animation for new elements (optional) */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+
+@media (max-width: 768px) { 
+  .buttonContainer {
+    flex-direction: column;
+    gap: 15px;
+  }
+  .cardTitle {
+    font-size: 1.3rem;
+  }
+  .primaryButton {
+    width: 100%;
+    max-width: 280px;
+  }
+ 
+}
+@media (max-width: 480px) {
+  
+  .cardTitle {
+    font-size: 1.2rem;
+  }
+  
+}

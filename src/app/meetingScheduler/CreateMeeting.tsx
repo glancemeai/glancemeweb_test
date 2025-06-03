@@ -1,7 +1,8 @@
 'use client';
 import React, { useRef, useState } from 'react';
-import styles from './MeetingScheduler.module.css';
+// import styles from './MeetingScheduler.module.css';
 import { Video } from 'lucide-react';
+import styles from './CreateMeeting.module.css'
 
 interface CreateMeetingProps {
   onClose: () => void;
@@ -119,19 +120,19 @@ const CreateMeeting: React.FC<CreateMeetingProps> = ({ onClose }) => {
                 <input type="time" name="startTime" className={styles.popupInput} required />
               </div>
               {startTimeError && <p className={styles.errorText}>{startTimeError}</p>}
-              <div className={styles.formRow}>
+              {/* <div className={styles.formRow}>
                 <label className={styles.inlineLabel}>End Time</label>
                 <input type="time" name="endTime" className={styles.popupInput} required />
               </div>
-              {endTimeError && <p className={styles.errorText}>{endTimeError}</p>}
-              <div className={styles.formRow}>
+              {endTimeError && <p className={styles.errorText}>{endTimeError}</p>} */}
+              {/* <div className={styles.formRow}>
                 <label className={styles.inlineLabel}>Meeting Type</label>
                 <div className={styles.radioGroup}>
                   <label><input type="radio" name="meetingType" value="zoom" required /> Zoom</label>
                   <label><input type="radio" name="meetingType" value="teams" required /> Teams</label>
                   <label><input type="radio" name="meetingType" value="google" defaultChecked required /> Google Meet</label>
                 </div>
-              </div>
+              </div> */}
               <div className={styles.buttonRow}>
                 <button type="submit" className={styles.nextButton}>Next</button>
               </div>
@@ -175,3 +176,4 @@ const CreateMeeting: React.FC<CreateMeetingProps> = ({ onClose }) => {
 };
 
 export default CreateMeeting;
+  

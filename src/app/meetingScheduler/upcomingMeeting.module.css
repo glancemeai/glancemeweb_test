@@ -1,0 +1,55 @@
+.upcomingMeetingsWrapper {
+  margin-top: 2rem;
+  width: 100%;
+  max-width: 800px;
+}
+
+.upcomingMeetingCard {
+  background: #fff6ff;
+  border: 1px solid #e1bee7;
+  border-radius: 16px;
+  padding: 1.25rem;
+  margin-bottom: 1.25rem;
+  box-shadow: 0 4px 12px rgba(106, 27, 154, 0.05);
+  transition: transform 0.2s ease;
+}
+
+.upcomingMeetingCard:hover {
+  transform: scale(1.01);
+}
+
+.upcomingMeetingHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.meetingTitle {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #4a0072;
+}
+
+.meetingInfo {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.9rem;
+  color: #555;
+  margin-top: 0.5rem;
+  align-items: center;
+}
+
+.meetingLink {
+  margin-top: 0.75rem;
+  font-size: 0.9rem;
+  color: #6a1b9a;
+  text-decoration: underline;
+  word-break: break-all;
+}
+
+.noMeetings {
+  text-align: center;
+  font-size: 1rem;
+  color: #888;
+  margin-top: 2rem;
+}
