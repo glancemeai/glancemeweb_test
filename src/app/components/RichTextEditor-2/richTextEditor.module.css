@@ -1,0 +1,135 @@
+.rich-editor-container {
+  position: relative;
+}
+
+.ql-toolbar-custom {
+  border: 2px solid #e5e7eb;
+  border-bottom: 1px solid #e5e7eb;
+  border-radius: 12px 12px 0 0;
+  background: #f9fafb;
+  padding: 12px;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.toolbar-group {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+  background: white;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+}
+
+.toolbar-group button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  border: none;
+  background: transparent;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #374151;
+  min-width: 32px;
+  height: 32px;
+}
+
+.toolbar-group button:hover:not(:disabled) {
+  background: #f3f4f6;
+  color: #667eea;
+}
+
+.toolbar-group button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.toolbar-group button.ql-active {
+  background: #667eea;
+  color: white;
+}
+
+.processing-indicator {
+  margin-left: 4px;
+  font-size: 12px;
+  animation: pulse 1.5s infinite;
+}
+
+.pdf-error {
+  background: rgba(239, 68, 68, 0.1);
+  color: #dc2626;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  margin-bottom: 8px;
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.pdf-processing {
+  background: rgba(59, 130, 246, 0.1);
+  color: #2563eb;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  margin-bottom: 8px;
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  text-align: center;
+}
+
+.ql-container {
+  border: 2px solid #e5e7eb;
+  border-top: none;
+  border-radius: 0 0 12px 12px;
+  font-size: 16px;
+  min-height: 400px;
+}
+
+.ql-editor {
+  min-height: 350px;
+  padding: 20px;
+  line-height: 1.6;
+}
+
+.ql-editor.ql-blank::before {
+  color: #9ca3af;
+  font-style: normal;
+  left: 20px;
+}
+
+.ql-snow .ql-tooltip {
+  z-index: 1000;
+}
+
+.ql-editor img {
+  max-width: 100%;
+  height: auto;
+  margin: 10px 0;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+@media (max-width: 768px) {
+  .ql-toolbar-custom {
+    padding: 8px;
+    gap: 8px;
+  }
+  
+  .toolbar-group {
+    gap: 2px;
+  }
+  
+  .toolbar-group button {
+    padding: 6px;
+    min-width: 28px;
+    height: 28px;
+  }
+}

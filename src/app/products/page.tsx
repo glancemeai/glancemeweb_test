@@ -13,6 +13,8 @@ interface Product {
   features: string[];
   icon: string;
   gradient: string;
+  learnMoreRoute: string;
+  demoRoute: string;
 }
 
 const ProductsPage: React.FC = () => {
@@ -34,7 +36,9 @@ const ProductsPage: React.FC = () => {
         'Multi-language support for global accessibility'
       ],
       icon: '🎧',
-      gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+      gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+      learnMoreRoute: '/recap',
+      demoRoute: '/recap'
     },
     {
       id: 'meetingbot',
@@ -49,7 +53,9 @@ const ProductsPage: React.FC = () => {
         'Multi-platform meeting support (Zoom, Teams, Meet)'
       ],
       icon: '🤖',
-      gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)'
+      gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+      learnMoreRoute: '/meetingBot',
+      demoRoute: '/meetingBot'
     },
     {
       id: 'glanceme',
@@ -64,7 +70,9 @@ const ProductsPage: React.FC = () => {
         'Export notes in multiple formats'
       ],
       icon: '📚',
-      gradient: 'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)'
+      gradient: 'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)',
+      learnMoreRoute: '/home',
+      demoRoute: '/home'
     }
   ];
 
@@ -160,10 +168,10 @@ const ProductsPage: React.FC = () => {
               
               <div className={styles.productActions}>
                 <button className={styles.primaryButton}>
-                  <Link href={"/meetingBot"}>Learn More</Link>
+                  <Link href={product.learnMoreRoute}>Learn More</Link>
                 </button>
                 <button className={styles.secondaryButton}>
-                  Try Demo
+                  <Link href={product.demoRoute}>Try Demo</Link>
                 </button>
               </div>
             </div>
