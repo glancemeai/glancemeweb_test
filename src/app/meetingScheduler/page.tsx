@@ -1,6 +1,6 @@
-
 'use client';
-import React, { useState } from 'react';
+
+import React, { useState, useEffect } from 'react';
 import styles from './MeetingScheduler.module.css';
 import Header from "../home/header/header";
 import CreateMeeting from './CreateMeeting';
@@ -9,15 +9,88 @@ import { LuPlus } from "react-icons/lu";
 import { FiMic, FiCalendar, FiUpload, FiSearch } from "react-icons/fi";
 import ButtonOne, { ButtonFive, ButtonFour } from "@/app/components/utils/Edit/buttons/Buttons";
 import { SearchInput } from "@/app/components/utils/Edit/Input/Input";
-import UpcomingMeeting from './upcomingMeeting';
+import UpcomingMeetings from './upcomingMeeting';
 import PreviousMeeting from './previousMeeting';
+import { useSearchParams } from 'next/navigation';
 
-
+interface CalendarEvent {
+  summary: string;
+  start: { dateTime: string };
+  category?: string;
+}
 
 const MeetingScheduler: React.FC = () => {
+  const [searchQuery, setSearchQuery] = useState('');
+
   const [showPopup, setShowPopup] = useState(false);
   const [showInstant, setShowInstant] = useState(false);
-  const [activeTab, setActiveTab] = useState('upcomingMeeting');
+  const [activeTab, setActiveTab] = useState<'upcomingMeeting' | 'previousMeeting'>('upcomingMeeting');
+  const [events, setEvents] = useState<CalendarEvent[]>([]);
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const tokenFromUrl = searchParams?.get('token');
+    const storedToken = localStorage.getItem('google_access_token');
+    const token = tokenFromUrl || storedToken;
+
+    if (tokenFromUrl) {
+      localStorage.setItem('google_access_token', tokenFromUrl);
+      console.log('✅ Access token saved:', tokenFromUrl);
+    }
+
+    if (!token) {
+      console.warn('⚠️ No access token found');
+      return;
+    }
+
+    const fetchEvents = async () => {
+      try {
+        const response = await fetch(
+          `https://www.googleapis.com/calendar/v3/calendars/primary/events?maxResults=50&orderBy=startTime&singleEvents=true&timeMin=${new Date().toISOString()}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        const data = await response.json();
+        const normalized = (data.items || []).map((event: any) => ({
+          summary: event.summary || 'Untitled',
+          start: {
+            dateTime: event.start?.dateTime || event.start?.date || new Date().toISOString(),
+          },
+          category: 'Work', // fallback, you can enhance later
+        }));
+        setEvents(normalized);
+        console.log('✅ Events fetched:', normalized);
+      } catch (err) {
+        console.error('❌ Error fetching events:', err);
+        setEvents([]);
+      }
+    };
+
+    fetchEvents();
+  }, [searchParams]);
+
+  const handleCreateMeeting = (newMeeting: CalendarEvent) => {
+    setEvents(prev => [...(prev || []), newMeeting]);
+    setShowPopup(false);
+  };
+
+  
+  const handleGoogleSync = () => {
+  const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
+const redirectUri = 'http://localhost:3000/api/auth/callback';
+  const scope = 'https://www.googleapis.com/auth/calendar.readonly';
+
+  if (!clientId) {
+    console.error('❌ Google Client ID not found in environment variables');
+    return;
+  }
+
+  const oauthUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=${scope}&prompt=consent&access_type=offline`;
+  window.open(oauthUrl, '_blank');
+};
 
 
   return (
@@ -38,7 +111,7 @@ const MeetingScheduler: React.FC = () => {
                       <FiMic size={18} />
                       <span>Instant Meeting</span>
                     </div>
-                    <div className={styles.dropdownItem}>
+                    <div className={styles.dropdownItem} onClick={handleGoogleSync}>
                       <FiUpload size={18} />
                       <span>Sync Calendar</span>
                     </div>
@@ -48,9 +121,10 @@ const MeetingScheduler: React.FC = () => {
                     </div>
                   </div>
                 </div>
-
                 <div className={styles.mainHolderHeaderOptionsSearch}>
-                  <SearchInput type="text" placeholder="Search in this Folder" />
+                  <SearchInput type="text" placeholder="Search by month name"   value={searchQuery}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchQuery(e.target.value)}
+                       />
                   <ButtonFour icon={<FiSearch size={18} color="#fff" />} />
                 </div>
               </div>
@@ -75,13 +149,13 @@ const MeetingScheduler: React.FC = () => {
               </div>
             </div>
             <div className={styles.mainHolderBodyRight}>
-              {activeTab === 'upcomingMeeting' && <UpcomingMeeting />}
+              {activeTab === 'upcomingMeeting' && <UpcomingMeetings events={events} searchQuery={searchQuery} />}
               {activeTab === 'previousMeeting' && <PreviousMeeting />}
             </div>
           </div>
         </div>
 
-        {showPopup && <CreateMeeting onClose={() => setShowPopup(false)} />}
+        {showPopup && <CreateMeeting onClose={() => setShowPopup(false)} onCreate={handleCreateMeeting} />}
         {showInstant && <InstantMeeting onClose={() => setShowInstant(false)} />}
       </div>
     </>

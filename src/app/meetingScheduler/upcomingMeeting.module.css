@@ -1,55 +1,179 @@
-.upcomingMeetingsWrapper {
-  margin-top: 2rem;
-  width: 100%;
-  max-width: 800px;
+.container {
+  padding: 1rem;
+  background: #f9fbff;
+  font-family: 'Roboto', sans-serif;
+}
+/* In your external CSS (e.g., upcomingMeeting.module.css) */
+.scrollWrapper {
+  max-height: 50vh; /* Adjust height as needed */
+  overflow-y: auto;
+  padding-right: 8px; /* So content doesn't hide under scrollbar */
 }
 
-.upcomingMeetingCard {
-  background: #fff6ff;
-  border: 1px solid #e1bee7;
-  border-radius: 16px;
-  padding: 1.25rem;
-  margin-bottom: 1.25rem;
-  box-shadow: 0 4px 12px rgba(106, 27, 154, 0.05);
-  transition: transform 0.2s ease;
+.scrollWrapper::-webkit-scrollbar {
+  width: 8px;
 }
 
-.upcomingMeetingCard:hover {
-  transform: scale(1.01);
+.scrollWrapper::-webkit-scrollbar-track {
+  background: #f3f4f6;
+  border-radius: 10px;
 }
 
-.upcomingMeetingHeader {
+.scrollWrapper::-webkit-scrollbar-thumb {
+  background: #a855f7;
+  border-radius: 10px;
+}
+
+.scrollWrapper::-webkit-scrollbar-thumb:hover {
+  background: #9333ea;
+}
+
+.dayGroup {
+  margin-bottom: 2rem;
+}
+
+.dateHeader {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-}
-
-.meetingTitle {
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: #4a0072;
-}
-
-.meetingInfo {
-  display: flex;
   gap: 1rem;
-  font-size: 0.9rem;
-  color: #555;
-  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.dateCircle {
+  background: linear-gradient(to bottom right, #7c3aed, #a855f7);
+  color: white;
+  padding: 8px;
+  border-radius: 12px;
+  width: 50px;
+  text-align: center;
+}
+
+.dateNumber {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.dateMonth {
+  font-size: 10px;
+}
+
+.dateTitle {
+  font-weight: 600;
+  font-size: 18px;
+  margin: 0;
+}
+
+.meetingCount {
+  font-size: 14px;
+  color: #6b7280;
+}
+.cardsContainer {
+  display: flex;
+  flex-wrap: nowrap; /* 🚫 No wrapping */
+  gap: 1rem;
+  overflow-x: auto; /* ✅ Allow horizontal scrolling if needed */
+  padding-bottom: 0.5rem;
+}
+
+
+
+.card {
+  background: white;
+  border-radius: 10px;
+  padding: 1rem;
+  width: 250px; /* ✅ Fixed width to control layout */
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-shrink: 0; /* ✅ Prevent shrinking in scroll */
+}
+
+
+/* 
+.cardsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.card {
+  background: white;
+  border-radius: 10px;
+  padding: 1rem;
+  flex: 1 1 300px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+} */
+
+.cardTitle {
+  font-weight: 600;
+  font-size: 16px;
+  margin-bottom: 0.5rem;
+}
+
+.cardDetails p {
+  margin: 4px 0;
+  font-size: 14px;
+  color: #374151;
+  display: flex;
   align-items: center;
 }
 
-.meetingLink {
-  margin-top: 0.75rem;
-  font-size: 0.9rem;
-  color: #6a1b9a;
-  text-decoration: underline;
-  word-break: break-all;
+.icon {
+  margin-right: 6px;
+  color: #4b5563;
 }
 
-.noMeetings {
-  text-align: center;
-  font-size: 1rem;
-  color: #888;
-  margin-top: 2rem;
+.cardFooter {
+  margin-top: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
+
+.tag {
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 500;
+  color: white;
+}
+
+.tag.work {
+  background-color: #3b82f6;
+}
+.tag.client {
+  background-color: #f59e0b;
+}
+.tag.team {
+  background-color: #a855f7;
+}
+
+.statusDot {
+  width: 10px;
+  height: 10px;
+  background: #10b981;
+  border-radius: 50%;
+}
+.empty {
+  padding: 2rem;
+  text-align: center;
+  font-size: 16px;
+  color: #6b7280;
+}
+.filterContainer {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1rem;
+}
+
+.dropdown {
+  padding: 0.5rem;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+

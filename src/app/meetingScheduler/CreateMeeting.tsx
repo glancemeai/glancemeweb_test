@@ -1,19 +1,21 @@
 'use client';
+
 import React, { useRef, useState } from 'react';
-// import styles from './MeetingScheduler.module.css';
 import { Video } from 'lucide-react';
-import styles from './CreateMeeting.module.css'
+import styles from './CreateMeeting.module.css';
 
 interface CreateMeetingProps {
   onClose: () => void;
+  onCreate: (meeting: any) => void;
 }
 
-const CreateMeeting: React.FC<CreateMeetingProps> = ({ onClose }) => {
+const CreateMeeting: React.FC<CreateMeetingProps> = ({ onClose, onCreate }) => {
   const [step, setStep] = useState(1);
   const [startTimeError, setStartTimeError] = useState('');
-  const [endTimeError, setEndTimeError] = useState('');
   const [participants, setParticipants] = useState<string[]>([]);
   const [participantInput, setParticipantInput] = useState('');
+  const [startDate, setStartDate] = useState('');
+  const [startTime, setStartTime] = useState('');
 
   const firstFormRef = useRef<HTMLFormElement>(null);
   const secondFormRef = useRef<HTMLFormElement>(null);
@@ -36,30 +38,19 @@ const CreateMeeting: React.FC<CreateMeetingProps> = ({ onClose }) => {
     e.preventDefault();
     const formData = new FormData(secondFormRef.current!);
     const selectedDate = formData.get('startDate') as string;
-    const startTime = formData.get('startTime') as string;
-    const endTime = formData.get('endTime') as string;
+    const selectedTime = formData.get('startTime') as string;
 
-    let valid = true;
     setStartTimeError('');
-    setEndTimeError('');
+    let valid = true;
 
-    if (selectedDate === todayDateStr) {
-      if (startTime <= currentTimeStr) {
-        setStartTimeError('Start time must be after current time.');
-        valid = false;
-      }
-      if (endTime <= startTime) {
-        setEndTimeError('End time must be after start time.');
-        valid = false;
-      }
-    } else {
-      if (endTime <= startTime) {
-        setEndTimeError('End time must be after start time.');
-        valid = false;
-      }
+    if (selectedDate === todayDateStr && selectedTime <= currentTimeStr) {
+      setStartTimeError('Start time must be after current time.');
+      valid = false;
     }
 
     if (secondFormRef.current?.checkValidity() && valid) {
+      setStartDate(selectedDate);
+      setStartTime(selectedTime);
       setStep(3);
     }
   };
@@ -76,10 +67,27 @@ const CreateMeeting: React.FC<CreateMeetingProps> = ({ onClose }) => {
   };
 
   const handleCreateMeeting = () => {
-    const title = titleRef.current?.value || '';
-    console.log('Meeting Created:', { title, participants });
-    alert('Meeting created successfully!');
-    onClose(); // Close popup
+    const title = titleRef.current?.value || 'Untitled Meeting';
+
+    if (!startDate || !startTime) {
+      console.error("Start date or time is missing");
+      return;
+    }
+
+    const [year, month, day] = startDate.split('-').map(Number);
+    const [hours, minutes] = startTime.split(':').map(Number);
+    const start = new Date(year, month - 1, day, hours, minutes);
+
+    const newMeeting = {
+      summary: title,
+      start: { dateTime: start.toISOString() },
+      recurrence: [],
+      participants,
+    };
+
+    console.log('Meeting Created:', newMeeting);
+    onCreate(newMeeting);
+    onClose();
   };
 
   return (
@@ -113,26 +121,25 @@ const CreateMeeting: React.FC<CreateMeetingProps> = ({ onClose }) => {
             <form ref={secondFormRef} onSubmit={handleSecondNext} className={styles.compactForm}>
               <div className={styles.formRow}>
                 <label className={styles.inlineLabel}>Start Date</label>
-                <input type="date" name="startDate" defaultValue={todayDateStr} min={todayDateStr} className={styles.popupInput} required />
+                <input
+                  type="date"
+                  name="startDate"
+                  defaultValue={todayDateStr}
+                  min={todayDateStr}
+                  className={styles.popupInput}
+                  required
+                />
               </div>
               <div className={styles.formRow}>
                 <label className={styles.inlineLabel}>Start Time</label>
-                <input type="time" name="startTime" className={styles.popupInput} required />
+                <input
+                  type="time"
+                  name="startTime"
+                  className={styles.popupInput}
+                  required
+                />
               </div>
               {startTimeError && <p className={styles.errorText}>{startTimeError}</p>}
-              {/* <div className={styles.formRow}>
-                <label className={styles.inlineLabel}>End Time</label>
-                <input type="time" name="endTime" className={styles.popupInput} required />
-              </div>
-              {endTimeError && <p className={styles.errorText}>{endTimeError}</p>} */}
-              {/* <div className={styles.formRow}>
-                <label className={styles.inlineLabel}>Meeting Type</label>
-                <div className={styles.radioGroup}>
-                  <label><input type="radio" name="meetingType" value="zoom" required /> Zoom</label>
-                  <label><input type="radio" name="meetingType" value="teams" required /> Teams</label>
-                  <label><input type="radio" name="meetingType" value="google" defaultChecked required /> Google Meet</label>
-                </div>
-              </div> */}
               <div className={styles.buttonRow}>
                 <button type="submit" className={styles.nextButton}>Next</button>
               </div>
@@ -144,7 +151,12 @@ const CreateMeeting: React.FC<CreateMeetingProps> = ({ onClose }) => {
           <>
             <h3 className={styles.cardTitle}>Meeting Details</h3>
             <div className={styles.formRow}>
-              <input ref={titleRef} type="text" placeholder="Meeting Title (optional)" className={styles.popupInput} />
+              <input
+                ref={titleRef}
+                type="text"
+                placeholder="Meeting Title (optional)"
+                className={styles.popupInput}
+              />
             </div>
             <div className={styles.formRow}>
               <div className={styles.participantInputWrapper}>
@@ -161,7 +173,8 @@ const CreateMeeting: React.FC<CreateMeetingProps> = ({ onClose }) => {
             <ul className={styles.participantList}>
               {participants.map((p, i) => (
                 <li key={i} className={styles.participantItem}>
-                  {p} <button onClick={() => handleRemoveParticipant(i)} className={styles.removeButton}>🗑️</button>
+                  {p}
+                  <button onClick={() => handleRemoveParticipant(i)} className={styles.removeButton}>🗑️</button>
                 </li>
               ))}
             </ul>
@@ -176,4 +189,3 @@ const CreateMeeting: React.FC<CreateMeetingProps> = ({ onClose }) => {
 };
 
 export default CreateMeeting;
-  
