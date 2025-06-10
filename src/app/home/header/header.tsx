@@ -116,7 +116,10 @@ const Header = () => {
       setActiveTab('home');
     } else if (pathname === '/products') {
       setActiveTab('products');
-    } else {
+    }else if (pathname === '/meetingScheduler') {
+      setActiveTab('products');
+    }
+     else {
       setActiveTab('home'); // Default case
     }
   }, [pathname]);
