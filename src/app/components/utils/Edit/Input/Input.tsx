@@ -127,21 +127,37 @@ export function InputSeven(props: any) {
         </div>
     )
 }
-export function SearchInput(props: any) {
-    return (
-        <div className={styles.mainSearchInput}>
-            <label htmlFor="search" ><BsSearch /></label>
+interface SearchInputProps extends React.InputHTMLAttributes<HTMLInputElement> {}
 
-            {props?.onChange ?
-
-                <input id="search" autoComplete="off" type={props?.type ? props?.type : "text"} value={props?.value ? props?.value : ""} onChange={(e: any) => { props?.onChange ? props?.onChange(e.target.value, props?.id) : "" }} placeholder={props?.placeholder} />
-                // <input type={props?.type ? props?.type : "text"} value={props?.value ? props?.value : ""} onChange={(e:any) => {props?.onChange ? props?.onChange(e.target.value,props?.id) : nofunction()}} placeholder={props?.placeholder} />
-                :
-                <input id="search" autoComplete="off" type="text" placeholder={props?.placeholder} />
-            }
-        </div>
-    )
+export function SearchInput(props: SearchInputProps) {
+  return (
+    <div className={styles.mainSearchInput}>
+      <label htmlFor="search">
+        <BsSearch />
+      </label>
+      <input
+        id="search"
+        autoComplete="off"
+        {...props} 
+      />
+    </div>
+  );
 }
+// export function SearchInput(props: any) {
+//     return (
+//         <div className={styles.mainSearchInput}>
+//             <label htmlFor="search" ><BsSearch /></label>
+
+//             {props?.onChange ?
+
+//                 <input id="search" autoComplete="off" type={props?.type ? props?.type : "text"} value={props?.value ? props?.value : ""} onChange={(e: any) => { props?.onChange ? props?.onChange(e.target.value, props?.id) : "" }} placeholder={props?.placeholder} />
+//                 // <input type={props?.type ? props?.type : "text"} value={props?.value ? props?.value : ""} onChange={(e:any) => {props?.onChange ? props?.onChange(e.target.value,props?.id) : nofunction()}} placeholder={props?.placeholder} />
+//                 :
+//                 <input id="search" autoComplete="off" type="text" placeholder={props?.placeholder} />
+//             }
+//         </div>
+//     )
+// }
 
 
 export function InputEight() {

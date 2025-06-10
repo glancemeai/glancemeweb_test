@@ -33,7 +33,7 @@ const formatTime = (dateString: string) =>
     minute: '2-digit',
   });
 
-const FILTERS = ['Day', 'Week', 'Month',  'Schedule', '4 days'];
+const FILTERS = ['Day', 'Week', 'Month', 'Schedule', '4 days'];
 
 const UpcomingMeetings: React.FC<Props> = ({ events, searchQuery }) => {
   const [selectedFilter, setSelectedFilter] = useState('Month');
@@ -51,7 +51,6 @@ const UpcomingMeetings: React.FC<Props> = ({ events, searchQuery }) => {
       case 'Month':
         newDate.setMonth(newDate.getMonth() + 1);
         break;
-      
       case '4 days':
         newDate.setDate(newDate.getDate() + 4);
         break;
@@ -64,31 +63,34 @@ const UpcomingMeetings: React.FC<Props> = ({ events, searchQuery }) => {
 
   const endDate = getFilterEndDate(now);
 
-  const futureEvents = events.filter((event) => {
-    const eventDate = new Date(event.start.dateTime);
-    const isAfterNow = eventDate.getTime() > now.getTime();
-    const isBeforeEnd = endDate ? eventDate.getTime() < endDate.getTime() : true;
-    return isAfterNow && isBeforeEnd;
-  });
-
-  const filteredEventsBySearch = futureEvents.filter((event) => {
-  if (!searchQuery.trim()) return true;
-
-  const query = searchQuery.toLowerCase().trim();
-
+// Step 1: Normalize and prepare event list
+const filteredEventsBySearch = events.filter((event) => {
   const eventDate = new Date(event.start.dateTime);
-  const eventMonth = eventDate.toLocaleString('en-US', { month: 'long' }).toLowerCase();
-  const eventTitle = event.summary?.toLowerCase() || '';
+  const isFutureEvent = eventDate > now;
 
-  return eventMonth.includes(query) || eventTitle.includes(query);
+  if (!isFutureEvent) return false; // Always skip past events
+
+  // If search is active, skip range check, just match by query
+  if (searchQuery.trim()) {
+    const query = searchQuery.toLowerCase();
+    const eventMonth = eventDate.toLocaleString('en-US', { month: 'long' }).toLowerCase();
+    const eventTitle = event.summary?.toLowerCase() || '';
+    return eventMonth.includes(query) || eventTitle.includes(query);
+  }
+
+  // If no search, apply date range filter
+  const isBeforeEnd = endDate ? eventDate < endDate : true;
+  return isBeforeEnd;
 });
 
-
+  // Step 2: Sort events by date
   const sorted = [...filteredEventsBySearch].sort(
     (a, b) =>
-      new Date(a.start.dateTime).getTime() - new Date(b.start.dateTime).getTime()
+      new Date(a.start.dateTime).getTime() -
+      new Date(b.start.dateTime).getTime()
   );
 
+  // Step 3: Group by date
   const grouped = sorted.reduce((acc, event) => {
     const key = getDateKey(event.start.dateTime);
     if (!acc[key]) acc[key] = [];
@@ -129,7 +131,9 @@ const UpcomingMeetings: React.FC<Props> = ({ events, searchQuery }) => {
                 </p>
               </div>
               <div>
-                <h3 className={styles.dateTitle}>{formatDateHeader(dateKey)}</h3>
+                <h3 className={styles.dateTitle}>
+                  {formatDateHeader(dateKey)}
+                </h3>
                 <p className={styles.meetingCount}>
                   {dayEvents.length} meeting{dayEvents.length > 1 ? 's' : ''} scheduled
                 </p>
@@ -158,6 +162,11 @@ const UpcomingMeetings: React.FC<Props> = ({ events, searchQuery }) => {
             </div>
           </div>
         ))}
+
+        {/* No events fallback */}
+        {Object.keys(grouped).length === 0 && (
+          <div className={styles.noEvents}>No upcoming meetings found.</div>
+        )}
       </div>
     </div>
   );

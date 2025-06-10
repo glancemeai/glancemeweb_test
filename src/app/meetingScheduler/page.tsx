@@ -45,9 +45,13 @@ const MeetingScheduler: React.FC = () => {
 
     const fetchEvents = async () => {
       try {
+        const timeMin = new Date().toISOString();
+        const timeMax = new Date();
+        timeMax.setMonth(timeMax.getMonth() + 12); // Fetch events for the next 12 months
+
         const response = await fetch(
-          `https://www.googleapis.com/calendar/v3/calendars/primary/events?maxResults=50&orderBy=startTime&singleEvents=true&timeMin=${new Date().toISOString()}`,
-          {
+         `https://www.googleapis.com/calendar/v3/calendars/primary/events?maxResults=250&orderBy=startTime&singleEvents=true&timeMin=${timeMin}&timeMax=${timeMax.toISOString()}`,
+     {
             headers: {
               Authorization: `Bearer ${token}`,
             },
@@ -58,8 +62,7 @@ const MeetingScheduler: React.FC = () => {
           summary: event.summary || 'Untitled',
           start: {
             dateTime: event.start?.dateTime || event.start?.date || new Date().toISOString(),
-          },
-          category: 'Work', // fallback, you can enhance later
+          }
         }));
         setEvents(normalized);
         console.log('✅ Events fetched:', normalized);
@@ -122,9 +125,16 @@ const redirectUri = 'http://localhost:3000/api/auth/callback';
                   </div>
                 </div>
                 <div className={styles.mainHolderHeaderOptionsSearch}>
-                  <SearchInput type="text" placeholder="Search by month name"   value={searchQuery}
+                  <SearchInput type="text" placeholder="Search by  month name"   value={searchQuery}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchQuery(e.target.value)}
                        />
+                       {/* <input
+                           type="text"
+                                      placeholder="Search by month name"
+                          value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                      /> */}
+
                   <ButtonFour icon={<FiSearch size={18} color="#fff" />} />
                 </div>
               </div>
