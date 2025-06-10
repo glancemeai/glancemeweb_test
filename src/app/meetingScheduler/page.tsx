@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import styles from './MeetingScheduler.module.css';
 import Header from "../home/header/header";
 import CreateMeeting from './CreateMeeting';
@@ -19,7 +19,7 @@ interface CalendarEvent {
   category?: string;
 }
 
-const MeetingScheduler: React.FC = () => {
+const MeetingSchedulerwithParams: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
 
   const [showPopup, setShowPopup] = useState(false);
@@ -33,7 +33,7 @@ const MeetingScheduler: React.FC = () => {
     const storedToken = localStorage.getItem('google_access_token');
     const token = tokenFromUrl || storedToken;
 
-    if (tokenFromUrl) {
+    if (tokenFromUrl && typeof window !== 'undefined') {
       localStorage.setItem('google_access_token', tokenFromUrl);
       console.log('✅ Access token saved:', tokenFromUrl);
     }
@@ -162,4 +162,10 @@ const redirectUri = 'http://localhost:3000/api/auth/callback';
   );
 };
 
-export default MeetingScheduler;
+export default function MeetingScheduler() {
+  return(
+    <Suspense fallback={<div>Loading...</div>}>
+       <MeetingSchedulerwithParams />
+    </Suspense>
+  )
+};
