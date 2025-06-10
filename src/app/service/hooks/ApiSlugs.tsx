@@ -5,6 +5,7 @@ export default function Apis() {
     const URL = "https://glanceme.co.in/v1/api"
     const NEW_URL = "https://glanceme.co.in/v2/api"
     const bot_url = "https://glanceme.co.in/v1/api/bot"
+    const local_URL = "http://localhost:3000/v1/api"
     
 interface MeetingParticipant {
     name: string;
@@ -590,6 +591,39 @@ interface MeetingParticipant {
         }
     }
 
+    const PostBlog = async (data: { title: string, content: string, author: string }, adminToken: string) => {
+    try {
+        const headers = {
+            'Authorization': adminToken,
+            'Content-Type': 'application/json'
+        };
+        
+        const result = await APIClient("POST", `${local_URL}/blog`, false, data, headers);
+        
+        if (result && result.status === 200) {
+            return {
+                status: 200,
+                data: result.data || {},
+                message: result.message || 'Blog posted successfully'
+            };
+        } else {
+            return {
+                status: result?.status || 500,
+                data: {},
+                message: result?.message || 'Failed to post blog'
+            };
+        }
+    } catch (error: any) {
+        console.error('PostBlog API Error:', error);
+        return {
+            status: 500,
+            data: {},
+            message: error.message || 'An unexpected error occurred'
+        };
+    }
+};
+
+
     return {
         Login,
         Logout,
@@ -623,6 +657,7 @@ interface MeetingParticipant {
         GetAudioMcqs,
         ForgotPassword,
         VerifyForgotPassword,
-        CreateMeeting
+        CreateMeeting,
+        PostBlog
     }
 }

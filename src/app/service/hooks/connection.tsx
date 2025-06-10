@@ -1,7 +1,4 @@
-const APIClient = async (method: string,
-    url: string,
-    token: boolean | null = null,
-    request: any = null) => {
+const APIClient = async (method: string, url: string, token: boolean | null = null, request: any = null, customHeader?: { Authorization: string; 'Content-Type': string; }) => {
     let isFormData = request instanceof FormData;
 
     // Get token from localStorage with SSR check

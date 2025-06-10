@@ -1,8 +1,8 @@
 'use client';
-import { useEffect } from 'react';
+import { Suspense, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
-export default function StoreToken() {
+function StoreTokenwithParams() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const token = searchParams.get('token');
@@ -17,4 +17,12 @@ export default function StoreToken() {
   }, [token]);
 
   return <p>Setting up token and redirecting...</p>;
+}
+
+export default function StoreToken() {
+  return(
+    <Suspense fallback={<div>Loading...</div>}>
+      <StoreTokenwithParams />
+    </Suspense>
+  )
 }
